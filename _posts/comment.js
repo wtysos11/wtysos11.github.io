@@ -13,7 +13,7 @@ const myTheme = {
 
 var gitment = new Gitment({
   id: 'location.href', // 可选。默认为 location.href
-  owner: 'Palette25',
+  owner: 'wtysos11',
   repo: 'Comments',
   oauth: {
     client_id: 'a1ac2783392c3eef32c1',
