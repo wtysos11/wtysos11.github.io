@@ -1,10 +1,10 @@
 # Site settings
-title: Palette Blog
-SEOTitle: Palette Blog
-email: 1377278217@qq.com
-description: "一个初入Web开发的小白大学生Palette......"
-keyword: "Blog, Life"
-url: "https://palette25.github.io"              # your host, for absolute URL
+title: wtysos11's Blog
+SEOTitle: wtysos11's Blog
+email: wtysos11@163.com
+description: "Wish this will be the disk of my mind."
+keyword: "Blog, Life, Coding"
+url: "https://wtysos11.github.io"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 header-img: 'img/sky.jpg'
 
@@ -13,7 +13,7 @@ RSS: false
 Access_Number: 0
 #weibo_username:     huxpro
 #zhihu_username:     huxpro
-github_username:    palette25
+github_username:    wtysos11
 #twitter_username:  huxpro
 #facebook_username:  huxpro
 
@@ -54,7 +54,7 @@ kramdown:
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "学无止境<br>无尽地学习..."
+sidebar-about-description: "劝君莫惜金缕衣，劝君惜取少年时。 花开堪折直须折，莫待无花空折枝。"
 sidebar-avatar: 'img/star.jpg'
 
 
@@ -69,10 +69,7 @@ friends:  [
       title: "Hux Blog",
       href: "http://huangxuan.me"
     },{
-      title: "Sirius",
-      href: "http://siriussee.info"
-    },{
-      title: "Hoshino Gen",
-      href: "#"
+      title: "Palette",
+      href: "https://palette25.github.io/"
     }
 ]
