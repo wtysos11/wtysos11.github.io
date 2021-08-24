@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>现代人工智能课程复习 - 实践出真知</title><meta name="Description" content=""><meta property="og:title" content="现代人工智能课程复习" />
+<meta property="og:description" content="中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展 距" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-01-09T14:14:04+08:00" />
+<meta property="article:modified_time" content="2021-01-09T14:14:04+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="现代人工智能课程复习"/>
+<meta name="twitter:description" content="中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展 距"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" /><link rel="next" href="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "现代人工智能课程复习",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0\/"
+        },"genre": "posts","keywords": "机器学习, 深度学习","wordcount":  1578 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0\/","datePublished": "2021-01-09T14:14:04+08:00","dateModified": "2021-01-09T14:14:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">现代人工智能课程复习</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"><i class="far fa-folder fa-fw"></i>计算机基础</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-01-09">2021-01-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1578 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#过拟合">过拟合</a></li>
+    <li><a href="#概率论">概率论</a></li>
+    <li><a href="#贝叶斯概率">贝叶斯概率</a></li>
+    <li><a href="#高斯分布">高斯分布</a></li>
+    <li><a href="#交叉验证">交叉验证</a></li>
+    <li><a href="#决策论">决策论</a></li>
+    <li><a href="#判别器">判别器</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#二项分布伯努利分布">二项分布（伯努利分布）</a></li>
+    <li><a href="#高斯分布-1">高斯分布</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#fisher线性判别函数lda">Fisher线性判别函数（LDA）</a></li>
+    <li><a href="#pca">PCA</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#生成模型与判别模型">生成模型与判别模型</a>
+      <ul>
+        <li><a href="#判别模型">判别模型</a></li>
+        <li><a href="#生成模型">生成模型</a></li>
+      </ul>
+    </li>
+    <li><a href="#卷积神经网络中的参数计算">卷积神经网络中的参数计算</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/74eb4044d81f" target="_blank" rel="noopener noreffer">距离度量</a>，重点记忆Mahalanobis距离和Minkowski距离</li>
+</ul>
+<h2 id="过拟合">过拟合</h2>
+<p>训练集误差减小的时候，测试集误差增大。
+解决方案：正则化，给误差函数增加一个惩罚项（L1/L2）</p>
+<h2 id="概率论">概率论</h2>
+<p>全概率公式，P(A) = P(A|Bi)<em>P(Bi)
+贝叶斯公式，P(Bi|A) = P(A</em>Bi)/P(A)</p>
+<h2 id="贝叶斯概率">贝叶斯概率</h2>
+<p>后验概率= 先验概率*似然函数</p>
+<p>bootstrap，自助法，频率学派使用。假设原始数据集有N个数据，可以采取随机抽取N个点的做法来生成新的数据集（可重复，可缺失）。这样可以在多个产生的数据集中评估参数估计的结果。</p>
+<h2 id="高斯分布">高斯分布</h2>
+<p>一元与多元的表示</p>
+<h2 id="交叉验证">交叉验证</h2>
+<p>信息准则：AIC与BIC</p>
+<h2 id="决策论">决策论</h2>
+<p>或者说贝叶斯决策/贝叶斯推断</p>
+<ol>
+<li>最小化错误分类率。对于二分类问题，降低错误发生的概率，即把类1分给类2与类2分给类1两个事件。</li>
+<li>最小化期望损失。使用损失函数来量化错误分类的代价。</li>
+<li>拒绝选项</li>
+</ol>
+<h2 id="判别器">判别器</h2>
+<h1 id="概率分布">概率分布</h1>
+<h2 id="二项分布伯努利分布">二项分布（伯努利分布）</h2>
+<p>E = p, V = p(1-p)</p>
+<h2 id="高斯分布-1">高斯分布</h2>
+<p>对于多元实值向量，使熵取最大值的是高斯分布</p>
+<p>中心极限定理：</p>
+<ul>
+<li>独立同分布的中心极限定理。当n个随机变量独立同分布且n足够大的时候，可以将独立同分布的随机变量之和当作正态变量。</li>
+</ul>
+<p>对于要定义的高斯分布，其协方差的酥油特征值要严格大于零，不然不能被正确的归一化。如果一个或多个特征值为零，则该高斯分布将是奇异的，被限制在一个低维的子空间上。
+高斯分布的局限性在于它是单峰的，因此难以逼近多峰分布。解决方法是使用混合高斯分布，使用足够多的高斯分布，并调整它们的均值和方差以及线性组合的系数，几乎可以以任意精度近似所有的连续概率密度。</p>
+<p>共轭先验分布：在贝叶斯统计中，如果先验分布与后验分布是同一分布，则称为共轭分布。一般情况下，给定概率分布，能够寻找一个先验与似然函数共轭，从而后验分布的函数形式与先验分布相同。</p>
+<p>非参数估计概率密度：Parzen窗/knn</p>
+<h1 id="线性判别">线性判别</h1>
+<p>或者降维度</p>
+<h2 id="fisher线性判别函数lda">Fisher线性判别函数（LDA）</h2>
+<p>使得类间距离最大与类内距离最小的分类方式，损失函数为类间方差/类内方差。投影面的方向由均值的中心连线决定。</p>
+<h2 id="pca">PCA</h2>
+<p>PCA选择投影后使得样本投影点具有最大方差的方向，假设就是方差越大，信息量越多。</p>
+<p>对于无监督学习，使用PCA降维，维度可以任意。
+对于有监督学习，使用LDA降维，维度只能降到k-1</p>
+<h1 id="线性回归">线性回归</h1>
+<p>Lasso回归，相当于MSE加上L1算子
+岭回归，相当于MSE加上L2算子</p>
+<h2 id="生成模型与判别模型">生成模型与判别模型</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/21279827/104115670-9bb6cb00-534c-11eb-87d9-fc80aa59c2d3.jpg"
+        data-srcset="https://user-images.githubusercontent.com/21279827/104115670-9bb6cb00-534c-11eb-87d9-fc80aa59c2d3.jpg, https://user-images.githubusercontent.com/21279827/104115670-9bb6cb00-534c-11eb-87d9-fc80aa59c2d3.jpg 1.5x, https://user-images.githubusercontent.com/21279827/104115670-9bb6cb00-534c-11eb-87d9-fc80aa59c2d3.jpg 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/21279827/104115670-9bb6cb00-534c-11eb-87d9-fc80aa59c2d3.jpg"
+        title="v2-a2e753542fc6384ee351cabdbe6dd523_r" />
+对机器学习的任务而言， 其目标是根据属性X预测标记Y，即求得概率P(Y|X)，在贝叶斯中这也就是后验概率</p>
+<h3 id="判别模型">判别模型</h3>
+<p>判别模型是直接求出了一个判别边界，对没有见过的实例X就可以求出边界Y
+例子：SVM模型、线性回归模型、一般的人工神经网络（多层感知机）、提升方法、条件随机场、随机森林
+特点：输入属性X可以直接得到Y</p>
+<h3 id="生成模型">生成模型</h3>
+<p>生成模型需要求得P(X,Y)，即一个联合概率。对于没有见过的实例X，需要求出X与不同的标记Y之间的联合概率分布，然后取最大的那个。比如上图的右边是没有严格的判定边界的，那对于未见实例（红三角），联合概率分布大的那个类会占优。
+例子：高斯混合模型、朴素贝叶斯模型、隐马尔可夫模型、VAE、GAN、受限玻尔兹曼机
+特点：对于输入的X，需要求出好几个概率，选择最大的那一个。</p>
+<h2 id="卷积神经网络中的参数计算">卷积神经网络中的参数计算</h2>
+<p>不考虑通道数，对于N<em>N大小的输入，与F</em>F大小的卷积核，输出大小为(N-F)/stride+1</p>
+<p>案例2，对于7<em>7的图片，3</em>3的卷积核，stride=1，补了一圈零，最后为多少？
+大小应该为7<em>7，原图片补了一圈零之后等价为9</em>9，之后按照公式计算即可。</p>
+<p>输入7<em>7</em>3通道，经过6个3<em>3的卷积核，输出的应该为5</em>5*6的数据。此处，卷积核默认通道数与输入数据通道数相同，图片大小按照公式计算，卷积核的数量即为输出的通道数。</p>
+<p>总结
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://user-images.githubusercontent.com/21279827/104115899-2dbfd300-534f-11eb-99dc-0aa19f9d7e47.png"
+        data-srcset="https://user-images.githubusercontent.com/21279827/104115899-2dbfd300-534f-11eb-99dc-0aa19f9d7e47.png, https://user-images.githubusercontent.com/21279827/104115899-2dbfd300-534f-11eb-99dc-0aa19f9d7e47.png 1.5x, https://user-images.githubusercontent.com/21279827/104115899-2dbfd300-534f-11eb-99dc-0aa19f9d7e47.png 2x"
+        data-sizes="auto"
+        alt="https://user-images.githubusercontent.com/21279827/104115899-2dbfd300-534f-11eb-99dc-0aa19f9d7e47.png"
+        title="804824-20171003232331474-1860427775" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-01-09</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-title="现代人工智能课程复习" data-hashtags="机器学习,深度学习"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-hashtag="机器学习"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-title="现代人工智能课程复习" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-title="现代人工智能课程复习"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-title="现代人工智能课程复习"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-title="现代人工智能课程复习" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-title="现代人工智能课程复习" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" data-title="现代人工智能课程复习"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>,&nbsp;<a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="prev" rel="prev" title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读"><i class="fas fa-angle-left fa-fw"></i>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</a>
+            <a href="/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" class="next" rel="next" title="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions">Recurrent Neural Networks for Time Series Forecasting: Current status and future directions<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -4,77 +4,77 @@
         <link>http://wtysos11.github.io/</link>
         <description>实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Tue, 05 May 2020 09:08:04 &#43;0800</lastBuildDate>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Fri, 05 Mar 2021 10:46:04 &#43;0800</lastBuildDate>
             <atom:link href="http://wtysos11.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>python日志模块logging学习与快速复习笔记</title>
-    <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-    <pubDate>Tue, 05 May 2020 09:08:04 &#43;0800</pubDate>
+    <title>Dynamic Cloud Resource Allocation Considering Demand Uncertainty</title>
+    <link>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</link>
+    <pubDate>Fri, 05 Mar 2021 10:46:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-    <description><![CDATA[因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考： csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细]]></description>
+    <guid>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</guid>
+    <description><![CDATA[Dynamic Cloud Resource Allocation Considering Demand Uncertainty 2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合]]></description>
 </item><item>
-    <title>基于网站流量的时间序列预测资源整理</title>
-    <link>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</link>
-    <pubDate>Mon, 04 May 2020 10:20:04 &#43;0800</pubDate>
+    <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
+    <link>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</link>
+    <pubDate>Thu, 04 Mar 2021 11:03:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</guid>
-    <description><![CDATA[原文地址 去年到现在一些关于时间序列预测的资料的整理。 kaggle文章： everything you can do with time series kaggle - web-traffic-time-series-forecasting - 1st solution。谷歌的这个比赛是针对流量预测]]></description>
+    <guid>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</guid>
+    <description><![CDATA[Profit Maximization for Cloud Brokers in Cloud Computing CCF A类 IEEE Transactions on Parallel and Distributed Systems，2019 摘要 为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务]]></description>
 </item><item>
-    <title>Response Time Characterization of Microservice-Based Systems</title>
-    <link>http://wtysos11.github.io/posts/20200422_response-time-characterization-of-microservice-based-systems/</link>
-    <pubDate>Thu, 23 Apr 2020 17:21:04 &#43;0800</pubDate>
+    <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
+    <link>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</link>
+    <pubDate>Mon, 01 Mar 2021 19:49:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200422_response-time-characterization-of-microservice-based-systems/</guid>
-    <description><![CDATA[原文地址 看到的挺好的一篇文章 November 2018 DOI: 10.1109/NCA.2018.8548062 Conference: 2018 IEEE 17th International Symposium on Network Computing and Applications (NCA) ConferenceIEEE International Symposium on Network Computing and Applications 以排队论分析响应时间的一篇论文。 说实话，我一没看懂排队论的过程，]]></description>
+    <guid>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</guid>
+    <description><![CDATA[A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction 主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-dema]]></description>
 </item><item>
-    <title>bottleneck detection</title>
-    <link>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</link>
-    <pubDate>Wed, 22 Apr 2020 17:36:04 &#43;0800</pubDate>
+    <title>Business-Driven Long-Term Capacity Planning for SaaS Applications</title>
+    <link>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</link>
+    <pubDate>Mon, 01 Mar 2021 16:57:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</guid>
-    <description><![CDATA[原文地址 主要还是针对微服务调度中bottleneck的定义入手 瓶颈点定义 从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间]]></description>
+    <guid>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</guid>
+    <description><![CDATA[未完成 本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？ Business-Driven Long-Term Capacity Planning for SaaS Applications 2015 TCC ，没记]]></description>
 </item><item>
-    <title>使用ADEPT方法学习困难概念</title>
-    <link>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</link>
-    <pubDate>Tue, 14 Apr 2020 09:51:04 &#43;0800</pubDate>
+    <title>阿里春招简历小课堂笔记</title>
+    <link>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</link>
+    <pubDate>Wed, 24 Feb 2021 19:12:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</guid>
-    <description><![CDATA[原文地址 参考资料： Learning Difficult Concepts with the ADEPT Method 缘起-强化学习 困难的概念往往让人疯狂，仅仅看一遍几乎没有任何效果，实际操作又过于繁琐。使用5个步骤来科学学习]]></description>
+    <guid>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</guid>
+    <description><![CDATA[简历的内容 简历，总结而言是经历的总结。 简历自答： 用一句话或者三个词描述自己是一个怎么样的人 我热爱/喜欢做的事情是什么 我擅长做的事情是什么/特]]></description>
 </item><item>
-    <title>【总结性】微服务调度相关论文</title>
-    <link>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</link>
-    <pubDate>Sat, 11 Apr 2020 10:20:04 &#43;0800</pubDate>
+    <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
+    <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
+    <pubDate>Mon, 15 Feb 2021 11:00:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</guid>
-    <description><![CDATA[原始地址 阅读和微服务相关的论文 【论文名称】 调度类型，调度方法，调度对象，索引 综述文献： A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014]]></description>
+    <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
+    <description><![CDATA[Temporal fusion transformers for interpretable multi-horizon time series forecasting 摘要 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covari]]></description>
 </item><item>
-    <title>数据结构与算法复习</title>
-    <link>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
-    <pubDate>Tue, 07 Apr 2020 16:11:14 &#43;0800</pubDate>
+    <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
+    <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
+    <pubDate>Wed, 03 Feb 2021 14:24:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</guid>
-    <description><![CDATA[原文地址 内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来 数据结构与算法复习 不包括全部内容 基础部分包括大O记号和]]></description>
+    <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
+    <description><![CDATA[Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020. 一篇关于时间序列增强的论文，很有意思。 Time Series Data Augmentation for Deep Learning: A Survey 摘要 时间序列相关的问题中，时间序列数据可能]]></description>
 </item><item>
-    <title>软件测试复习</title>
-    <link>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</link>
-    <pubDate>Mon, 06 Apr 2020 20:15:14 &#43;0800</pubDate>
+    <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
+    <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
+    <pubDate>Tue, 19 Jan 2021 19:50:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</guid>
-    <description><![CDATA[原文地址 软件测试复习 对大三下学期的软件测试课程进行复习 第一章 计算机软件体系结构 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的]]></description>
+    <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
+    <description><![CDATA[Recurrent Neural Networks for Time Series Forecasting: Current status and future directions 2021 International Journal of Forecasting 文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏]]></description>
 </item><item>
-    <title>中山大学考研复试内容复习</title>
-    <link>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</link>
-    <pubDate>Sat, 04 Apr 2020 20:15:14 &#43;0800</pubDate>
+    <title>现代人工智能课程复习</title>
+    <link>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</link>
+    <pubDate>Sat, 09 Jan 2021 14:14:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</guid>
-    <description><![CDATA[中山大学考研复试内容复习 原文地址 复试复习以基本概念为主，重点概念为主，偏题怪题一律不考虑。 计算机网络 网络基础 OSI七层模型 OSI七层模型 OS]]></description>
+    <guid>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</guid>
+    <description><![CDATA[中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展 距]]></description>
 </item><item>
-    <title>复试英语翻译练习</title>
-    <link>http://wtysos11.github.io/posts/20200403_%E5%A4%8D%E8%AF%95%E8%8B%B1%E8%AF%AD%E7%BF%BB%E8%AF%91%E7%BB%83%E4%B9%A0/</link>
-    <pubDate>Fri, 03 Apr 2020 20:15:14 &#43;0800</pubDate>
+    <title>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</title>
+    <link>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+    <pubDate>Tue, 22 Dec 2020 19:20:04 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200403_%E5%A4%8D%E8%AF%95%E8%8B%B1%E8%AF%AD%E7%BF%BB%E8%AF%91%E7%BB%83%E4%B9%A0/</guid>
-    <description><![CDATA[原文地址 复试英语翻译练习 计划 计划对A类会议的部分论文的概述进行实时翻译（录音），并再写一份答案作为巩固。 会议参考：https://blog.]]></description>
+    <guid>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
+    <description><![CDATA[所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018.]]></description>
 </item></channel>
 </rss>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>知乎分享：vscode从入门到进阶 - 实践出真知</title><meta name="Description" content=""><meta property="og:title" content="知乎分享：vscode从入门到进阶" />
+<meta property="og:description" content="地址：知乎 内容大纲 VS Code 的优势 VS 和 VS Code 到底有什么关系？ 微软从 VS 组里面抽了一拨人做 VS Code，是真的吗？ VS 支持 Java ？背后的真相到底是怎样的？ 你真的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-24T09:08:04+08:00" />
+<meta property="article:modified_time" content="2020-05-24T09:08:04+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="知乎分享：vscode从入门到进阶"/>
+<meta name="twitter:description" content="地址：知乎 内容大纲 VS Code 的优势 VS 和 VS Code 到底有什么关系？ 微软从 VS 组里面抽了一拨人做 VS Code，是真的吗？ VS 支持 Java ？背后的真相到底是怎样的？ 你真的"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" /><link rel="prev" href="http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" /><link rel="next" href="http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "知乎分享：vscode从入门到进阶",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6\/"
+        },"genre": "posts","keywords": "vscode, 学习笔记","wordcount":  2850 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6\/","datePublished": "2020-05-24T09:08:04+08:00","dateModified": "2020-05-24T09:08:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">知乎分享：vscode从入门到进阶</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="far fa-folder fa-fw"></i>计算机课程学习笔记</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-05-24">2020-05-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2850 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#vs-code-从入门到进阶">VS Code 从入门到进阶</a>
+      <ul>
+        <li><a href="#第一章-vscode的优势">第一章 VSCode的优势</a></li>
+        <li><a href="#你真的会用vs-code吗">你真的会用VS Code吗</a></li>
+        <li><a href="#如何更好地学习vs-code">如何更好地学习VS Code</a></li>
+        <li><a href="#vscode的核心组件">VSCode的核心组件</a></li>
+        <li><a href="#vscode是如何做开源的">VSCode是如何做开源的</a></li>
+        <li><a href="#进阶功能">进阶功能</a></li>
+        <li><a href="#插件开发">插件开发</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>地址：<a href="https://www.zhihu.com/lives/1124809477068849152" target="_blank" rel="noopener noreffer">知乎</a>
+内容大纲</p>
+<ol>
+<li>
+<p>VS Code 的优势</p>
+</li>
+<li>
+<p>VS 和 VS Code 到底有什么关系？</p>
+<ul>
+<li>微软从 VS 组里面抽了一拨人做 VS Code，是真的吗？</li>
+<li>VS 支持 Java ？背后的真相到底是怎样的？</li>
+</ul>
+</li>
+<li>
+<p>你真的会用 VS Code 了吗？</p>
+<ul>
+<li>VS Code Insiders 版本</li>
+<li>常用的配置项</li>
+<li>命令面板</li>
+<li>面包屑导航/大纲/缩略图</li>
+<li>主题</li>
+<li>快捷键</li>
+<li>集成终端</li>
+</ul>
+</li>
+<li>
+<p>如何更好地学习 VS Code ？</p>
+<ul>
+<li>学会提问</li>
+<li>学会搜索</li>
+<li>学会学习</li>
+</ul>
+</li>
+<li>
+<p>一起改进 VS Code，你也能成为 VS Code 的 Contributor</p>
+</li>
+<li>
+<p>VS Code 的核心组件</p>
+<ul>
+<li>Electron</li>
+<li>Monaco Editor</li>
+<li>Language Server Protocol</li>
+<li>Debug Adapter Protocol</li>
+</ul>
+</li>
+<li>
+<p>VS Code 怎么做开源的？</p>
+</li>
+<li>
+<p>进阶</p>
+<ul>
+<li>命令行</li>
+<li>玩转 Git</li>
+<li>打造自己的主题</li>
+<li>快速创建属于你的 Code Snippet</li>
+<li>玩转 Tasks，把重复的工作自动化</li>
+<li>调试</li>
+<li>远程开发</li>
+</ul>
+</li>
+<li>
+<p>插件</p>
+<ul>
+<li>插件管理</li>
+<li>好用的插件推荐</li>
+<li>你也可以开发一款属于你的插件</li>
+</ul>
+</li>
+</ol>
+<h2 id="vs-code-从入门到进阶">VS Code 从入门到进阶</h2>
+<h3 id="第一章-vscode的优势">第一章 VSCode的优势</h3>
+<p>特点：开源、跨平台、轻量级、内置git支持、丰富的插件</p>
+<h3 id="你真的会用vs-code吗">你真的会用VS Code吗</h3>
+<h4 id="快捷键">快捷键</h4>
+<p><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf" target="_blank" rel="noopener noreffer">VSCode shortcut for windows</a>
+常见命令：</p>
+<ul>
+<li>Ctrl+Shift+P或F1：调出命令面板，可以输出执行所有命令。</li>
+<li>Ctrl+P：在不同的文件跳转</li>
+<li>Ctrl+Shift+Tab：在所有打开的文件中进行跳转</li>
+<li>Ctrl+Shift+O：跳转到文件中的Symbol</li>
+<li>Ctrl+T：搜索当前文件夹下的所有Symbol</li>
+<li>Ctrl+G：跳转到某一行</li>
+<li>Alt+&lt;-/-&gt;：向后/向前跳转
+可以修改Preference-&gt;Keyboard Shortcuts的设置来修改键位，也可以下载键盘映射插件。</li>
+</ul>
+<h4 id="菜单栏-配置项">菜单栏-配置项</h4>
+<p>通过File-Preference-Settings可以访问配置项，可以修改所有的配置，包括扩展与否
+常用配置项如下：</p>
+<ul>
+<li>Editor: Format On Save，可以在保存时格式化文件</li>
+<li>Files: Auto Save，控制已更新文件的自动保存</li>
+<li>Files: Auto Save Delay，上面自动保存的间隔</li>
+<li>Editor: Tab Size，规定一个制表符等于的空格数</li>
+<li>Edirot: Insert Spaces，在按制表符的时候会自动插入空格</li>
+<li>&ldquo;file.exclude&rdquo;：在打开VS code时有一些文件夹是默认不展示的，比如<code>.git</code>文件夹等。可以通过修改该配置项进行设置。</li>
+<li>&ldquo;search.exclude&rdquo;：因为VS Code有内置的搜索功能，比如nodejs项目中，node module我就不希望搜索到，可以加入到这里面进行设置。</li>
+</ul>
+<h4 id="菜单-视图">菜单-视图</h4>
+<p>最上方会有面包屑导航，可以方便的查看在工作区的位置。
+左边会有大纲导航，方便查看变量级别。
+右边有全文跳转，方便在全文中进行跳转。</p>
+<h4 id="主题">主题</h4>
+<p>包括颜色主题或文件图标主题</p>
+<h4 id="集成终端terminal">集成终端/terminal</h4>
+<ul>
+<li>Ctrl+`，打开终端</li>
+<li>Ctrl+Shift+`，打开新的终端</li>
+<li>Ctrl+Home，滚动到顶</li>
+<li>Ctrl+End，滚动到底</li>
+</ul>
+<h3 id="如何更好地学习vs-code">如何更好地学习VS Code</h3>
+<p>学会搜索：</p>
+<ul>
+<li>访问VSCode官网</li>
+<li>访问VSCode的github</li>
+<li>Google</li>
+<li>Stack Overflow</li>
+</ul>
+<p>学会提问：描述清楚问题，方便别人帮助</p>
+<ul>
+<li>版本/环境/插件</li>
+<li>问题的步骤（是否可复现/复习过程）</li>
+<li>问题的期望行为与实际行为的比较</li>
+<li>Code Sample，最好有error message</li>
+<li>Screenshot</li>
+</ul>
+<p>寻求帮助前一定要有自己的思考（不然会提出很多弱智问题）
+知其然，更要知其所以然
+学会举一反三</p>
+<p>贡献：</p>
+<ul>
+<li>提问</li>
+<li>issues</li>
+<li>PRs</li>
+<li>插件</li>
+<li>翻译</li>
+</ul>
+<p>讨论：</p>
+<ul>
+<li>gitter chat room:https://gitter.im/Microsoft/vscode</li>
+<li>Slack: <a href="https://aka.ms/vscode-dev-community" target="_blank" rel="noopener noreffer">https://aka.ms/vscode-dev-community</a></li>
+</ul>
+<p>PRs：发PR前需要看一下PR指南：https://github.com/Microsoft/vscode/wiki/How-to-Contribute#pull-requests
+一般标help-wanted或bug的标签是可以发PR的。</p>
+<p>另外一个贡献的方式就是开发插件。</p>
+<p>翻译：翻译指南https://aka.ms/vscodeloc</p>
+<h3 id="vscode的核心组件">VSCode的核心组件</h3>
+<p>四个核心组件：</p>
+<ul>
+<li>Electron</li>
+<li>Monaco Editor</li>
+<li>Language Server Protocol</li>
+<li>Debug Adapter Protocol</li>
+</ul>
+<h4 id="electron">Electron</h4>
+<p>开发框架，基于Node.js和Chromium，使用HTML，CSS和JavaScript等前端技术来开发跨平台的桌面级应用程序</p>
+<h4 id="monaco-editor">Monaco Editor</h4>
+<p>基于浏览器的代码编辑器：IntelliSense，代码验证，语法高亮等特性</p>
+<h4 id="language-server-protocol">Language Server Protocol</h4>
+<p>IDE与语言服务器之间的协议，可以允许开发人员在最喜爱的工具中使用各种语言来写程序。</p>
+<h4 id="dap">DAP</h4>
+<p>希望将编辑器与调试器解耦合，便于编辑器与其他Debugger的集成</p>
+<h3 id="vscode是如何做开源的">VSCode是如何做开源的</h3>
+<p>开源的三个阶段：公开源代码-&gt;Issues&amp;PRs-&gt;Planning&amp;Design
+实时更新，管理Issues和PR来交互，并且有着开发和设计的计划。</p>
+<h3 id="进阶功能">进阶功能</h3>
+<h4 id="命令行">命令行</h4>
+<ul>
+<li><code>code .</code>：在当前目录下打开新的VSCode</li>
+<li><code>code -r .</code>：在当前目录下覆盖打开VSCode</li>
+<li><code>code -n</code>：创建新的窗口</li>
+<li><code>code --local=es</code>：改变语言</li>
+<li><code>code --diff &lt;file1&gt; &lt;file2&gt;</code>：打开diff工具对两个文件进行比较</li>
+<li><code>code --goto package.sjon:10:5</code>：打开指定文件，指定行列(file:line[:character])</li>
+<li><code>code --help</code>：查看帮助选项</li>
+<li><code>code --disable-extensions</code>：禁止所有的扩展</li>
+</ul>
+<p>命令行高级功能：</p>
+<ul>
+<li><code>--status</code>/<code>-s</code>：查看信息</li>
+<li><code>extensions-dir &lt;dir&gt;</code>：查看extension的根目录</li>
+</ul>
+<h4 id="打造自己的主题">打造自己的主题</h4>
+<p><a href="https://code.visualstudio.com/api/references/theme-color" target="_blank" rel="noopener noreffer">https://code.visualstudio.com/api/references/theme-color</a></p>
+<p>TmThemeEditor：https://ththeme-editor.herokuapp.com/</p>
+<h4 id="自己的代码片段">自己的代码片段</h4>
+<p>在当前工作目录的<code>.vscode</code>目录下
+文件&gt;首选项&gt;用户代码片段即可，可以生成仅在当前工作区生效的VSCode代码片段。</p>
+<h4 id="tasks将重复工作自动化">Tasks，将重复工作自动化</h4>
+<p>在菜单中，选择终端&gt;Configure Task来配置。
+选择终端&gt;Run Task来运行重复工作。
+这样可以不用在终端中反复输入重复的命令。</p>
+<p>变量：https://code.visualstudio.com/docs/editor/variables-reference，列出了常用的变量</p>
+<h4 id="调试launchjson">调试：launch.json</h4>
+<p>常规语言可以直接进行调试，复杂的项目要进行调试的时候需要对launch.json进行配置，通过修改当前目录下<code>.vscode/launch.json</code>中的对应内容，可以实现调试。</p>
+<p>多目标调试，比如在开发Web应用的时候，可以同时调试前端和后端的应用。</p>
+<h4 id="远程开发">远程开发</h4>
+<p>VSCode Remote，允许将容器/远程计算机/WSL作为完整的开发环境。相关插件包括：</p>
+<ul>
+<li>Remote - SSH</li>
+<li>Remote - Containers</li>
+<li>Remote - WSL</li>
+</ul>
+<p>其中，Remote - SSH就很方便，可以通过SSH channel连接上远程计算机，访问远程文件夹进行开发。</p>
+<h4 id="插件推荐">插件推荐</h4>
+<ul>
+<li>GitLens：Git管理利器</li>
+<li>REST Client：也许比Postman更好</li>
+<li>Bracket Pair Colorizer：括号颜色高亮，我觉得可以</li>
+<li>Browser Preview：把Chrome浏览器代入到VSCode中</li>
+<li>LeetCode：Offer收割利器</li>
+<li>Visual Studio Live Share：极大方便协作编程，可以实时实现代码编辑、跟踪光标、团队调试、分享本地服务器、共享终端</li>
+<li>Visual Studio IntelliCode：AI赋能，根据上下文给出编程建议与智能提示</li>
+</ul>
+<h3 id="插件开发">插件开发</h3>
+<h4 id="设计">设计</h4>
+<p>如何获取产品灵感：从日常生活、github issues中
+参考其他浏览器/IDE的热门插件</p>
+<p>确定目标用户</p>
+<h4 id="实现">实现</h4>
+<p>VSCode插件开发：https://code.visualstudio.com/api
+VSCode插件样例：https://code.visualstudio.com/api/extension-guides/overview</p>
+<h4 id="推广">推广</h4>
+<h4 id="维护">维护</h4>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-05-24</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-title="知乎分享：vscode从入门到进阶" data-hashtags="vscode,学习笔记"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-hashtag="vscode"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-title="知乎分享：vscode从入门到进阶" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-title="知乎分享：vscode从入门到进阶"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-title="知乎分享：vscode从入门到进阶"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-title="知乎分享：vscode从入门到进阶" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-title="知乎分享：vscode从入门到进阶" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/" data-title="知乎分享：vscode从入门到进阶"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/vscode/">vscode</a>,&nbsp;<a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="python日志模块logging学习与快速复习笔记"><i class="fas fa-angle-left fa-fw"></i>python日志模块logging学习与快速复习笔记</a>
+            <a href="/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" class="next" rel="next" title="Keras中的Embedding层是如何工作的">Keras中的Embedding层是如何工作的<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

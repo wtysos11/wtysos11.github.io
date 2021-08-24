@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>A two-phase cloud resource provisioning algorithm for cost optimization - 实践出真知</title><meta name="Description" content=""><meta property="og:title" content="A two-phase cloud resource provisioning algorithm for cost optimization" />
+<meta property="og:description" content="Profit Maximization for Cloud Brokers in Cloud Computing CCF A类 IEEE Transactions on Parallel and Distributed Systems，2019 摘要 为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-03-04T11:03:04+08:00" />
+<meta property="article:modified_time" content="2021-03-04T11:03:04+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="A two-phase cloud resource provisioning algorithm for cost optimization"/>
+<meta name="twitter:description" content="Profit Maximization for Cloud Brokers in Cloud Computing CCF A类 IEEE Transactions on Parallel and Distributed Systems，2019 摘要 为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" /><link rel="next" href="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "A two-phase cloud resource provisioning algorithm for cost optimization",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing\/"
+        },"genre": "posts","keywords": "云资源调度","wordcount":  1171 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing\/","datePublished": "2021-03-04T11:03:04+08:00","dateModified": "2021-03-04T11:03:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">A two-phase cloud resource provisioning algorithm for cost optimization</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw"></i>计算机论文阅读</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-04">2021-03-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1171 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#3-the-models">3 The Models</a>
+      <ul>
+        <li><a href="#32-multiserver-queue-system">3.2 Multiserver queue system</a></li>
+        <li><a href="#33-cost-modeling">3.3 Cost Modeling</a></li>
+        <li><a href="#34-revenue-modeling">3.4 Revenue modeling</a></li>
+      </ul>
+    </li>
+    <li><a href="#4">4</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="profit-maximization-for-cloud-brokers-in-cloud-computing">Profit Maximization for Cloud Brokers in Cloud Computing</h1>
+<p>CCF A类</p>
+<p>IEEE Transactions on Parallel and Distributed Systems，2019</p>
+<h2 id="摘要">摘要</h2>
+<p>为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务提供商处以reserved instance的形式租用VM，并把它们以比on-demand更低的价格与相同的付费模式租给用户。</p>
+<p>本文关注于如何设置中间商的价格模型，为它的VM定价使得其利润最大化，在其能为用户节省成本的前提下。将最优化的多服务器配置问题和VM的定价问题建模为利润最优化问题，并使用启发式的方法来求解。近-最优解可以被用来指导配置和虚拟机的定价。</p>
+<h2 id="3-the-models">3 The Models</h2>
+<p>模型主要使用的是多服务器排队论模型、收入模型和花费模型</p>
+<p>reserved instance和on demand instance的价格使用$\beta_{re}$和$\beta_{od}$来指代，单位为dollar per unit time，一般unit time指的是小时。</p>
+<h3 id="32-multiserver-queue-system">3.2 Multiserver queue system</h3>
+<p>本文所研究的中间商broker只从单一的云服务提供商处租用资源，并把它们提供给用户。因此，中间商提供的VM是同构的(homogeneous)。资源在CPU、内存、带宽等方面是一致的。本文假设用户使用了M/M/n/n的排队系统，来对其流量等进行建模。</p>
+<p>在M/M/n/n排队系统中，VM的到达流量被认为是一个速率$\lambda$的泊松流，到达时间独立同分布且呈指数分布。考虑到中间商使用价格来吸引用户，因此实际速率$lambda$会受到两个因素的影响，即实际用户需求$\lambda_{max}$与资源价格。</p>
+<p>通过租用VM并搭建私有云的方式，中间商可以向用户提供on-demand的产品。现假设中间商所拥有的虚拟机数量为n，则多队列系统的队列长度不超过n，此时可以根据排队论公式计算出平均服务时间与资源占用率。</p>
+<p>得到等式1，描述$\pi_k$的式子，这个变量为在排队论系统中有k个服务请求的概率。</p>
+<p>显然，如果请求得不到满足，用户就会流失。因此流失概率等于系统中有n个请求的概率，即$P_L = \pi_n$</p>
+<h3 id="33-cost-modeling">3.3 Cost Modeling</h3>
+<p>即购买服务器的钱，显然是$C=n\beta_{re}$</p>
+<h3 id="34-revenue-modeling">3.4 Revenue modeling</h3>
+<h4 id="341-analysis-on-the-revenue-affecting-factors">3.4.1 Analysis on the Revenue-affecting Factors</h4>
+<p>有两个主要影响盈利的因素，一个是用户的需求，即请求到达率$\lambda$。在价格不变的情况下，请求到达率越高，收入也就越高。因此提升用户需求是获取更高收入的主要手段。</p>
+<p>但是，用户的需求是随着VM的销售价格而变化的，因此第二个影响因素就是VM的销售价格。</p>
+<p>价格从两个方面影响收入。首先，价格直接影响收入，在给定需求下，高价格导向高收入。其次，低价格是该盈利模式的核心竞争力，提升价格将导致客户流失。</p>
+<p>考虑到收入与成本，销售VM的价格只能在$\beta_{od}$与$\beta{re}$区间内。</p>
+<p>考虑关系，价格越低，用户流量$\lambda_{max}$越高，可以构建出price-demand function。采用线性建模是因为这样最常见。</p>
+<h2 id="4">4</h2>
+<p>没看明白</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-03-04</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-hashtags="云资源调度"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-hashtag="云资源调度"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E4%BA%91%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6/">云资源调度</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" class="prev" rel="prev" title="A two-phase cloud resource provisioning algorithm for cost optimization"><i class="fas fa-angle-left fa-fw"></i>A two-phase cloud resource provisioning algorithm for cost optimization</a>
+            <a href="/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" class="next" rel="next" title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty">Dynamic Cloud Resource Allocation Considering Demand Uncertainty<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

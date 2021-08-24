@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>如何让pandas根据指定列的指进行partition - 实践出真知</title><meta name="Description" content=""><meta property="og:title" content="如何让pandas根据指定列的指进行partition" />
+<meta property="og:description" content="问题描述 我拿到了一个维基百科的列表，其数据如下： datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-11-22T19:20:04+08:00" />
+<meta property="article:modified_time" content="2020-11-22T19:20:04+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何让pandas根据指定列的指进行partition"/>
+<meta name="twitter:description" content="问题描述 我拿到了一个维基百科的列表，其数据如下： datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" /><link rel="prev" href="http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" /><link rel="next" href="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "如何让pandas根据指定列的指进行partition",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition\/"
+        },"genre": "posts","keywords": "问题解答, Python","wordcount":  849 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition\/","datePublished": "2020-11-22T19:20:04+08:00","dateModified": "2020-11-22T19:20:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">如何让pandas根据指定列的指进行partition</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E9%97%AE%E9%A2%98/"><i class="far fa-folder fa-fw"></i>问题</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-22">2020-11-22</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 849 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#问题描述">问题描述</a>
+      <ul>
+        <li><a href="#朴素想法">朴素想法</a></li>
+        <li><a href="#更python的做法">更python的做法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="问题描述">问题描述</h2>
+<p>我拿到了一个维基百科的列表，其数据如下：</p>
+<table>
+<thead>
+<tr>
+<th>datehour</th>
+<th>title</th>
+<th>views</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2015-10-17 13:00:00 UTC</td>
+<td>Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2015-06-01 14:00:00 UTC</td>
+<td>Dulce_Mar铆a</td>
+<td>10</td>
+</tr>
+<tr>
+<td>2015-06-01 21:00:00 UTC</td>
+<td>Dulce_Mar铆a</td>
+<td>25</td>
+</tr>
+<tr>
+<td>2015-06-01 06:00:00 UTC</td>
+<td>Dulce_Mar铆a</td>
+<td>18</td>
+</tr>
+<tr>
+<td>2015-08-30 12:00:00 UTC</td>
+<td>Portal:Current_events</td>
+<td>116</td>
+</tr>
+</tbody>
+</table>
+<p>UTF-8的问题暂且不谈，现在需要将其作为csv文件读入内存中，并且按照title分成不同的datehour-&gt;views表，并按照datehour排序。将2015~2020的数据按照同样的操作进行处理，并将它们拼接成一张大表，最后将每一个title对应的表导出到csv，title写入到index.txt中。</p>
+<p>##解决方案</p>
+<h3 id="朴素想法">朴素想法</h3>
+<p>最朴素的想法就是遍历一遍原表的所有行，构建一个字典，字典的每个key是title，value是两个list。不断将原有数据放入其中，然后到时候直接遍历keys，根据两个list构建pd，排序后导出。</p>
+<h3 id="更python的做法">更python的做法</h3>
+<p>朴素想法应该是够用的，但是不美观，不够pythonic，看着很别扭。于是我搜索了<code>How to partition DataFrame by column value in pandas?</code></p>
+<h4 id="boolean-index">boolean index</h4>
+<p><a href="https://stackoverflow.com/questions/33742588/pandas-split-dataframe-by-column-value" target="_blank" rel="noopener noreffer">stackoverflow</a>里有人提问如何将离散数据进行二分类，把小于和大于某个值的数据分到两个DataFrame中。直接用<code>df1 = df[df[&quot;Sales&quot;]&gt;=s]</code>这样的语句就可以完成。
+但是这在我们的场景上并不太适用。当然，可以提前遍历一遍把title做成集合再循环遍历，不过这也不是很pythonic。</p>
+<h4 id="groupby">groupby</h4>
+<p>同样是上面那个问题，有人提到可以使用groupby方法。<a href="https://www.yiibai.com/pandas/python_pandas_groupby.html" target="_blank" rel="noopener noreffer">groupby</a>听着就很满足我的需求，它让我想起了SQL里面的同名功能。</p>
+<ul>
+<li><code>df.groupby('ColumnName').groups</code>可以显示所有的列中的元素。</li>
+<li><code>df.groupby('ColumnName')</code>可以进行遍历，结果是一个(name,subDF)的二元组，name为分组的元素名称，subDF为分组后的DataFrame</li>
+<li>对<code>df.groupby('ColumnName')</code>产生的对象执行<code>get_group(keyvalue)</code>可以选择一个组</li>
+</ul>
+<p>此外还有聚合、转换、过滤等操作，不赘述。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-11-22</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-title="如何让pandas根据指定列的指进行partition" data-hashtags="问题解答,Python"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-hashtag="问题解答"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-title="如何让pandas根据指定列的指进行partition" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-title="如何让pandas根据指定列的指进行partition"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-title="如何让pandas根据指定列的指进行partition"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-title="如何让pandas根据指定列的指进行partition" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-title="如何让pandas根据指定列的指进行partition" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" data-title="如何让pandas根据指定列的指进行partition"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/">问题解答</a>,&nbsp;<a href="/tags/python/">python</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" class="prev" rel="prev" title="Keras中的Embedding层是如何工作的"><i class="fas fa-angle-left fa-fw"></i>Keras中的Embedding层是如何工作的</a>
+            <a href="/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="next" rel="next" title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读">比特币，基于交易图网络数据分析的去匿名性问题论文阅读<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

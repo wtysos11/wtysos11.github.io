@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Dynamic Cloud Resource Allocation Considering Demand Uncertainty - 实践出真知</title><meta name="Description" content=""><meta property="og:title" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" />
+<meta property="og:description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty 2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-03-05T10:46:04+08:00" />
+<meta property="article:modified_time" content="2021-03-05T10:46:04+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"/>
+<meta name="twitter:description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty 2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Dynamic Cloud Resource Allocation Considering Demand Uncertainty",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty\/"
+        },"genre": "posts","keywords": "云资源调度","wordcount":  1607 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty\/","datePublished": "2021-03-05T10:46:04+08:00","dateModified": "2021-03-05T10:46:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Dynamic Cloud Resource Allocation Considering Demand Uncertainty</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw"></i>计算机论文阅读</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-05">2021-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1607 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1">1</a></li>
+    <li><a href="#2-related-work">2 Related work</a></li>
+    <li><a href="#3-system-model-and-assumptions">3 System model and assumptions</a>
+      <ul>
+        <li><a href="#31-problem-definition">3.1 Problem Definition</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-dynamic-cloud-resource-allocation-algorithm">4 Dynamic Cloud Resource Allocation Algorithm</a>
+      <ul>
+        <li><a href="#41-dcra-flowchart-overview">4.1 DCRA Flowchart Overview</a></li>
+        <li><a href="#42-cloud-resource-reservation-optimization">4.2 Cloud Resource Reservation Optimization</a></li>
+        <li><a href="#43-dynamic-cloud-provision-optimization">4.3 Dynamic Cloud Provision Optimization</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-performance-analysis">5 Performance Analysis</a>
+      <ul>
+        <li><a href="#51-experimental-setup">5.1 Experimental Setup</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="dynamic-cloud-resource-allocation-considering-demand-uncertainty">Dynamic Cloud Resource Allocation Considering Demand Uncertainty</h1>
+<p>2019 TCC,CCF C类</p>
+<p>看到C类效果这样心里还是有点底，这个用来PK应该是没问题的</p>
+<h2 id="1">1</h2>
+<p>本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。</p>
+<p>贡献可以分为以下部分：</p>
+<ol>
+<li>部署了动态云资源分配方法，解决了在资源预分配和动态分配两阶段的资源调度问题。开发了随机优化方法来将用户需求建模为随机变量，并实现了10%的部署代价提升。</li>
+</ol>
+<h2 id="2-related-work">2 Related work</h2>
+<p>动态资源分配分为两个阶段：</p>
+<ol>
+<li>第一阶段，资源在不考虑用户需求的情况下被分配。</li>
+<li>第二阶段，为了保证QoS，采用on-demand的方式分配资源。</li>
+</ol>
+<p>由于是离散的，因此不能使用凸优化方法，不能保证有全局最优解。</p>
+<p>Robust Cloud Resouce Provisioning，考虑了三个不确定性：demand、price和cloud resource availability</p>
+<ul>
+<li>在第一阶段，预付费资源完成，将特定数量的资源分配给了应用。</li>
+<li>在第二阶段，判定资源是否够用，开始采购on-demand资源</li>
+</ul>
+<p>总体来说该作者列的引文都是关于stochastic programming的</p>
+<h2 id="3-system-model-and-assumptions">3 System model and assumptions</h2>
+<h3 id="31-problem-definition">3.1 Problem Definition</h3>
+<p>为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。</p>
+<p>算法主要将数据库应用与一般网络应用进行区分。(database instnace and computing instance)</p>
+<p>然后进行了一系列的数学符号定义</p>
+<h2 id="4-dynamic-cloud-resource-allocation-algorithm">4 Dynamic Cloud Resource Allocation Algorithm</h2>
+<p>本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。
+第二阶段，将non-deterministic user demand建模成随机变量，来动态分配on-demand的资源。</p>
+<h3 id="41-dcra-flowchart-overview">4.1 DCRA Flowchart Overview</h3>
+<p>在reservation phase，算法会决定满足最细骄傲用户需求的资源，来作为分配预付费资源的依据。</p>
+<p>在dynamic provision phase，DCRA算法会在每一个周期内(15-min)监控用户的实际需求。</p>
+<p>除此之外，对于云服务提供商而言，如果购买了on-demand的机器，它不会在意你是使用了一小时还是几秒钟。因此，较短的动态分配周期并不能帮助减少分配的花费，但是可以帮助减少资源不足的情况，因为它可以尽快启动机器。</p>
+<p>在动态阶段，如果监控平均用户流量$r_{avg}$超过了最低期望流量$r_{min}$，网络服务将处于资源不足的状态，这时就应该启动资源动态分配算法来满足动态的流量需求。输入当前流量，输出期望的on-demand资源数量。</p>
+<h3 id="42-cloud-resource-reservation-optimization">4.2 Cloud Resource Reservation Optimization</h3>
+<p>reserved phase，目标是确保资源在最小代价下满足QoS的最小需求。</p>
+<p>代价函数包括了，DB实例的代价、存储代价、计算实例代价和IO的代价。</p>
+<p>满足的约束是，实例的数量与单位实例能处理流量的乘积，要大于最小的流量估计值。</p>
+<p>这里默认web application request arrival rate服从泊松过程分布，直接用了排队论的公式来联系到达速率、响应时间与CPU占用率之间的关系。</p>
+<p>接下来是一些合法性约束条件，确保后续不会出现非法解</p>
+<h3 id="43-dynamic-cloud-provision-optimization">4.3 Dynamic Cloud Provision Optimization</h3>
+<p>我觉得它这里还是说的不错，流量本身是uncertaint nature，这使得deterministic resource allocation optimization不足以应对现实的情况。</p>
+<p>作者引经据典，指出demand uncertainty can be modeled by a normal distribution。</p>
+<p>作者希望使用stochastic optimization approach，考虑服从正态分布的随机过程。</p>
+<p>最优化的目标optimization variables是on-demand的计算资源和数据库的实例数，以及它们的服务速率来满足更新的请求速率。</p>
+<p>建模的目标式流量的期望值$r_{ave_c}$与$r_{ave_{db}}$及其方差。为了保证满足95%的置信区间，选用两倍的方差。</p>
+<p>同样采用排队论方式建模，来建立请求率与访问时间之间的关系。</p>
+<h2 id="5-performance-analysis">5 Performance Analysis</h2>
+<h3 id="51-experimental-setup">5.1 Experimental Setup</h3>
+<p>用户请求到达率依据排队论建模（2011,Optimal Resource Allocation for Multimedia Cloud Based on Queuing Model）</p>
+<p>reserved instance固定使用一年的合约，on-demand资源使用小时级合约</p>
+<p>测试流量，其中之一为RUBiS流量；另外一个是SPEC。这两个都是benchmark流量。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-03-05</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-hashtags="云资源调度"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-hashtag="云资源调度"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E4%BA%91%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6/">云资源调度</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" class="prev" rel="prev" title="A two-phase cloud resource provisioning algorithm for cost optimization"><i class="fas fa-angle-left fa-fw"></i>A two-phase cloud resource provisioning algorithm for cost optimization</a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
