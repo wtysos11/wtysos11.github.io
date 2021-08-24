@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>分布式系统-CAP理论十二年回顾：规则变了 - 实践出真知</title><meta name="Description" content=""><meta property="og:title" content="分布式系统-CAP理论十二年回顾：规则变了" />
+<meta property="og:description" content="该文的阅读感想 CAP理论断言，最多只能满足数据一致性、可用性、分区容忍性这三要素中的两个。 REF: What is CAP 数据一致性（consistency）：所有" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-03-10T14:21:14+08:00" />
+<meta property="article:modified_time" content="2021-03-10T14:21:14+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="分布式系统-CAP理论十二年回顾：规则变了"/>
+<meta name="twitter:description" content="该文的阅读感想 CAP理论断言，最多只能满足数据一致性、可用性、分区容忍性这三要素中的两个。 REF: What is CAP 数据一致性（consistency）：所有"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/" /><link rel="next" href="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "分布式系统-CAP理论十二年回顾：规则变了",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86\/"
+        },"genre": "posts","keywords": "分布式系统, 学习笔记","wordcount":  2996 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86\/","datePublished": "2021-03-10T14:21:14+08:00","dateModified": "2021-03-10T14:21:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">分布式系统-CAP理论十二年回顾：规则变了</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"><i class="far fa-folder fa-fw"></i>计算机基础</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-10">2021-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2996 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#三选二公式的误导性">三选二公式的误导性</a></li>
+    <li><a href="#acidbase和cap">ACID、BASE和CAP</a>
+      <ul>
+        <li><a href="#acid">ACID</a></li>
+        <li><a href="#cap和延迟的联系">CAP和延迟的联系</a></li>
+      </ul>
+    </li>
+    <li><a href="#cap之惑">CAP之惑</a></li>
+    <li><a href="#管理分区">管理分区</a></li>
+    <li><a href="#哪些操作可以执行">哪些操作可以执行？</a></li>
+    <li><a href="#分区恢复">分区恢复</a></li>
+    <li><a href="#补偿错误">补偿错误</a>
+      <ul>
+        <li><a href="#历史信息引入">历史信息引入</a></li>
+        <li><a href="#补偿性事务">补偿性事务</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p><a href="https://www.infoq.cn/article/cap-twelve-years-later-how-the-rules-have-changed/" target="_blank" rel="noopener noreffer">该文</a>的阅读感想</p>
+</blockquote>
+<p>CAP理论断言，最多只能满足数据一致性、可用性、分区容忍性这三要素中的两个。</p>
+<p><a href="https://www.quora.com/What-Is-CAP-Theorem-1" target="_blank" rel="noopener noreffer">REF: What is CAP</a></p>
+<ul>
+<li>数据一致性（consistency）：所有节点访问同一份最新的数据副本。就是说所有副本之间互相同步，在任何时候保持着同一个状态</li>
+<li>高可用性（availability）：每一个请求最终都会成功。对节点的任何读写请求都不会被拒绝。</li>
+<li>网络容忍性(Network Partition Tolerance)：当网络断开连接的时候，系统能够继续运行。即使某些或者所有的节点都不能够互相通信。一般指的是跨区域的数据库，此时很难保证两个数据库之间相互连接。</li>
+</ul>
+<p>通过显式处理分区情景，系统设计师可以做到优化数据一致性和可用性，进而取得三者的平衡。<em>我自己对这句话的理解是这样的，假设现在存在两个节点N1和N2，所有更新操作都会互相通知，显然可以满足数据一致性C。当两者不能互相连接的时候，有三种情况：1. 两者继续服务，更新数据，此时数据必定不一致，就是放弃了C来换去A，同时维护P；2.N1和N2都不服务，放弃可用性来取得C和P。3. 只有N1服务，此时数据一致性得到部分保留，可用性得到部分保留，同时维护了P。我觉得第三种就是这种所谓的权衡。</em></p>
+<p>作者指出，三选二这样的语句本身是不严谨的。实际上，只有<strong>在分区存在的前提下呈现完美的数据一致性和可用性</strong>这种很少见的情况是CAP理论所不允许出现的。因此在实际设计中有着很多的变通方案和灵活度。</p>
+<h2 id="三选二公式的误导性">三选二公式的误导性</h2>
+<ol>
+<li>分区很少发生，那么在系统不存在分区的情况下没理由去牺牲C和A。</li>
+<li>C和A之间的取舍可以在同一系统中以非常细小的粒度反复发生，每一次的决策可能因为具体的操作，或者牵涉到特定的数据或用户而有所不同。</li>
+<li>这三种性质都可以在程度上衡量，并不是非黑即白的有或者无，可用性是一个百分比，一致性也分很多级别，分区也有不同的定义。</li>
+</ol>
+<p>CAP在大多数时候允许完美的C和A，那在P出现的时候，准备一些策略去处理其影响即可，包括：</p>
+<ol>
+<li>探知分区发生</li>
+<li>进入显式的分区模式以限制某些操作</li>
+<li>启动恢复过程以恢复数据一致性并补偿分区期间发生的错误</li>
+</ol>
+<h2 id="acidbase和cap">ACID、BASE和CAP</h2>
+<p>ACID和BASE分处一致性-可用性分布图谱的两极</p>
+<h3 id="acid">ACID</h3>
+<p>数据库的传统设计思路，注重一致性，写入数据库教材的经典原则。这也是事务transaction的基本性质</p>
+<ul>
+<li>原子性atom：操作要么全部成功，要么全部失败。所有的系统都受惠于原子性，这是没有理由改变的，可以极大简化分区恢复</li>
+<li>一致性consistency：事务不能破坏任何数据库规则，如键的唯一性。（CAP的C仅指单一副本上的一致性，因此是其子集）ACID一致性不能在恢复过程中保持，因此分区恢复的时候要考虑重建一致性。</li>
+<li>隔离性Isolation:数据库允许多个并发事务对其数据进行同时读写和修改的能力。隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。这也是CAP理论的核心，如果系统要求ACID隔离性，那在分区P期间，最多可以在分区的一侧维持操作。事务的可串行性要求全局的通信，因此在分区的情况下不能成立。只有在分区恢复时进行补偿，在分区前后保持一个较弱的正确性定义是可行的。</li>
+<li>持久性Durability：事务处理结束后，对数据的修改就是永久的。牺牲持久性也没有意义。</li>
+</ul>
+<h3 id="cap和延迟的联系">CAP和延迟的联系</h3>
+<p>CAP理论的经典解释是忽略网络延迟的，但实际中延迟和分区密切相关。在操作的间隙，系统需要作出决策：</p>
+<ol>
+<li>取消操作，降低系统可用性。或是</li>
+<li>继续操作，以冒险损失系统一致性为代价</li>
+</ol>
+<p>依靠多次尝试通信来达成一致性，比如Paxos算法或者两阶段事务提交，仅仅是推迟了决策时间。无限期地尝试下去，本身就是选择一致性牺牲可用性的表现。</p>
+<p>从延迟的角度抓住了设计的核心问题：分区两侧是否在无通信的情况下继续操作？</p>
+<p>从这个实用的观察角度导出两条推论：</p>
+<ol>
+<li>分区并不是全体节点的一致见解，因为有的节点检测到分区，有的节点没有</li>
+<li>检测到分区的节点会进入到分区模式，这是优化C和A的核心环节。</li>
+</ol>
+<h2 id="cap之惑">CAP之惑</h2>
+<p>对于可用性和一致性的作用范围的误解比较严重。</p>
+<p>离线模式正在变得越来越重要，比如HTML5的客户端持久化存储特性。这些离线系统在C和A中会更倾向于A，此时就不得不在长时间处于分区状态后进行恢复。</p>
+<p>“一致性的作用范围”其实反映了这样一种观念，即在一定的边界内状态是一直的，但超出了边界就无从谈起。比如在一个主分区内可以保证完备的一致性和可用性，而在分区外服务是不可用的。</p>
+<h2 id="管理分区">管理分区</h2>
+<p>由于基本操作是原子的，因此分区检测一定发生在两个事务之间，然后在分区结束后执行分区恢复来恢复一致性。</p>
+<p>当系统进入分区模式，有两种可行的策略。其一是限制部分操作，因此会削弱可用性；其二是额外记录一些有利于后面分区恢复的操作信息。系统可以通过持续尝试恢复通信来察觉分区何时结束。</p>
+<h2 id="哪些操作可以执行">哪些操作可以执行？</h2>
+<p>决定限制哪些操作，主要取决于系统需要维持哪几项不变性约束。</p>
+<p>对分区两侧跟踪操作历史的最佳方式是使用版本向量，版本向量可以反映操作间的因果依赖关系。向量的元素是（节点, 逻辑时间）数值对，分别对应一个更新了对象的节点和它最后更新的时间。对于同一对象的两个给定的版本 A 和 B，当所有结点的版本向量一致有 A 的时间大于或等于 B 的时间，且至少有一个节点的版本向量有 A 的时间较大，则 A 新于 B。</p>
+<h2 id="分区恢复">分区恢复</h2>
+<p>到了某个时刻，通信恢复，分区结束。
+分区恢复过程中，设计师必须解决两个问题：</p>
+<ol>
+<li>分区两侧的状态最终必须保持一致</li>
+<li>必须补偿分区期间产生的错误</li>
+</ol>
+<p>通常情况，矫正当前状态最简单的解决方法是回退到分区开始时的状态，以特定方式推进分区两侧的一系列操作，并在过程中一直保持一致的状态。
+这样总是会有存在不能自动合并的冲突的情况，比如版本控制系统CVS，如git，就会有需要手动合并分支的时候。
+相反，有些系统用了限制操作的办法来保证冲突总能合并。因此，虽然总的来说冲突问题不可解，但现实中设计师可以选择在分区期间限制使用部分操作，以便系统在恢复的时候能够自动合并状态。如果要实施这种策略，推迟有风险的操作是相对简单的实现方式。
+还有一种办法是让操作可以交换顺序，这种办法最接近于形成一种解决自动状态合并问题的通用框架。<em>但是好像挺复杂的，作者的说法是实现起来没那么容易</em></p>
+<h2 id="补偿错误">补偿错误</h2>
+<p>一般系统在分区恢复期间检查违反情况，修复工作也必须在这段时间内完成。</p>
+<h3 id="历史信息引入">历史信息引入</h3>
+<p>恢复外在错误通常要求知道一些有关外在输出的历史信息。以“喝醉酒打电话”为例，一位老兄不记得自己昨晚喝高了的时候打过几个电话，虽然他第二天白天恢复了正常状态，但通话日志上的记录都还在，其中有些通话很可能是错误的。拨出的电话就是这位老兄的状态（喝高了）的外在影响。而由于这位老兄不记得打过什么电话，也就很难补偿其中可能造成的麻烦。</p>
+<h3 id="补偿性事务">补偿性事务</h3>
+<p>曾经有人正式研究过将补偿性事务作为处理长寿命事务（long-lived transactions）的一种手段 21,22。长时间运行的事务会面临另一种形态的分区决策：是长时间持有锁来保证一致性比较好呢？还是及早释放锁向其他事务暴露未提交的数据，提高并发能力比较好呢？比如在单笔事务中更新所有的员工记录就是一个典型例子。按照一般的方式串行化这笔事务，将导致所有的记录都被锁定，阻止并发。而补偿性事务采取另一种方式，它将大事务拆成多个分别提交的子事务。如果要中止大事务，系统必须发起一笔新的、起纠正作用的事务，逐一撤销所有已经提交的子事务，这笔新事务就是所谓的补偿性事务。</p>
+<p><strong>经验太少，没太看明白</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-03-10</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-title="分布式系统-CAP理论十二年回顾：规则变了" data-hashtags="分布式系统,学习笔记"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-hashtag="分布式系统"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-title="分布式系统-CAP理论十二年回顾：规则变了" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-title="分布式系统-CAP理论十二年回顾：规则变了"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-title="分布式系统-CAP理论十二年回顾：规则变了"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-title="分布式系统-CAP理论十二年回顾：规则变了" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-title="分布式系统-CAP理论十二年回顾：规则变了" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" data-title="分布式系统-CAP理论十二年回顾：规则变了"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">分布式系统</a>,&nbsp;<a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/" class="prev" rel="prev" title="微信面试算法题-最长拼接子序列"><i class="fas fa-angle-left fa-fw"></i>微信面试算法题-最长拼接子序列</a>
+            <a href="/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" class="next" rel="next" title="KMP算法复习">KMP算法复习<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
