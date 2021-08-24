@@ -4,7 +4,21 @@
         <link>http://wtysos11.github.io/tags/%E8%80%83%E7%A0%94/</link>
         <description>考研 - 标签 - 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Sat, 04 Apr 2020 20:15:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%80%83%E7%A0%94/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Tue, 07 Apr 2020 16:11:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%80%83%E7%A0%94/" rel="self" type="application/rss+xml" /><item>
+    <title>数据结构与算法复习</title>
+    <link>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
+    <pubDate>Tue, 07 Apr 2020 16:11:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</guid>
+    <description><![CDATA[原文地址 内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来 数据结构与算法复习 不包括全部内容 基础部分包括大O记号和]]></description>
+</item><item>
+    <title>软件测试复习</title>
+    <link>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</link>
+    <pubDate>Mon, 06 Apr 2020 20:15:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</guid>
+    <description><![CDATA[原文地址 软件测试复习 对大三下学期的软件测试课程进行复习 第一章 计算机软件体系结构 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的]]></description>
+</item><item>
     <title>中山大学考研复试内容复习</title>
     <link>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Sat, 04 Apr 2020 20:15:14 &#43;0800</pubDate>
@@ -17,6 +31,6 @@
     <pubDate>Fri, 03 Apr 2020 20:15:14 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20200403_%E5%A4%8D%E8%AF%95%E8%8B%B1%E8%AF%AD%E7%BF%BB%E8%AF%91%E7%BB%83%E4%B9%A0/</guid>
-    <description><![CDATA[复试英语翻译练习 计划 计划对A类会议的部分论文的概述进行实时翻译（录音），并再写一份答案作为巩固。 会议参考：https://blog.csdn]]></description>
+    <description><![CDATA[原文地址 复试英语翻译练习 计划 计划对A类会议的部分论文的概述进行实时翻译（录音），并再写一份答案作为巩固。 会议参考：https://blog.]]></description>
 </item></channel>
 </rss>
