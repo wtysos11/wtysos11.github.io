@@ -1,14 +1,15 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>所有文章 - 我的全新 Hugo 网站</title>
-        <link>http://example.org/posts/</link>
-        <description>所有文章 | 我的全新 Hugo 网站</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 23 Aug 2021 20:15:14 &#43;0800</lastBuildDate><atom:link href="http://example.org/posts/" rel="self" type="application/rss+xml" /><item>
+        <title>所有文章 - 实践出真知</title>
+        <link>http://wtysos11.github.io/posts/</link>
+        <description>所有文章 | 实践出真知</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Mon, 23 Aug 2021 20:15:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>中山大学考研复试内容复习</title>
-    <link>http://example.org/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</link>
+    <link>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Mon, 23 Aug 2021 20:15:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</guid>
+    <guid>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</guid>
     <description><![CDATA[中山大学考研复试内容复习 原文地址 复试复习以基本概念为主，重点概念为主，偏题怪题一律不考虑。 计算机网络 网络基础 OSI七层模型 OSI七层模型 OS]]></description>
 </item></channel>
 </rss>
