@@ -1,11 +1,9 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>我的全新 Hugo 网站</title>
-        <link>http://example.org/</link>
-        <description>我的全新 Hugo 网站</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 23 Aug 2021 20:15:14 &#43;0800</lastBuildDate>
-            <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
-        <item>
+        <title>考研 - 标签 - 我的全新 Hugo 网站</title>
+        <link>http://example.org/tags/%E8%80%83%E7%A0%94/</link>
+        <description>考研 - 标签 - 我的全新 Hugo 网站</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 23 Aug 2021 20:15:14 &#43;0800</lastBuildDate><atom:link href="http://example.org/tags/%E8%80%83%E7%A0%94/" rel="self" type="application/rss+xml" /><item>
     <title>中山大学考研复试内容复习</title>
     <link>http://example.org/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Mon, 23 Aug 2021 20:15:14 &#43;0800</pubDate>
