@@ -4,7 +4,42 @@
         <link>http://wtysos11.github.io/tags/</link>
         <description>Tags - 标签 - 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Fri, 05 Mar 2021 10:46:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Tue, 09 Mar 2021 14:28:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>考研</title>
+    <link>http://wtysos11.github.io/tags/%E8%80%83%E7%A0%94/</link>
+    <pubDate>Tue, 09 Mar 2021 14:28:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/tags/%E8%80%83%E7%A0%94/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>计算机网络</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+    <pubDate>Tue, 09 Mar 2021 14:28:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>计算机组成</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/</link>
+    <pubDate>Tue, 09 Mar 2021 14:26:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>操作系统</title>
+    <link>http://wtysos11.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <pubDate>Tue, 09 Mar 2021 14:24:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>数据结构</title>
+    <link>http://wtysos11.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+    <pubDate>Tue, 09 Mar 2021 14:21:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>云资源调度</title>
     <link>http://wtysos11.github.io/tags/%E4%BA%91%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6/</link>
     <pubDate>Fri, 05 Mar 2021 10:46:04 &#43;0800</pubDate>
@@ -38,41 +73,6 @@
     <pubDate>Tue, 19 Jan 2021 19:50:04 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/tags/rnn/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>机器学习</title>
-    <link>http://wtysos11.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Sat, 09 Jan 2021 14:14:04 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>深度学习</title>
-    <link>http://wtysos11.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Sat, 09 Jan 2021 14:14:04 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>python</title>
-    <link>http://wtysos11.github.io/tags/python/</link>
-    <pubDate>Sun, 22 Nov 2020 19:20:04 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/tags/python/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>问题解答</title>
-    <link>http://wtysos11.github.io/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/</link>
-    <pubDate>Sun, 22 Nov 2020 19:20:04 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>keras</title>
-    <link>http://wtysos11.github.io/tags/keras/</link>
-    <pubDate>Tue, 08 Sep 2020 20:57:04 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/tags/keras/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
