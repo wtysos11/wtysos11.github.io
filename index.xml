@@ -4,9 +4,16 @@
         <link>http://wtysos11.github.io/</link>
         <description>后端技术博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Sat, 26 Jun 2021 21:13:14 &#43;0800</lastBuildDate>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Thu, 01 Jul 2021 16:34:14 &#43;0800</lastBuildDate>
             <atom:link href="http://wtysos11.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>golang函数参数中接口指针的传递</title>
+    <link>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</link>
+    <pubDate>Thu, 01 Jul 2021 16:34:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</guid>
+    <description><![CDATA[其实是一个很简单的问题，但是如果是之前一直写go的话可能没有意识到指针的本质，就走不出来了。 最近写代码的时候遇到了一个问题：有一个功能需要使]]></description>
+</item><item>
     <title>专利讲座笔记</title>
     <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>
     <pubDate>Sat, 26 Jun 2021 21:13:14 &#43;0800</pubDate>
@@ -14,67 +21,60 @@
     <guid>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</guid>
     <description><![CDATA[专利学习 内容： 专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座 专利基本知识 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念]]></description>
 </item><item>
-    <title>go语言函数传值与指针的相关问题</title>
-    <link>http://wtysos11.github.io/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-    <pubDate>Fri, 04 Jun 2021 16:23:14 &#43;0800</pubDate>
+    <title>Go中nil意义的理解</title>
+    <link>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</link>
+    <pubDate>Mon, 21 Jun 2021 14:28:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-    <description><![CDATA[最近在快速阅读《go语言高级编程》，里面提到Go语言的栈会自动调整大小，所以go程序员是难以关心栈的运行机制。比如说，程序员很难知道局部变量]]></description>
+    <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
+    <description><![CDATA[对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频htt]]></description>
 </item><item>
-    <title>Vagrant如何手动下载官网镜像并导入</title>
-    <link>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</link>
-    <pubDate>Thu, 03 Jun 2021 09:36:14 &#43;0800</pubDate>
+    <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
+    <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
+    <pubDate>Thu, 17 Jun 2021 14:22:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</guid>
-    <description><![CDATA[参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu]]></description>
+    <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
+    <description><![CDATA[今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是]]></description>
 </item><item>
-    <title>记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考</title>
-    <link>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</link>
-    <pubDate>Fri, 09 Apr 2021 09:36:14 &#43;0800</pubDate>
+    <title>邓宁-克鲁格效应</title>
+    <link>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</link>
+    <pubDate>Thu, 17 Jun 2021 10:40:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</guid>
-    <description><![CDATA[http://ita.ee.lbl.gov 这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也]]></description>
+    <guid>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</guid>
+    <description><![CDATA[每次都忘记这个效应叫什么名字，所以还是专门开个issue记录一下。 邓宁-克鲁格效应，按照百科的说法，是一种认知偏差，能力欠缺的人有一种虚幻的]]></description>
 </item><item>
-    <title>统计序列中的逆序对</title>
-    <link>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</link>
-    <pubDate>Wed, 17 Mar 2021 20:07:14 &#43;0800</pubDate>
+    <title>golang中函数如何设置参数默认值</title>
+    <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
+    <pubDate>Sun, 13 Jun 2021 14:50:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</guid>
-    <description><![CDATA[因为好像做过这个题目，所以稍微提一下。最简单的方式就是归并排序 题解 方法分别是归并排序和树状数组。 归并排序 代码来源：https://blog.]]></description>
+    <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
+    <description><![CDATA[参考资料 Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认]]></description>
 </item><item>
-    <title>树状数组、线段树与RMQ</title>
-    <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
-    <pubDate>Wed, 17 Mar 2021 19:57:14 &#43;0800</pubDate>
+    <title>Git分支开发模式学习</title>
+    <link>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
-    <description><![CDATA[区间修改问题常用的三种手段，我觉得还是有必要复习一下。 树状数组 binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数]]></description>
+    <guid>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备 参考资料 segmentationfault official-分支开发工作流 按照官方的分]]></description>
 </item><item>
-    <title>全排列问题与康托编码</title>
-    <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
-    <pubDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</pubDate>
+    <title>golang单元测试整理归纳</title>
+    <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
+    <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
-    <description><![CDATA[leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。 题目采用康托编码的思路。其实就是康托展]]></description>
+    <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
+    <description><![CDATA[本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识 参考资料 Go by example，中文版]]></description>
 </item><item>
-    <title>图的存储方式之前向星与邻接表</title>
-    <link>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</link>
-    <pubDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</pubDate>
+    <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
+    <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
+    <pubDate>Sat, 12 Jun 2021 10:38:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</guid>
-    <description><![CDATA[常用的邻接矩阵和邻接表都挺简单的，就不提了。 这个是ACM版本的前向星，本质就是用数组替换了链表，效果就是更方便一些。 虽然不如十字链表删除方便]]></description>
+    <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
+    <description><![CDATA[遇到问题 这个问题的来源是今天在复习接口的时候遇到了一份代码 package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err]]></description>
 </item><item>
-    <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
-    <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-    <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
+    <title>kubernetes服务：学习ingress与暴露服务简单实验</title>
+    <link>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</link>
+    <pubDate>Sun, 06 Jun 2021 16:30:14 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-    <description><![CDATA[字节笔试题，原题忘记了，但是稍微有些区别 题目 大致意思就是反转。 实现核心就是利用亮点： 开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution]]></description>
-</item><item>
-    <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
-    <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
-    <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
-    <description><![CDATA[今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一]]></description>
+    <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</guid>
+    <description><![CDATA[参考资料： kubernetes ingress实战 Intro to Kube ingress: Set up nginx Ingress in Kubernetes Bare Metal ingress的nip.io相关资料 实验室集群中已经有一个ingress-contro]]></description>
 </item></channel>
 </rss>

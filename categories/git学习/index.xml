@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Git学习 - 分类 - 实践出真知</title>
+        <link>http://wtysos11.github.io/categories/git%E5%AD%A6%E4%B9%A0/</link>
+        <description>Git学习 - 分类 - 实践出真知</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/git%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>Git分支开发模式学习</title>
+    <link>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备 参考资料 segmentationfault official-分支开发工作流 按照官方的分]]></description>
+</item></channel>
+</rss>
