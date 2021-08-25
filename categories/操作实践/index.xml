@@ -18,5 +18,19 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</guid>
     <description><![CDATA[参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu]]></description>
+</item><item>
+    <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
+    <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+    <pubDate>Tue, 13 Oct 2020 12:37:13 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+    <description><![CDATA[后续更新，不一定会记得更新 kubernetes虚拟机多级环境部署与Istio的安装 标签：项目实践 kubernetes istio 计划在三台2C4G的机器上安装kuber]]></description>
+</item><item>
+    <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
+    <link>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+    <pubDate>Mon, 12 Oct 2020 15:44:17 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+    <description><![CDATA[后续更新，我不一定会记得更新过来。 在k8s中上线gatling镜像并在内网发送流量 很多时候我们会面临一个问题，即外网的带宽是有限的，虽然未来]]></description>
 </item></channel>
 </rss>

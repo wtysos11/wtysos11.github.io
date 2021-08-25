@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>kubernetes虚拟机多级环境部署与Istio的安装 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="kubernetes虚拟机多级环境部署与Istio的安装" />
+<meta property="og:description" content="后续更新，不一定会记得更新 kubernetes虚拟机多级环境部署与Istio的安装 标签：项目实践 kubernetes istio 计划在三台2C4G的机器上安装kuber" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-13T12:37:13+08:00" />
+<meta property="article:modified_time" content="2020-10-13T12:37:13+08:00" /><meta property="og:site_name" content="实践出真知" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="kubernetes虚拟机多级环境部署与Istio的安装"/>
+<meta name="twitter:description" content="后续更新，不一定会记得更新 kubernetes虚拟机多级环境部署与Istio的安装 标签：项目实践 kubernetes istio 计划在三台2C4G的机器上安装kuber"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" /><link rel="prev" href="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" /><link rel="next" href="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "kubernetes虚拟机多级环境部署与Istio的安装",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85\/"
+        },"genre": "posts","keywords": "kubernetes, istio, 实验报告","wordcount":  3996 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85\/","datePublished": "2020-10-13T12:37:13+08:00","dateModified": "2020-10-13T12:37:13+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">kubernetes虚拟机多级环境部署与Istio的安装</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/"><i class="far fa-folder fa-fw"></i>操作实践</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3996 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#安装基本软件">安装基本软件</a>
+      <ul>
+        <li><a href="#配置docker">配置docker</a></li>
+        <li><a href="#配置kubectlkubeadmkubelet">配置kubectl、kubeadm、kubelet</a></li>
+        <li><a href="#系统配置">系统配置</a></li>
+      </ul>
+    </li>
+    <li><a href="#下载kubeadm所需镜像">下载kubeadm所需镜像</a>
+      <ul>
+        <li><a href="#从阿里云下载">从阿里云下载</a></li>
+      </ul>
+    </li>
+    <li><a href="#使用kubeadm安装kubernetes集群">使用kubeadm安装kubernetes集群</a>
+      <ul>
+        <li><a href="#安装集群主体">安装集群主体</a></li>
+        <li><a href="#安装flannel">安装flannel</a></li>
+        <li><a href="#连接其他节点">连接其他节点</a></li>
+      </ul>
+    </li>
+    <li><a href="#安装istio">安装istio</a>
+      <ul>
+        <li><a href="#下载">下载</a></li>
+        <li><a href="#安装">安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#部署prometheus和grafana">部署prometheus和grafana</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://github.com/wtysos11/blogWiki/blob/master/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/k8s/kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E6%9C%BA%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.md" target="_blank" rel="noopener noreffer">后续更新</a>，不一定会记得更新</p>
+<h1 id="kubernetes虚拟机多级环境部署与istio的安装">kubernetes虚拟机多级环境部署与Istio的安装</h1>
+<p>标签：项目实践 kubernetes istio</p>
+<p>计划在三台2C4G的机器上安装kubernetes。其中master和slave的系统均为Ubuntu18.04桌面版。（原本想用CentOS的，下载的时候就是这样了，费事改了）</p>
+<p>目前需要在实验室的服务器上进行部署，得了，最终结果也是一样的。</p>
+<p>分为以下几个步骤：</p>
+<ol>
+<li>安装基本软件</li>
+<li>访问谷歌镜像仓库gcr.io</li>
+<li>完成三台机器关于安装kubeadm的相关工作</li>
+<li>安装Istio</li>
+<li>部署相关应用（prometheus、grafana）</li>
+</ol>
+<p>参考文献：</p>
+<ul>
+<li><a href="https://juejin.im/post/6844903908326932493" target="_blank" rel="noopener noreffer">掘金</a></li>
+<li><a href="https://www.cnblogs.com/tylerzhou/p/10971336.html" target="_blank" rel="noopener noreffer">cnblog</a>，这一篇是我后来看到的，写的更好一些。</li>
+</ul>
+<h2 id="安装基本软件">安装基本软件</h2>
+<p>如果使用包管理软件，请务必检查自身的包管理软件为最新。</p>
+<p>以Ubuntu的apt为例，首先请务必使用最新的镜像仓库（最好手动弄一下），然后再执行一遍<code>sudo apt-get update</code>来更新。</p>
+<h3 id="配置docker">配置docker</h3>
+<p>略</p>
+<h3 id="配置kubectlkubeadmkubelet">配置kubectl、kubeadm、kubelet</h3>
+<p>在执行命令之前，请首先使用检查是否能够访问到指定的包。以apt为例，使用<code>apt-cache policy &lt;package&gt;</code>可以检查远程仓库中包的版本。</p>
+<ul>
+<li><code>apt-get install kubectl kubeadm kubelet</code></li>
+</ul>
+<h3 id="系统配置">系统配置</h3>
+<ul>
+<li>关闭防火墙</li>
+<li>关闭SELinux</li>
+<li>关闭swap</li>
+</ul>
+<h2 id="下载kubeadm所需镜像">下载kubeadm所需镜像</h2>
+<h3 id="从阿里云下载">从阿里云下载</h3>
+<p>首先使用<code>kubeadm config images list</code>列出kubeadm所需要的所有镜像</p>
+<pre><code>k8s.gcr.io/kube-apiserver:v1.19.2
+k8s.gcr.io/kube-controller-manager:v1.19.2
+k8s.gcr.io/kube-scheduler:v1.19.2
+k8s.gcr.io/kube-proxy:v1.19.2
+k8s.gcr.io/pause:3.2
+k8s.gcr.io/etcd:3.4.13-0
+k8s.gcr.io/coredns:1.7.0
+</code></pre><p>即所有的系统镜像为v1.19.2版本，pause3.2,etcd3.4.13,coredns1.7.0</p>
+<p><a href="https://juejin.im/post/6844903908326932493" target="_blank" rel="noopener noreffer">这篇博客</a>提供了一个脚本</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#########################################################################</span>
+<span class="c1"># File Name: pull_master_image.sh</span>
+<span class="c1"># Description: pull_master_image.sh</span>
+<span class="c1"># Author: zhangyi</span>
+<span class="c1"># mail: 450575982@qq.com</span>
+<span class="c1"># Created Time: 2019-07-31 21:38:14</span>
+<span class="c1">#########################################################################</span>
+<span class="c1">#!/bin/bash</span>
+<span class="nv">kube_version</span><span class="o">=</span>:v1.19.2
+<span class="nv">kube_images</span><span class="o">=(</span>kube-proxy kube-scheduler kube-controller-manager kube-apiserver<span class="o">)</span>
+<span class="nv">addon_images</span><span class="o">=(</span>etcd:3.4.13-0 coredns:1.7.0 pause:3.2<span class="o">)</span>
+
+<span class="k">for</span> imageName in <span class="si">${</span><span class="nv">kube_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
+  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span> k8s.gcr.io/<span class="nv">$imageName$kube_version</span>
+  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
+<span class="k">done</span>
+
+<span class="k">for</span> imageName in <span class="si">${</span><span class="nv">addon_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
+  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span> k8s.gcr.io/<span class="nv">$imageName</span>
+  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
+<span class="k">done</span>
+</code></pre></div><p>这个脚本应该是没有问题的，有可能因为阿里云那边的容器镜像发生改变导致脚本需要变化，但大体思路是没错的。</p>
+<p>可能的错误信息：</p>
+<ul>
+<li>如果使用<code>sh</code>命令运行此脚本，可能会遇到<code>pullImage.sh: 3: pullImage.sh: Syntax error: &quot;(&quot; unexpected</code>。参考<a href="https://unix.stackexchange.com/questions/253892/syntax-error-unexpected-when-creating-an-array" target="_blank" rel="noopener noreffer">这篇回答</a>，该问题的原因是因为使用<code>sh xx.sh</code>的时候是使用sh shell，是没有数组的。正确的执行方式是<code>bash xx.sh</code>或者如回答中一样使用<code>./xx.sh</code>(需要注意权限)</li>
+</ul>
+<h2 id="使用kubeadm安装kubernetes集群">使用kubeadm安装kubernetes集群</h2>
+<h3 id="安装集群主体">安装集群主体</h3>
+<p>在执行完第一步和第二步之后，可以直接使用kubeadm进行安装：<code>sudo kubeadm init --apiserver-advertise-address=192.168.1.1 --pod-network-cidr=10.244.0.0/16 --token-ttl=0</code>（与之相反，执行<code>kubeadm reset</code>就可以尽量还原<code>kubeadm init</code>或者<code>kubeadm join</code>所带来的影响）</p>
+<p>命令参考：<a href="https://kubernetes.io/zh/docs/reference/setup-tools/kubeadm/kubeadm-init/" target="_blank" rel="noopener noreffer">官方</a>，也可以在命令行下查看。</p>
+<ul>
+<li>apiserver-advertise-address：这个参数指定了监听的API地址。若没有设置，则使用默认网络接口。</li>
+<li>apiserver-bind-port：这个参数指定了API服务器暴露出的端口号，默认是6443。</li>
+<li>pod-network-cidr：规定了pod能够使用的IP地址段。我之前用的是16位子网掩码，但是现在给的子网就是24位掩码，我也不确定使用其他子网能不能行……先保险起见吧。</li>
+<li>kubernetes-version：指定kubeadm安装的kubernetes版本。这个是很重要的，因为默认情况下kubeadm会安装与它版本相同的kubernetes版本，而由于国内的网络问题，每次都需要重新下载一遍镜像，非常的麻烦。如果之后版本使用这个脚本，可以加上<code>--kubernetes-version=v1.19.2</code></li>
+<li>image-repository：默认是&quot;k8s.gcr.io&quot;。我觉得如果修改这个可以不用像之前那样从阿里云下载下来后手动tag，不过没有尝试。</li>
+<li>token-ttl：令牌被删除前的时间，默认是24h。kubeadm初始化完毕后会生成一个令牌，让其他节点能够加入集群，过时之后这个令牌会自动删除。如果设置为0之后令牌就永不过期。</li>
+</ul>
+<p>这一步的难点在于如何设置pod-network-cidr，参数的<a href="https://blog.csdn.net/shida_csdn/article/details/104334372" target="_blank" rel="noopener noreffer">作用</a>。根据<a href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/" target="_blank" rel="noopener noreffer">官方教程</a>的说法，Pod网络与任何主机网络不得有重叠。但是目前我看到的很多教程都是在主机局域网络下构建的。比如说三台主机都在<code>192.168.1.1/16</code>子网，而pod网络也在同样的子网下。</p>
+<p>这个参数的设置似乎与所使用的CNI有关系：</p>
+<ul>
+<li><a href="https://coreos.com/flannel/docs/latest/kubernetes.html" target="_blank" rel="noopener noreffer">flannel</a>，要求的参数为<code>--pod-network-cidr=10.244.0.0/16</code></li>
+<li><a href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart" target="_blank" rel="noopener noreffer">calico</a>，要求的参数为<code>--pod-network-cidr=192.168.0.0/16</code></li>
+</ul>
+<p>本文采用flannel，一个很重要的原因是因为服务器的子网与pod的子网部分重叠，可能存在风险，以及flannel似乎更容易部署一些。</p>
+<p>产生的日志：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">stack@workflow-1:~/k8sTest$ sudo kubeadm init --apiserver-advertise-address<span class="o">=</span>192.168.1.1 --pod-network-cidr<span class="o">=</span>10.244.0.0/16 --token-ttl<span class="o">=</span><span class="m">0</span>
+W1012 19:18:16.455833   <span class="m">86405</span> configset.go:348<span class="o">]</span> WARNING: kubeadm cannot validate component configs <span class="k">for</span> API groups <span class="o">[</span>kubelet.config.k8s.io kubeproxy.config.k8s.io<span class="o">]</span>
+<span class="o">[</span>init<span class="o">]</span> Using Kubernetes version: v1.19.2
+<span class="o">[</span>preflight<span class="o">]</span> Running pre-flight checks
+<span class="o">[</span>preflight<span class="o">]</span> Pulling images required <span class="k">for</span> setting up a Kubernetes cluster
+<span class="o">[</span>preflight<span class="o">]</span> This might take a minute or two, depending on the speed of your internet connection
+<span class="o">[</span>preflight<span class="o">]</span> You can also perform this action in beforehand using <span class="s1">&#39;kubeadm config images pull&#39;</span>
+<span class="o">[</span>certs<span class="o">]</span> Using certificateDir folder <span class="s2">&#34;/etc/kubernetes/pki&#34;</span>
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;ca&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> apiserver serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local workflow-1<span class="o">]</span> and IPs <span class="o">[</span>10.96.0.1 192.168.1.1<span class="o">]</span>
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver-kubelet-client&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;front-proxy-ca&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;front-proxy-client&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/ca&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/server&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> etcd/server serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>localhost workflow-1<span class="o">]</span> and IPs <span class="o">[</span>192.168.1.1 127.0.0.1 ::1<span class="o">]</span>
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/peer&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> etcd/peer serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>localhost workflow-1<span class="o">]</span> and IPs <span class="o">[</span>192.168.1.1 127.0.0.1 ::1<span class="o">]</span>
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/healthcheck-client&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver-etcd-client&#34;</span> certificate and key
+<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;sa&#34;</span> key and public key
+<span class="o">[</span>kubeconfig<span class="o">]</span> Using kubeconfig folder <span class="s2">&#34;/etc/kubernetes&#34;</span>
+<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;admin.conf&#34;</span> kubeconfig file
+<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;kubelet.conf&#34;</span> kubeconfig file
+<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;controller-manager.conf&#34;</span> kubeconfig file
+<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;scheduler.conf&#34;</span> kubeconfig file
+<span class="o">[</span>kubelet-start<span class="o">]</span> Writing kubelet environment file with flags to file <span class="s2">&#34;/var/lib/kubelet/kubeadm-flags.env&#34;</span>
+<span class="o">[</span>kubelet-start<span class="o">]</span> Writing kubelet configuration to file <span class="s2">&#34;/var/lib/kubelet/config.yaml&#34;</span>
+<span class="o">[</span>kubelet-start<span class="o">]</span> Starting the kubelet
+<span class="o">[</span>control-plane<span class="o">]</span> Using manifest folder <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>
+<span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-apiserver&#34;</span>
+<span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-controller-manager&#34;</span>
+<span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-scheduler&#34;</span>
+<span class="o">[</span>etcd<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="nb">local</span> etcd in <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>
+<span class="o">[</span>wait-control-plane<span class="o">]</span> Waiting <span class="k">for</span> the kubelet to boot up the control plane as static Pods from directory <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>. This can take up to 4m0s
+<span class="o">[</span>apiclient<span class="o">]</span> All control plane components are healthy after 26.502830 seconds
+<span class="o">[</span>upload-config<span class="o">]</span> Storing the configuration used in ConfigMap <span class="s2">&#34;kubeadm-config&#34;</span> in the <span class="s2">&#34;kube-system&#34;</span> Namespace
+<span class="o">[</span>kubelet<span class="o">]</span> Creating a ConfigMap <span class="s2">&#34;kubelet-config-1.19&#34;</span> in namespace kube-system with the configuration <span class="k">for</span> the kubelets in the cluster
+<span class="o">[</span>upload-certs<span class="o">]</span> Skipping phase. Please see --upload-certs
+<span class="o">[</span>mark-control-plane<span class="o">]</span> Marking the node workflow-1 as control-plane by adding the label <span class="s2">&#34;node-role.kubernetes.io/master=&#39;&#39;&#34;</span>
+<span class="o">[</span>mark-control-plane<span class="o">]</span> Marking the node workflow-1 as control-plane by adding the taints <span class="o">[</span>node-role.kubernetes.io/master:NoSchedule<span class="o">]</span>
+<span class="o">[</span>bootstrap-token<span class="o">]</span> Using token: a8svth.m8zu4mdj60m6zjzd
+<span class="o">[</span>bootstrap-token<span class="o">]</span> Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow Node Bootstrap tokens to get nodes
+<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order <span class="k">for</span> nodes to get long term certificate credentials
+<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow certificate rotation <span class="k">for</span> all node client certificates in the cluster
+<span class="o">[</span>bootstrap-token<span class="o">]</span> Creating the <span class="s2">&#34;cluster-info&#34;</span> ConfigMap in the <span class="s2">&#34;kube-public&#34;</span> namespace
+<span class="o">[</span>kubelet-finalize<span class="o">]</span> Updating <span class="s2">&#34;/etc/kubernetes/kubelet.conf&#34;</span> to point to a rotatable kubelet client certificate and key
+<span class="o">[</span>addons<span class="o">]</span> Applied essential addon: CoreDNS
+<span class="o">[</span>addons<span class="o">]</span> Applied essential addon: kube-proxy
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p <span class="nv">$HOME</span>/.kube
+  sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+  sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+
+You should now deploy a pod network to the cluster.
+Run <span class="s2">&#34;kubectl apply -f [podnetwork].yaml&#34;</span> with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.1.1:6443 --token a8svth.m8zu4mdj60m6zjzd <span class="se">\
+</span><span class="se"></span>    --discovery-token-ca-cert-hash sha256:a98361e5d879fe14734236285b8ad28d0a4d3d1470bd424194011bee41ee8c9e 
+</code></pre></div><p>在看到如上的命令之后，需要按照它的说明执行这三条命令，其作用是将kubectl所需要的配置文件拉到用户目录下并设置访问权限。（不执行的话kubectl是无法正常工作的）</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p <span class="nv">$HOME</span>/.kube
+sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</code></pre></div><p>之后，执行<code>kubectl get pods --all-namespaces</code>(或者<code>-n=kube-system</code>)，就可以看到kubernetes的系统节点了。</p>
+<pre><code>NAME                                 READY   STATUS    RESTARTS   AGE
+coredns-f9fd979d6-7m7bb              1/1     Running   0          2m26s
+coredns-f9fd979d6-9xr4b              1/1     Running   0          2m26s
+etcd-workflow-1                      1/1     Running   0          2m30s
+kube-apiserver-workflow-1            1/1     Running   0          2m30s
+kube-controller-manager-workflow-1   1/1     Running   0          2m30s
+kube-proxy-pdpkp                     1/1     Running   0          2m26s
+kube-scheduler-workflow-1            1/1     Running   0          2m30s
+</code></pre><p>这里的CoreDNS需要在安装完CNI插件之后才会正常运行，Pending是正常情况。这里是Running，我觉得是因为我第一次的时候没有删除干净。</p>
+<h3 id="安装flannel">安装flannel</h3>
+<p>参考<a href="https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md" target="_blank" rel="noopener noreffer">flannel官方教程</a>，对于1.7版本以上的kubernetes，可以直接用<code>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</code>。当然，国内网络，懂得都懂，我就基本上没有直连成功过。直接手动弄下来搞也可以。</p>
+<p>日志记录</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">stack@workflow-1:~/k8sTest$ kubectl apply -f kube-flannel.yml 
+podsecuritypolicy.policy/psp.flannel.unprivileged created
+Warning: rbac.authorization.k8s.io/v1beta1 ClusterRole is deprecated in v1.17+, unavailable in v1.22+<span class="p">;</span> use rbac.authorization.k8s.io/v1 ClusterRole
+clusterrole.rbac.authorization.k8s.io/flannel created
+Warning: rbac.authorization.k8s.io/v1beta1 ClusterRoleBinding is deprecated in v1.17+, unavailable in v1.22+<span class="p">;</span> use rbac.authorization.k8s.io/v1 ClusterRoleBinding
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds created
+</code></pre></div><p>可能出现的问题：</p>
+<ul>
+<li>flannel需要镜像<code>quay.io/coreos/flannel:v0.13.0-rc2</code>，之前的时候我的虚拟机是无法直接从<code>quay.io</code>下拉镜像，因此有可能需要曲线救国。</li>
+</ul>
+<h3 id="连接其他节点">连接其他节点</h3>
+<p>将主节点装完之后就可以安装其他节点了（也可以在之前一起安装）。其他节点的前置条件需要像主节点一样，包括系统配置、软件安装等等。</p>
+<p>比较麻烦的一点是从节点也需要安装那一些镜像，如果我没有理解错的话。这就需要很久了……</p>
+<p>命令就是之前弹出来的那个</p>
+<pre><code>sudo kubeadm join 192.168.1.1:6443 --token a8svth.m8zu4mdj60m6zjzd \
+    --discovery-token-ca-cert-hash sha256:a98361e5d879fe14734236285b8ad28d0a4d3d1470bd424194011bee41ee8c9e 
+</code></pre><p>可能出现的问题：</p>
+<ul>
+<li>如果安装过比较多次的话，会发现一些奇怪的报错信息，比如端口被占用之类的。请记得执行<code>kubeadm reset</code></li>
+</ul>
+<h2 id="安装istio">安装istio</h2>
+<p>原本计划是用helm来安装istio，但是最新版本的<a href="https://istio.io/latest/zh/docs/setup/install/helm/" target="_blank" rel="noopener noreffer">官方文档</a>弃用了helm。</p>
+<h3 id="下载">下载</h3>
+<p>首先到官方给的<a href="https://github.com/istio/istio/releases/tag/1.7.3" target="_blank" rel="noopener noreffer">发布页面</a>下载（这个链接是1.7.3版本）。</p>
+<p>然后使用<code>tar -zxvf</code>解压</p>
+<h3 id="安装">安装</h3>
+<p>按照官方说明<a href="https://istio.io/latest/zh/docs/setup/getting-started/#download" target="_blank" rel="noopener noreffer">文档</a></p>
+<ul>
+<li>把文件夹下的<code>istioctl</code>所在目录加入PATH变量之中。（我没有把istioctl丢到<code>/usr/bin</code>下，因为它这个安装过程有可能要用到其他目录中的文件）</li>
+<li>执行<code>istioctl manifest install --set profile=demo</code></li>
+</ul>
+<pre><code>stack@workflow-1:~/k8sTest/istio-1.7.3/bin$ istioctl manifest install --set profile=demo
+Detected that your cluster does not support third party JWT authentication. Falling back to less secure first party JWT. See https://istio.io/docs/ops/best-practices/security/#configure-third-party-service-account-tokens for details.
+✔ Istio core installed                                                               
+✔ Istiod installed                                                                   
+✔ Egress gateways installed                                                          
+✔ Ingress gateways installed                                                         
+✔ Installation complete 
+</code></pre><p>结果：</p>
+<pre><code>stack@workflow-1:~/k8sTest/istio-1.7.3/bin$ kubectl get pods -n=istio-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+istio-egressgateway-8556f8c8dc-rj922    1/1     Running   0          2m42s
+istio-ingressgateway-589d868684-pf7g4   1/1     Running   0          2m42s
+istiod-86d65b6959-lch8x                 1/1     Running   0          3m54s
+stack@workflow-1:~/k8sTest/istio-1.7.3/bin$ kubectl get svc -n istio-system
+NAME                   TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                                                                      AGE
+istio-egressgateway    ClusterIP      10.108.56.199   &lt;none&gt;        80/TCP,443/TCP,15443/TCP                                                     3m7s
+istio-ingressgateway   LoadBalancer   10.96.27.251    &lt;pending&gt;     15021:32083/TCP,80:31588/TCP,443:31926/TCP,31400:30951/TCP,15443:31996/TCP   3m7s
+istiod                 ClusterIP      10.111.3.121    &lt;none&gt;        15010/TCP,15012/TCP,443/TCP,15014/TCP,853/TCP                                4m20s
+</code></pre><p>这个步骤真的是比我当时（0.2.x）要简单多了。我记得我试了好多次都没有成功，都有心理阴影了。才过了一年多就有了这么大的变化，软件行业真的是日新月异啊。</p>
+<h2 id="部署prometheus和grafana">部署prometheus和grafana</h2>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/ac8853927528" target="_blank" rel="noopener noreffer">简书-k8s安装prometheus+grafana</a></li>
+<li><a href="https://github.com/prometheus/prometheus" target="_blank" rel="noopener noreffer">prometheus-github</a></li>
+<li><a href="https://juejin.im/post/6844903908251451406" target="_blank" rel="noopener noreffer">掘金-k8s监控 安装prometheus</a></li>
+<li><a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/" target="_blank" rel="noopener noreffer">promethues官方-配置文件规范</a></li>
+</ul>
+<p>istio之前有一套prometheus的系统，因此我一开始并没有考虑安装。但是在<a href="https://istio.io/latest/docs/ops/integrations/prometheus/" target="_blank" rel="noopener noreffer">最新版本1.7</a>中它并没有自带了，只是在addon里面加上了一个prometheus的样本用于验证（不过似乎也够用？）。</p>
+<p><a href="https://github.com/istio/istio/tree/master/samples/addons" target="_blank" rel="noopener noreffer">istio/addon</a></p>
+<p>可以直接使用<code>kubectl apply -f samples/addons</code>进行安装。当然如果之前是自定义安装istioctl的话那这一步就需要看一下官方文档怎么说了。</p>
+<p>可能出现的问题：</p>
+<ul>
+<li>在K8s 1.19版本情况下可能会出现如<a href="https://github.com/istio/istio/issues/27417" target="_blank" rel="noopener noreffer">issues</a>所示的情况，因为某些未知的原因k8s无法识别出在同一个文件内配置的配置项，因此必须要执行两次<code>kubectl apply -f kiali.yaml</code></li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-10-13</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-hashtags="kubernetes,istio,实验报告"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-hashtag="kubernetes"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kubernetes/">kubernetes</a>,&nbsp;<a href="/tags/istio/">istio</a>,&nbsp;<a href="/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">实验报告</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" class="prev" rel="prev" title="kubernetes虚拟机多级环境部署与Istio的安装"><i class="fas fa-angle-left fa-fw"></i>kubernetes虚拟机多级环境部署与Istio的安装</a>
+            <a href="/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" class="next" rel="next" title="如何让pandas根据指定列的指进行partition">如何让pandas根据指定列的指进行partition<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

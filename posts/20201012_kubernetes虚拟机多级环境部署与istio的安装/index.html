@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>kubernetes虚拟机多级环境部署与Istio的安装 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="kubernetes虚拟机多级环境部署与Istio的安装" />
+<meta property="og:description" content="后续更新，我不一定会记得更新过来。 在k8s中上线gatling镜像并在内网发送流量 很多时候我们会面临一个问题，即外网的带宽是有限的，虽然未来" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-10-12T15:44:17+08:00" />
+<meta property="article:modified_time" content="2020-10-12T15:44:17+08:00" /><meta property="og:site_name" content="实践出真知" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="kubernetes虚拟机多级环境部署与Istio的安装"/>
+<meta name="twitter:description" content="后续更新，我不一定会记得更新过来。 在k8s中上线gatling镜像并在内网发送流量 很多时候我们会面临一个问题，即外网的带宽是有限的，虽然未来"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" /><link rel="prev" href="http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" /><link rel="next" href="http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "kubernetes虚拟机多级环境部署与Istio的安装",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85\/"
+        },"genre": "posts","keywords": "kubernetes, 实验报告","wordcount":  2195 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85\/","datePublished": "2020-10-12T15:44:17+08:00","dateModified": "2020-10-12T15:44:17+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item language" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                        <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" selected>简体中文</option></select>
+                    </a><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">简体中文<i class="fas fa-chevron-right fa-fw"></i>
+                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" selected>简体中文</option></select>
+                </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">kubernetes虚拟机多级环境部署与Istio的安装</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/"><i class="far fa-folder fa-fw"></i>操作实践</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-12">2020-10-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2195 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#镜像构造">镜像构造</a>
+      <ul>
+        <li><a href="#初始镜像构造">初始镜像构造</a></li>
+        <li><a href="#进阶流量压力测试镜像构造">进阶流量压力测试镜像构造</a></li>
+        <li><a href="#动态挂载">动态挂载</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p><a href="https://github.com/wtysos11/blogWiki/blob/master/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/k8s/%E5%9C%A8k8s%E4%B8%AD%E4%B8%8A%E7%BA%BFgatling%E9%95%9C%E5%83%8F%E5%B9%B6%E5%9C%A8%E5%86%85%E7%BD%91%E5%8F%91%E9%80%81%E6%B5%81%E9%87%8F.md" target="_blank" rel="noopener noreffer">后续更新</a>，我不一定会记得更新过来。</p>
+<h1 id="在k8s中上线gatling镜像并在内网发送流量">在k8s中上线gatling镜像并在内网发送流量</h1>
+<p>很多时候我们会面临一个问题，即外网的带宽是有限的，虽然未来有扩容的可能，但是短时间内也不能直接扩容，而测试本身是无限的。因此，如果不能够在内网下直接发包进行测试，那由于带宽限制打不到较大的压力，对于一些容器的测试很可能就达不到效果。</p>
+<p>因此我们需要在内网有一个能够配置的压力测试容器，目前选定了gatling，因为其功能比较强大，而且安装很方便。</p>
+<h2 id="镜像构造">镜像构造</h2>
+<h3 id="初始镜像构造">初始镜像构造</h3>
+<p>虽然之前已经做了<code>ubuntu</code>的镜像，并且可以使用<code>apt-get install</code>来安装gatling，但是这种方式安装后有些不太会用，似乎更多是作为一个插件存在而不是独立存在的软件。</p>
+<p>我还是选择了自己最熟悉的方式，直接从官网上下载了开源版本的standalone gatling.zip，解压后将目录重命名为gatling，Dockerfile如下:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="k">FROM</span><span class="s"> ubuntu:18.04</span><span class="err">
+</span><span class="err"></span><span class="k">MAINTAINER</span><span class="s"> wtysos11 &#34;wtysos11@gmail.com&#34;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">COPY</span> sources.list ./<span class="err">
+</span><span class="err"></span><span class="k">ADD</span> gatling ./gatling<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> rm /etc/apt/sources.list<span class="se">\
+</span><span class="se"></span>  <span class="o">&amp;&amp;</span> mv sources.list /etc/apt/sources.list<span class="se">\
+</span><span class="se"></span>  <span class="o">&amp;&amp;</span> apt-get update <span class="se">\ </span><span class="err">
+</span><span class="err"></span>  <span class="o">&amp;&amp;</span> apt-get install -y openjdk-8-jdk scala <span class="err">
+</span><span class="err"></span>  <span class="c1">#&amp;&amp; apt-get install -y gatling</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;/bin/bash&#34;</span><span class="p">]</span><span class="err">
+</span></code></pre></div><p>sources.list为清华的apt镜像，为了加速；gatling可以在java8下运行，必须要安装scala（其实我个人觉得只安装scala就够了，保险起见）</p>
+<p>操作完之后执行<code>docker build . -t ubuntu-wtynettest:0.0.2</code>构造镜像，然后执行<code>docker run --name test -d  ubuntu-wtynettest:0.0.2  sleep infinity</code>。再使用<code>docker exec -it test bash</code></p>
+<p>经过测试，gatling软件能够正常运行并且访问外界指定端口。如果我没有记错，k8s中的pod暴露端口主要是为了转发流量，那容器自己往外发流量应该是不用暴露端口的，因此直接上k8s是没有问题的。</p>
+<h3 id="进阶流量压力测试镜像构造">进阶流量压力测试镜像构造</h3>
+<p>下面的任务为：</p>
+<ol>
+<li>在镜像文件中配置环境变量，该变量最好是能够在<code>docker build</code>的时候修改而不是要手动改写Docerfile，这样后续写bash脚本之类的会比较方便。（如果能够实时传入就更好了，不过这要将gatling作为插件实现，改写太多了，计划放在第三步）</li>
+<li>删除原有系统中的脚本文件，并上传指定的脚本文件<code>test.scala</code>。这个脚本文件要能够读取环境变量来替换指定的值。</li>
+<li>命令直接设为指定的发包命令。</li>
+</ol>
+<h4 id="环境变量配置">环境变量配置</h4>
+<p>我看了一下，使用<code>docker build</code>加参数的方式似乎并不常见，而且其他方式也挺麻烦的。</p>
+<p>因此我直接使用了<code>ENV Key=value</code>的形式（如果value中间有空格，两边要加上双引号）</p>
+<h4 id="脚本读取环境变量">脚本读取环境变量</h4>
+<p>scala脚本是可以读取到环境变量的，方法挺多的。目前选择的是直接使用<code>sys.env[&quot;EnvVar&quot;]</code>，此时需要环境中能够读取到<code>$EnvVar</code>，不需要引入任何库。</p>
+<p>这个方法的缺点是如果环境中没有设置环境变量会报错，不过这也不是什么大问题，毕竟在docker内部。</p>
+<p>接下来就很简单了，将这个值作为方法的参数进行传递，然后把脚本送到指定的位置。</p>
+<h4 id="命令配置">命令配置</h4>
+<p>由于standalone版本的gatling是使用<code>gatling.sh</code>进行执行的，因此我预先写了一个输入文件进行重定向（其实就是一个只有<code>1</code>+回车的文件）。如此，容器的命令配置完毕。</p>
+<p>最终的Dockerfile：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="k">FROM</span><span class="s"> ubuntu:18.04</span><span class="err">
+</span><span class="err"></span><span class="k">MAINTAINER</span><span class="s"> wtysos11 &#34;wtysos11@gmail.com&#34;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">ENV</span> <span class="nv">Test</span><span class="o">=</span><span class="s2">&#34;http://192.168.0.173:19001&#34;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">COPY</span> sources.list ./<span class="err">
+</span><span class="err"></span><span class="k">COPY</span> nettest.scala ./<span class="err">
+</span><span class="err"></span><span class="k">COPY</span> command.txt ./<span class="err">
+</span><span class="err"></span><span class="k">ADD</span> gatling ./gatling<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> rm /etc/apt/sources.list<span class="se">\
+</span><span class="se"></span>  <span class="o">&amp;&amp;</span> mv sources.list /etc/apt/sources.list<span class="se">\
+</span><span class="se"></span>  <span class="o">&amp;&amp;</span> rm /gatling/user-files/simulations/computerdatabase/ -R <span class="se">\
+</span><span class="se"></span>  <span class="o">&amp;&amp;</span> mv nettest.scala /gatling/user-files/simulations/nettest.scala <span class="se">\
+</span><span class="se"></span>  <span class="o">&amp;&amp;</span> apt-get update <span class="se">\ </span><span class="err">
+</span><span class="err"></span>  <span class="o">&amp;&amp;</span> apt-get install -y openjdk-8-jdk <span class="err">
+</span><span class="err"></span>  <span class="c1">#&amp;&amp; apt-get install gatling</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;/gatling/bin/gatling.sh &lt; command.txt&#34;</span><span class="p">]</span><span class="err">
+</span></code></pre></div><p>其中移除gatling内系统自带脚本的目的是为了让用户脚本一定排在第一位。由于版本不同，系统自带脚本可能有所区别，需要注意。</p>
+<p>下面的文件：</p>
+<ul>
+<li>command.txt，内含<code>1</code>+空格，表示输入给<code>gatling.sh</code>的内容</li>
+<li>nettest.scala，一个可以读取<code>$Test</code>作为目标地址的gatling脚本</li>
+<li>gatling，解压官方包gatling.zip后的文件夹</li>
+</ul>
+<p>执行测试部分命令：</p>
+<ul>
+<li><code>docker build . -t ubuntu-wtynettest:0.0.3</code></li>
+<li><code>docker run --name test -d ubuntu-wtynettest:0.0.3 sleep infinity</code></li>
+<li><code>docker exec -it test bash</code></li>
+</ul>
+<p><del>测试完毕之后就直接挂载在kubernetes上了，还是挺不错的。</del> 有一个问题，我发现如果使用这个DockerFile的CMD命令会导致gatling报错，错误原因是输入了一个空值给description，也就是command.txt可能是有问题的……但我进去执行又是正常的。因为我赶时间，所以是选择使用<code>sleep infinity</code>代替了原来的镜像，手动进入这个容器内去执行代码，从而实现在k8s集群中发送流量的操作。之后看有没有时间继续完善。</p>
+<h3 id="动态挂载">动态挂载</h3>
+<p>上面的实现方案还是有一个问题，即没有办法灵活控制gatling，只能够每次生成一个实例在挂载到k8s上，非常麻烦。而且如果不小心生成了两个实例，那就是双倍的流量，可能会造成一些问题。</p>
+<p>我在思考有没有一种方式，能够将一个gatling程序传到k8s集群中，只需要通过网络端口向其上传配置文件、发送命令就可以调用指定的压力测试脚本。</p>
+<p>我的实现思路需要用scala做一个简易的服务器，而网上的思路似乎有些不太一样。</p>
+<ul>
+<li><a href="https://github.com/denvazh/gatling" target="_blank" rel="noopener noreffer">gatling docker image</a>是github上一个gatling的docker镜像，通过挂载配置文件能够在本地的docker上进行压力测试。</li>
+<li><a href="https://movile.blog/distributed-load-testing-with-gatling-and-kubernetes/" target="_blank" rel="noopener noreffer">Distributed load testing with Gatling and Kubernetes</a>这个是用gatling docker kubernetes关键词搜索出来的文章，似乎和我的思路比较类似。</li>
+</ul>
+<p>不过有没有必要作出这个项目也是一个问题，毕竟gatling中仍然存在一些问题没有弄清楚，比如atOnceUser和constantUser等测试方式之间的选择等。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-10-12</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-hashtags="kubernetes,实验报告"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-hashtag="kubernetes"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" data-title="kubernetes虚拟机多级环境部署与Istio的安装"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/kubernetes/">kubernetes</a>,&nbsp;<a href="/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">实验报告</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/" class="prev" rel="prev" title="Keras中的Embedding层是如何工作的"><i class="fas fa-angle-left fa-fw"></i>Keras中的Embedding层是如何工作的</a>
+            <a href="/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" class="next" rel="next" title="kubernetes虚拟机多级环境部署与Istio的安装">kubernetes虚拟机多级环境部署与Istio的安装<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
