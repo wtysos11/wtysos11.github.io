@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考 - 实践出真知</title><meta name="Description" content=""><meta property="og:title" content="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考" />
+<meta property="og:description" content="http://ita.ee.lbl.gov 这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-09T09:36:14+08:00" />
+<meta property="article:modified_time" content="2021-04-09T09:36:14+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考"/>
+<meta name="twitter:description" content="http://ita.ee.lbl.gov 这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也"/>
+<meta name="application-name" content="实践出真知">
+<meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/" /><link rel="next" href="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wtysos11.github.io\/posts\/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83\/"
+        },"genre": "posts","keywords": "实验报告","wordcount":  371 ,
+        "url": "http:\/\/wtysos11.github.io\/posts\/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83\/","datePublished": "2021-04-09T09:36:14+08:00","dateModified": "2021-04-09T09:36:14+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Carlo Wu"},"author": {
+                "@type": "Person",
+                "name": "Carlo Wu"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="实践出真知">实践出真知</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="实践出真知">实践出真知</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%A7%91%E7%A0%94%E5%AE%9E%E9%AA%8C/"><i class="far fa-folder fa-fw"></i>科研实验</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-04-09">2021-04-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 371 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><div class="content" id="content"><p><a href="http://ita.ee.lbl.gov" target="_blank" rel="noopener noreffer">http://ita.ee.lbl.gov</a>
+这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也没有办法连上。
+然后我又通过google搜索了一下，发现可以找得到，但是网址是<a href="ftp://ita.ee.lbl.gov" target="_blank" rel="noopener noreffer">ftp版本</a>的。虽然打不开，但是快照是连的上的，说明服务器是正常的。
+我又试了一下winscp连接，然后不行……</p>
+<p>这时我注意到了该组织维护的另外一个<a href="https://ee.lbl.gov/nrg.html" target="_blank" rel="noopener noreffer">网站</a>，我当时就想着说发个邮件问一下。不过发邮件前，我问了一下师兄。师兄想了一下，让我试着用Filezilla直接开。
+我试了一下，在host里输入ita.ee.lbl.gov快速连接，然后就开了……
+开了……
+QAQ我忙活了一上午！！！
+所以winscp和filezilla以及windows自带的FTP有什么区别吗，为什么其他两个连不上，但是就filezilla可以呢，是默认参数的区别吗？</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-04-09</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考" data-hashtags="实验报告"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-hashtag="实验报告"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" data-title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考"><i class="fab fa-evernote fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/">实验报告</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/" class="prev" rel="prev" title="统计序列中的逆序对"><i class="fas fa-angle-left fa-fw"></i>统计序列中的逆序对</a>
+            <a href="/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" class="next" rel="next" title="Vagrant如何手动下载官网镜像并导入">Vagrant如何手动下载官网镜像并导入<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

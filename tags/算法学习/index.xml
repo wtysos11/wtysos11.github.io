@@ -4,7 +4,49 @@
         <link>http://wtysos11.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
         <description>算法学习 - 标签 - 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Thu, 11 Mar 2021 15:09:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Wed, 17 Mar 2021 20:07:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>统计序列中的逆序对</title>
+    <link>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</link>
+    <pubDate>Wed, 17 Mar 2021 20:07:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</guid>
+    <description><![CDATA[因为好像做过这个题目，所以稍微提一下。最简单的方式就是归并排序 题解 方法分别是归并排序和树状数组。 归并排序 代码来源：https://blog.]]></description>
+</item><item>
+    <title>树状数组、线段树与RMQ</title>
+    <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
+    <pubDate>Wed, 17 Mar 2021 19:57:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
+    <description><![CDATA[区间修改问题常用的三种手段，我觉得还是有必要复习一下。 树状数组 binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数]]></description>
+</item><item>
+    <title>全排列问题与康托编码</title>
+    <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
+    <pubDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
+    <description><![CDATA[leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。 题目采用康托编码的思路。其实就是康托展]]></description>
+</item><item>
+    <title>图的存储方式之前向星与邻接表</title>
+    <link>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</link>
+    <pubDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</guid>
+    <description><![CDATA[常用的邻接矩阵和邻接表都挺简单的，就不提了。 这个是ACM版本的前向星，本质就是用数组替换了链表，效果就是更方便一些。 虽然不如十字链表删除方便]]></description>
+</item><item>
+    <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
+    <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[字节笔试题，原题忘记了，但是稍微有些区别 题目 大致意思就是反转。 实现核心就是利用亮点： 开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution]]></description>
+</item><item>
+    <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
+    <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
+    <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
+    <description><![CDATA[今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一]]></description>
+</item><item>
     <title>KMP算法复习</title>
     <link>http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Thu, 11 Mar 2021 15:09:14 &#43;0800</pubDate>
