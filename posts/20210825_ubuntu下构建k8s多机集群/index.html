@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>ubuntu下构建k8s多机集群 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="ubuntu下构建k8s多机集群" />
+        <title>华为云服务器ubuntu环境构建k8s多机集群 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="华为云服务器ubuntu环境构建k8s多机集群" />
 <meta property="og:description" content="博客的构建记录" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" /><meta property="article:section" content="posts" />
@@ -13,7 +13,7 @@
 <meta property="article:modified_time" content="2021-08-25T20:19:18+08:00" /><meta property="og:site_name" content="实践出真知" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="ubuntu下构建k8s多机集群"/>
+<meta name="twitter:title" content="华为云服务器ubuntu环境构建k8s多机集群"/>
 <meta name="twitter:description" content="博客的构建记录"/>
 <meta name="application-name" content="实践出真知">
 <meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -22,12 +22,12 @@
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "ubuntu下构建k8s多机集群",
+        "headline": "华为云服务器ubuntu环境构建k8s多机集群",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wtysos11.github.io\/posts\/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4\/"
-        },"genre": "posts","keywords": "实验报告, kubernetes","wordcount":  372 ,
+        },"genre": "posts","keywords": "实验报告, kubernetes","wordcount":  3460 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4\/","datePublished": "2021-08-25T20:19:18+08:00","dateModified": "2021-08-25T20:19:18+08:00","publisher": {
             "@type": "Organization",
             "name": "Carlo Wu"},"author": {
@@ -106,10 +106,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">ubuntu下构建k8s多机集群</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">华为云服务器ubuntu环境构建k8s多机集群</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/codebase/"><i class="far fa-folder fa-fw"></i>codebase</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-25">2021-08-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 372 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-25">2021-08-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3460 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -126,7 +126,13 @@
       </ul>
     </li>
     <li><a href="#安装docker">安装docker</a></li>
-    <li><a href="#安装kubernetes">安装kubernetes</a></li>
+    <li><a href="#安装kubernetes">安装kubernetes</a>
+      <ul>
+        <li><a href="#配置apt仓库">配置apt仓库</a></li>
+        <li><a href="#通过kubeadm安装k8s集群">通过kubeadm安装k8s集群</a></li>
+        <li><a href="#安装flannel">安装flannel</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>机器选择使用华为云的两台x86虚拟机，HECS相对来说便宜一点。这回不用实验室的机器了，希望华为云的机子能给点力。</p>
@@ -168,13 +174,199 @@ ssh-keygen -t rsa -C &quot;wtysos11@163.com&quot;
 <li><a href="https://yeasy.gitbook.io/docker_practice/install/ubuntu" target="_blank" rel="noopener noreffer">https://yeasy.gitbook.io/docker_practice/install/ubuntu</a></li>
 <li><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener noreffer">https://docs.docker.com/engine/install/ubuntu/</a></li>
 </ul>
-<p>配置镜像加速</p>
-<h2 id="安装kubernetes">安装kubernetes</h2>
-<p>通过kubeadm进行安装</p>
+<p>使用脚本安装</p>
 <ul>
-<li><a href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/" target="_blank" rel="noopener noreffer">https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/</a></li>
-<li></li>
+<li><code>curl -fsSL get.docker.com -o get-docker.sh</code></li>
+<li><code>sudo sh get-docker.sh --mirror Aliyun</code></li>
+<li><code>usermod -aG docker $USER</code></li>
 </ul>
+<p>配置镜像加速：<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors" target="_blank" rel="noopener noreffer">阿里云</a></p>
+<h2 id="安装kubernetes">安装kubernetes</h2>
+<h3 id="配置apt仓库">配置apt仓库</h3>
+<p><a href="https://developer.aliyun.com/mirror/kubernetes" target="_blank" rel="noopener noreffer">参考</a>，配置apt仓库并安装对应的二进制组件（如果对版本没有要求可以不进行指定）</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo apt-get update <span class="o">&amp;&amp;</span> sudo apt-get install -y apt-transport-https
+curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg <span class="p">|</span> sudo apt-key add - 
+sudo cat <span class="s">&lt;&lt;EOF &gt;/etc/apt/sources.list.d/kubernetes.list
+</span><span class="s">deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
+</span><span class="s">EOF</span>  
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+</code></pre></div><p>运行情况检查</p>
+<ul>
+<li><code>systemctl status kubelet</code>查看情况</li>
+<li><code>journalctl -xeu kubelet</code>输出日志</li>
+</ul>
+<h4 id="遇到问题kubelet-shutdown">遇到问题：kubelet shutdown</h4>
+<p>报错信息<code>&quot;Failed to run kubelet&quot; err=&quot;failed to run Kubelet: misconfiguration: kubelet cgroup driver: \&quot;systemd\&quot; is different from docker cgroup driver: \&quot;cgroupfs\&quot;&quot;</code></p>
+<p>从报错信息来看，应该是docker的cgroup driver和kubelet的cgroup driver不一致的问题。</p>
+<p>参考<a href="https://stackoverflow.com/questions/43794169/docker-change-cgroup-driver-to-systemd" target="_blank" rel="noopener noreffer">SO</a>的解决方案，在docker的配置文件(<code>/etc/docker/daemon.json</code>)中加上了<code>&quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;]</code>，然后使用<code>sudo systemctl restart docker</code>即可</p>
+<h4 id="遇到问题failed-to-load-kubelet-config-file">遇到问题：failed to load kubelet config file</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Service hold-off <span class="nb">time</span> over, scheduling restart.
+Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Scheduled restart job, restart counter is at 87.
+-- Subject: Automatic restarting of a unit has been scheduled
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Automatic restarting of the unit kubelet.service has been scheduled, as the result <span class="k">for</span>
+-- the configured <span class="nv">Restart</span><span class="o">=</span> setting <span class="k">for</span> the unit.
+Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: Stopped kubelet: The Kubernetes Node Agent.
+-- Subject: Unit kubelet.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit kubelet.service has finished shutting down.
+Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: Started kubelet: The Kubernetes Node Agent.
+-- Subject: Unit kubelet.service has finished start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+-- Unit kubelet.service has finished starting up.
+-- 
+-- The start-up result is RESULT.
+Aug <span class="m">26</span> 16:17:48 k8s-master kubelet<span class="o">[</span>27908<span class="o">]</span>: E0826 16:17:48.885345   <span class="m">27908</span> server.go:206<span class="o">]</span> <span class="s2">&#34;Failed to load kubelet config file&#34;</span> <span class="nv">err</span><span class="o">=</span><span class="s2">&#34;failed to load Kubelet config file /var/lib/k
+</span><span class="s2">ubelet/config.yaml, error failed to read kubelet config file \&#34;/var/lib/kubelet/config.yaml\&#34;, error: open /var/lib/kubelet/config.yaml: no such file or directory&#34;</span> <span class="nv">path</span><span class="o">=</span><span class="s2">&#34;/var/
+</span><span class="s2">lib/kubelet/config.yaml&#34;</span>
+Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Main process exited, <span class="nv">code</span><span class="o">=</span>exited, <span class="nv">status</span><span class="o">=</span>1/FAILURE
+Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Failed with result <span class="s1">&#39;exit-code&#39;</span>.
+Aug <span class="m">26</span> 16:17:59 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Service hold-off <span class="nb">time</span> over, scheduling restart.
+Aug <span class="m">26</span> 16:17:59 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Scheduled restart job, restart counter is at 88.
+-- Subject: Automatic restarting of a unit has been scheduled
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+-- 
+</code></pre></div><p>报错信息主要是<code>failed to load kubelet config file</code></p>
+<p>参考<a href="https://github.com/kubernetes/kubernetes/issues/65863#issuecomment-402952753" target="_blank" rel="noopener noreffer">issue/65863</a>的一个回答。不过这个问题可以直接通过<code>kubeadm init</code>解决（简单来说就是不用管）</p>
+<h4 id="其他问题">其他问题</h4>
+<p><a href="https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/configure-cgroup-driver/" target="_blank" rel="noopener noreffer">kubeadm: Configuring a cgroup driver</a>提到v1.22版本中，如果用户没有指定<code>cgroupDriver</code>的会默认为systemd。目前我用的正是1.22.1版本，应该是这个值没有设置为cgroupfs的问题</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># kubeadm-config.yaml</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterConfiguration</span><span class="w">
+</span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">kubeadm.k8s.io/v1beta3</span><span class="w">
+</span><span class="w"></span><span class="nt">kubernetesVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1.22.1</span><span class="w">
+</span><span class="w"></span><span class="nn">---</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">KubeletConfiguration</span><span class="w">
+</span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">kubelet.config.k8s.io/v1beta1</span><span class="w">
+</span><span class="w"></span><span class="nt">cgroupDriver</span><span class="p">:</span><span class="w"> </span><span class="l">cgroupfs</span><span class="w">
+</span></code></pre></div><h3 id="通过kubeadm安装k8s集群">通过kubeadm安装k8s集群</h3>
+<ul>
+<li><a href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/" target="_blank" rel="noopener noreffer">官网教程</a>，还是比较推荐的，唯一的问题就是没有考虑到国内访问不到谷歌的问题</li>
+</ul>
+<h4 id="预先配置">预先配置</h4>
+<h5 id="交换与防火墙">交换与防火墙</h5>
+<ul>
+<li><code>top</code>内查看是否开启交换，开了要关闭</li>
+<li>关闭防火墙</li>
+</ul>
+<h5 id="网络">网络</h5>
+<p>官网“允许iptables检查桥接流量”一节提到<code>lsmod | grep br_netfilter</code>来检查<code>br_netfilter</code>模块被加载</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">cat <span class="s">&lt;&lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
+</span><span class="s">br_netfilter
+</span><span class="s">EOF</span>
+
+cat <span class="s">&lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+</span><span class="s">net.bridge.bridge-nf-call-ip6tables = 1
+</span><span class="s">net.bridge.bridge-nf-call-iptables = 1
+</span><span class="s">EOF</span>
+sudo sysctl --system
+</code></pre></div><h5 id="配置cgroup为systemd">配置cgroup为systemd</h5>
+<p>kubelet这边可以不用管，默认是<code>systemd</code>。需要按照[kubelet shutdown](#遇到问题：kubelet shutdown)内的操作来修改容器运行时的cgroup，不然Kubelet会启动不了。（按照官方的说法，不建议修改kubelet的cgroup为cgroupfs）</p>
+<h4 id="正式安装">正式安装</h4>
+<p>可以参考我之前配置时的<a href="https://challengefilter.com/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/" target="_blank" rel="noopener noreffer">教程</a>。不过当时并没有做可重复性相关的验证。</p>
+<p>首先使用<code>kubeadm config images list</code>列出kubeadm所需要的所有镜像</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">k8s.gcr.io/kube-apiserver:v1.22.1
+k8s.gcr.io/kube-controller-manager:v1.22.1
+k8s.gcr.io/kube-scheduler:v1.22.1
+k8s.gcr.io/kube-proxy:v1.22.1
+k8s.gcr.io/pause:3.5
+k8s.gcr.io/etcd:3.5.0-0
+k8s.gcr.io/coredns/coredns:v1.8.4
+</code></pre></div><p>执行以下命令进行安装：</p>
+<pre><code>sudo kubeadm init --apiserver-advertise-address=192.168.0.97 --pod-network-cidr=10.244.0.0/16 --token-ttl=0 --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers
+</code></pre><p>命令参考：<a href="https://kubernetes.io/zh/docs/reference/setup-tools/kubeadm/kubeadm-init/" target="_blank" rel="noopener noreffer">官方</a>，也可以在命令行下查看。</p>
+<ul>
+<li>
+<p>apiserver-advertise-address：这个参数指定了监听的API地址。若没有设置，则使用默认网络接口。我使用的是华为云的服务器，这里填master节点的地址即可（要求能被其他节点访问到）</p>
+</li>
+<li>
+<p>apiserver-bind-port：这个参数指定了API服务器暴露出的端口号，默认是6443。</p>
+</li>
+<li>
+<p>pod-network-cidr：规定了pod能够使用的IP地址段。我之前用的是16位子网掩码，但是现在给的子网就是24位掩码，我也不确定使用其他子网能不能行……先保险起见吧。</p>
+</li>
+<li>
+<p>kubernetes-version：指定kubeadm安装的kubernetes版本。这个是很重要的，因为默认情况下kubeadm会安装与它版本相同的kubernetes版本，而由于国内的网络问题，每次都需要重新下载一遍镜像，非常的麻烦。如果之后版本使用这个脚本，可以加上<code>--kubernetes-version=v1.19.2</code></p>
+</li>
+<li>
+<p>image-repository：默认是&quot;k8s.gcr.io&quot;。我觉得如果修改这个可以不用像之前那样从阿里云下载下来后手动tag。可以使用<code>kubeadm config images pull --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers</code>，<a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/generated/kubeadm_config_images_pull/" target="_blank" rel="noopener noreffer">参考</a></p>
+</li>
+<li>
+<p>token-ttl：令牌被删除前的时间，默认是24h。kubeadm初始化完毕后会生成一个令牌，让其他节点能够加入集群，过时之后这个令牌会自动删除。如果设置为0之后令牌就永不过期。</p>
+</li>
+</ul>
+<p>这一步的难点在于如何设置pod-network-cidr，参数的<a href="https://blog.csdn.net/shida_csdn/article/details/104334372" target="_blank" rel="noopener noreffer">作用</a>。根据<a href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/" target="_blank" rel="noopener noreffer">官方教程</a>的说法，Pod网络与任何主机网络不得有重叠。但是目前我看到的很多教程都是在主机局域网络下构建的。比如说三台主机都在<code>192.168.1.1/16</code>子网，而pod网络也在同样的子网下。</p>
+<p>这个参数的设置似乎与所使用的CNI有关系：</p>
+<ul>
+<li>
+<p><a href="https://coreos.com/flannel/docs/latest/kubernetes.html" target="_blank" rel="noopener noreffer">flannel</a>，要求的参数为<code>--pod-network-cidr=10.244.0.0/16</code></p>
+</li>
+<li>
+<p><a href="https://docs.projectcalico.org/getting-started/kubernetes/quickstart" target="_blank" rel="noopener noreffer">calico</a>，要求的参数为<code>--pod-network-cidr=192.168.0.0/16</code></p>
+</li>
+</ul>
+<p>本文采用flannel，一个很重要的原因是因为服务器的子网与pod的子网部分重叠，可能存在风险，以及flannel似乎更容易部署一些。</p>
+<p>值得注意的是，在<a href="https://cr.console.aliyun.com/images/cn-hangzhou/google_containers/coredns/detail" target="_blank" rel="noopener noreffer">coredns镜像</a>中，只有x.x.x，而没有vx.x.x，所以需要手动改一下。也可以参考<a href="https://github.com/zhangguanzhang/google_containers" target="_blank" rel="noopener noreffer">zhangguanzhang</a>的工具来直接同步</p>
+<p>如果image-repository不可用可以考虑下面的脚本</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#########################################################################</span>
+<span class="c1"># File Name: pull_master_image.sh</span>
+<span class="c1"># Description: pull_master_image.sh</span>
+<span class="c1"># Author: zhangyi</span>
+<span class="c1"># mail: 450575982@qq.com</span>
+<span class="c1"># Created Time: 2019-07-31 21:38:14</span>
+<span class="c1">#########################################################################</span>
+<span class="c1">#!/bin/bash</span>
+<span class="nv">kube_version</span><span class="o">=</span>:v1.22.1
+<span class="nv">kube_images</span><span class="o">=(</span>kube-proxy kube-scheduler kube-controller-manager kube-apiserver<span class="o">)</span>
+<span class="nv">addon_images</span><span class="o">=(</span>etcd:3.5.0-0 coredns:1.8.4 pause:3.5<span class="o">)</span>
+
+<span class="k">for</span> imageName in <span class="si">${</span><span class="nv">kube_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
+  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span> k8s.gcr.io/<span class="nv">$imageName$kube_version</span>
+  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
+<span class="k">done</span>
+
+<span class="k">for</span> imageName in <span class="si">${</span><span class="nv">addon_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
+  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span> k8s.gcr.io/<span class="nv">$imageName</span>
+  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
+<span class="k">done</span>
+</code></pre></div><p>之后，需要执行这三条命令，其作用是将kubectl所需要的配置文件拉到用户目录下并设置访问权限。（不执行的话kubectl是无法正常工作的）</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p <span class="nv">$HOME</span>/.kube
+sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</code></pre></div><p>有时可能需要显示配置<code>export KUBECONFIG=$HOME/.kube/config</code>。</p>
+<p>如果是使用root用户需要设置<code>export KUBECONFIG=/etc/kubernetes/admin.conf</code>。</p>
+<p>使用<code>kubectl get pods -n=kube-system</code>可以查看所有的系统容器，这时候<code>coredns</code>可能没有运行，这个没有关系，等flannel装上之后就好了。</p>
+<h4 id="untaint">untaint</h4>
+<p>对于小集群，必须要执行<code>kubectl taint nodes --all node-role.kubernetes.io/master-</code>，不然调度的时候会少一台机子。</p>
+<h3 id="安装flannel">安装flannel</h3>
+<p>参考<a href="https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md" target="_blank" rel="noopener noreffer">flannel官方教程</a>，</p>
+<ul>
+<li><code>curl -fsSL https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml &gt; kube-flannel.yml</code>下载配置文件</li>
+<li><code>kubectl apply -f kube-flannel.yml</code></li>
+</ul>
+<p>日志记录：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">➜  ~ kubectl apply -f kube-flannel.yml
+Warning: policy/v1beta1 PodSecurityPolicy is deprecated in v1.21+, unavailable in v1.25+
+podsecuritypolicy.policy/psp.flannel.unprivileged created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds created
+</code></pre></div><p>可能出现的问题：</p>
+<ul>
+<li>flannel需要镜像<code>quay.io/coreos/flannel:v0.14.0</code>，之前安装的时候没有办法抓下来。不过这次成功搞下来了，可能是阿里云的镜像服务又更进一步了？</li>
+</ul>
+<p>此时，k8s的安装就基本完成了，后续就自由发挥了。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -186,7 +378,7 @@ ssh-keygen -t rsa -C &quot;wtysos11@163.com&quot;
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="ubuntu下构建k8s多机集群" data-hashtags="实验报告,kubernetes"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-hashtag="实验报告"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="ubuntu下构建k8s多机集群" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="ubuntu下构建k8s多机集群"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="ubuntu下构建k8s多机集群"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="ubuntu下构建k8s多机集群" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="ubuntu下构建k8s多机集群" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="ubuntu下构建k8s多机集群"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="华为云服务器ubuntu环境构建k8s多机集群" data-hashtags="实验报告,kubernetes"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-hashtag="实验报告"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="华为云服务器ubuntu环境构建k8s多机集群" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="华为云服务器ubuntu环境构建k8s多机集群"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="华为云服务器ubuntu环境构建k8s多机集群"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="华为云服务器ubuntu环境构建k8s多机集群" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="华为云服务器ubuntu环境构建k8s多机集群" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" data-title="华为云服务器ubuntu环境构建k8s多机集群"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
