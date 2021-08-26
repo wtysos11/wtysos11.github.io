@@ -4,19 +4,26 @@
         <link>http://wtysos11.github.io/tags/</link>
         <description>Tags - 标签 - 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Wed, 25 Aug 2021 16:34:18 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Wed, 25 Aug 2021 20:19:18 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>kubernetes</title>
+    <link>http://wtysos11.github.io/tags/kubernetes/</link>
+    <pubDate>Wed, 25 Aug 2021 20:19:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/tags/kubernetes/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>实验报告</title>
+    <link>http://wtysos11.github.io/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</link>
+    <pubDate>Wed, 25 Aug 2021 20:19:18 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>hugo</title>
     <link>http://wtysos11.github.io/tags/hugo/</link>
     <pubDate>Wed, 25 Aug 2021 16:34:18 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/tags/hugo/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>实验报告</title>
-    <link>http://wtysos11.github.io/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</link>
-    <pubDate>Wed, 25 Aug 2021 16:34:18 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/tags/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Go</title>
@@ -66,13 +73,6 @@
     <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/tags/%E5%BE%85%E5%AE%8C%E5%96%84/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>软件工程</title>
-    <link>http://wtysos11.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</link>
-    <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
