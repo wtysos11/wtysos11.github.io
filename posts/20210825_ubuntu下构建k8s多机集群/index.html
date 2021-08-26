@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>华为云服务器ubuntu环境构建k8s多机集群 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="华为云服务器ubuntu环境构建k8s多机集群" />
-<meta property="og:description" content="博客的构建记录" />
+<meta property="og:description" content="在华为云买了两台x86的hecs服务器，于是顺便就在ubuntu18.04环境下装了次k8sv1.22.1。由于之前没有考虑可重复性的问题，这次特地重新做了几次确保了一下，方便以后继续重复操作。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-08-25T20:19:18+08:00" />
@@ -14,7 +14,7 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="华为云服务器ubuntu环境构建k8s多机集群"/>
-<meta name="twitter:description" content="博客的构建记录"/>
+<meta name="twitter:description" content="在华为云买了两台x86的hecs服务器，于是顺便就在ubuntu18.04环境下装了次k8sv1.22.1。由于之前没有考虑可重复性的问题，这次特地重新做了几次确保了一下，方便以后继续重复操作。"/>
 <meta name="application-name" content="实践出真知">
 <meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wtysos11.github.io\/posts\/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4\/"
-        },"genre": "posts","keywords": "实验报告, kubernetes","wordcount":  3460 ,
+        },"genre": "posts","keywords": "实验报告, kubernetes","wordcount":  3496 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4\/","datePublished": "2021-08-25T20:19:18+08:00","dateModified": "2021-08-25T20:19:18+08:00","publisher": {
             "@type": "Organization",
             "name": "Carlo Wu"},"author": {
@@ -108,7 +108,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">华为云服务器ubuntu环境构建k8s多机集群</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/codebase/"><i class="far fa-folder fa-fw"></i>codebase</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-25">2021-08-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3460 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-25">2021-08-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3496 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -138,7 +138,6 @@
             </div><div class="content" id="content"><p>机器选择使用华为云的两台x86虚拟机，HECS相对来说便宜一点。这回不用实验室的机器了，希望华为云的机子能给点力。</p>
 <h2 id="创建用户">创建用户</h2>
 <ul>
-<li><code>useradd wty</code></li>
 <li><code>useradd -g root wty</code></li>
 <li><code>usermod -a -G sudo wty</code></li>
 <li>创建<code>/home/wty</code></li>
@@ -169,7 +168,8 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted unive
 <pre><code class="language-console" data-lang="console">git config --global user.name &quot;wtysos11&quot;
 git config --global user.email wtysos11@163.com
 ssh-keygen -t rsa -C &quot;wtysos11@163.com&quot;
-</code></pre><h2 id="安装docker">安装docker</h2>
+</code></pre><p>上传公钥到github</p>
+<h2 id="安装docker">安装docker</h2>
 <ul>
 <li><a href="https://yeasy.gitbook.io/docker_practice/install/ubuntu" target="_blank" rel="noopener noreffer">https://yeasy.gitbook.io/docker_practice/install/ubuntu</a></li>
 <li><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener noreffer">https://docs.docker.com/engine/install/ubuntu/</a></li>
@@ -180,7 +180,7 @@ ssh-keygen -t rsa -C &quot;wtysos11@163.com&quot;
 <li><code>sudo sh get-docker.sh --mirror Aliyun</code></li>
 <li><code>usermod -aG docker $USER</code></li>
 </ul>
-<p>配置镜像加速：<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors" target="_blank" rel="noopener noreffer">阿里云</a></p>
+<p>配置镜像加速：<a href="https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors" target="_blank" rel="noopener noreffer">阿里云</a>。由于使用了阿里云，就不进行<code>docker login</code>了。</p>
 <h2 id="安装kubernetes">安装kubernetes</h2>
 <h3 id="配置apt仓库">配置apt仓库</h3>
 <p><a href="https://developer.aliyun.com/mirror/kubernetes" target="_blank" rel="noopener noreffer">参考</a>，配置apt仓库并安装对应的二进制组件（如果对版本没有要求可以不进行指定）</p>

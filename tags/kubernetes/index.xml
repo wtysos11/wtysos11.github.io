@@ -10,7 +10,7 @@
     <pubDate>Wed, 25 Aug 2021 20:19:18 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</guid>
-    <description><![CDATA[博客的构建记录]]></description>
+    <description><![CDATA[在华为云买了两台x86的hecs服务器，于是顺便就在ubuntu18.04环境下装了次k8sv1.22.1。由于之前没有考虑可重复性的问题，这次特地重新做了几次确保了一下，方便以后继续重复操作。]]></description>
 </item><item>
     <title>kubernetes服务：学习ingress与暴露服务简单实验</title>
     <link>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</link>
