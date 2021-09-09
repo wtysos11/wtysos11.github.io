@@ -18,7 +18,7 @@
 <meta name="application-name" content="实践出真知">
 <meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/" /><link rel="next" href="http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/" /><link rel="next" href="http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wtysos11.github.io\/posts\/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4\/"
-        },"genre": "posts","keywords": "实验报告, kubernetes","wordcount":  3615 ,
+        },"genre": "posts","keywords": "实验报告, kubernetes","wordcount":  4024 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4\/","datePublished": "2021-08-25T20:19:18+08:00","dateModified": "2021-08-25T20:19:18+08:00","publisher": {
             "@type": "Organization",
             "name": "Carlo Wu"},"author": {
@@ -108,8 +108,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">华为云服务器ubuntu18.04环境下构建k8s多机集群</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/codebase/"><i class="far fa-folder fa-fw"></i>codebase</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-25">2021-08-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3615 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-08-25">2021-08-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4024 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -133,9 +133,12 @@
         <li><a href="#安装flannel">安装flannel</a></li>
       </ul>
     </li>
+    <li><a href="#istio安装">istio安装</a></li>
+    <li><a href="#其他问题-1">其他问题</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>机器选择使用华为云的两台x86虚拟机，HECS相对来说便宜一点。这回不用实验室的机器了，希望华为云的机子能给点力。</p>
+<p><a href="https://gist.github.com/wtysos11/43558b801951496609e614dd4fe894f1" target="_blank" rel="noopener noreffer">gist</a>，如果只是要安装k8s可以参考这个脚本。可能还是有点问题（我是在root下跑完的），sudo支持上可能有遗漏的地方。</p>
 <h2 id="创建用户">创建用户</h2>
 <ul>
 <li><code>useradd -g root wty</code></li>
@@ -207,7 +210,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 <h4 id="遇到问题kubelet-shutdown">遇到问题：kubelet shutdown</h4>
 <p>报错信息<code>&quot;Failed to run kubelet&quot; err=&quot;failed to run Kubelet: misconfiguration: kubelet cgroup driver: \&quot;systemd\&quot; is different from docker cgroup driver: \&quot;cgroupfs\&quot;&quot;</code></p>
 <p>从报错信息来看，应该是docker的cgroup driver和kubelet的cgroup driver不一致的问题。</p>
-<p>参考<a href="https://stackoverflow.com/questions/43794169/docker-change-cgroup-driver-to-systemd" target="_blank" rel="noopener noreffer">SO</a>的解决方案，在docker的配置文件(<code>/etc/docker/daemon.json</code>)中加上了<code>&quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;]</code>，然后使用<code>sudo systemctl restart docker</code>即可</p>
+<p>参考<a href="https://stackoverflow.com/questions/43794169/docker-change-cgroup-driver-to-systemd" target="_blank" rel="noopener noreffer">SO</a>的解决方案，在docker的配置文件(<code>/etc/docker/daemon.json</code>)中加上了<code>&quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;]</code>，然后使用<code>sudo systemctl restart docker</code>即可（PS：即使是新开启的docker也必须执行）</p>
 <h4 id="遇到问题failed-to-load-kubelet-config-file">遇到问题：failed to load kubelet config file</h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Service hold-off <span class="nb">time</span> over, scheduling restart.
 Aug <span class="m">26</span> 16:17:48 k8s-master systemd<span class="o">[</span>1<span class="o">]</span>: kubelet.service: Scheduled restart job, restart counter is at 87.
@@ -288,7 +291,7 @@ k8s.gcr.io/pause:3.5
 k8s.gcr.io/etcd:3.5.0-0
 k8s.gcr.io/coredns/coredns:v1.8.4
 </code></pre></div><p>执行以下命令进行安装：</p>
-<pre><code>sudo kubeadm init --apiserver-advertise-address=192.168.0.97 --pod-network-cidr=10.244.0.0/16 --token-ttl=0 --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers
+<pre><code>sudo kubeadm init --apiserver-advertise-address=10.186.117.4 --pod-network-cidr=10.244.0.0/16 --token-ttl=0 --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers
 </code></pre><p>命令参考：<a href="https://kubernetes.io/zh/docs/reference/setup-tools/kubeadm/kubeadm-init/" target="_blank" rel="noopener noreffer">官方</a>，也可以在命令行下查看。</p>
 <ul>
 <li>
@@ -375,6 +378,13 @@ daemonset.apps/kube-flannel-ds created
 <li>flannel需要镜像<code>quay.io/coreos/flannel:v0.14.0</code>，之前安装的时候没有办法抓下来。不过这次成功搞下来了，可能是阿里云的镜像服务又更进一步了？</li>
 </ul>
 <p>此时，k8s的安装就基本完成了，后续就自由发挥了。</p>
+<h2 id="istio安装">istio安装</h2>
+<p>按照<a href="https://istio.io/latest/docs/setup/getting-started/" target="_blank" rel="noopener noreffer">官网</a>指南安装即可，这个版本的istio安装基本不会出现问题</p>
+<h2 id="其他问题-1">其他问题</h2>
+<ol>
+<li>安装flannel时提示<code>open /run/systemd/resolve/resolv.conf: no such file or directory</code>，经过检查发现是节点的<code>systemd-resolved</code>出现问题，<code>systemctl status systemd-resolved</code>中状态为Inactive。直接使用<code>systemctl restart systemd-resolved</code>重启对应的DNS服务即可。</li>
+<li>端口问题。因为在内网配置了比较严格的安全策略，需要手动打开但偶才能正常工作。其中kubernetes的api-server默认是在6443端口下工作，istio则需要15021端口。而且coreDNS需要UDP53端口……如果可以的话测试环境建议全打开，鬼知道是在哪里被卡的。</li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -399,7 +409,7 @@ daemonset.apps/kube-flannel-ds created
     </div>
 
     <div class="post-nav"><a href="/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/" class="prev" rel="prev" title="hugo loveit构建github page博客"><i class="fas fa-angle-left fa-fw"></i>hugo loveit构建github page博客</a>
-            <a href="/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/" class="next" rel="next" title="python命令行库如何实现子命令共享参数？">python命令行库如何实现子命令共享参数？<i class="fas fa-angle-right fa-fw"></i></a></div>
+            <a href="/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="torch.einsum函数学习">torch.einsum函数学习<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.

@@ -4,13 +4,27 @@
         <link>http://wtysos11.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <description>学习笔记 - 标签 - 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Thu, 09 Sep 2021 10:46:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+    <title>torch.roll函数学习</title>
+    <link>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 09 Sep 2021 10:46:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[torch.roll函数的使用例子与说明]]></description>
+</item><item>
     <title>python命令行库如何实现子命令共享参数？</title>
     <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
     <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
     <description><![CDATA[比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。]]></description>
+</item><item>
+    <title>torch.einsum函数学习</title>
+    <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[torch.einsum函数的使用例子与说明]]></description>
 </item><item>
     <title>专利讲座笔记</title>
     <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>

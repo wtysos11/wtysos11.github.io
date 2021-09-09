@@ -4,13 +4,27 @@
         <link>http://wtysos11.github.io/posts/</link>
         <description>所有文章 | 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Thu, 09 Sep 2021 10:46:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>torch.roll函数学习</title>
+    <link>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 09 Sep 2021 10:46:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[torch.roll函数的使用例子与说明]]></description>
+</item><item>
     <title>python命令行库如何实现子命令共享参数？</title>
     <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
     <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
     <description><![CDATA[比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。]]></description>
+</item><item>
+    <title>torch.einsum函数学习</title>
+    <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[torch.einsum函数的使用例子与说明]]></description>
 </item><item>
     <title>华为云服务器ubuntu18.04环境下构建k8s多机集群</title>
     <link>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</link>
@@ -60,19 +74,5 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
     <description><![CDATA[对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频htt]]></description>
-</item><item>
-    <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
-    <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
-    <pubDate>Thu, 17 Jun 2021 14:22:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
-    <description><![CDATA[今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是]]></description>
-</item><item>
-    <title>邓宁-克鲁格效应</title>
-    <link>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</link>
-    <pubDate>Thu, 17 Jun 2021 10:40:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</guid>
-    <description><![CDATA[每次都忘记这个效应叫什么名字，所以还是专门开个issue记录一下。 邓宁-克鲁格效应，按照百科的说法，是一种认知偏差，能力欠缺的人有一种虚幻的]]></description>
 </item></channel>
 </rss>
