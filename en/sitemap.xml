@@ -2,7 +2,7 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://wtysos11.github.io/en/categories/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
+            <loc>http://wtysos11.github.io/en/categories/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="http://wtysos11.github.io/categories/"
@@ -11,9 +11,9 @@
                     hreflang="en"
                     href="http://wtysos11.github.io/en/categories/"
                     /></url><url>
-            <loc>http://wtysos11.github.io/en/categories/cs-paper-reading/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://wtysos11.github.io/en/tags/micro-scheduling/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://wtysos11.github.io/en/posts/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
+            <loc>http://wtysos11.github.io/en/categories/cs-paper-reading/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://wtysos11.github.io/en/tags/micro-scheduling/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://wtysos11.github.io/en/posts/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="http://wtysos11.github.io/posts/"
@@ -22,7 +22,7 @@
                     hreflang="en"
                     href="http://wtysos11.github.io/en/posts/"
                     /></url><url>
-            <loc>http://wtysos11.github.io/en/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
+            <loc>http://wtysos11.github.io/en/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="http://wtysos11.github.io/"
@@ -31,9 +31,9 @@
                     hreflang="en"
                     href="http://wtysos11.github.io/en/"
                     /></url><url>
-            <loc>http://wtysos11.github.io/en/posts/test-post/test/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://wtysos11.github.io/en/tags/summary-of-paper/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>http://wtysos11.github.io/en/tags/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority><xhtml:link
+            <loc>http://wtysos11.github.io/en/posts/test-post/test/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://wtysos11.github.io/en/tags/summary-of-paper/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>http://wtysos11.github.io/en/tags/</loc><lastmod>2021-08-11T10:20:04&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority><xhtml:link
                         rel="alternate"
                         hreflang="zh-cn"
                         href="http://wtysos11.github.io/tags/"
