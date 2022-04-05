@@ -3,8 +3,15 @@
         <title>学习笔记 - 标签 - 实践出真知</title>
         <link>http://wtysos11.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
         <description>学习笔记 - 标签 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Carlo Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Carlo Wu)</webMaster><lastBuildDate>Fri, 24 Sep 2021 18:43:00 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Mon, 27 Sep 2021 09:49:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+    <title>Conv1d原理解析</title>
+    <link>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</link>
+    <pubDate>Mon, 27 Sep 2021 09:49:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</guid>
+    <description><![CDATA[torch中的Conv1d解析]]></description>
+</item><item>
     <title>《心流：最优体验心理学》读书笔记与自我思考</title>
     <link>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</link>
     <pubDate>Fri, 24 Sep 2021 18:43:00 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</guid>
     <description><![CDATA[简历的内容 简历，总结而言是经历的总结。 简历自答： 用一句话或者三个词描述自己是一个怎么样的人 我热爱/喜欢做的事情是什么 我擅长做的事情是什么/特]]></description>
-</item><item>
-    <title>知乎分享：vscode从入门到进阶</title>
-    <link>http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/</link>
-    <pubDate>Sun, 24 May 2020 09:08:04 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/</guid>
-    <description><![CDATA[地址：知乎 内容大纲 VS Code 的优势 VS 和 VS Code 到底有什么关系？ 微软从 VS 组里面抽了一拨人做 VS Code，是真的吗？ VS 支持 Java ？背后的真相到底是怎样的？ 你真的]]></description>
 </item></channel>
 </rss>

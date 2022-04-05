@@ -30,9 +30,9 @@
         },"genre": "posts","keywords": "Go, 问题解答","wordcount":  753 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver\/","datePublished": "2021-06-12T10:38:14+08:00","dateModified": "2021-06-12T10:38:14+08:00","publisher": {
             "@type": "Organization",
-            "name": "Carlo Wu"},"author": {
+            "name": "Timothy Wu"},"author": {
                 "@type": "Person",
-                "name": "Carlo Wu"
+                "name": "Timothy Wu"
             },"description": ""
     }
     </script></head>
@@ -107,7 +107,7 @@
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">golang基础问题：X does not implement Y (... method has a point receiver)</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Go基础学习</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Go基础学习</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-12">2021-06-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 753 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -125,90 +125,90 @@
 </nav></div>
             </div><div class="content" id="content"><h2 id="遇到问题">遇到问题</h2>
 <p>这个问题的来源是今天在复习接口的时候遇到了一份代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-
-<span class="kd">type</span> <span class="nx">RPCError</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">Code</span>    <span class="kt">int64</span>
-	<span class="nx">Message</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">RPCError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s, code=%d&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Message</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Code</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;In main function&#34;</span><span class="p">)</span>
-	<span class="kd">var</span> <span class="nx">rpcErr</span> <span class="kt">error</span> <span class="p">=</span> <span class="nf">NewRPCError</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s">&#34;unknown err&#34;</span><span class="p">)</span> <span class="c1">// typecheck1
-</span><span class="c1"></span>	<span class="nx">err</span> <span class="o">:=</span> <span class="nf">AsErr</span><span class="p">(</span><span class="nx">rpcErr</span><span class="p">)</span> <span class="c1">// typecheck2
-</span><span class="c1"></span>	<span class="nb">println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">NewRPCError</span><span class="p">(</span><span class="nx">code</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">msg</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">RPCError</span><span class="p">{</span> <span class="c1">// typecheck3， must be &amp;RPCError
-</span><span class="c1"></span>		<span class="nx">Code</span><span class="p">:</span>    <span class="nx">code</span><span class="p">,</span>
-		<span class="nx">Message</span><span class="p">:</span> <span class="nx">msg</span><span class="p">,</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">AsErr</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">err</span>
-<span class="p">}</span>
-</code></pre></div><p>这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</p>
-<pre><code>./main.go:22:17: cannot use RPCError{...} (type RPCError) as type error in return argument:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">RPCError</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Code</span>    <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">Message</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">RPCError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s, code=%d&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Message</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Code</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;In main function&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">rpcErr</span> <span class="kt">error</span> <span class="p">=</span> <span class="nf">NewRPCError</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s">&#34;unknown err&#34;</span><span class="p">)</span> <span class="c1">// typecheck1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">err</span> <span class="o">:=</span> <span class="nf">AsErr</span><span class="p">(</span><span class="nx">rpcErr</span><span class="p">)</span> <span class="c1">// typecheck2
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nb">println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewRPCError</span><span class="p">(</span><span class="nx">code</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">msg</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">RPCError</span><span class="p">{</span> <span class="c1">// typecheck3， must be &amp;RPCError
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">Code</span><span class="p">:</span>    <span class="nx">code</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Message</span><span class="p">:</span> <span class="nx">msg</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">AsErr</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</p>
+<pre tabindex="0"><code>./main.go:22:17: cannot use RPCError{...} (type RPCError) as type error in return argument:
 	RPCError does not implement error (Error method has pointer receiver)
 </code></pre><p>解决方案是将返回的<code>RPCError</code>改为<code>&amp;RPCError</code>，即传回指针而不是实值。</p>
 <p>但是这显然是与常识相违背的，因为error类型本身也并不是什么指针之类的东西，那这个指针是定义在哪里的？</p>
 <h2 id="找到共性">找到共性</h2>
 <p>在<a href="https://stackoverflow.com/questions/40823315/x-does-not-implement-y-method-has-a-pointer-receiver" target="_blank" rel="noopener noreffer">SO</a>上找到了一个对应的问题，回答中构造了一个类似的情况</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-
-<span class="kd">type</span> <span class="nx">Stringer</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nf">String</span><span class="p">()</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">type</span> <span class="nx">MyType</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">value</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">MyType</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">value</span> <span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-	<span class="nx">m</span> <span class="o">:=</span> <span class="nx">MyType</span><span class="p">{</span><span class="nx">value</span><span class="p">:</span><span class="s">&#34;something&#34;</span><span class="p">}</span>
-	<span class="kd">var</span> <span class="nx">s</span> <span class="nx">Stringer</span>
-	<span class="nx">s</span> <span class="p">=</span> <span class="nx">m</span> <span class="c1">// s=&amp;m
-</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>大意就是，为了实现接口Stringer，结构体必须有一个方法String。而在实际的实现中，String是被绑在方法*MyType上而不是MyType，所以接口对应的类型也只能是*MyType，因此必须传递一个指针。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Stringer</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">String</span><span class="p">()</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">MyType</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">value</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">MyType</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">value</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="nx">MyType</span><span class="p">{</span><span class="nx">value</span><span class="p">:</span><span class="s">&#34;something&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">s</span> <span class="nx">Stringer</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">s</span> <span class="p">=</span> <span class="nx">m</span> <span class="c1">// s=&amp;m
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>大意就是，为了实现接口Stringer，结构体必须有一个方法String。而在实际的实现中，String是被绑在方法*MyType上而不是MyType，所以接口对应的类型也只能是*MyType，因此必须传递一个指针。</p>
 <h2 id="回溯">回溯</h2>
 <p>而在原问题中，对Error方法的实现为</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">RPCError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s, code=%d&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Message</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Code</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>所以如果将这个地方进行修改的话一样是可行的。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">RPCError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s, code=%d&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Message</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Code</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>所以如果将这个地方进行修改的话一样是可行的。
 问题解决。</p>
 <h2 id="根源">根源</h2>
 <p>该问题的根源在于，结构体与结构体的指针本质上是两种不同的类型。就像不能向一个接受指针的函数传递结构体一样，反过来也是不行的。只是这两种类型可以比较方便地进行快速转换，所以可能导致一些理解上的偏差</p>
 <p>比如下面两种实现接口的方法，其实都是可以的，而且是两种不同的实现方法。（当然，下面这样写肯定是不行的，指针类型和非指针类型对接口的实现不能同时出现）</p>
-<pre><code>type Duck interface{
+<pre tabindex="0"><code>type Duck interface{
     Walk()
     Quack()
 }
 type Cat struct{}
 func (c *Cat) Walk(){
-    fmt.Println(&quot;Star Cat Walk&quot;)
+    fmt.Println(&#34;Star Cat Walk&#34;)
 }
 func (c *Cat) Quack(){
-    fmt.Println(&quot;Star Cat meow&quot;)
+    fmt.Println(&#34;Star Cat meow&#34;)
 }
 func (c Cat) Walk(){
-    fmt.Println(&quot;Cat Walk&quot;)
+    fmt.Println(&#34;Cat Walk&#34;)
 }
 func (c Cat) Quack(){
-    fmt.Println(&quot;Cat meow&quot;)
+    fmt.Println(&#34;Cat meow&#34;)
 }
 </code></pre><p>详情可以看<a href="https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-interface/" target="_blank" rel="noopener noreffer">面向信仰编程-4.2接口</a></p>
 </div><div class="post-footer" id="post-footer">
@@ -241,8 +241,8 @@ func (c Cat) Quack(){
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.96.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

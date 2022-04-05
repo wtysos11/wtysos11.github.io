@@ -30,9 +30,9 @@
         },"genre": "posts","keywords": "考研, 计算机组成","wordcount":  21418 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E6%A6%82%E8%BF%B0\/","datePublished": "2021-03-09T14:26:14+08:00","dateModified": "2021-03-09T14:26:14+08:00","publisher": {
             "@type": "Organization",
-            "name": "Carlo Wu"},"author": {
+            "name": "Timothy Wu"},"author": {
                 "@type": "Person",
-                "name": "Carlo Wu"
+                "name": "Timothy Wu"
             },"description": ""
     }
     </script></head>
@@ -107,7 +107,7 @@
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">计算机组成-概述</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"><i class="far fa-folder fa-fw"></i>计算机基础</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"><i class="far fa-folder fa-fw"></i>计算机基础</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-09">2021-03-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 21418 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 43 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -267,9 +267,9 @@ MIPS(million instructions per second)：每秒执行多少百万条指令。有M
 PS：变形补码等同于模4补码，即符号位有两位</p>
 <h3 id="浮点数">浮点数</h3>
 <p>值得注意的一点：标准的移码中，对于n+1位，偏移量为2^n，这时候有一个很好的性质，就是移码在表示上等于补码在符号位取反后的结果。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="gd">- IEEE754不是标准的译码，它的偏移量是2^k-1，即对于32位浮点数，偏移量为127
-</span><span class="gd">- 从网上的回答来看，目的应当是为了对齐范围
-</span></code></pre></div><h4 id="浮点数加减运算">浮点数加减运算</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"><span class="gd">- IEEE754不是标准的译码，它的偏移量是2^k-1，即对于32位浮点数，偏移量为127
+</span></span></span><span class="line"><span class="cl"><span class="gd">- 从网上的回答来看，目的应当是为了对齐范围
+</span></span></span></code></pre></div><h4 id="浮点数加减运算">浮点数加减运算</h4>
 <ol>
 <li>对阶：目的是将小数点的位置对齐，使得两个数阶码相等。求阶差，然后小阶向大阶看齐的原则，将阶码小的尾数右移一位，阶加1，直到阶码相等。尾数右移的时候会舍弃有效位，引起误差。</li>
 <li>尾数求和：对阶后尾数按定点数加减法运算。</li>
@@ -468,15 +468,15 @@ Y：00,101;00,10100
 </ol>
 <p>一般非写分配法与全写法合用。写分配法通常和写回法合用。</p>
 <p>PS：需要意识到，cache中的内容都是主存中的备份，因此在计算存储系统容量的时候不能够简单地将主存容量与cache容量相加。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="gd">- 主存地址从0开始的时候，组相联的组号需要慎重考虑是否能直接通过求余得到（仔细思考）
-</span><span class="gd"></span>
-## 3.7 虚拟存储器
-与cache的不同之处：
-1. cache是为了解决系统速度，而虚拟存储器解决的是主存容量。
-2. cache全由硬件实现，对所有程序员透明；而虚拟存储器由OS和硬件实现，对系统程序员不透明。
-3. CPU速度为cache的10倍，而主存速度为磁盘速度的100倍，故虚拟存储器系统不命中时对系统性能的影响更大。
-4. cache不命中的时候主存能直接和CPU通信，把数据调入cache中。而虚拟存储器不命中时只能先将数据调入主存，不能直接和CPU通信。
-</code></pre></div><p>PS：指令和数据可以分别存储在不同的cache中，其特点是允许CPU在同一Cache存储周期内同时提取指令和数据，由于指令执行过程取值和取数据都有可能访问cache，这一特性可以保证不同的指令同时访存。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"><span class="gd">- 主存地址从0开始的时候，组相联的组号需要慎重考虑是否能直接通过求余得到（仔细思考）
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span>
+</span></span><span class="line"><span class="cl">## 3.7 虚拟存储器
+</span></span><span class="line"><span class="cl">与cache的不同之处：
+</span></span><span class="line"><span class="cl">1. cache是为了解决系统速度，而虚拟存储器解决的是主存容量。
+</span></span><span class="line"><span class="cl">2. cache全由硬件实现，对所有程序员透明；而虚拟存储器由OS和硬件实现，对系统程序员不透明。
+</span></span><span class="line"><span class="cl">3. CPU速度为cache的10倍，而主存速度为磁盘速度的100倍，故虚拟存储器系统不命中时对系统性能的影响更大。
+</span></span><span class="line"><span class="cl">4. cache不命中的时候主存能直接和CPU通信，把数据调入cache中。而虚拟存储器不命中时只能先将数据调入主存，不能直接和CPU通信。
+</span></span></code></pre></div><p>PS：指令和数据可以分别存储在不同的cache中，其特点是允许CPU在同一Cache存储周期内同时提取指令和数据，由于指令执行过程取值和取数据都有可能访问cache，这一特性可以保证不同的指令同时访存。</p>
 <h3 id="42-指令寻址方式">4.2 指令寻址方式</h3>
 <p>寻址方式是指寻找指令或操作数有效地址的方式，也就是确定本条指令的数据地址以及下一条要执行的指令地址的方法。分为指令寻址和数据寻址两大类。</p>
 <p>指令中的地址码字段叫做形式地址A，通过A结合寻址方式可以计算出操作数在存储器中的真实地址，称为有效地址EA。</p>
@@ -1105,8 +1105,8 @@ DMA方式是在外设与内存之间开辟一条“直接数据通道”，信�
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.96.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

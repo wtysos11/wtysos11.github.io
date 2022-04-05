@@ -30,9 +30,9 @@
         },"genre": "posts","keywords": "算法学习, KMP","wordcount":  1081 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0\/","datePublished": "2021-03-11T15:09:14+08:00","dateModified": "2021-03-11T15:09:14+08:00","publisher": {
             "@type": "Organization",
-            "name": "Carlo Wu"},"author": {
+            "name": "Timothy Wu"},"author": {
                 "@type": "Person",
-                "name": "Carlo Wu"
+                "name": "Timothy Wu"
             },"description": ""
     }
     </script></head>
@@ -107,7 +107,7 @@
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">KMP算法复习</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw"></i>算法</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw"></i>算法</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-03-11">2021-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1081 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -132,57 +132,57 @@
 <p>KMP的想法是充分利用适配信息，其next数组的定义如下：next[i]表示在<code>P[0:i]</code>子串中，使前k个字符恰好等于后k个字符的最大的k，且k不能等于i+1（否则就等于它自己了）
 这个数组的定义挺绕的，第一眼基本都不会反应过来，我就不插图了，只用文本表述一下（建议看图）。KMP的失配匹配，本质上就是把模版串向前伸，直到伸到前缀与后缀匹配为止，这实际上就是自己与自己匹配。因此这个k就是前缀与后缀相同的最大长度k。</p>
 <p>因此next数组可以用如下方法求得</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">getNxt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="n">i</span>
-    <span class="k">return</span> <span class="mi">0</span>
-
-<span class="n">nxt</span> <span class="o">=</span> <span class="p">[</span><span class="n">getNxt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))]</span>
-</code></pre></div><p>构建next数组的复杂度显然是O(m^2)的
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">getNxt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">i</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">nxt</span> <span class="o">=</span> <span class="p">[</span><span class="n">getNxt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))]</span>
+</span></span></code></pre></div><p>构建next数组的复杂度显然是O(m^2)的
 使用next数组加速匹配</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
-    <span class="n">tar</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 主串中将要匹配的位置</span>
-    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 子串中将要匹配的位置</span>
-    <span class="k">while</span> <span class="n">tar</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">tar</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">pos</span><span class="p">]:</span> <span class="c1"># 若两个字符相同，匹配成功，tar和pos各进一步</span>
-            <span class="n">tar</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="n">pos</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># 失配，且pos&gt;0，则next数组移动</span>
-            <span class="n">pos</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> <span class="c1"># pos[0]也失配了，则主串前进</span>
-            <span class="n">tar</span> <span class="o">+=</span> <span class="mi">1</span>
-        
-        <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span> <span class="c1"># pos走到了len(p)，匹配成功</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">tar</span><span class="o">-</span><span class="n">pos</span><span class="p">)</span> <span class="c1"># 输出起始地点</span>
-            <span class="n">pos</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 当作失配，继续下一次匹配</span>
-</code></pre></div><p>时间复杂度为O(n+m)，会比暴力方法小很多。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tar</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 主串中将要匹配的位置</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 子串中将要匹配的位置</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">tar</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">tar</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">pos</span><span class="p">]:</span> <span class="c1"># 若两个字符相同，匹配成功，tar和pos各进一步</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tar</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">pos</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># 失配，且pos&gt;0，则next数组移动</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span> <span class="c1"># pos[0]也失配了，则主串前进</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tar</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span> <span class="c1"># pos走到了len(p)，匹配成功</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">tar</span><span class="o">-</span><span class="n">pos</span><span class="p">)</span> <span class="c1"># 输出起始地点</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 当作失配，继续下一次匹配</span>
+</span></span></code></pre></div><p>时间复杂度为O(n+m)，会比暴力方法小很多。</p>
 <h2 id="快速求next数组">快速求next数组</h2>
 <p>这一步也是KMP的精髓，前面我没记错的话应该是MP算法，这一步是K算法。
 其核心在于让P自己与自己做匹配。</p>
 <p>next数组的定义是使得前缀与后缀的前k个字符相等的最大的k，隐含着一个匹配。因此可以考虑使用next数组递归求解自身</p>
 <p>现在考虑两种情况，对于给定字符串</p>
-<pre><code>a b c a b d d d a b c a b c
+<pre tabindex="0"><code>a b c a b d d d a b c a b c
 _________ X ----__________X
 0 0 0 1 2 0 0 0 1 2 3 4 5 ?
 </code></pre><p>前一个子串为A串，后一个子串为B串在两个X的地方。如果前者等于后者，则？处的next显然等于6，即next[i-1]+1，即得配的情况。
 但是现在是失配了，显然目标是要找到一个新的now，使得前面的前缀与后面的后缀相同，而且注意到前面的A串与B串是相同的，因此就可以利用起A串的next数组。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">nxt</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">def</span> <span class="nf">buildNxt</span><span class="p">():</span>
-    <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># next[0]一定是0</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#求解从1开始</span>
-    <span class="n">now</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="n">now</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span> <span class="c1">#第一种情况，得配，相前一位</span>
-            <span class="n">now</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">now</span><span class="p">)</span> <span class="c1"># 之前没有，我看了一下意思，我觉得要加上</span>
-        <span class="k">elif</span> <span class="n">now</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># 失配，需要缩小now</span>
-            <span class="n">now</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">now</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#now最小，此时肯定为0</span>
-            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
-</code></pre></div></div><div class="post-footer" id="post-footer">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">nxt</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">buildNxt</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># next[0]一定是0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#求解从1开始</span>
+</span></span><span class="line"><span class="cl">    <span class="n">now</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="n">now</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span> <span class="c1">#第一种情况，得配，相前一位</span>
+</span></span><span class="line"><span class="cl">            <span class="n">now</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">now</span><span class="p">)</span> <span class="c1"># 之前没有，我看了一下意思，我觉得要加上</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">now</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># 失配，需要缩小now</span>
+</span></span><span class="line"><span class="cl">            <span class="n">now</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">now</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#now最小，此时肯定为0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -212,8 +212,8 @@ _________ X ----__________X
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.96.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

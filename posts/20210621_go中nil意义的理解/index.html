@@ -30,9 +30,9 @@
         },"genre": "posts","keywords": "Go, 学习笔记, 实验报告","wordcount":  2592 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3\/","datePublished": "2021-06-21T14:28:14+08:00","dateModified": "2021-06-21T14:28:14+08:00","publisher": {
             "@type": "Organization",
-            "name": "Carlo Wu"},"author": {
+            "name": "Timothy Wu"},"author": {
                 "@type": "Person",
-                "name": "Carlo Wu"
+                "name": "Timothy Wu"
             },"description": ""
     }
     </script></head>
@@ -107,7 +107,7 @@
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Go中nil意义的理解</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Go基础学习</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Go基础学习</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-21">2021-06-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2592 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -134,313 +134,312 @@
 <p>就结果来说，nil是绝大部分Go中类型的初始值，包括指针、slices、maps、channels、functions等。而这其中，应该大部分类型最核心的实现都是指针，比如map和slice的本质就是指向内置对象的指针。</p>
 <p>而对于接口而言就更加复杂一些，这个其实涉及到了接口的底层实现，详情参考<a href="https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-interface/" target="_blank" rel="noopener noreffer">Go语言接口的原理-Go语言设计与实现</a>。</p>
 <p>接口包括了一个指向值的指针和一个指向类型的指针。对接口来说，接口为nil代表着(nil,nil)，因此如果声明了一个自珍并且把指针赋值给了接口，那类型就不为nil了（*Person,nil）</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Person</span> <span class="kd">struct</span><span class="p">{</span>
-	<span class="nx">a</span> <span class="kt">int</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Person</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span><span class="p">{</span>
-	<span class="k">return</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">a</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-	<span class="kd">var</span> <span class="nx">s</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Stringer</span><span class="c1">//接口类型，要求实现String()函数
-</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span><span class="c1">//true
-</span><span class="c1"></span>	<span class="kd">var</span> <span class="nx">p</span> <span class="o">*</span><span class="nx">Person</span>
-	<span class="nx">s</span> <span class="p">=</span> <span class="nx">p</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span><span class="c1">//false，尽管值依旧为nil，但是类型不为nil
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><h2 id="什么时候nil不是nil">什么时候nil不是nil</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Person</span> <span class="kd">struct</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">a</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Person</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">s</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Stringer</span><span class="c1">//接口类型，要求实现String()函数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span><span class="c1">//true
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kd">var</span> <span class="nx">p</span> <span class="o">*</span><span class="nx">Person</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">s</span> <span class="p">=</span> <span class="nx">p</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span><span class="c1">//false，尽管值依旧为nil，但是类型不为nil
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><h2 id="什么时候nil不是nil">什么时候nil不是nil</h2>
 <p>nil可以是一个nil接口/切片或者指针，是有实际意义的</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">doError</span> <span class="kd">struct</span><span class="p">{</span>
-	<span class="nx">errorMessage</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">err</span> <span class="nx">doError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span><span class="p">{</span>
-	<span class="k">return</span> <span class="nx">err</span><span class="p">.</span><span class="nx">errorMessage</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">do</span><span class="p">()</span> <span class="kt">error</span><span class="p">{</span> <span class="c1">//错误地方：返回了error接口类型。改正：应该返回具体类型 * doError
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">err</span> <span class="o">*</span><span class="nx">doError</span>
-    <span class="k">return</span> <span class="nx">err</span> <span class="c1">//类型*doError是空的，但是它实现了接口
-</span><span class="c1"></span><span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-    <span class="nx">err</span> <span class="o">:=</span> <span class="nf">do</span><span class="p">()</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span><span class="c1">//false
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><p>但如果使用了一个wrap方法，一样会出现问题。本质上是没有变化的。因此，最好不要返回具体的自定义错误类型（do not declare concrete error vars）。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">do</span><span class="p">()</span> <span class="o">*</span><span class="nx">doError</span><span class="p">{</span>
-    <span class="k">return</span> <span class="kc">nil</span>
-<span class="p">}</span>
-<span class="kd">func</span> <span class="nf">wrapDo</span><span class="p">()</span> <span class="kt">error</span><span class="p">{</span>
-    <span class="k">return</span> <span class="nf">do</span><span class="p">()</span> <span class="c1">//返回空的*doError类型
-</span><span class="c1"></span><span class="p">}</span>
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-    <span class="nx">err</span> <span class="o">:=</span> <span class="nf">wrapDo</span><span class="p">()</span>  <span class="c1">//error(*doError,nil)
-</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span> <span class="c1">// false
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><p>正确的方式是：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">doError</span> <span class="kd">struct</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">errorMessage</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">err</span> <span class="nx">doError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">err</span><span class="p">.</span><span class="nx">errorMessage</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">do</span><span class="p">()</span> <span class="kt">error</span><span class="p">{</span> <span class="c1">//错误地方：返回了error接口类型。改正：应该返回具体类型 * doError
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">err</span> <span class="o">*</span><span class="nx">doError</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">err</span> <span class="c1">//类型*doError是空的，但是它实现了接口
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="nf">do</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span><span class="c1">//false
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>但如果使用了一个wrap方法，一样会出现问题。本质上是没有变化的。因此，最好不要返回具体的自定义错误类型（do not declare concrete error vars）。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">do</span><span class="p">()</span> <span class="o">*</span><span class="nx">doError</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">wrapDo</span><span class="p">()</span> <span class="kt">error</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nf">do</span><span class="p">()</span> <span class="c1">//返回空的*doError类型
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="nf">wrapDo</span><span class="p">()</span>  <span class="c1">//error(*doError,nil)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">)</span> <span class="c1">// false
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>正确的方式是：</p>
 <ol>
 <li>不应该返回具体的错误类型，无论如何都应该返回接口error</li>
 <li>在过程中不要自行声明具体类型变量，无论如何都应该使用接口error变量
 这种感觉，就是具体类型只出现在自己的实现中而不出现在其他的任何地方。实际的错误使用</li>
 </ol>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">doRequest</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">RequestError</span><span class="p">{</span>
-        <span class="nx">StatusCode</span><span class="p">:</span> <span class="mi">503</span><span class="p">,</span>
-        <span class="nx">Err</span><span class="p">:</span>        <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;unavailable&#34;</span><span class="p">),</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>这样的东西来返回，这样即使是nil也与具体类型无关。这个是我个人的理解。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">doRequest</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">RequestError</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">StatusCode</span><span class="p">:</span> <span class="mi">503</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">Err</span><span class="p">:</span>        <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;unavailable&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这样的东西来返回，这样即使是nil也与具体类型无关。这个是我个人的理解。</p>
 <h2 id="nil的用法">nil的用法</h2>
 <p>在Go中，nil也是可以调用该类型的方法：（这个确实是有点出乎我的意料了，这个函数更接近于静态函数的实现而不是成员函数。这也说明了Go中的很多概念和OO中的概念不能很简单的一一对应）</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">person</span> <span class="kd">struct</span><span class="p">{}</span>
-<span class="kd">func</span> <span class="nf">sayHi</span><span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">person</span><span class="p">)</span>    <span class="p">{</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;hi&#34;</span><span class="p">)</span> <span class="p">}</span>
-<span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">person</span><span class="p">)</span> <span class="nf">sayHi</span><span class="p">()</span> <span class="p">{</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;hi&#34;</span><span class="p">)</span> <span class="p">}</span>
-<span class="kd">var</span> <span class="nx">p</span> <span class="o">*</span><span class="nx">person</span>
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-	<span class="nx">p</span><span class="p">.</span><span class="nf">sayHi</span><span class="p">()</span>                  <span class="c1">// hi
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><p>所以二叉树遍历可以有两个版本：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">//精细版本
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">tree</span><span class="p">)</span> <span class="nf">Sum</span><span class="p">()</span> <span class="kt">int</span><span class="p">{</span>
-    <span class="nx">sum</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">v</span>
-    <span class="k">if</span> <span class="nx">t</span><span class="p">.</span><span class="nx">l</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
-        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">l</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
-    <span class="p">}</span>
-
-    <span class="k">if</span> <span class="nx">t</span><span class="p">.</span><span class="nx">r</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
-        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">r</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">sum</span>
-<span class="p">}</span>
-<span class="c1">//简单版本
-</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">tree</span><span class="p">)</span> <span class="nf">Sum</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="nx">t</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">t</span><span class="p">.</span><span class="nx">v</span> <span class="o">+</span> <span class="nx">t</span><span class="p">.</span><span class="nx">l</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span> <span class="o">+</span> <span class="nx">t</span><span class="p">.</span><span class="nx">r</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
-<span class="p">}</span>
-</code></pre></div><p>后者同样是可行的。这虽然使得整体结构更加简洁了，但是我并不是很喜欢这种实现。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">person</span> <span class="kd">struct</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">sayHi</span><span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">person</span><span class="p">)</span>    <span class="p">{</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;hi&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">person</span><span class="p">)</span> <span class="nf">sayHi</span><span class="p">()</span> <span class="p">{</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;hi&#34;</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">p</span> <span class="o">*</span><span class="nx">person</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">p</span><span class="p">.</span><span class="nf">sayHi</span><span class="p">()</span>                  <span class="c1">// hi
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>所以二叉树遍历可以有两个版本：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">//精细版本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">tree</span><span class="p">)</span> <span class="nf">Sum</span><span class="p">()</span> <span class="kt">int</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">sum</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">v</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">t</span><span class="p">.</span><span class="nx">l</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">l</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">t</span><span class="p">.</span><span class="nx">r</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">t</span><span class="p">.</span><span class="nx">r</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">sum</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//简单版本
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">tree</span><span class="p">)</span> <span class="nf">Sum</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">t</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">t</span><span class="p">.</span><span class="nx">v</span> <span class="o">+</span> <span class="nx">t</span><span class="p">.</span><span class="nx">l</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span> <span class="o">+</span> <span class="nx">t</span><span class="p">.</span><span class="nx">r</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>后者同样是可行的。这虽然使得整体结构更加简洁了，但是我并不是很喜欢这种实现。</p>
 <h2 id="nil管道">nil管道</h2>
 <p>作者给了一个问题，一个很简单的应用，要求将两个channel的内容合并到一个channel中并输出。这两个channel将在发送一定数量后分别进行关闭</p>
 <p>一个很简单的想法是这样的：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">merge</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="o">&lt;-</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">){</span>
-	<span class="k">for</span><span class="p">{</span>
-		<span class="k">select</span><span class="p">{</span>
-			<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">:</span>
-				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
-			<span class="k">case</span> <span class="nx">v</span><span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">:</span>
-				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-	<span class="nx">a</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">b</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">counter</span> <span class="o">:=</span> <span class="mi">0</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="nx">t1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
-			<span class="o">&lt;-</span> <span class="nx">t1</span>
-			<span class="c1">//fmt.Println(&#34;record a&#34;,time.Now())
-</span><span class="c1"></span>			<span class="nx">a</span> <span class="o">&lt;-</span> <span class="mi">1</span>
-			<span class="nx">counter</span> <span class="o">++</span>
-			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">{</span>
-				<span class="nb">close</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="nx">t2</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
-			<span class="o">&lt;-</span> <span class="nx">t2</span>
-			<span class="c1">//fmt.Println(&#34;record b&#34;,time.Now())
-</span><span class="c1"></span>			<span class="nx">b</span> <span class="o">&lt;-</span> <span class="mi">2</span>
-			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">4</span><span class="p">{</span>
-				<span class="nb">close</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="k">select</span> <span class="p">{</span>
-				<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">out</span> <span class="p">:</span>
-					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="s">&#34; &#34;</span><span class="p">,</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="nf">merge</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>缺陷：看上去是没有问题的，但是实际上在通道关闭后会输出大量的0（因为被关闭的通道的特性，会给v赋值为0）。这是因为管道关闭后读取部分没有进行验证，依旧在获取数据，导致获得了大量无效的值。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">merge</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="o">&lt;-</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">select</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nx">v</span><span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">a</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">b</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">counter</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="o">&lt;-</span> <span class="nx">t1</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//fmt.Println(&#34;record a&#34;,time.Now())
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">a</span> <span class="o">&lt;-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">counter</span> <span class="o">++</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">close</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t2</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="o">&lt;-</span> <span class="nx">t2</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//fmt.Println(&#34;record b&#34;,time.Now())
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">b</span> <span class="o">&lt;-</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">4</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">close</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">out</span> <span class="p">:</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="s">&#34; &#34;</span><span class="p">,</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">merge</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>缺陷：看上去是没有问题的，但是实际上在通道关闭后会输出大量的0（因为被关闭的通道的特性，会给v赋值为0）。这是因为管道关闭后读取部分没有进行验证，依旧在获取数据，导致获得了大量无效的值。</p>
 <p>显然，可以通过从管道接收值的时候第二个值是否为true来判断管道有没有关上，但是这也并不管用</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">merge</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="o">&lt;-</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">){</span>
-	<span class="nx">aClosed</span> <span class="o">:=</span> <span class="kc">false</span>
-	<span class="nx">bClosed</span> <span class="o">:=</span> <span class="kc">false</span>
-	<span class="k">for</span> <span class="p">!</span><span class="nx">aClosed</span> <span class="o">||</span> <span class="p">!</span><span class="nx">bClosed</span><span class="p">{</span>
-		<span class="k">select</span><span class="p">{</span>
-			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">:</span>
-				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
-					<span class="nx">aClosed</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
-					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;a is now closed&#34;</span><span class="p">)</span>
-					<span class="k">continue</span>
-				<span class="p">}</span>
-				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
-			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">:</span>
-				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
-					<span class="nx">bClosed</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
-					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;b is now closed&#34;</span><span class="p">)</span>
-					<span class="k">continue</span>
-				<span class="p">}</span>
-				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-	<span class="nx">a</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">b</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">t</span> <span class="o">:=</span> <span class="mi">0</span>
-	<span class="nx">counter</span> <span class="o">:=</span> <span class="mi">0</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="nx">t1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
-			<span class="o">&lt;-</span> <span class="nx">t1</span>
-			<span class="c1">//fmt.Println(&#34;record a&#34;,time.Now())
-</span><span class="c1"></span>			<span class="nx">a</span> <span class="o">&lt;-</span> <span class="mi">1</span>
-			<span class="nx">counter</span> <span class="o">++</span>
-			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">{</span>
-				<span class="nb">close</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="nx">t2</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
-			<span class="o">&lt;-</span> <span class="nx">t2</span>
-			<span class="c1">//fmt.Println(&#34;record b&#34;,time.Now())
-</span><span class="c1"></span>			<span class="nx">b</span> <span class="o">&lt;-</span> <span class="mi">2</span>
-			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">10</span><span class="p">{</span>
-				<span class="nb">close</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="k">select</span> <span class="p">{</span>
-				<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">out</span> <span class="p">:</span>
-					<span class="nx">t</span> <span class="p">=</span> <span class="nx">v</span>
-					<span class="c1">//fmt.Println(v,&#34; &#34;,time.Now())
-</span><span class="c1"></span>			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="nf">merge</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>（这里需要稍微增大关闭的间隔，不然真的会同步关闭）
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">merge</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="o">&lt;-</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">aClosed</span> <span class="o">:=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bClosed</span> <span class="o">:=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">!</span><span class="nx">aClosed</span> <span class="o">||</span> <span class="p">!</span><span class="nx">bClosed</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">select</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">aClosed</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;a is now closed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">					<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">bClosed</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;b is now closed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">					<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">a</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">b</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">t</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">counter</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="o">&lt;-</span> <span class="nx">t1</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//fmt.Println(&#34;record a&#34;,time.Now())
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">a</span> <span class="o">&lt;-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">counter</span> <span class="o">++</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">close</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t2</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="o">&lt;-</span> <span class="nx">t2</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//fmt.Println(&#34;record b&#34;,time.Now())
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">b</span> <span class="o">&lt;-</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">10</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">close</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">out</span> <span class="p">:</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">t</span> <span class="p">=</span> <span class="nx">v</span>
+</span></span><span class="line"><span class="cl">					<span class="c1">//fmt.Println(v,&#34; &#34;,time.Now())
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">merge</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>（这里需要稍微增大关闭的间隔，不然真的会同步关闭）
 问题：结果显示，&ldquo;a is now closed&quot;被大量输出，说明已经被关闭的管道a被反复读取且没有办法阻塞，正常情况下这可能会导致程序崩溃。
 PS：最后程序报错<code>panic: send on closed channel</code>显示向a中发送了数据，并结束（这个是go协程中忘记写退出了）。
 该问题的根源在于，已经关闭的管道仍然是可以读取的（只是不能写入，向一个已经关闭的管道中写入数据会引起panic）。此时如果有两个管道的话，单独关闭一个就会造成另外一个管道无法阻塞并被大量调用。</p>
 <p>最好的方法是设置关闭的管道为nil</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="p">(</span>
-	<span class="s">&#34;fmt&#34;</span>
-	<span class="s">&#34;time&#34;</span>
-<span class="p">)</span>
-
-<span class="kd">func</span> <span class="nf">merge</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="o">&lt;-</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">){</span>
-	<span class="k">for</span> <span class="nx">a</span><span class="o">!=</span><span class="kc">nil</span> <span class="o">||</span> <span class="nx">b</span><span class="o">!=</span><span class="kc">nil</span><span class="p">{</span>
-		<span class="k">select</span><span class="p">{</span>
-			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">:</span>
-				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
-					<span class="nx">a</span> <span class="p">=</span> <span class="kc">nil</span>
-					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;a is now closed&#34;</span><span class="p">)</span>
-					<span class="k">continue</span>
-				<span class="p">}</span>
-				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
-			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">:</span>
-				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
-					<span class="nx">b</span> <span class="p">=</span> <span class="kc">nil</span>
-					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;b is now closed&#34;</span><span class="p">)</span>
-					<span class="k">continue</span>
-				<span class="p">}</span>
-				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-	<span class="nx">a</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">b</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-	<span class="nx">t</span> <span class="o">:=</span> <span class="mi">0</span>
-	<span class="nx">counter</span> <span class="o">:=</span> <span class="mi">0</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="nx">t1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
-			<span class="o">&lt;-</span> <span class="nx">t1</span>
-			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;record a&#34;</span><span class="p">,</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
-			<span class="nx">a</span> <span class="o">&lt;-</span> <span class="mi">1</span>
-			<span class="nx">counter</span> <span class="o">++</span>
-			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">2</span><span class="p">{</span>
-				<span class="nb">close</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-				<span class="k">return</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="nx">t2</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
-			<span class="o">&lt;-</span> <span class="nx">t2</span>
-			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;record b&#34;</span><span class="p">,</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
-			<span class="nx">b</span> <span class="o">&lt;-</span> <span class="mi">2</span>
-			<span class="nx">counter</span> <span class="o">++</span>
-			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">3</span><span class="p">{</span>
-				<span class="nb">close</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
-				<span class="k">return</span>
-			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
-		<span class="k">for</span><span class="p">{</span>
-			<span class="k">select</span> <span class="p">{</span>
-				<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">out</span> <span class="p">:</span>
-					<span class="nx">t</span> <span class="p">=</span> <span class="nx">v</span>
-					<span class="c1">//fmt.Println(v,&#34; &#34;,time.Now())
-</span><span class="c1"></span>			<span class="p">}</span>
-		<span class="p">}</span>
-	<span class="p">}()</span>
-	<span class="nf">merge</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span>
-<span class="p">}</span>
-
-</code></pre></div><h2 id="nil-function">nil function</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;time&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">merge</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="o">&lt;-</span> <span class="kd">chan</span> <span class="kt">int</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">a</span><span class="o">!=</span><span class="kc">nil</span> <span class="o">||</span> <span class="nx">b</span><span class="o">!=</span><span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">select</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">a</span> <span class="p">=</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;a is now closed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">					<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nx">v</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">b</span> <span class="p">=</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;b is now closed&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">					<span class="k">continue</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">out</span><span class="o">&lt;-</span><span class="nx">v</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">a</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">b</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">t</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">counter</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="o">&lt;-</span> <span class="nx">t1</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;record a&#34;</span><span class="p">,</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">a</span> <span class="o">&lt;-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">counter</span> <span class="o">++</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">2</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">close</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">t2</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="o">&lt;-</span> <span class="nx">t2</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;record b&#34;</span><span class="p">,</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">b</span> <span class="o">&lt;-</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">counter</span> <span class="o">++</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">counter</span> <span class="p">&gt;</span> <span class="mi">3</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">close</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">case</span> <span class="nx">v</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">out</span> <span class="p">:</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">t</span> <span class="p">=</span> <span class="nx">v</span>
+</span></span><span class="line"><span class="cl">					<span class="c1">//fmt.Println(v,&#34; &#34;,time.Now())
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">merge</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="nil-function">nil function</h2>
 <p>对于函数来说，可以选择给它赋值为nil来表示默认值
 比如</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">doSum</span><span class="p">(</span><span class="nx">s</span> <span class="nx">Summer</span><span class="p">)</span> <span class="kt">int</span><span class="p">{</span>
-    <span class="k">if</span> <span class="nx">s</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">{</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
-<span class="p">}</span>
-<span class="c1">//Summer是接口，t是具体的实现类型，但上述方法都是可以的。即使是传入具体类型(*tree,nil)也不会报错，因为值为nil的具体类型的方法依旧可以被调用
-</span></code></pre></div><p>在HTTP中，<code>http.HandleFunc('localhost:8080',nil)</code>就是这样的实现。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">doSum</span><span class="p">(</span><span class="nx">s</span> <span class="nx">Summer</span><span class="p">)</span> <span class="kt">int</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">s</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nf">Sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//Summer是接口，t是具体的实现类型，但上述方法都是可以的。即使是传入具体类型(*tree,nil)也不会报错，因为值为nil的具体类型的方法依旧可以被调用
+</span></span></span></code></pre></div><p>在HTTP中，<code>http.HandleFunc('localhost:8080',nil)</code>就是这样的实现。</p>
 <h2 id="nil-map">nil map</h2>
 <p>nil的map是不能够赋值的，因此对于需要写入的map无论何时都应该判断是否为nil，不然会直接panic退出：</p>
-<pre><code>func main(){
+<pre tabindex="0"><code>func main(){
    var s map[string]bool
    fmt.Println(s==nil) //true
-   s[&quot;true&quot;] = true //panic: assignment to entry in nil map
+   s[&#34;true&#34;] = true //panic: assignment to entry in nil map
    fmt.Println(len(s))
 }
 nil的map的读取会直接任意成功。像下面的代码，并不会如预期一样输出fail，而是会输出`pass through`+v的值false。
 func main(){
    var s map[string]bool
-   if v,ok := s[&quot;test&quot;]; ok{
-      fmt.Println(&quot;fail&quot;)
+   if v,ok := s[&#34;test&#34;]; ok{
+      fmt.Println(&#34;fail&#34;)
    }else{
-      fmt.Println(&quot;pass through&quot;)
+      fmt.Println(&#34;pass through&#34;)
       fmt.Println(v)
    }
 }
@@ -480,8 +479,8 @@ func main(){
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.96.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 

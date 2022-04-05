@@ -30,9 +30,9 @@
         },"genre": "posts","keywords": "kubernetes, istio, 实验报告","wordcount":  3996 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85\/","datePublished": "2020-10-13T12:37:13+08:00","dateModified": "2020-10-13T12:37:13+08:00","publisher": {
             "@type": "Organization",
-            "name": "Carlo Wu"},"author": {
+            "name": "Timothy Wu"},"author": {
                 "@type": "Person",
-                "name": "Carlo Wu"
+                "name": "Timothy Wu"
             },"description": ""
     }
     </script></head>
@@ -107,7 +107,7 @@
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">kubernetes虚拟机多级环境部署与Istio的安装</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Carlo Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/"><i class="far fa-folder fa-fw"></i>操作实践</a></span></div>
+            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/"><i class="far fa-folder fa-fw"></i>操作实践</a></span></div>
             <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-13">2020-10-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3996 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
@@ -182,7 +182,7 @@
 <h2 id="下载kubeadm所需镜像">下载kubeadm所需镜像</h2>
 <h3 id="从阿里云下载">从阿里云下载</h3>
 <p>首先使用<code>kubeadm config images list</code>列出kubeadm所需要的所有镜像</p>
-<pre><code>k8s.gcr.io/kube-apiserver:v1.19.2
+<pre tabindex="0"><code>k8s.gcr.io/kube-apiserver:v1.19.2
 k8s.gcr.io/kube-controller-manager:v1.19.2
 k8s.gcr.io/kube-scheduler:v1.19.2
 k8s.gcr.io/kube-proxy:v1.19.2
@@ -191,30 +191,30 @@ k8s.gcr.io/etcd:3.4.13-0
 k8s.gcr.io/coredns:1.7.0
 </code></pre><p>即所有的系统镜像为v1.19.2版本，pause3.2,etcd3.4.13,coredns1.7.0</p>
 <p><a href="https://juejin.im/post/6844903908326932493" target="_blank" rel="noopener noreffer">这篇博客</a>提供了一个脚本</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#########################################################################</span>
-<span class="c1"># File Name: pull_master_image.sh</span>
-<span class="c1"># Description: pull_master_image.sh</span>
-<span class="c1"># Author: zhangyi</span>
-<span class="c1"># mail: 450575982@qq.com</span>
-<span class="c1"># Created Time: 2019-07-31 21:38:14</span>
-<span class="c1">#########################################################################</span>
-<span class="c1">#!/bin/bash</span>
-<span class="nv">kube_version</span><span class="o">=</span>:v1.19.2
-<span class="nv">kube_images</span><span class="o">=(</span>kube-proxy kube-scheduler kube-controller-manager kube-apiserver<span class="o">)</span>
-<span class="nv">addon_images</span><span class="o">=(</span>etcd:3.4.13-0 coredns:1.7.0 pause:3.2<span class="o">)</span>
-
-<span class="k">for</span> imageName in <span class="si">${</span><span class="nv">kube_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
-  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
-  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span> k8s.gcr.io/<span class="nv">$imageName$kube_version</span>
-  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
-<span class="k">done</span>
-
-<span class="k">for</span> imageName in <span class="si">${</span><span class="nv">addon_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
-  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
-  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span> k8s.gcr.io/<span class="nv">$imageName</span>
-  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
-<span class="k">done</span>
-</code></pre></div><p>这个脚本应该是没有问题的，有可能因为阿里云那边的容器镜像发生改变导致脚本需要变化，但大体思路是没错的。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#########################################################################</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># File Name: pull_master_image.sh</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Description: pull_master_image.sh</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Author: zhangyi</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># mail: 450575982@qq.com</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Created Time: 2019-07-31 21:38:14</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#########################################################################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#!/bin/bash</span>
+</span></span><span class="line"><span class="cl"><span class="nv">kube_version</span><span class="o">=</span>:v1.19.2
+</span></span><span class="line"><span class="cl"><span class="nv">kube_images</span><span class="o">=(</span>kube-proxy kube-scheduler kube-controller-manager kube-apiserver<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">addon_images</span><span class="o">=(</span>etcd:3.4.13-0 coredns:1.7.0 pause:3.2<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> imageName in <span class="si">${</span><span class="nv">kube_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
+</span></span><span class="line"><span class="cl">  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span> k8s.gcr.io/<span class="nv">$imageName$kube_version</span>
+</span></span><span class="line"><span class="cl">  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>-amd64<span class="nv">$kube_version</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> imageName in <span class="si">${</span><span class="nv">addon_images</span><span class="p">[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
+</span></span><span class="line"><span class="cl">  docker image tag registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span> k8s.gcr.io/<span class="nv">$imageName</span>
+</span></span><span class="line"><span class="cl">  docker image rm registry.cn-hangzhou.aliyuncs.com/google_containers/<span class="nv">$imageName</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></div><p>这个脚本应该是没有问题的，有可能因为阿里云那边的容器镜像发生改变导致脚本需要变化，但大体思路是没错的。</p>
 <p>可能的错误信息：</p>
 <ul>
 <li>如果使用<code>sh</code>命令运行此脚本，可能会遇到<code>pullImage.sh: 3: pullImage.sh: Syntax error: &quot;(&quot; unexpected</code>。参考<a href="https://unix.stackexchange.com/questions/253892/syntax-error-unexpected-when-creating-an-array" target="_blank" rel="noopener noreffer">这篇回答</a>，该问题的原因是因为使用<code>sh xx.sh</code>的时候是使用sh shell，是没有数组的。正确的执行方式是<code>bash xx.sh</code>或者如回答中一样使用<code>./xx.sh</code>(需要注意权限)</li>
@@ -239,81 +239,81 @@ k8s.gcr.io/coredns:1.7.0
 </ul>
 <p>本文采用flannel，一个很重要的原因是因为服务器的子网与pod的子网部分重叠，可能存在风险，以及flannel似乎更容易部署一些。</p>
 <p>产生的日志：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">stack@workflow-1:~/k8sTest$ sudo kubeadm init --apiserver-advertise-address<span class="o">=</span>192.168.1.1 --pod-network-cidr<span class="o">=</span>10.244.0.0/16 --token-ttl<span class="o">=</span><span class="m">0</span>
-W1012 19:18:16.455833   <span class="m">86405</span> configset.go:348<span class="o">]</span> WARNING: kubeadm cannot validate component configs <span class="k">for</span> API groups <span class="o">[</span>kubelet.config.k8s.io kubeproxy.config.k8s.io<span class="o">]</span>
-<span class="o">[</span>init<span class="o">]</span> Using Kubernetes version: v1.19.2
-<span class="o">[</span>preflight<span class="o">]</span> Running pre-flight checks
-<span class="o">[</span>preflight<span class="o">]</span> Pulling images required <span class="k">for</span> setting up a Kubernetes cluster
-<span class="o">[</span>preflight<span class="o">]</span> This might take a minute or two, depending on the speed of your internet connection
-<span class="o">[</span>preflight<span class="o">]</span> You can also perform this action in beforehand using <span class="s1">&#39;kubeadm config images pull&#39;</span>
-<span class="o">[</span>certs<span class="o">]</span> Using certificateDir folder <span class="s2">&#34;/etc/kubernetes/pki&#34;</span>
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;ca&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> apiserver serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local workflow-1<span class="o">]</span> and IPs <span class="o">[</span>10.96.0.1 192.168.1.1<span class="o">]</span>
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver-kubelet-client&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;front-proxy-ca&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;front-proxy-client&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/ca&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/server&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> etcd/server serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>localhost workflow-1<span class="o">]</span> and IPs <span class="o">[</span>192.168.1.1 127.0.0.1 ::1<span class="o">]</span>
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/peer&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> etcd/peer serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>localhost workflow-1<span class="o">]</span> and IPs <span class="o">[</span>192.168.1.1 127.0.0.1 ::1<span class="o">]</span>
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/healthcheck-client&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver-etcd-client&#34;</span> certificate and key
-<span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;sa&#34;</span> key and public key
-<span class="o">[</span>kubeconfig<span class="o">]</span> Using kubeconfig folder <span class="s2">&#34;/etc/kubernetes&#34;</span>
-<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;admin.conf&#34;</span> kubeconfig file
-<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;kubelet.conf&#34;</span> kubeconfig file
-<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;controller-manager.conf&#34;</span> kubeconfig file
-<span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;scheduler.conf&#34;</span> kubeconfig file
-<span class="o">[</span>kubelet-start<span class="o">]</span> Writing kubelet environment file with flags to file <span class="s2">&#34;/var/lib/kubelet/kubeadm-flags.env&#34;</span>
-<span class="o">[</span>kubelet-start<span class="o">]</span> Writing kubelet configuration to file <span class="s2">&#34;/var/lib/kubelet/config.yaml&#34;</span>
-<span class="o">[</span>kubelet-start<span class="o">]</span> Starting the kubelet
-<span class="o">[</span>control-plane<span class="o">]</span> Using manifest folder <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>
-<span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-apiserver&#34;</span>
-<span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-controller-manager&#34;</span>
-<span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-scheduler&#34;</span>
-<span class="o">[</span>etcd<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="nb">local</span> etcd in <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>
-<span class="o">[</span>wait-control-plane<span class="o">]</span> Waiting <span class="k">for</span> the kubelet to boot up the control plane as static Pods from directory <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>. This can take up to 4m0s
-<span class="o">[</span>apiclient<span class="o">]</span> All control plane components are healthy after 26.502830 seconds
-<span class="o">[</span>upload-config<span class="o">]</span> Storing the configuration used in ConfigMap <span class="s2">&#34;kubeadm-config&#34;</span> in the <span class="s2">&#34;kube-system&#34;</span> Namespace
-<span class="o">[</span>kubelet<span class="o">]</span> Creating a ConfigMap <span class="s2">&#34;kubelet-config-1.19&#34;</span> in namespace kube-system with the configuration <span class="k">for</span> the kubelets in the cluster
-<span class="o">[</span>upload-certs<span class="o">]</span> Skipping phase. Please see --upload-certs
-<span class="o">[</span>mark-control-plane<span class="o">]</span> Marking the node workflow-1 as control-plane by adding the label <span class="s2">&#34;node-role.kubernetes.io/master=&#39;&#39;&#34;</span>
-<span class="o">[</span>mark-control-plane<span class="o">]</span> Marking the node workflow-1 as control-plane by adding the taints <span class="o">[</span>node-role.kubernetes.io/master:NoSchedule<span class="o">]</span>
-<span class="o">[</span>bootstrap-token<span class="o">]</span> Using token: a8svth.m8zu4mdj60m6zjzd
-<span class="o">[</span>bootstrap-token<span class="o">]</span> Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
-<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow Node Bootstrap tokens to get nodes
-<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order <span class="k">for</span> nodes to get long term certificate credentials
-<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
-<span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow certificate rotation <span class="k">for</span> all node client certificates in the cluster
-<span class="o">[</span>bootstrap-token<span class="o">]</span> Creating the <span class="s2">&#34;cluster-info&#34;</span> ConfigMap in the <span class="s2">&#34;kube-public&#34;</span> namespace
-<span class="o">[</span>kubelet-finalize<span class="o">]</span> Updating <span class="s2">&#34;/etc/kubernetes/kubelet.conf&#34;</span> to point to a rotatable kubelet client certificate and key
-<span class="o">[</span>addons<span class="o">]</span> Applied essential addon: CoreDNS
-<span class="o">[</span>addons<span class="o">]</span> Applied essential addon: kube-proxy
-
-Your Kubernetes control-plane has initialized successfully!
-
-To start using your cluster, you need to run the following as a regular user:
-
-  mkdir -p <span class="nv">$HOME</span>/.kube
-  sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
-  sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
-
-You should now deploy a pod network to the cluster.
-Run <span class="s2">&#34;kubectl apply -f [podnetwork].yaml&#34;</span> with one of the options listed at:
-  https://kubernetes.io/docs/concepts/cluster-administration/addons/
-
-Then you can join any number of worker nodes by running the following on each as root:
-
-kubeadm join 192.168.1.1:6443 --token a8svth.m8zu4mdj60m6zjzd <span class="se">\
-</span><span class="se"></span>    --discovery-token-ca-cert-hash sha256:a98361e5d879fe14734236285b8ad28d0a4d3d1470bd424194011bee41ee8c9e 
-</code></pre></div><p>在看到如上的命令之后，需要按照它的说明执行这三条命令，其作用是将kubectl所需要的配置文件拉到用户目录下并设置访问权限。（不执行的话kubectl是无法正常工作的）</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">mkdir -p <span class="nv">$HOME</span>/.kube
-sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
-sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
-</code></pre></div><p>之后，执行<code>kubectl get pods --all-namespaces</code>(或者<code>-n=kube-system</code>)，就可以看到kubernetes的系统节点了。</p>
-<pre><code>NAME                                 READY   STATUS    RESTARTS   AGE
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">stack@workflow-1:~/k8sTest$ sudo kubeadm init --apiserver-advertise-address<span class="o">=</span>192.168.1.1 --pod-network-cidr<span class="o">=</span>10.244.0.0/16 --token-ttl<span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl">W1012 19:18:16.455833   <span class="m">86405</span> configset.go:348<span class="o">]</span> WARNING: kubeadm cannot validate component configs <span class="k">for</span> API groups <span class="o">[</span>kubelet.config.k8s.io kubeproxy.config.k8s.io<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>init<span class="o">]</span> Using Kubernetes version: v1.19.2
+</span></span><span class="line"><span class="cl"><span class="o">[</span>preflight<span class="o">]</span> Running pre-flight checks
+</span></span><span class="line"><span class="cl"><span class="o">[</span>preflight<span class="o">]</span> Pulling images required <span class="k">for</span> setting up a Kubernetes cluster
+</span></span><span class="line"><span class="cl"><span class="o">[</span>preflight<span class="o">]</span> This might take a minute or two, depending on the speed of your internet connection
+</span></span><span class="line"><span class="cl"><span class="o">[</span>preflight<span class="o">]</span> You can also perform this action in beforehand using <span class="s1">&#39;kubeadm config images pull&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Using certificateDir folder <span class="s2">&#34;/etc/kubernetes/pki&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;ca&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> apiserver serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local workflow-1<span class="o">]</span> and IPs <span class="o">[</span>10.96.0.1 192.168.1.1<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver-kubelet-client&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;front-proxy-ca&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;front-proxy-client&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/ca&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/server&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> etcd/server serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>localhost workflow-1<span class="o">]</span> and IPs <span class="o">[</span>192.168.1.1 127.0.0.1 ::1<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/peer&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> etcd/peer serving cert is signed <span class="k">for</span> DNS names <span class="o">[</span>localhost workflow-1<span class="o">]</span> and IPs <span class="o">[</span>192.168.1.1 127.0.0.1 ::1<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;etcd/healthcheck-client&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;apiserver-etcd-client&#34;</span> certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>certs<span class="o">]</span> Generating <span class="s2">&#34;sa&#34;</span> key and public key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubeconfig<span class="o">]</span> Using kubeconfig folder <span class="s2">&#34;/etc/kubernetes&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;admin.conf&#34;</span> kubeconfig file
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;kubelet.conf&#34;</span> kubeconfig file
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;controller-manager.conf&#34;</span> kubeconfig file
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubeconfig<span class="o">]</span> Writing <span class="s2">&#34;scheduler.conf&#34;</span> kubeconfig file
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubelet-start<span class="o">]</span> Writing kubelet environment file with flags to file <span class="s2">&#34;/var/lib/kubelet/kubeadm-flags.env&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubelet-start<span class="o">]</span> Writing kubelet configuration to file <span class="s2">&#34;/var/lib/kubelet/config.yaml&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubelet-start<span class="o">]</span> Starting the kubelet
+</span></span><span class="line"><span class="cl"><span class="o">[</span>control-plane<span class="o">]</span> Using manifest folder <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-apiserver&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-controller-manager&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>control-plane<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="s2">&#34;kube-scheduler&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>etcd<span class="o">]</span> Creating static Pod manifest <span class="k">for</span> <span class="nb">local</span> etcd in <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>wait-control-plane<span class="o">]</span> Waiting <span class="k">for</span> the kubelet to boot up the control plane as static Pods from directory <span class="s2">&#34;/etc/kubernetes/manifests&#34;</span>. This can take up to 4m0s
+</span></span><span class="line"><span class="cl"><span class="o">[</span>apiclient<span class="o">]</span> All control plane components are healthy after 26.502830 seconds
+</span></span><span class="line"><span class="cl"><span class="o">[</span>upload-config<span class="o">]</span> Storing the configuration used in ConfigMap <span class="s2">&#34;kubeadm-config&#34;</span> in the <span class="s2">&#34;kube-system&#34;</span> Namespace
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubelet<span class="o">]</span> Creating a ConfigMap <span class="s2">&#34;kubelet-config-1.19&#34;</span> in namespace kube-system with the configuration <span class="k">for</span> the kubelets in the cluster
+</span></span><span class="line"><span class="cl"><span class="o">[</span>upload-certs<span class="o">]</span> Skipping phase. Please see --upload-certs
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mark-control-plane<span class="o">]</span> Marking the node workflow-1 as control-plane by adding the label <span class="s2">&#34;node-role.kubernetes.io/master=&#39;&#39;&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>mark-control-plane<span class="o">]</span> Marking the node workflow-1 as control-plane by adding the taints <span class="o">[</span>node-role.kubernetes.io/master:NoSchedule<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>bootstrap-token<span class="o">]</span> Using token: a8svth.m8zu4mdj60m6zjzd
+</span></span><span class="line"><span class="cl"><span class="o">[</span>bootstrap-token<span class="o">]</span> Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+</span></span><span class="line"><span class="cl"><span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow Node Bootstrap tokens to get nodes
+</span></span><span class="line"><span class="cl"><span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order <span class="k">for</span> nodes to get long term certificate credentials
+</span></span><span class="line"><span class="cl"><span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+</span></span><span class="line"><span class="cl"><span class="o">[</span>bootstrap-token<span class="o">]</span> configured RBAC rules to allow certificate rotation <span class="k">for</span> all node client certificates in the cluster
+</span></span><span class="line"><span class="cl"><span class="o">[</span>bootstrap-token<span class="o">]</span> Creating the <span class="s2">&#34;cluster-info&#34;</span> ConfigMap in the <span class="s2">&#34;kube-public&#34;</span> namespace
+</span></span><span class="line"><span class="cl"><span class="o">[</span>kubelet-finalize<span class="o">]</span> Updating <span class="s2">&#34;/etc/kubernetes/kubelet.conf&#34;</span> to point to a rotatable kubelet client certificate and key
+</span></span><span class="line"><span class="cl"><span class="o">[</span>addons<span class="o">]</span> Applied essential addon: CoreDNS
+</span></span><span class="line"><span class="cl"><span class="o">[</span>addons<span class="o">]</span> Applied essential addon: kube-proxy
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Your Kubernetes control-plane has initialized successfully!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To start using your cluster, you need to run the following as a regular user:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  mkdir -p <span class="nv">$HOME</span>/.kube
+</span></span><span class="line"><span class="cl">  sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+</span></span><span class="line"><span class="cl">  sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You should now deploy a pod network to the cluster.
+</span></span><span class="line"><span class="cl">Run <span class="s2">&#34;kubectl apply -f [podnetwork].yaml&#34;</span> with one of the options listed at:
+</span></span><span class="line"><span class="cl">  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Then you can join any number of worker nodes by running the following on each as root:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kubeadm join 192.168.1.1:6443 --token a8svth.m8zu4mdj60m6zjzd <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    --discovery-token-ca-cert-hash sha256:a98361e5d879fe14734236285b8ad28d0a4d3d1470bd424194011bee41ee8c9e 
+</span></span></code></pre></div><p>在看到如上的命令之后，需要按照它的说明执行这三条命令，其作用是将kubectl所需要的配置文件拉到用户目录下并设置访问权限。（不执行的话kubectl是无法正常工作的）</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p <span class="nv">$HOME</span>/.kube
+</span></span><span class="line"><span class="cl">sudo cp -i /etc/kubernetes/admin.conf <span class="nv">$HOME</span>/.kube/config
+</span></span><span class="line"><span class="cl">sudo chown <span class="k">$(</span>id -u<span class="k">)</span>:<span class="k">$(</span>id -g<span class="k">)</span> <span class="nv">$HOME</span>/.kube/config
+</span></span></code></pre></div><p>之后，执行<code>kubectl get pods --all-namespaces</code>(或者<code>-n=kube-system</code>)，就可以看到kubernetes的系统节点了。</p>
+<pre tabindex="0"><code>NAME                                 READY   STATUS    RESTARTS   AGE
 coredns-f9fd979d6-7m7bb              1/1     Running   0          2m26s
 coredns-f9fd979d6-9xr4b              1/1     Running   0          2m26s
 etcd-workflow-1                      1/1     Running   0          2m30s
@@ -325,16 +325,16 @@ kube-scheduler-workflow-1            1/1     Running   0          2m30s
 <h3 id="安装flannel">安装flannel</h3>
 <p>参考<a href="https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md" target="_blank" rel="noopener noreffer">flannel官方教程</a>，对于1.7版本以上的kubernetes，可以直接用<code>kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</code>。当然，国内网络，懂得都懂，我就基本上没有直连成功过。直接手动弄下来搞也可以。</p>
 <p>日志记录</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">stack@workflow-1:~/k8sTest$ kubectl apply -f kube-flannel.yml 
-podsecuritypolicy.policy/psp.flannel.unprivileged created
-Warning: rbac.authorization.k8s.io/v1beta1 ClusterRole is deprecated in v1.17+, unavailable in v1.22+<span class="p">;</span> use rbac.authorization.k8s.io/v1 ClusterRole
-clusterrole.rbac.authorization.k8s.io/flannel created
-Warning: rbac.authorization.k8s.io/v1beta1 ClusterRoleBinding is deprecated in v1.17+, unavailable in v1.22+<span class="p">;</span> use rbac.authorization.k8s.io/v1 ClusterRoleBinding
-clusterrolebinding.rbac.authorization.k8s.io/flannel created
-serviceaccount/flannel created
-configmap/kube-flannel-cfg created
-daemonset.apps/kube-flannel-ds created
-</code></pre></div><p>可能出现的问题：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">stack@workflow-1:~/k8sTest$ kubectl apply -f kube-flannel.yml 
+</span></span><span class="line"><span class="cl">podsecuritypolicy.policy/psp.flannel.unprivileged created
+</span></span><span class="line"><span class="cl">Warning: rbac.authorization.k8s.io/v1beta1 ClusterRole is deprecated in v1.17+, unavailable in v1.22+<span class="p">;</span> use rbac.authorization.k8s.io/v1 ClusterRole
+</span></span><span class="line"><span class="cl">clusterrole.rbac.authorization.k8s.io/flannel created
+</span></span><span class="line"><span class="cl">Warning: rbac.authorization.k8s.io/v1beta1 ClusterRoleBinding is deprecated in v1.17+, unavailable in v1.22+<span class="p">;</span> use rbac.authorization.k8s.io/v1 ClusterRoleBinding
+</span></span><span class="line"><span class="cl">clusterrolebinding.rbac.authorization.k8s.io/flannel created
+</span></span><span class="line"><span class="cl">serviceaccount/flannel created
+</span></span><span class="line"><span class="cl">configmap/kube-flannel-cfg created
+</span></span><span class="line"><span class="cl">daemonset.apps/kube-flannel-ds created
+</span></span></code></pre></div><p>可能出现的问题：</p>
 <ul>
 <li>flannel需要镜像<code>quay.io/coreos/flannel:v0.13.0-rc2</code>，之前的时候我的虚拟机是无法直接从<code>quay.io</code>下拉镜像，因此有可能需要曲线救国。</li>
 </ul>
@@ -342,7 +342,7 @@ daemonset.apps/kube-flannel-ds created
 <p>将主节点装完之后就可以安装其他节点了（也可以在之前一起安装）。其他节点的前置条件需要像主节点一样，包括系统配置、软件安装等等。</p>
 <p>比较麻烦的一点是从节点也需要安装那一些镜像，如果我没有理解错的话。这就需要很久了……</p>
 <p>命令就是之前弹出来的那个</p>
-<pre><code>sudo kubeadm join 192.168.1.1:6443 --token a8svth.m8zu4mdj60m6zjzd \
+<pre tabindex="0"><code>sudo kubeadm join 192.168.1.1:6443 --token a8svth.m8zu4mdj60m6zjzd \
     --discovery-token-ca-cert-hash sha256:a98361e5d879fe14734236285b8ad28d0a4d3d1470bd424194011bee41ee8c9e 
 </code></pre><p>可能出现的问题：</p>
 <ul>
@@ -359,7 +359,7 @@ daemonset.apps/kube-flannel-ds created
 <li>把文件夹下的<code>istioctl</code>所在目录加入PATH变量之中。（我没有把istioctl丢到<code>/usr/bin</code>下，因为它这个安装过程有可能要用到其他目录中的文件）</li>
 <li>执行<code>istioctl manifest install --set profile=demo</code></li>
 </ul>
-<pre><code>stack@workflow-1:~/k8sTest/istio-1.7.3/bin$ istioctl manifest install --set profile=demo
+<pre tabindex="0"><code>stack@workflow-1:~/k8sTest/istio-1.7.3/bin$ istioctl manifest install --set profile=demo
 Detected that your cluster does not support third party JWT authentication. Falling back to less secure first party JWT. See https://istio.io/docs/ops/best-practices/security/#configure-third-party-service-account-tokens for details.
 ✔ Istio core installed                                                               
 ✔ Istiod installed                                                                   
@@ -367,7 +367,7 @@ Detected that your cluster does not support third party JWT authentication. Fall
 ✔ Ingress gateways installed                                                         
 ✔ Installation complete 
 </code></pre><p>结果：</p>
-<pre><code>stack@workflow-1:~/k8sTest/istio-1.7.3/bin$ kubectl get pods -n=istio-system
+<pre tabindex="0"><code>stack@workflow-1:~/k8sTest/istio-1.7.3/bin$ kubectl get pods -n=istio-system
 NAME                                    READY   STATUS    RESTARTS   AGE
 istio-egressgateway-8556f8c8dc-rj922    1/1     Running   0          2m42s
 istio-ingressgateway-589d868684-pf7g4   1/1     Running   0          2m42s
@@ -423,8 +423,8 @@ istiod                 ClusterIP      10.111.3.121    &lt;none&gt;        15010/
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Carlo Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.96.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
