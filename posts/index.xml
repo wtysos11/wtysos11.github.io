@@ -4,7 +4,14 @@
         <link>http://wtysos11.github.io/posts/</link>
         <description>所有文章 | 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Sat, 30 Oct 2021 16:41:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Tue, 05 Apr 2022 12:09:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Leetcode 5: 最长回文子串</title>
+    <link>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</link>
+    <pubDate>Tue, 05 Apr 2022 12:09:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</guid>
+    <description><![CDATA[Leetcode第五题：最长回文子串]]></description>
+</item><item>
     <title>istio应用对外访问极速入门</title>
     <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
     <pubDate>Sat, 30 Oct 2021 16:41:02 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
     <description><![CDATA[最近在SO上找到了一个很有意思的问题： 这个问题是关于一个指针在外部函数的赋值，当然，解决方法也很简单。 type userIP net.IP func main() { var u *userIP u.defaultIP() fmt.Printf(&#34;%v\n&#34;, u) } func (u *userIP) defaultIP() { defaultIP]]></description>
-</item><item>
-    <title>golang中的赋值:=的一次误用与shadow variable</title>
-    <link>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</link>
-    <pubDate>Thu, 08 Jul 2021 11:32:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</guid>
-    <description><![CDATA[今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致]]></description>
 </item></channel>
 </rss>
