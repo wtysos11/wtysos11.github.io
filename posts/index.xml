@@ -4,13 +4,20 @@
         <link>http://wtysos11.github.io/posts/</link>
         <description>所有文章 | 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Thu, 07 Apr 2022 19:21:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>置顶：博客文章组织，目录与标签</title>
     <link>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</link>
     <pubDate>Wed, 06 Apr 2022 12:34:02 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</guid>
     <description><![CDATA[介绍本博客的文章是如何组织的，以及对应的标签和目录的意思介绍]]></description>
+</item><item>
+    <title>Leetcode 796: 旋转字符串</title>
+    <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+    <pubDate>Thu, 07 Apr 2022 19:21:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+    <description><![CDATA[Leetcode第796题：旋转字符串，简单题]]></description>
 </item><item>
     <title>Wikipedia pageview数据获取(bigquery)</title>
     <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
     <description><![CDATA[torch.roll函数的使用例子与说明]]></description>
-</item><item>
-    <title>python命令行库如何实现子命令共享参数？</title>
-    <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
-    <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
-    <description><![CDATA[比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。]]></description>
 </item></channel>
 </rss>
