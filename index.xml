@@ -4,7 +4,7 @@
         <link>http://wtysos11.github.io/</link>
         <description>后端技术博客</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</lastBuildDate>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</lastBuildDate>
             <atom:link href="http://wtysos11.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>置顶：博客文章组织，目录与标签</title>
@@ -13,6 +13,13 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</guid>
     <description><![CDATA[介绍本博客的文章是如何组织的，以及对应的标签和目录的意思介绍]]></description>
+</item><item>
+    <title>Go基本库阅读：io库</title>
+    <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</link>
+    <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</guid>
+    <description><![CDATA[io相关库 阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。]]></description>
 </item><item>
     <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
     <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
@@ -69,12 +76,5 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
     <description><![CDATA[寻找两个正序数组的中位数 这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已]]></description>
-</item><item>
-    <title>Leetcode 762: 二进制表示中质数个计算置位</title>
-    <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
-    <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
-    <description><![CDATA[762 二进制表示中质数个计算置位 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。 比如说$(21){10}=(10101){2}$，]]></description>
 </item></channel>
 </rss>
