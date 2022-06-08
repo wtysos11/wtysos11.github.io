@@ -6,10 +6,10 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
             <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
     <title>Go基本库阅读：bufio库</title>
-    <link>http://wtysos11.github.io/posts/22040422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</link>
+    <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</link>
     <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/22040422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</guid>
+    <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</guid>
     <description><![CDATA[bufio 这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考： 1.4 bu]]></description>
 </item><item>
     <title>Go基本库阅读：io库</title>
