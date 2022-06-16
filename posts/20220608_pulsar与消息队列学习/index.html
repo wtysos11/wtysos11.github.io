@@ -18,7 +18,7 @@
 <meta name="application-name" content="实践出真知">
 <meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" /><link rel="next" href="http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" /><link rel="next" href="http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wtysos11.github.io\/posts\/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0\/"
-        },"genre": "posts","keywords": "消息队列, 学习笔记","wordcount":  1532 ,
+        },"genre": "posts","keywords": "消息队列, 学习笔记, 待完善","wordcount":  1532 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0\/","datePublished": "2022-06-08T09:01:42+08:00","dateModified": "2022-06-08T09:01:42+08:00","publisher": {
             "@type": "Organization",
             "name": "Timothy Wu"},"author": {
@@ -132,7 +132,7 @@
 <ul>
 <li><a href="https://www.ibm.com/docs/en/ibm-mq/9.0?topic=queuing-messages-queues" target="_blank" rel="noopener noreffer">IBM Messages and queues</a></li>
 <li><a href="https://docs.microsoft.com/en-us/previous-versions/windows/desktop/msmq/ms703216%28v=vs.85%29" target="_blank" rel="noopener noreffer">Microsoft-MSMQ Overview</a></li>
-<li><a href="https://km.woa.com/group/1642/articles/show/449542?kmref=search&amp;from_page=1&amp;no=1" target="_blank" rel="noopener noreffer">KM-消息队列原理简介与对比选型</a></li>
+<li><a href="https://yourpassword/group/1642/articles/show/449542?kmref=search&amp;from_page=1&amp;no=1" target="_blank" rel="noopener noreffer">KM-消息队列原理简介与对比选型</a></li>
 </ul>
 <p>基础概念</p>
 <ul>
@@ -234,20 +234,20 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-hashtags="消息队列,学习笔记"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-hashtag="消息队列"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-hashtags="消息队列,学习笔记,待完善"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-hashtag="消息队列"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>,&nbsp;<a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a>,&nbsp;<a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>,&nbsp;<a href="/tags/%E5%BE%85%E5%AE%8C%E5%96%84/">待完善</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
     <div class="post-nav"><a href="/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" class="prev" rel="prev" title="Go基本库阅读：bufio库"><i class="fas fa-angle-left fa-fw"></i>Go基本库阅读：bufio库</a>
-            <a href="/posts/%E7%BD%AE%E9%A1%B6/" class="next" rel="next" title="置顶：博客文章组织，目录与标签">置顶：博客文章组织，目录与标签<i class="fas fa-angle-right fa-fw"></i></a></div>
+            <a href="/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="腾讯云 cos Go SDK使用学习">腾讯云 cos Go SDK使用学习<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
