@@ -4,7 +4,14 @@
         <link>http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
         <description>Go基础学习 - 分类 - 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>腾讯云cos获取文件操作实践--Go SDK</title>
+    <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
+    <pubDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
+    <description><![CDATA[使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证]]></description>
+</item><item>
     <title>由多个goroutine中获取第一个错误信息出发的CAS学习</title>
     <link>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</link>
     <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
@@ -67,12 +74,5 @@
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
     <description><![CDATA[本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识 参考资料 Go by example，中文版]]></description>
-</item><item>
-    <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
-    <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
-    <pubDate>Sat, 12 Jun 2021 10:38:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
-    <description><![CDATA[遇到问题 这个问题的来源是今天在复习接口的时候遇到了一份代码 package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err]]></description>
 </item></channel>
 </rss>
