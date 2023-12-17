@@ -1,0 +1,43 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>计算机/问题 - 标签 - 实践出真知</title>
+        <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/</link>
+        <description>计算机/问题 - 标签 - 实践出真知</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/" rel="self" type="application/rss+xml" /><item>
+    <title>多协程错误处理与errgroup</title>
+    <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
+    <pubDate>Wed, 15 Jun 2022 14:17:05 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
+    <description><![CDATA[工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习]]></description>
+</item><item>
+    <title>Git常见操作与QA</title>
+    <link>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</link>
+    <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</guid>
+    <description><![CDATA[操作QA 操作与对应的实践练习 git update-index 比如对于本仓库的.env文件，就使用了git update-index --skip-worktree .env来避免]]></description>
+</item><item>
+    <title>python命令行库如何实现子命令共享参数？</title>
+    <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
+    <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
+    <description><![CDATA[比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。]]></description>
+</item><item>
+    <title>如何让pandas根据指定列的指进行partition</title>
+    <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
+    <pubDate>Sun, 22 Nov 2020 19:20:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
+    <description><![CDATA[问题描述 我拿到了一个维基百科的列表，其数据如下： datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce]]></description>
+</item><item>
+    <title>Keras中的Embedding层是如何工作的</title>
+    <link>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
+    <pubDate>Tue, 08 Sep 2020 20:57:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
+    <description><![CDATA[在学习的过程中遇到了这个问题，同时也看到了SO中有相同的问题。而keras-github中这个问题也挺有意思的，记录一下。 这个解释很不错，假]]></description>
+</item></channel>
+</rss>

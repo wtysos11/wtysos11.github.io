@@ -1,0 +1,36 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>计算机/算法/算法学习 - 标签 - 实践出真知</title>
+        <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
+        <description>计算机/算法/算法学习 - 标签 - 实践出真知</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>统计序列中的逆序对</title>
+    <link>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</link>
+    <pubDate>Wed, 17 Mar 2021 20:07:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</guid>
+    <description><![CDATA[因为好像做过这个题目，所以稍微提一下。最简单的方式就是归并排序 题解 方法分别是归并排序和树状数组。 归并排序 代码来源：https://blog.]]></description>
+</item><item>
+    <title>树状数组、线段树与RMQ</title>
+    <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
+    <pubDate>Wed, 17 Mar 2021 19:57:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
+    <description><![CDATA[区间修改问题常用的三种手段，我觉得还是有必要复习一下。 树状数组 binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数]]></description>
+</item><item>
+    <title>图的存储方式之前向星与邻接表</title>
+    <link>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</link>
+    <pubDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</guid>
+    <description><![CDATA[常用的邻接矩阵和邻接表都挺简单的，就不提了。 这个是ACM版本的前向星，本质就是用数组替换了链表，效果就是更方便一些。 虽然不如十字链表删除方便]]></description>
+</item><item>
+    <title>KMP算法复习</title>
+    <link>http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
+    <pubDate>Thu, 11 Mar 2021 15:09:14 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</guid>
+    <description><![CDATA[太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。 参考资料 如何更好地理解和掌握 KMP 算法?]]></description>
+</item></channel>
+</rss>

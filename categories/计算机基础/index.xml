@@ -10,7 +10,7 @@
     <pubDate>Fri, 12 Mar 2021 09:56:14 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://wtysos11.github.io/posts/20210312_c&#43;&#43;%E5%A4%8D%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
-    <description><![CDATA[复习一下基本的排序算法 快速排序 时间复杂度O(nlogn)，不稳定 这个写法是我刻在DNA里的，应该没什么大问题，除了比较抽象之外都还好。 #include &lt;string&gt;#include &lt;vector&gt;#include]]></description>
+    <description><![CDATA[复习一下基本的排序算法 快速排序 时间复杂度O(nlogn)，不稳定 这个写法是我刻在DNA里的，应该没什么大问题，除了比较抽象之外都还好。 #include &lt;string&gt; #include]]></description>
 </item><item>
     <title>分布式系统-CAP理论十二年回顾：规则变了</title>
     <link>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</link>

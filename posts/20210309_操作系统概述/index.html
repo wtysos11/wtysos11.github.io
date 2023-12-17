@@ -10,10 +10,9 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-09T14:24:14+08:00" />
-<meta property="article:modified_time" content="2021-03-09T14:24:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-03-09T14:24:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="操作系统-概述"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="操作系统-概述"/>
 <meta name="twitter:description" content="整理磁盘时发现的408笔记 第一章 操作系统概述 1.1 操作系统的基本概念 操作系统是控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的"/>
 <meta name="application-name" content="实践出真知">
 <meta name="apple-mobile-web-app-title" content="实践出真知"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -27,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wtysos11.github.io\/posts\/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0\/"
-        },"genre": "posts","keywords": "考研, 操作系统","wordcount":  19989 ,
+        },"genre": "posts","keywords": "分类\/笔记\/考研, 计算机\/基础\/操作系统","wordcount":  19989 ,
         "url": "http:\/\/wtysos11.github.io\/posts\/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0\/","datePublished": "2021-03-09T14:24:14+08:00","dateModified": "2021-03-09T14:24:14+08:00","publisher": {
             "@type": "Organization",
             "name": "Timothy Wu"},"author": {
@@ -523,7 +522,7 @@ TestAndSet指令，原子操作。</li>
 </span></span><span class="line"><span class="cl"><span class="n">lock</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="err">剩余区；</span>
 </span></span></code></pre></div><p>Swap指令：交换两个字的内容。lock为共享变量，初值为false。key为局部变量</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">Swap</span><span class="p">(</span><span class="n">boolean</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="n">boolean</span> <span class="o">*</span><span class="n">b</span><span class="p">){</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="nf">Swap</span><span class="p">(</span><span class="n">boolean</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span><span class="n">boolean</span> <span class="o">*</span><span class="n">b</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">    <span class="n">boolean</span> <span class="n">temp</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">temp</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">     <span class="o">*</span><span class="n">a</span>  <span class="o">=</span> <span class="o">*</span><span class="n">b</span><span class="p">;</span>
@@ -533,7 +532,7 @@ TestAndSet指令，原子操作。</li>
 </span></span><span class="line"><span class="cl"><span class="err">使用的时候</span>
 </span></span><span class="line"><span class="cl"><span class="n">key</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="n">key</span><span class="o">!=</span><span class="nb">false</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">,</span><span class="o">&amp;</span><span class="n">key</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">Swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lock</span><span class="p">,</span><span class="o">&amp;</span><span class="n">key</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="err">进程临界区</span>
 </span></span><span class="line"><span class="cl"><span class="n">lock</span> <span class="o">=</span> <span class="nb">false</span>
 </span></span><span class="line"><span class="cl"><span class="err">剩余区</span>
@@ -562,7 +561,7 @@ signal(S){
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">S</span><span class="p">.</span><span class="n">value</span><span class="o">--</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">value</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">        <span class="n">add</span> <span class="n">this</span> <span class="n">process</span> <span class="n">to</span> <span class="n">S</span><span class="p">.</span><span class="n">L</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">block</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">L</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">block</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">L</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
@@ -570,22 +569,22 @@ signal(S){
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">S</span><span class="p">.</span><span class="n">value</span><span class="o">++</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="n">S</span><span class="p">.</span><span class="n">value</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">        <span class="n">remove</span> <span class="n">a</span> <span class="n">process</span> <span class="n">P</span> <span class="n">from</span> <span class="n">S</span><span class="p">.</span><span class="n">L</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">wakeup</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">wakeup</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><ol start="3">
 <li>利用信号量实现同步</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">S</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">P1</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">P1</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
 </span></span><span class="line"><span class="cl">    <span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">V</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">V</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">P2</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">P2</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
-</span></span><span class="line"><span class="cl">    <span class="n">P</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">P</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -594,18 +593,18 @@ signal(S){
 <li>利用信号量实现互斥</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">S</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">P1</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">P1</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
-</span></span><span class="line"><span class="cl">    <span class="n">P</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">P</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">P1临界区</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">V</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">V</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">P2</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">P2</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
-</span></span><span class="line"><span class="cl">    <span class="n">P</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">P</span><span class="p">(</span><span class="n">S</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="n">P2临界区</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">V</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">V</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">...</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>在互斥问题中，P、V操作要紧紧夹着使用互斥资源的那个行为，中间不能有其他冗余代码。</p>
@@ -624,23 +623,23 @@ signal(S){
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">mutex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">//临界区互斥变量
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">semaphore</span> <span class="n">empty</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span><span class="c1">//空闲缓冲区数量
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">semaphore</span> <span class="n">full</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span><span class="c1">//缓冲区初始化为空
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">producer</span><span class="p">(){</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">producer</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">        <span class="n">produce</span> <span class="n">an</span> <span class="n">item</span> <span class="n">in</span> <span class="n">nextp</span><span class="p">;</span><span class="c1">//生产数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">P</span><span class="p">(</span><span class="n">empty</span><span class="p">);(</span><span class="err">要用什么，</span><span class="n">P一下</span><span class="p">)</span><span class="c1">//获取空缓冲区单元
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//进入临界区
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">P</span><span class="p">(</span><span class="n">empty</span><span class="p">);(</span><span class="err">要用什么，</span><span class="n">P一下</span><span class="p">)</span><span class="c1">//获取空缓冲区单元
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//进入临界区
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">add</span> <span class="n">nextp</span> <span class="n">to</span> <span class="n">buffer</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//离开临界区
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">V</span><span class="p">(</span><span class="n">full</span><span class="p">);</span><span class="err">（提供什么，</span><span class="n">V一下</span><span class="err">）</span><span class="c1">//满缓冲区数量加1
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//离开临界区
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">V</span><span class="p">(</span><span class="n">full</span><span class="p">);</span><span class="err">（提供什么，</span><span class="n">V一下</span><span class="err">）</span><span class="c1">//满缓冲区数量加1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">consumer</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">consumer</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">full</span><span class="p">);</span><span class="c1">//获取满缓冲区单元
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">full</span><span class="p">);</span><span class="c1">//获取满缓冲区单元
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">remove</span> <span class="n">an</span> <span class="n">item</span> <span class="n">from</span> <span class="n">buffer</span><span class="p">;</span><span class="c1">//从缓冲区中取出数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">empty</span><span class="p">);</span><span class="c1">//空缓冲区数加1
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">empty</span><span class="p">);</span><span class="c1">//空缓冲区数加1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">consume</span> <span class="n">the</span> <span class="n">item</span><span class="c1">//消费数据
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -648,35 +647,35 @@ signal(S){
 描述：桌上有一只盘子，每次只能放入一个水果。爸爸专门向盘中放苹果，妈妈专门向盘中放橘子；儿子专等吃橘子，女儿专等着吃苹果。只有盘子为空时，爸爸或妈妈才可以放入一个水果；仅当盘中有自己需要的水果时，儿子或女儿可以从盘子中取出。
 信号量设置：互斥信号量plate，表示是否允许向盘中放入水果。apple=0，表示盘中是否有苹果，orange=0，表示盘中是否有橘子</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">plate</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">apple</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">orange</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">dad</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dad</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">        <span class="n">prepare</span> <span class="n">an</span> <span class="n">apple</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">put</span> <span class="n">the</span> <span class="n">apple</span> <span class="n">on</span> <span class="n">the</span> <span class="n">plate</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">apple</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">apple</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">mom</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
 </span></span><span class="line"><span class="cl">        <span class="n">prepare</span> <span class="n">an</span> <span class="n">orange</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">put</span> <span class="n">the</span> <span class="n">orange</span> <span class="n">on</span> <span class="n">the</span> <span class="n">plate</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">orange</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">orange</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">son</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">son</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">orange</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">orange</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">take</span> <span class="n">an</span> <span class="n">orange</span> <span class="n">from</span> <span class="n">the</span> <span class="n">plate</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">eat</span> <span class="n">the</span> <span class="n">orange</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">daughter</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">daughter</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">apple</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">apple</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">take</span> <span class="n">an</span> <span class="n">apple</span> <span class="n">from</span> <span class="n">the</span> <span class="n">plate</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">plate</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">eat</span> <span class="n">the</span> <span class="n">apple</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -689,27 +688,27 @@ signal(S){
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">mutex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">rw</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">writer</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">writer</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//互斥访问共享文件
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//互斥访问共享文件
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">writing</span><span class="p">;</span><span class="c1">//写入
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//释放共享文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//释放共享文件
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">reader</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">reader</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问count变量
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问count变量
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span><span class="c1">//当第一个读进程共享文件时
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//阻止写进程写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//阻止写进程写
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">reading</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问变量count
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问变量count
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">count</span><span class="o">--</span><span class="p">;</span><span class="c1">//读者计数器减1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="c1">//当最后一个读进程读完共享文件时
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//允许写进程写
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//允许写进程写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>写者优先，增加了一个信号量以及一个P、V操作，在有写进程的请求时不允许读进程进行</p>
@@ -718,29 +717,29 @@ signal(S){
 </span></span><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">rw</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//new add
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">semaphore</span> <span class="n">w</span><span class="o">=</span>  <span class="mi">1</span><span class="p">;</span><span class="c1">//用于实现写优先
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">writer</span><span class="p">(){</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">writer</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">w</span><span class="p">);</span><span class="c1">//在无写进程请求时进入
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//互斥访问共享文件
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">w</span><span class="p">);</span><span class="c1">//在无写进程请求时进入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//互斥访问共享文件
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">writing</span><span class="p">;</span><span class="c1">//写入
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//释放共享文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">V</span><span class="p">(</span><span class="n">w</span><span class="p">);</span><span class="c1">//恢复对共享文件的访问
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//释放共享文件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">V</span><span class="p">(</span><span class="n">w</span><span class="p">);</span><span class="c1">//恢复对共享文件的访问
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">reader</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl"><span class="nf">reader</span><span class="p">(){</span>
 </span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问count变量
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问count变量
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span><span class="c1">//当第一个读进程共享文件时
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//阻止写进程写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">P</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//阻止写进程写
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">reading</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问变量count
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//互斥访问变量count
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">count</span><span class="o">--</span><span class="p">;</span><span class="c1">//读者计数器减1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="c1">//当最后一个读进程读完共享文件时
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//允许写进程写
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">V</span><span class="p">(</span><span class="n">rw</span><span class="p">);</span><span class="c1">//允许写进程写
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nf">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span><span class="c1">//释放互斥变量count
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><ol start="3">
@@ -749,13 +748,13 @@ signal(S){
 信号量设置：互斥信号量组chopstick[5]={1,1,1,1,1}，用于对5个筷子的互斥访问</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">chopstick</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span><span class="c1">//定义信号量数组chopstick[5]并初始化
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Pi</span><span class="p">(){</span><span class="c1">//i号哲学家的进程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">Pi</span><span class="p">(){</span><span class="c1">//i号哲学家的进程
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">do</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">eat</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">think</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -763,15 +762,15 @@ signal(S){
 使用AND型信号量机制来解决哲学家进餐问题</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">semaphore</span> <span class="n">chopstick</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">};</span><span class="c1">//定义信号量数组chopstick[5]并初始化
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">semaphore</span> <span class="n">mutex</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="c1">//设置取筷子的信号量
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">Pi</span><span class="p">(){</span><span class="c1">//i号哲学家的进程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nf">Pi</span><span class="p">(){</span><span class="c1">//i号哲学家的进程
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">do</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">mutex</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">eat</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">chopstick</span><span class="p">[(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">        <span class="n">think</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -790,33 +789,33 @@ signal(S){
 </span></span><span class="line"><span class="cl">        <span class="n">random</span> <span class="o">=</span> <span class="err">随机整数</span>
 </span></span><span class="line"><span class="cl">        <span class="n">random</span> <span class="o">=</span> <span class="n">random</span><span class="o">%</span><span class="mi">3</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">random</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">V</span><span class="p">(</span><span class="n">offer1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">V</span><span class="p">(</span><span class="n">offer1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">random</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">V</span><span class="p">(</span><span class="n">offer2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">V</span><span class="p">(</span><span class="n">offer2</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">random</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="n">V</span><span class="p">(</span><span class="n">offer3</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">V</span><span class="p">(</span><span class="n">offer3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">process</span> <span class="nf">P2</span><span class="p">(){</span><span class="c1">//拥有烟草者
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">offer3</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">offer3</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="err">卷烟，抽掉</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">process</span> <span class="nf">P3</span><span class="p">(){</span><span class="c1">//拥有纸张者
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">offer2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">offer2</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="err">卷烟，抽掉</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="n">process</span> <span class="nf">P4</span><span class="p">(){</span><span class="c1">//拥有胶水者
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">P</span><span class="p">(</span><span class="n">offer1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">P</span><span class="p">(</span><span class="n">offer1</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="err">卷烟，抽掉</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">V</span><span class="p">(</span><span class="n">finish</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="234-管程">2.3.4 管程</h3>
@@ -1357,13 +1356,13 @@ D.由用户作业控制设备与输入/输出井之间的数据传送
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-hashtags="考研,操作系统"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-hashtag="考研"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-hashtags="分类/笔记/考研,计算机/基础/操作系统"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-hashtag="分类/笔记/考研"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-web><i class="fab fa-whatsapp fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述"><i data-svg-src="/lib/simple-icons/icons/line.min.svg"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述" data-description=""><i class="fab fa-blogger fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/" data-title="操作系统-概述"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E8%80%83%E7%A0%94/">考研</a>,&nbsp;<a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E8%80%83%E7%A0%94/">分类/笔记/考研</a>,&nbsp;<a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%9F%BA%E7%A1%80/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机/基础/操作系统</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
@@ -1376,7 +1375,7 @@ D.由用户作业控制设备与输入/输出井之间的数据传送
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
             </noscript></div></article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.96.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.121.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

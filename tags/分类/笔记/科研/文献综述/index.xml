@@ -1,0 +1,29 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>分类/笔记/科研/文献综述 - 标签 - 实践出真知</title>
+        <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/</link>
+        <description>分类/笔记/科研/文献综述 - 标签 - 实践出真知</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" rel="self" type="application/rss+xml" /><item>
+    <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
+    <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
+    <pubDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
+    <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item><item>
+    <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
+    <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
+    <pubDate>Wed, 03 Feb 2021 14:24:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
+    <description><![CDATA[Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020. 一篇关于时间序列增强的论文，很有意思。 Time Series Data Augmentation for Deep Learning: A Survey 摘要 时间序列相关的问题中，时间序列数据可能]]></description>
+</item><item>
+    <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
+    <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
+    <pubDate>Tue, 19 Jan 2021 19:50:04 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
+    <description><![CDATA[Recurrent Neural Networks for Time Series Forecasting: Current status and future directions 2021 International Journal of Forecasting 文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏]]></description>
+</item></channel>
+</rss>

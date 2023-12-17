@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>计算机/算法/位运算 - 标签 - 实践出真知</title>
+        <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/</link>
+        <description>计算机/算法/位运算 - 标签 - 实践出真知</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="self" type="application/rss+xml" /><item>
+    <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+    <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+    <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+    <description><![CDATA[762 二进制表示中质数个计算置位 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。 比如说$(21){10}=(10101){2}$，]]></description>
+</item></channel>
+</rss>
