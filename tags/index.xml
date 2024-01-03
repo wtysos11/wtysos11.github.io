@@ -4,84 +4,84 @@
         <link>http://wtysos11.github.io/tags/</link>
         <description>Tags - 标签 - 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>待完善</title>
-    <link>http://wtysos11.github.io/tags/%E5%BE%85%E5%AE%8C%E5%96%84/</link>
-    <pubDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</pubDate>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>分类/论文/论文总结</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E8%AE%BA%E6%96%87/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%BE%85%E5%AE%8C%E5%96%84/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E8%AE%BA%E6%96%87/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>博文/测评/安卓软件</title>
-    <link>http://wtysos11.github.io/tags/%E5%8D%9A%E6%96%87/%E6%B5%8B%E8%AF%84/%E5%AE%89%E5%8D%93%E8%BD%AF%E4%BB%B6/</link>
+    <title>分类/实践记录</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%8D%9A%E6%96%87/%E6%B5%8B%E8%AF%84/%E5%AE%89%E5%8D%93%E8%BD%AF%E4%BB%B6/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/考研</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E8%80%83%E7%A0%94/</link>
+    <title>分类/实践记录/博客构建</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E8%80%83%E7%A0%94/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/科研/时间序列预测</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/</link>
+    <title>分类/学习/个人成长</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/科研/数据集</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%95%B0%E6%8D%AE%E9%9B%86/</link>
+    <title>分类/学习/学习笔记</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%95%B0%E6%8D%AE%E9%9B%86/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/科研/微服务调度</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/</link>
+    <title>分类/学习/学习笔记/笔记/读书笔记</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/科研/文献综述</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/</link>
+    <title>分类/学习/学习笔记/笔记/考研</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E8%80%83%E7%A0%94/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E8%80%83%E7%A0%94/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/科研/资源调度预测</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/</link>
+    <title>分类/学习/学习笔记/笔记/科研/时间序列预测</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/校招</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E6%A0%A1%E6%8B%9B/</link>
+    <title>分类/学习/学习笔记/笔记/科研/数据集</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%95%B0%E6%8D%AE%E9%9B%86/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E6%A0%A1%E6%8B%9B/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%95%B0%E6%8D%AE%E9%9B%86/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>分类/笔记/英语</title>
-    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E8%8B%B1%E8%AF%AD/</link>
+    <title>分类/学习/学习笔记/笔记/科研/微服务调度</title>
+    <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/</link>
     <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
     <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%AC%94%E8%AE%B0/%E8%8B%B1%E8%AF%AD/</guid>
+    <guid>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

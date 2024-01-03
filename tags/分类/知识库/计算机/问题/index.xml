@@ -1,0 +1,88 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>分类/知识库/计算机/问题 - 标签 - 实践出真知</title>
+        <link>http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/</link>
+        <description>分类/知识库/计算机/问题 - 标签 - 实践出真知</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/" rel="self" type="application/rss+xml" /><item>
+    <title>多协程写同一个slice的最佳实践</title>
+    <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+    <pubDate>Wed, 15 Jun 2022 14:40:05 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+    <description><![CDATA[问题描述 main.go func main() { fmt.Println(&#34;in waitgroup test&#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会]]></description>
+</item>
+<item>
+    <title>多协程错误处理与errgroup</title>
+    <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
+    <pubDate>Wed, 15 Jun 2022 14:17:05 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
+    <description><![CDATA[工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习]]></description>
+</item>
+<item>
+    <title>Git常见操作与QA</title>
+    <link>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</link>
+    <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</guid>
+    <description><![CDATA[操作QA 操作与对应的实践练习 git update-index 比如对于本仓库的.env文件，就使用了git update-index --skip-worktree .env来避免]]></description>
+</item>
+<item>
+    <title>python命令行库如何实现子命令共享参数？</title>
+    <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
+    <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
+    <description><![CDATA[比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。]]></description>
+</item>
+<item>
+    <title>关于golang中指针赋值的问题</title>
+    <link>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Thu, 15 Jul 2021 18:08:14 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[最近在SO上找到了一个很有意思的问题：SO 这个问题是关于一个指针在外部函数的赋值，当然，解决方法也很简单。 type userIP net.IP func main() { var u *userIP u.defaultIP() fmt.Printf(&#34;%v\n&#34;, u) } func (u *userIP) defaultIP()]]></description>
+</item>
+<item>
+    <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
+    <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
+    <pubDate>Thu, 17 Jun 2021 14:22:14 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
+    <description><![CDATA[今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是]]></description>
+</item>
+<item>
+    <title>golang中函数如何设置参数默认值</title>
+    <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
+    <pubDate>Sun, 13 Jun 2021 14:50:14 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
+    <description><![CDATA[参考资料 Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认]]></description>
+</item>
+<item>
+    <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
+    <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
+    <pubDate>Sat, 12 Jun 2021 10:38:14 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
+    <description><![CDATA[遇到问题 这个问题的来源是今天在复习接口的时候遇到了一份代码 package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err]]></description>
+</item>
+<item>
+    <title>如何让pandas根据指定列的指进行partition</title>
+    <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
+    <pubDate>Sun, 22 Nov 2020 19:20:04 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
+    <description><![CDATA[问题描述 我拿到了一个维基百科的列表，其数据如下： datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce]]></description>
+</item>
+<item>
+    <title>Keras中的Embedding层是如何工作的</title>
+    <link>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
+    <pubDate>Tue, 08 Sep 2020 20:57:04 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
+    <description><![CDATA[在学习的过程中遇到了这个问题，同时也看到了SO中有相同的问题。而keras-github中这个问题也挺有意思的，记录一下。 这个解释很不错，假]]></description>
+</item>
+</channel>
+</rss>
