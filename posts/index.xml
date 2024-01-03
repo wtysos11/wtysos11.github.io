@@ -4,75 +4,85 @@
         <link>http://wtysos11.github.io/posts/</link>
         <description>所有文章 | 实践出真知</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>置顶：博客文章组织，目录与标签</title>
     <link>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</link>
     <pubDate>Wed, 06 Apr 2022 12:34:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</guid>
     <description><![CDATA[介绍本博客的文章是如何组织的，以及对应的标签和目录的意思介绍]]></description>
-</item><item>
+</item>
+<item>
     <title>hugo loveit构建github page博客</title>
     <link>http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/</link>
     <pubDate>Wed, 25 Aug 2021 16:34:18 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/</guid>
     <description><![CDATA[博客的构建记录]]></description>
-</item><item>
+</item>
+<item>
+    <title>基于大模型构建本地知识库</title>
+    <link>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</link>
+    <pubDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</guid>
+    <description><![CDATA[基于大模型构建本地知识库，尝试使用ChatGPT、chatglm和Langchain-chatchat]]></description>
+</item>
+<item>
     <title>Gopherfest 2015：Go Proverbs with Rob Pike</title>
     <link>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</link>
     <pubDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</guid>
     <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
-</item><item>
+</item>
+<item>
     <title>Vegeta压测工具学习与使用</title>
     <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
     <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
     <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
-</item><item>
+</item>
+<item>
     <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
     <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
     <pubDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
     <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
-</item><item>
+</item>
+<item>
     <title>腾讯云cos获取文件操作实践--Go SDK</title>
     <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
     <pubDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
     <description><![CDATA[使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证]]></description>
-</item><item>
+</item>
+<item>
     <title>多协程写同一个slice的最佳实践</title>
     <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
     <pubDate>Wed, 15 Jun 2022 14:40:05 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
     <description><![CDATA[问题描述 main.go func main() { fmt.Println(&#34;in waitgroup test&#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会]]></description>
-</item><item>
+</item>
+<item>
     <title>多协程错误处理与errgroup</title>
     <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
     <pubDate>Wed, 15 Jun 2022 14:17:05 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
     <description><![CDATA[工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习]]></description>
-</item><item>
+</item>
+<item>
     <title>Git常见操作与QA</title>
     <link>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</link>
     <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</guid>
     <description><![CDATA[操作QA 操作与对应的实践练习 git update-index 比如对于本仓库的.env文件，就使用了git update-index --skip-worktree .env来避免]]></description>
-</item><item>
-    <title>由多个goroutine中获取第一个错误信息出发的CAS学习</title>
-    <link>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</link>
-    <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</guid>
-    <description><![CDATA[主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

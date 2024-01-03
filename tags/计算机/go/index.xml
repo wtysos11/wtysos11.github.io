@@ -8,71 +8,81 @@
     <title>Gopherfest 2015：Go Proverbs with Rob Pike</title>
     <link>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</link>
     <pubDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</guid>
     <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
-</item><item>
+</item>
+<item>
     <title>Vegeta压测工具学习与使用</title>
     <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
     <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
     <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
-</item><item>
+</item>
+<item>
     <title>腾讯云cos获取文件操作实践--Go SDK</title>
     <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
     <pubDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
     <description><![CDATA[使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证]]></description>
-</item><item>
+</item>
+<item>
     <title>多协程写同一个slice的最佳实践</title>
     <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
     <pubDate>Wed, 15 Jun 2022 14:40:05 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
     <description><![CDATA[问题描述 main.go func main() { fmt.Println(&#34;in waitgroup test&#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会]]></description>
-</item><item>
+</item>
+<item>
     <title>多协程错误处理与errgroup</title>
     <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
     <pubDate>Wed, 15 Jun 2022 14:17:05 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
     <description><![CDATA[工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习]]></description>
-</item><item>
+</item>
+<item>
     <title>由多个goroutine中获取第一个错误信息出发的CAS学习</title>
     <link>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</link>
     <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</guid>
     <description><![CDATA[主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用]]></description>
-</item><item>
+</item>
+<item>
     <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>
     <link>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
     <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
     <description><![CDATA[前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g]]></description>
-</item><item>
+</item>
+<item>
     <title>腾讯云 cos Go SDK使用学习</title>
     <link>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</link>
     <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</guid>
     <description><![CDATA[参考资料 官方文档 官方示例 基本概念 COS（Cloud Object Storage，云对象存储） Bucket（存储桶） 命名上，由存储桶名称（BucketNa]]></description>
-</item><item>
+</item>
+<item>
     <title>Go基本库阅读：bufio库</title>
     <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</link>
     <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</guid>
     <description><![CDATA[bufio 这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考： 1.4 bu]]></description>
-</item><item>
+</item>
+<item>
     <title>Go基本库阅读：io库</title>
     <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</link>
     <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</guid>
     <description><![CDATA[io相关库 阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

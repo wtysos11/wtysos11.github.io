@@ -8,8 +8,9 @@
     <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
     <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
     <pubDate>Mon, 11 Apr 2022 10:01:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
     <description><![CDATA[Leetcode 357: 统计各位数字都不同的数字个数 解法包括暴力解法和扩张方法。 暴力解法 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

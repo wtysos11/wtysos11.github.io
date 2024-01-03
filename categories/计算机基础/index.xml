@@ -8,71 +8,81 @@
     <title>C&#43;&#43;复现基础排序算法</title>
     <link>http://wtysos11.github.io/posts/20210312_c&#43;&#43;%E5%A4%8D%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
     <pubDate>Fri, 12 Mar 2021 09:56:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210312_c&#43;&#43;%E5%A4%8D%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
     <description><![CDATA[复习一下基本的排序算法 快速排序 时间复杂度O(nlogn)，不稳定 这个写法是我刻在DNA里的，应该没什么大问题，除了比较抽象之外都还好。 #include &lt;string&gt; #include]]></description>
-</item><item>
+</item>
+<item>
     <title>分布式系统-CAP理论十二年回顾：规则变了</title>
     <link>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</link>
     <pubDate>Wed, 10 Mar 2021 14:21:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</guid>
     <description><![CDATA[该文的阅读感想 CAP理论断言，最多只能满足数据一致性、可用性、分区容忍性这三要素中的两个。 REF: What is CAP 数据一致性（consistency）：所有]]></description>
-</item><item>
+</item>
+<item>
     <title>计算机网络-概述</title>
     <link>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/</link>
     <pubDate>Tue, 09 Mar 2021 14:28:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/</guid>
     <description><![CDATA[第一章 计算机网络体系结构 1.1 计算机网络概述 分类 按分布范围可以分为广域网、城域网和局域网 按拓扑结构分类可以分为星形网络、总线形网络、环形网络和网]]></description>
-</item><item>
+</item>
+<item>
     <title>计算机组成-概述</title>
     <link>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E6%A6%82%E8%BF%B0/</link>
     <pubDate>Tue, 09 Mar 2021 14:26:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E6%A6%82%E8%BF%B0/</guid>
     <description><![CDATA[第1章 计算机系统概述 冯诺依曼结构：运算器、控制器、存储器、输入设备和输出设备五大部件组成。现代计算机一般把控制器和运算器集成在一个芯片上，合]]></description>
-</item><item>
+</item>
+<item>
     <title>操作系统-概述</title>
     <link>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</link>
     <pubDate>Tue, 09 Mar 2021 14:24:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</guid>
     <description><![CDATA[整理磁盘时发现的408笔记 第一章 操作系统概述 1.1 操作系统的基本概念 操作系统是控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的]]></description>
-</item><item>
+</item>
+<item>
     <title>数据结构-概述</title>
     <link>http://wtysos11.github.io/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/</link>
     <pubDate>Tue, 09 Mar 2021 14:21:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/</guid>
     <description><![CDATA[整理磁盘时发现考研408时自己的笔记 第一章 绪论 1.1 数据结构的基本概念 数据：信息的载体 数据元素：数据的基本单位。一个数据元素可由若干个数据项组成]]></description>
-</item><item>
+</item>
+<item>
     <title>现代人工智能课程复习</title>
     <link>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Sat, 09 Jan 2021 14:14:04 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</guid>
     <description><![CDATA[中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展 距]]></description>
-</item><item>
+</item>
+<item>
     <title>数据结构与算法复习</title>
     <link>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Tue, 07 Apr 2020 16:11:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</guid>
     <description><![CDATA[原文地址 内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来 数据结构与算法复习 不包括全部内容 基础部分包括大O记号和]]></description>
-</item><item>
+</item>
+<item>
     <title>软件测试复习</title>
     <link>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Mon, 06 Apr 2020 20:15:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</guid>
     <description><![CDATA[原文地址 软件测试复习 对大三下学期的软件测试课程进行复习 第一章 计算机软件体系结构 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的]]></description>
-</item><item>
+</item>
+<item>
     <title>中山大学考研复试内容复习</title>
     <link>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Sat, 04 Apr 2020 20:15:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</guid>
     <description><![CDATA[中山大学考研复试内容复习 原文地址 复试复习以基本概念为主，重点概念为主，偏题怪题一律不考虑。 计算机网络 网络基础 OSI七层模型 OSI七层模型 OS]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

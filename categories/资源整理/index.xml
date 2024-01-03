@@ -8,8 +8,9 @@
     <title>基于网站流量的时间序列预测资源整理</title>
     <link>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</link>
     <pubDate>Mon, 04 May 2020 10:20:04 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</guid>
     <description><![CDATA[原文地址 去年到现在一些关于时间序列预测的资料的整理。 kaggle文章： everything you can do with time series kaggle - web-traffic-time-series-forecasting - 1st solution。谷歌的这个比赛是针对流量预测]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

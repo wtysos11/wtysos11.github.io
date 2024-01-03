@@ -8,8 +8,9 @@
     <title>golang中的赋值:=的一次误用与shadow variable</title>
     <link>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</link>
     <pubDate>Thu, 08 Jul 2021 11:32:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</guid>
     <description><![CDATA[今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

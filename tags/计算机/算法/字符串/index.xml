@@ -8,43 +8,49 @@
     <title>Leetcode 806: 写字符串需要的行数</title>
     <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
     <pubDate>Tue, 12 Apr 2022 09:15:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
     <description><![CDATA[220412 每日一题，非常简单 class Solution { public: vector&lt;int&gt; numberOfLines(vector&lt;int&gt;&amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&lt;s.length();i++){ if(rest == 100 &amp;&amp; widths[s[i]-&#39;a&#39;]&gt;0){ rest = widths[s[i]-&#39;a&#39;]; linenum++; continue; } rest += widths[s[i]-&#39;a&#39;]; if(rest&gt;100){ rest = widths[s[i]-&#39;a&#39;]; linenum++; } } return vector&lt;int&gt;{linenum,rest}; } };]]></description>
-</item><item>
+</item>
+<item>
     <title>Leetcode 804: 唯一摩尔斯密码词</title>
     <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
     <pubDate>Sun, 10 Apr 2022 16:30:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
     <description><![CDATA[Leetcode 804 唯一摩尔斯密码词 没什么难度，水题。如果不是每日一题不建议刷。 #include &lt;iostream&gt; #include &lt;string&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&lt;string&gt;&amp; words) { vector&lt;string&gt; password{&#34;.-&#34;,&#34;-...&#34;,&#34;-.-.&#34;,&#34;-..&#34;,&#34;.&#34;,&#34;..-.&#34;,&#34;--.&#34;,&#34;....&#34;,&#34;..&#34;,&#34;.---&#34;,&#34;-.-&#34;,&#34;.-..&#34;,&#34;--&#34;,&#34;-.&#34;,&#34;---&#34;,&#34;.--.&#34;,&#34;--.-&#34;,&#34;.-.&#34;,&#34;...&#34;,&#34;-&#34;,&#34;..-&#34;,&#34;...-&#34;,&#34;.--&#34;,&#34;-..-&#34;,&#34;-.--&#34;,&#34;--..&#34;}; map&lt;string,bool&gt; exist; for(int i=0;i&lt;words.size();i++){ string&amp; word = words[i]; string origin; for(int j=0;j&lt;word.length();j++){ origin = origin]]></description>
-</item><item>
+</item>
+<item>
     <title>Leetcode 796: 旋转字符串</title>
     <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
     <pubDate>Thu, 07 Apr 2022 19:21:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
     <description><![CDATA[Leetcode第796题：旋转字符串，简单题]]></description>
-</item><item>
+</item>
+<item>
     <title>Leetcode 5: 最长回文子串</title>
     <link>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</link>
     <pubDate>Tue, 05 Apr 2022 12:09:02 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</guid>
     <description><![CDATA[Leetcode第五题：最长回文子串]]></description>
-</item><item>
+</item>
+<item>
     <title>【动态规划】最长公共子串问题</title>
     <link>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</link>
     <pubDate>Thu, 11 Mar 2021 16:40:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</guid>
     <description><![CDATA[题目来源为：牛客网 题目有意思的地方在于，最长公共子串与最长连续公共子串都是比较经典的问题，但是这道题在其基础上加了限制。 首先这道题应该是最长]]></description>
-</item><item>
+</item>
+<item>
     <title>KMP算法复习</title>
     <link>http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
     <pubDate>Thu, 11 Mar 2021 15:09:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</guid>
     <description><![CDATA[太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。 参考资料 如何更好地理解和掌握 KMP 算法?]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

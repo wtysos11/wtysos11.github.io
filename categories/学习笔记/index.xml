@@ -8,8 +8,9 @@
     <title>腾讯云 cos Go SDK使用学习</title>
     <link>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</link>
     <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</guid>
     <description><![CDATA[参考资料 官方文档 官方示例 基本概念 COS（Cloud Object Storage，云对象存储） Bucket（存储桶） 命名上，由存储桶名称（BucketNa]]></description>
-</item></channel>
+</item>
+</channel>
 </rss>

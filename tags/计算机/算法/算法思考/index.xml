@@ -8,22 +8,25 @@
     <title>全排列问题与康托编码</title>
     <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
     <pubDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
     <description><![CDATA[leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。 题目采用康托编码的思路。其实就是康托展]]></description>
-</item><item>
-    <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
-    <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-    <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
-    <author>作者</author>
-    <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-    <description><![CDATA[字节笔试题，原题忘记了，但是稍微有些区别 题目 大致意思就是反转。 实现核心就是利用亮点： 开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution]]></description>
-</item><item>
+</item>
+<item>
     <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
     <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
     <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
-    <author>作者</author>
+    <author>Timothy Wu</author>
     <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
     <description><![CDATA[今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一]]></description>
-</item></channel>
+</item>
+<item>
+    <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
+    <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
+    <author>Timothy Wu</author>
+    <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[字节笔试题，原题忘记了，但是稍微有些区别 题目 大致意思就是反转。 实现核心就是利用亮点： 开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution]]></description>
+</item>
+</channel>
 </rss>
