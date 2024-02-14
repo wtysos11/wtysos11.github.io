@@ -1,16 +1,32 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>计算机/算法/回溯法 - 标签 - 实践出真知</title>
-        <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF%E6%B3%95/</link>
-        <description>计算机/算法/回溯法 - 标签 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
-    <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
-    <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
-    <pubDate>Mon, 11 Apr 2022 10:01:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
-    <description><![CDATA[Leetcode 357: 统计各位数字都不同的数字个数 解法包括暴力解法和扩张方法。 暴力解法 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机/算法/回溯法 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF%E6%B3%95/</link>
+    <description>Recent content in 计算机/算法/回溯法 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%9B%9E%E6%BA%AF%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+      <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+      <pubDate>Mon, 11 Apr 2022 10:01:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+      <description> Leetcode 357: 统计各位数字都不同的数字个数 Link to heading 解法包括暴力解法和扩张方法。&#xA;暴力解法 Link to heading 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了。&#xA;扩张方法 Link to heading 这个想法是错的……不应该从有重复的数字扩张，应该从没有重复的数字扩张。早上起来做这道题脑子有点懵。&#xA;该问题是具备最优子结构的。对于长度为n的问题，与其枚举没有重复的数字，不如枚举重复的数字。 重复源头可以来源于之前（n-1）与当前，因此可以从这个地方开始递推比较最新一位的数字与之前的数字之间的关系。&#xA;可以定义数字dp[n][m]为长度为n的数组中以m开头的数内重复的数字个数。 其中对0的处理比较麻烦，最高位不会出现0，但是0是有可能出现重复的，因此可能需要对之前的一位做专门的处理。 因此特殊的，定义dp[n-1][0]为第n位数为任意非0数时，n-1位为0时的重复数字个数&#xA;显而易见的是，dp[1][&amp;hellip;]=0，长度为一位的时候不会有重复的数据。&#xA;最新的一位数据的内容主要包括两个方面：&#xA;之前已经重复的0：$dp[n-1][0] = 10^{n-3} + \sum_{i\in Q_0}dp[n-2][i]$，包括最新的一个重复，加上之前的重复项目 更新完0之后，更新之前已经重复的1~9：$dp[n][m] = 10^{n-2} + \sum_{i\in Q_m}dp[n-1][i]$。其中$Q_m$表示个位数中除了m以外的集合，比如$Q_1={0,2,3,&amp;hellip;,9}$。 该项目的两个部分分别表示前一位为m或者非m的情况（非0），以1为例子 $10^{n-2}$表示形如&amp;quot;11XXX&amp;quot;的数据，其中之后的数据完全任意且不会重复，因此直接计总数即可。 $\sum_{i\in Q_m}dp[n-1][i]$，表示形如&amp;quot;1XaaXXX&amp;quot;的数据，即最新的数字加入时没有引入重复，但是之前已经发生了重复的情况。 该项也是0为什么要在之前计算的缘故，否则，会漏算因为0引起的重复情况。 在计算的时候是一起计算的，n位以0开头的数字可以视为n+1位存在任意数字使其非0。但是最终计算总重复数字时不会加入dp[n][0]，因为最高位为时非法的。&#xA;以n=3为例子:&#xA;n=1的时候，$dp[1][&amp;hellip;]=0$ n=2的时候，$dp[2][1] = dp[1][1] + 10^0=1$，也即11。类似的，有00、22、33、44、55、66、77、88、99。 n=3的时候，$dp[3][1] = 10^1 + \sum_{i\in{0,2,3,&amp;hellip;,9}}10^0$，即110、111、112、&amp;hellip;、119，以及100、122、133、&amp;hellip;、199。 在最终计入总数的时候，计算$\sum_{i=1}^9dp[n][i]$，不计算0。因为不存在以0开头的数字。 数学方法 Link to heading 官方给的解法：含有d位数($2\geq d\leq 10$)的各位数字都不同的数字x的个数可以由$9\times A_{9}^{d-1}$。（第一位选择范围为除0以外，第二位为10个数字除以第一位，以此类推）&#xA;class Solution { public: int countNumbersWithUniqueDigits(int n) { if (n == 0) { return 1; } if (n == 1) { return 10; } int ans = 10, cur = 9; for (int i = 0; i &amp;lt; n - 1; ++i) { cur *= 9 - i; ans += cur; } return ans; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+      <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+      <pubDate>Mon, 11 Apr 2022 10:01:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+      <description> Leetcode 357: 统计各位数字都不同的数字个数 Link to heading 解法包括暴力解法和扩张方法。&#xA;暴力解法 Link to heading 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了。&#xA;扩张方法 Link to heading 这个想法是错的……不应该从有重复的数字扩张，应该从没有重复的数字扩张。早上起来做这道题脑子有点懵。&#xA;该问题是具备最优子结构的。对于长度为n的问题，与其枚举没有重复的数字，不如枚举重复的数字。 重复源头可以来源于之前（n-1）与当前，因此可以从这个地方开始递推比较最新一位的数字与之前的数字之间的关系。&#xA;可以定义数字dp[n][m]为长度为n的数组中以m开头的数内重复的数字个数。 其中对0的处理比较麻烦，最高位不会出现0，但是0是有可能出现重复的，因此可能需要对之前的一位做专门的处理。 因此特殊的，定义dp[n-1][0]为第n位数为任意非0数时，n-1位为0时的重复数字个数&#xA;显而易见的是，dp[1][&amp;hellip;]=0，长度为一位的时候不会有重复的数据。&#xA;最新的一位数据的内容主要包括两个方面：&#xA;之前已经重复的0：$dp[n-1][0] = 10^{n-3} + \sum_{i\in Q_0}dp[n-2][i]$，包括最新的一个重复，加上之前的重复项目 更新完0之后，更新之前已经重复的1~9：$dp[n][m] = 10^{n-2} + \sum_{i\in Q_m}dp[n-1][i]$。其中$Q_m$表示个位数中除了m以外的集合，比如$Q_1={0,2,3,&amp;hellip;,9}$。 该项目的两个部分分别表示前一位为m或者非m的情况（非0），以1为例子 $10^{n-2}$表示形如&amp;quot;11XXX&amp;quot;的数据，其中之后的数据完全任意且不会重复，因此直接计总数即可。 $\sum_{i\in Q_m}dp[n-1][i]$，表示形如&amp;quot;1XaaXXX&amp;quot;的数据，即最新的数字加入时没有引入重复，但是之前已经发生了重复的情况。 该项也是0为什么要在之前计算的缘故，否则，会漏算因为0引起的重复情况。 在计算的时候是一起计算的，n位以0开头的数字可以视为n+1位存在任意数字使其非0。但是最终计算总重复数字时不会加入dp[n][0]，因为最高位为时非法的。&#xA;以n=3为例子:&#xA;n=1的时候，$dp[1][&amp;hellip;]=0$ n=2的时候，$dp[2][1] = dp[1][1] + 10^0=1$，也即11。类似的，有00、22、33、44、55、66、77、88、99。 n=3的时候，$dp[3][1] = 10^1 + \sum_{i\in{0,2,3,&amp;hellip;,9}}10^0$，即110、111、112、&amp;hellip;、119，以及100、122、133、&amp;hellip;、199。 在最终计入总数的时候，计算$\sum_{i=1}^9dp[n][i]$，不计算0。因为不存在以0开头的数字。 数学方法 Link to heading 官方给的解法：含有d位数($2\geq d\leq 10$)的各位数字都不同的数字x的个数可以由$9\times A_{9}^{d-1}$。（第一位选择范围为除0以外，第二位为10个数字除以第一位，以此类推）&#xA;class Solution { public: int countNumbersWithUniqueDigits(int n) { if (n == 0) { return 1; } if (n == 1) { return 10; } int ans = 10, cur = 9; for (int i = 0; i &amp;lt; n - 1; ++i) { cur *= 9 - i; ans += cur; } return ans; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+      <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+      <pubDate>Mon, 11 Apr 2022 10:01:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+      <description> Leetcode 357: 统计各位数字都不同的数字个数 Link to heading 解法包括暴力解法和扩张方法。&#xA;暴力解法 Link to heading 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了。&#xA;扩张方法 Link to heading 这个想法是错的……不应该从有重复的数字扩张，应该从没有重复的数字扩张。早上起来做这道题脑子有点懵。&#xA;该问题是具备最优子结构的。对于长度为n的问题，与其枚举没有重复的数字，不如枚举重复的数字。 重复源头可以来源于之前（n-1）与当前，因此可以从这个地方开始递推比较最新一位的数字与之前的数字之间的关系。&#xA;可以定义数字dp[n][m]为长度为n的数组中以m开头的数内重复的数字个数。 其中对0的处理比较麻烦，最高位不会出现0，但是0是有可能出现重复的，因此可能需要对之前的一位做专门的处理。 因此特殊的，定义dp[n-1][0]为第n位数为任意非0数时，n-1位为0时的重复数字个数&#xA;显而易见的是，dp[1][&amp;hellip;]=0，长度为一位的时候不会有重复的数据。&#xA;最新的一位数据的内容主要包括两个方面：&#xA;之前已经重复的0：$dp[n-1][0] = 10^{n-3} + \sum_{i\in Q_0}dp[n-2][i]$，包括最新的一个重复，加上之前的重复项目 更新完0之后，更新之前已经重复的1~9：$dp[n][m] = 10^{n-2} + \sum_{i\in Q_m}dp[n-1][i]$。其中$Q_m$表示个位数中除了m以外的集合，比如$Q_1={0,2,3,&amp;hellip;,9}$。 该项目的两个部分分别表示前一位为m或者非m的情况（非0），以1为例子 $10^{n-2}$表示形如&amp;quot;11XXX&amp;quot;的数据，其中之后的数据完全任意且不会重复，因此直接计总数即可。 $\sum_{i\in Q_m}dp[n-1][i]$，表示形如&amp;quot;1XaaXXX&amp;quot;的数据，即最新的数字加入时没有引入重复，但是之前已经发生了重复的情况。 该项也是0为什么要在之前计算的缘故，否则，会漏算因为0引起的重复情况。 在计算的时候是一起计算的，n位以0开头的数字可以视为n+1位存在任意数字使其非0。但是最终计算总重复数字时不会加入dp[n][0]，因为最高位为时非法的。&#xA;以n=3为例子:&#xA;n=1的时候，$dp[1][&amp;hellip;]=0$ n=2的时候，$dp[2][1] = dp[1][1] + 10^0=1$，也即11。类似的，有00、22、33、44、55、66、77、88、99。 n=3的时候，$dp[3][1] = 10^1 + \sum_{i\in{0,2,3,&amp;hellip;,9}}10^0$，即110、111、112、&amp;hellip;、119，以及100、122、133、&amp;hellip;、199。 在最终计入总数的时候，计算$\sum_{i=1}^9dp[n][i]$，不计算0。因为不存在以0开头的数字。 数学方法 Link to heading 官方给的解法：含有d位数($2\geq d\leq 10$)的各位数字都不同的数字x的个数可以由$9\times A_{9}^{d-1}$。（第一位选择范围为除0以外，第二位为10个数字除以第一位，以此类推）&#xA;class Solution { public: int countNumbersWithUniqueDigits(int n) { if (n == 0) { return 1; } if (n == 1) { return 10; } int ans = 10, cur = 9; for (int i = 0; i &amp;lt; n - 1; ++i) { cur *= 9 - i; ans += cur; } return ans; } }; </description>
+    </item>
+  </channel>
 </rss>

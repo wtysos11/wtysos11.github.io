@@ -1,32 +1,33 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>问题 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/%E9%97%AE%E9%A2%98/</link>
-        <description>问题 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E9%97%AE%E9%A2%98/" rel="self" type="application/rss+xml" /><item>
-    <title>python命令行库如何实现子命令共享参数？</title>
-    <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
-    <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
-    <description><![CDATA[比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。]]></description>
-</item>
-<item>
-    <title>如何让pandas根据指定列的指进行partition</title>
-    <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
-    <pubDate>Sun, 22 Nov 2020 19:20:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
-    <description><![CDATA[问题描述 我拿到了一个维基百科的列表，其数据如下： datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce]]></description>
-</item>
-<item>
-    <title>Keras中的Embedding层是如何工作的</title>
-    <link>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
-    <pubDate>Tue, 08 Sep 2020 20:57:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
-    <description><![CDATA[在学习的过程中遇到了这个问题，同时也看到了SO中有相同的问题。而keras-github中这个问题也挺有意思的，记录一下。 这个解释很不错，假]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>问题 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/%E9%97%AE%E9%A2%98/</link>
+    <description>Recent content in 问题 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/%E9%97%AE%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>python命令行库如何实现子命令共享参数？</title>
+      <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
+      <pubDate>Thu, 02 Sep 2021 15:46:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
+      <description>比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。</description>
+    </item>
+    <item>
+      <title>如何让pandas根据指定列的指进行partition</title>
+      <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
+      <pubDate>Sun, 22 Nov 2020 19:20:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
+      <description>问题描述 Link to heading 我拿到了一个维基百科的列表，其数据如下：&#xA;datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce_Mar铆a 18 2015-08-30 12:00:00 UTC Portal:Current_events 116 UTF-8的问题暂且不谈，现在需要将其作为csv文件读入内存中，并且按照title分成不同的datehour-&amp;gt;views表，并按照datehour排序。将2015~2020的数据按照同样的操作进行处理，并将它们拼接成一张大表，最后将每一个title对应的表导出到csv，title写入到index.txt中。&#xA;##解决方案&#xA;朴素想法 Link to heading 最朴素的想法就是遍历一遍原表的所有行，构建一个字典，字典的每个key是title，value是两个list。不断将原有数据放入其中，然后到时候直接遍历keys，根据两个list构建pd，排序后导出。&#xA;更python的做法 Link to heading 朴素想法应该是够用的，但是不美观，不够pythonic，看着很别扭。于是我搜索了How to partition DataFrame by column value in pandas?&#xA;boolean index Link to heading stackoverflow里有人提问如何将离散数据进行二分类，把小于和大于某个值的数据分到两个DataFrame中。直接用df1 = df[df[&amp;quot;Sales&amp;quot;]&amp;gt;=s]这样的语句就可以完成。 但是这在我们的场景上并不太适用。当然，可以提前遍历一遍把title做成集合再循环遍历，不过这也不是很pythonic。&#xA;groupby Link to heading 同样是上面那个问题，有人提到可以使用groupby方法。groupby听着就很满足我的需求，它让我想起了SQL里面的同名功能。&#xA;df.groupby(&#39;ColumnName&#39;).groups可以显示所有的列中的元素。 df.groupby(&#39;ColumnName&#39;)可以进行遍历，结果是一个(name,subDF)的二元组，name为分组的元素名称，subDF为分组后的DataFrame 对df.</description>
+    </item>
+    <item>
+      <title>Keras中的Embedding层是如何工作的</title>
+      <link>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
+      <pubDate>Tue, 08 Sep 2020 20:57:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
+      <description>在学习的过程中遇到了这个问题，同时也看到了SO中有相同的问题。而keras-github中这个问题也挺有意思的，记录一下。&#xA;这个解释很不错，假如现在有这么两句话&#xA;Hope to see you soon Nice to see you again 在神经网络中，我们将这个作为输入，一般就会将每个单词用一个正整数代替，这样，上面的两句话在输入中是这样的&#xA;[0, 1, 2, 3, 4] [5, 1, 2, 3, 6] 在神经网络中，第一层是&#xA;Embedding(7, 2, input_length=5) 其中，第一个参数是input_dim，上面的值是7，代表的是单词表的长度；第二个参数是output_dim，上面的值是2，代表输出后向量长度为2；第三个参数是input_length，上面的值是5，代表输入序列的长度。&#xA;一旦神经网络被训练了，Embedding层就会被赋予一个权重，计算出来的结果如下：&#xA;+------------+------------+ | index | Embedding | +------------+------------+ | 0 | [1.2, 3.1] | | 1 | [0.1, 4.2] | | 2 | [1.0, 3.1] | | 3 | [0.3, 2.1] | | 4 | [2.2, 1.4] | | 5 | [0.7, 1.</description>
+    </item>
+  </channel>
 </rss>

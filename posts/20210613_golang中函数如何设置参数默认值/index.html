@@ -1,171 +1,257 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>golang中函数如何设置参数默认值 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="golang中函数如何设置参数默认值" />
-<meta property="og:description" content="参考资料 Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认" />
+<html lang="zh">
+
+<head>
+  <title>
+  golang中函数如何设置参数默认值 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。
+设置参数值的好处：
+可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：
+强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &#34;&#34; { a = &#34;default-a&#34; } if b == 0 { b = 5 } return fmt.Sprintf(&#34;%s%d&#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。
+使用可变参数语法糖 Link to heading // a is required, b is optional.">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="golang中函数如何设置参数默认值"/>
+<meta name="twitter:description" content="参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。
+设置参数值的好处：
+可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：
+强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &#34;&#34; { a = &#34;default-a&#34; } if b == 0 { b = 5 } return fmt.Sprintf(&#34;%s%d&#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。
+使用可变参数语法糖 Link to heading // a is required, b is optional."/>
+
+<meta property="og:title" content="golang中函数如何设置参数默认值" />
+<meta property="og:description" content="参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。
+设置参数值的好处：
+可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：
+强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &#34;&#34; { a = &#34;default-a&#34; } if b == 0 { b = 5 } return fmt.Sprintf(&#34;%s%d&#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。
+使用可变参数语法糖 Link to heading // a is required, b is optional." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-06-13T14:50:14+08:00" />
-<meta property="article:modified_time" content="2021-06-13T14:50:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-06-13T14:50:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="golang中函数如何设置参数默认值"/>
-<meta name="twitter:description" content="参考资料 Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" /><link rel="next" href="http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "golang中函数如何设置参数默认值",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/问题\/问题解答, 分类\/知识库\/计算机\/go","wordcount":  610 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC\/","datePublished": "2021-06-13T14:50:14+08:00","dateModified": "2021-06-13T14:50:14+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang中函数如何设置参数默认值</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Go基础学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-06-13">2021-06-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 610 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#参考资料">参考资料</a>
-      <ul>
-        <li><a href="#强制改变">强制改变</a></li>
-        <li><a href="#使用可变参数语法糖">使用可变参数语法糖</a></li>
-        <li><a href="#利用结构体的config">利用结构体的config</a></li>
-        <li><a href="#转换函数的全部参数">转换函数的全部参数</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h2 id="参考资料">参考资料</h2>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/">
+              golang中函数如何设置参数默认值
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-06-13T14:50:14&#43;08:00">
+                六月 13, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">Go基础学习</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/">计算机/问题/问题解答</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">计算机/go</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="参考资料">
+  参考资料
+  <a class="heading-link" href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <ul>
-<li><a href="https://joneisen.me/programming/2013/06/23/golang-and-default-values.html" target="_blank" rel="noopener noreffer ">Golang and default values</a></li>
+<li><a href="https://joneisen.me/programming/2013/06/23/golang-and-default-values.html"  class="external-link" target="_blank" rel="noopener">Golang and default values</a></li>
 </ul>
-<p>这个问题相当麻烦，根据<a href="https://groups.google.com/g/golang-nuts/c/-5MCaivW0qQ?pli=1" target="_blank" rel="noopener noreffer ">golang-nuts/google groups</a>中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。</p>
+<p>这个问题相当麻烦，根据<a href="https://groups.google.com/g/golang-nuts/c/-5MCaivW0qQ?pli=1"  class="external-link" target="_blank" rel="noopener">golang-nuts/google groups</a>中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。</p>
 <p>设置参数值的好处：</p>
 <ol>
 <li>可以缺省部分参数。</li>
 <li>可以提供一种默认的，行之有效的配置。</li>
 </ol>
 <p>但是参考资料中提到了几种实现默认值的方法：</p>
-<h3 id="强制改变">强制改变</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Both parameters are optional, use empty string for default value
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Concat1</span><span class="p">(</span><span class="nx">a</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">a</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">a</span> <span class="p">=</span> <span class="s">&#34;default-a&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nx">b</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">b</span> <span class="p">=</span> <span class="mi">5</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s%d&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<h3 id="强制改变">
+  强制改变
+  <a class="heading-link" href="#%e5%bc%ba%e5%88%b6%e6%94%b9%e5%8f%98">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// Both parameters are optional, use empty string for default value
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">Concat1</span>(a <span style="color:#ff7b72">string</span>, b <span style="color:#ff7b72">int</span>) <span style="color:#ff7b72">string</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> a <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>    a = <span style="color:#a5d6ff">&#34;default-a&#34;</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> b <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">0</span> {
+</span></span><span style="display:flex;"><span>    b = <span style="color:#a5d6ff">5</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">return</span> fmt.<span style="color:#d2a8ff;font-weight:bold">Sprintf</span>(<span style="color:#a5d6ff">&#34;%s%d&#34;</span>, a, b)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。
 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。</p>
-<h3 id="使用可变参数语法糖">使用可变参数语法糖</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// a is required, b is optional.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// Only the first value in b_optional will be used.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Concat2</span><span class="p">(</span><span class="nx">a</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">b_optional</span> <span class="o">...</span><span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">b</span> <span class="o">:=</span> <span class="mi">5</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">b_optional</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">b</span> <span class="p">=</span> <span class="nx">b_optional</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s%d&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<h3 id="使用可变参数语法糖">
+  使用可变参数语法糖
+  <a class="heading-link" href="#%e4%bd%bf%e7%94%a8%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0%e8%af%ad%e6%b3%95%e7%b3%96">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// a is required, b is optional.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// Only the first value in b_optional will be used.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">Concat2</span>(a <span style="color:#ff7b72">string</span>, b_optional <span style="color:#ff7b72;font-weight:bold">...</span><span style="color:#ff7b72">int</span>) <span style="color:#ff7b72">string</span> {
+</span></span><span style="display:flex;"><span>  b <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">5</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> len(b_optional) &gt; <span style="color:#a5d6ff">0</span> {
+</span></span><span style="display:flex;"><span>    b = b_optional[<span style="color:#a5d6ff">0</span>]
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">return</span> fmt.<span style="color:#d2a8ff;font-weight:bold">Sprintf</span>(<span style="color:#a5d6ff">&#34;%s%d&#34;</span>, a, b)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>上述方法中，a是必须的，而b是可选的。
 此时b的默认值时5，如果b_optional中存在数据，则将其读取。</p>
-<h3 id="利用结构体的config">利用结构体的config</h3>
+<h3 id="利用结构体的config">
+  利用结构体的config
+  <a class="heading-link" href="#%e5%88%a9%e7%94%a8%e7%bb%93%e6%9e%84%e4%bd%93%e7%9a%84config">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <pre tabindex="0"><code>// A declarative default value syntax
 // Empty values will be replaced with defaults
 type Parameters struct {
@@ -188,62 +274,112 @@ func Concat3(prm Parameters) string {
   return fmt.Sprintf(&#34;%s%d&#34;, prm.A, prm.B)
 }
 </code></pre><p>虽然也能做到缺省参数（如果不设置A属性，则该属性将被默认初始化），但是这种方式只对字符串管用。</p>
-<h3 id="转换函数的全部参数">转换函数的全部参数</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Concat4</span><span class="p">(</span><span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="kt">string</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">a</span> <span class="o">:=</span> <span class="s">&#34;default-a&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">b</span> <span class="o">:=</span> <span class="mi">5</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">arg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">args</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">switch</span> <span class="nx">t</span> <span class="o">:=</span> <span class="nx">arg</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="kt">string</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">a</span> <span class="p">=</span> <span class="nx">t</span>
-</span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="kt">int</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">b</span> <span class="p">=</span> <span class="nx">t</span>
-</span></span><span class="line"><span class="cl">      <span class="k">default</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">panic</span><span class="p">(</span><span class="s">&#34;Unknown argument&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s%d&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<h3 id="转换函数的全部参数">
+  转换函数的全部参数
+  <a class="heading-link" href="#%e8%bd%ac%e6%8d%a2%e5%87%bd%e6%95%b0%e7%9a%84%e5%85%a8%e9%83%a8%e5%8f%82%e6%95%b0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">Concat4</span>(args <span style="color:#ff7b72;font-weight:bold">...</span><span style="color:#ff7b72">interface</span>{}) <span style="color:#ff7b72">string</span> {
+</span></span><span style="display:flex;"><span>  a <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">&#34;default-a&#34;</span>
+</span></span><span style="display:flex;"><span>  b <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">for</span> _, arg <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72">range</span> args {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">switch</span> t <span style="color:#ff7b72;font-weight:bold">:=</span> arg.(<span style="color:#ff7b72">type</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff7b72">case</span> <span style="color:#ff7b72">string</span>:
+</span></span><span style="display:flex;"><span>        a = t
+</span></span><span style="display:flex;"><span>      <span style="color:#ff7b72">case</span> <span style="color:#ff7b72">int</span>:
+</span></span><span style="display:flex;"><span>        b = t
+</span></span><span style="display:flex;"><span>      <span style="color:#ff7b72">default</span>:
+</span></span><span style="display:flex;"><span>        panic(<span style="color:#a5d6ff">&#34;Unknown argument&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">return</span> fmt.<span style="color:#d2a8ff;font-weight:bold">Sprintf</span>(<span style="color:#a5d6ff">&#34;%s%d&#34;</span>, a, b)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>相当泛用的方法，但是对于不同的类型就不可行了。</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-06-13</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" data-title="golang中函数如何设置参数默认值" data-hashtags="分类/知识库/计算机/问题/问题解答,分类/知识库/计算机/go"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" data-hashtag="分类/知识库/计算机/问题/问题解答"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" data-title="golang中函数如何设置参数默认值" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" data-title="golang中函数如何设置参数默认值"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" data-title="golang中函数如何设置参数默认值"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" data-title="golang中函数如何设置参数默认值" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" data-title="golang中函数如何设置参数默认值"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/">分类/知识库/计算机/问题/问题解答</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">分类/知识库/计算机/go</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" class="prev" rel="prev" title="Git分支开发模式学习"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Git分支开发模式学习</a>
-            <a href="/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/" class="next" rel="next" title="邓宁-克鲁格效应">邓宁-克鲁格效应<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

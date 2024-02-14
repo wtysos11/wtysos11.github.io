@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/</link>
+    <description>Recent content in 计算机 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>现代人工智能课程复习</title>
+      <link>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</link>
+      <pubDate>Sat, 09 Jan 2021 14:14:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</guid>
+      <description>中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展&#xA;距离度量，重点记忆Mahalanobis距离和Minkowski距离 过拟合 Link to heading 训练集误差减小的时候，测试集误差增大。 解决方案：正则化，给误差函数增加一个惩罚项（L1/L2）&#xA;概率论 Link to heading 全概率公式，P(A) = P(A|Bi)P(Bi) 贝叶斯公式，P(Bi|A) = P(ABi)/P(A)&#xA;贝叶斯概率 Link to heading 后验概率= 先验概率*似然函数&#xA;bootstrap，自助法，频率学派使用。假设原始数据集有N个数据，可以采取随机抽取N个点的做法来生成新的数据集（可重复，可缺失）。这样可以在多个产生的数据集中评估参数估计的结果。&#xA;高斯分布 Link to heading 一元与多元的表示&#xA;交叉验证 Link to heading 信息准则：AIC与BIC&#xA;决策论 Link to heading 或者说贝叶斯决策/贝叶斯推断&#xA;最小化错误分类率。对于二分类问题，降低错误发生的概率，即把类1分给类2与类2分给类1两个事件。 最小化期望损失。使用损失函数来量化错误分类的代价。 拒绝选项 判别器 Link to heading 概率分布 Link to heading 二项分布（伯努利分布） Link to heading E = p, V = p(1-p)&#xA;高斯分布 Link to heading 对于多元实值向量，使熵取最大值的是高斯分布&#xA;中心极限定理：&#xA;独立同分布的中心极限定理。当n个随机变量独立同分布且n足够大的时候，可以将独立同分布的随机变量之和当作正态变量。 对于要定义的高斯分布，其协方差的酥油特征值要严格大于零，不然不能被正确的归一化。如果一个或多个特征值为零，则该高斯分布将是奇异的，被限制在一个低维的子空间上。 高斯分布的局限性在于它是单峰的，因此难以逼近多峰分布。解决方法是使用混合高斯分布，使用足够多的高斯分布，并调整它们的均值和方差以及线性组合的系数，几乎可以以任意精度近似所有的连续概率密度。</description>
+    </item>
+  </channel>
+</rss>

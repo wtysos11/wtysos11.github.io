@@ -1,163 +1,252 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>KMP算法复习 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="KMP算法复习" />
-<meta property="og:description" content="太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。 参考资料 如何更好地理解和掌握 KMP 算法?" />
+<html lang="zh">
+
+<head>
+  <title>
+  KMP算法复习 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。
+参考资料 如何更好地理解和掌握 KMP 算法? - 阮行止的回答 - 知乎 https://www.zhihu.com/question/21923021/answer/1032665486
+核心思想 Link to heading KMP算法要解决的问题是字符串匹配问题。给定原串S和模版串P，求解原串中是否存在子字符串与模版串相匹配。
+最简单的想法就是暴力搜索，设原串S长度为n，模板串P长度为m，显然暴力的时间复杂度为O(nm)，非常慢。
+KMP的想法是充分利用适配信息，其next数组的定义如下：next[i]表示在P[0:i]子串中，使前k个字符恰好等于后k个字符的最大的k，且k不能等于i&#43;1（否则就等于它自己了） 这个数组的定义挺绕的，第一眼基本都不会反应过来，我就不插图了，只用文本表述一下（建议看图）。KMP的失配匹配，本质上就是把模版串向前伸，直到伸到前缀与后缀匹配为止，这实际上就是自己与自己匹配。因此这个k就是前缀与后缀相同的最大长度k。
+因此next数组可以用如下方法求得
+def getNxt(x): for i in range(x,0,-1): if p[0:i] == p[x-i&#43;1:x&#43;1]: return i return 0 nxt = [getNxt(x) for x in range(len(p))] 构建next数组的复杂度显然是O(m^2)的 使用next数组加速匹配
+def search(p,s): tar = 0 # 主串中将要匹配的位置 pos = 0 # 子串中将要匹配的位置 while tar &lt; len(s): if s[tar] == p[pos]: # 若两个字符相同，匹配成功，tar和pos各进一步 tar &#43;= 1 pos &#43;= 1 elif pos&gt;0: # 失配，且pos&gt;0，则next数组移动 pos = nxt[pos-1] else: # pos[0]也失配了，则主串前进 tar &#43;= 1 if pos == len(p): # pos走到了len(p)，匹配成功 print(tar-pos) # 输出起始地点 pos = nxt[pos-1] # 当作失配，继续下一次匹配 时间复杂度为O(n&#43;m)，会比暴力方法小很多。">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="KMP算法复习"/>
+<meta name="twitter:description" content="太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。
+参考资料 如何更好地理解和掌握 KMP 算法? - 阮行止的回答 - 知乎 https://www.zhihu.com/question/21923021/answer/1032665486
+核心思想 Link to heading KMP算法要解决的问题是字符串匹配问题。给定原串S和模版串P，求解原串中是否存在子字符串与模版串相匹配。
+最简单的想法就是暴力搜索，设原串S长度为n，模板串P长度为m，显然暴力的时间复杂度为O(nm)，非常慢。
+KMP的想法是充分利用适配信息，其next数组的定义如下：next[i]表示在P[0:i]子串中，使前k个字符恰好等于后k个字符的最大的k，且k不能等于i&#43;1（否则就等于它自己了） 这个数组的定义挺绕的，第一眼基本都不会反应过来，我就不插图了，只用文本表述一下（建议看图）。KMP的失配匹配，本质上就是把模版串向前伸，直到伸到前缀与后缀匹配为止，这实际上就是自己与自己匹配。因此这个k就是前缀与后缀相同的最大长度k。
+因此next数组可以用如下方法求得
+def getNxt(x): for i in range(x,0,-1): if p[0:i] == p[x-i&#43;1:x&#43;1]: return i return 0 nxt = [getNxt(x) for x in range(len(p))] 构建next数组的复杂度显然是O(m^2)的 使用next数组加速匹配
+def search(p,s): tar = 0 # 主串中将要匹配的位置 pos = 0 # 子串中将要匹配的位置 while tar &lt; len(s): if s[tar] == p[pos]: # 若两个字符相同，匹配成功，tar和pos各进一步 tar &#43;= 1 pos &#43;= 1 elif pos&gt;0: # 失配，且pos&gt;0，则next数组移动 pos = nxt[pos-1] else: # pos[0]也失配了，则主串前进 tar &#43;= 1 if pos == len(p): # pos走到了len(p)，匹配成功 print(tar-pos) # 输出起始地点 pos = nxt[pos-1] # 当作失配，继续下一次匹配 时间复杂度为O(n&#43;m)，会比暴力方法小很多。"/>
+
+<meta property="og:title" content="KMP算法复习" />
+<meta property="og:description" content="太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。
+参考资料 如何更好地理解和掌握 KMP 算法? - 阮行止的回答 - 知乎 https://www.zhihu.com/question/21923021/answer/1032665486
+核心思想 Link to heading KMP算法要解决的问题是字符串匹配问题。给定原串S和模版串P，求解原串中是否存在子字符串与模版串相匹配。
+最简单的想法就是暴力搜索，设原串S长度为n，模板串P长度为m，显然暴力的时间复杂度为O(nm)，非常慢。
+KMP的想法是充分利用适配信息，其next数组的定义如下：next[i]表示在P[0:i]子串中，使前k个字符恰好等于后k个字符的最大的k，且k不能等于i&#43;1（否则就等于它自己了） 这个数组的定义挺绕的，第一眼基本都不会反应过来，我就不插图了，只用文本表述一下（建议看图）。KMP的失配匹配，本质上就是把模版串向前伸，直到伸到前缀与后缀匹配为止，这实际上就是自己与自己匹配。因此这个k就是前缀与后缀相同的最大长度k。
+因此next数组可以用如下方法求得
+def getNxt(x): for i in range(x,0,-1): if p[0:i] == p[x-i&#43;1:x&#43;1]: return i return 0 nxt = [getNxt(x) for x in range(len(p))] 构建next数组的复杂度显然是O(m^2)的 使用next数组加速匹配
+def search(p,s): tar = 0 # 主串中将要匹配的位置 pos = 0 # 子串中将要匹配的位置 while tar &lt; len(s): if s[tar] == p[pos]: # 若两个字符相同，匹配成功，tar和pos各进一步 tar &#43;= 1 pos &#43;= 1 elif pos&gt;0: # 失配，且pos&gt;0，则next数组移动 pos = nxt[pos-1] else: # pos[0]也失配了，则主串前进 tar &#43;= 1 if pos == len(p): # pos走到了len(p)，匹配成功 print(tar-pos) # 输出起始地点 pos = nxt[pos-1] # 当作失配，继续下一次匹配 时间复杂度为O(n&#43;m)，会比暴力方法小很多。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-11T15:09:14+08:00" />
-<meta property="article:modified_time" content="2021-03-11T15:09:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-03-11T15:09:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="KMP算法复习"/>
-<meta name="twitter:description" content="太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。 参考资料 如何更好地理解和掌握 KMP 算法?"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" /><link rel="next" href="http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "KMP算法复习",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/算法\/算法学习, 分类\/知识库\/计算机\/算法\/字符串","wordcount":  1081 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0\/","datePublished": "2021-03-11T15:09:14+08:00","dateModified": "2021-03-11T15:09:14+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/">
+              KMP算法复习
+            </a>
+          </h1>
         </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" selected>简体中文</option></select>
-                </a></div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-03-11T15:09:14&#43;08:00">
+                三月 11, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">计算机/算法/算法学习</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2/">计算机/算法/字符串</a>
+    </span></div>
+
         </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">KMP算法复习</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-03-11">2021-03-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1081 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#核心思想">核心思想</a></li>
-    <li><a href="#快速求next数组">快速求next数组</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><p>太久没打了，刚好有道题用上了，就复习一下。
+      </header>
+
+      <div class="post-content">
+        
+        <p>太久没打了，刚好有道题用上了，就复习一下。
 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。</p>
 <p>参考资料
 如何更好地理解和掌握 KMP 算法? - 阮行止的回答 - 知乎
-<a href="https://www.zhihu.com/question/21923021/answer/1032665486" target="_blank" rel="noopener noreffer ">https://www.zhihu.com/question/21923021/answer/1032665486</a></p>
-<h2 id="核心思想">核心思想</h2>
+<a href="https://www.zhihu.com/question/21923021/answer/1032665486"  class="external-link" target="_blank" rel="noopener">https://www.zhihu.com/question/21923021/answer/1032665486</a></p>
+<h2 id="核心思想">
+  核心思想
+  <a class="heading-link" href="#%e6%a0%b8%e5%bf%83%e6%80%9d%e6%83%b3">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>KMP算法要解决的问题是字符串匹配问题。给定原串S和模版串P，求解原串中是否存在子字符串与模版串相匹配。</p>
 <p>最简单的想法就是暴力搜索，设原串S长度为n，模板串P长度为m，显然暴力的时间复杂度为O(nm)，非常慢。</p>
 <p>KMP的想法是充分利用适配信息，其next数组的定义如下：next[i]表示在<code>P[0:i]</code>子串中，使前k个字符恰好等于后k个字符的最大的k，且k不能等于i+1（否则就等于它自己了）
 这个数组的定义挺绕的，第一眼基本都不会反应过来，我就不插图了，只用文本表述一下（建议看图）。KMP的失配匹配，本质上就是把模版串向前伸，直到伸到前缀与后缀匹配为止，这实际上就是自己与自己匹配。因此这个k就是前缀与后缀相同的最大长度k。</p>
 <p>因此next数组可以用如下方法求得</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">getNxt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">i</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">nxt</span> <span class="o">=</span> <span class="p">[</span><span class="n">getNxt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">))]</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">getNxt</span>(x):
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">in</span> range(x,<span style="color:#a5d6ff">0</span>,<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> p[<span style="color:#a5d6ff">0</span>:i] <span style="color:#ff7b72;font-weight:bold">==</span> p[x<span style="color:#ff7b72;font-weight:bold">-</span>i<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>:x<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>]:
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> i
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>nxt <span style="color:#ff7b72;font-weight:bold">=</span> [getNxt(x) <span style="color:#ff7b72">for</span> x <span style="color:#ff7b72;font-weight:bold">in</span> range(len(p))]
 </span></span></code></pre></div><p>构建next数组的复杂度显然是O(m^2)的
 使用next数组加速匹配</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">tar</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 主串中将要匹配的位置</span>
-</span></span><span class="line"><span class="cl">    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># 子串中将要匹配的位置</span>
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">tar</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">tar</span><span class="p">]</span> <span class="o">==</span> <span class="n">p</span><span class="p">[</span><span class="n">pos</span><span class="p">]:</span> <span class="c1"># 若两个字符相同，匹配成功，tar和pos各进一步</span>
-</span></span><span class="line"><span class="cl">            <span class="n">tar</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">pos</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># 失配，且pos&gt;0，则next数组移动</span>
-</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span> <span class="c1"># pos[0]也失配了，则主串前进</span>
-</span></span><span class="line"><span class="cl">            <span class="n">tar</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span> <span class="c1"># pos走到了len(p)，匹配成功</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">tar</span><span class="o">-</span><span class="n">pos</span><span class="p">)</span> <span class="c1"># 输出起始地点</span>
-</span></span><span class="line"><span class="cl">            <span class="n">pos</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">pos</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 当作失配，继续下一次匹配</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">search</span>(p,s):
+</span></span><span style="display:flex;"><span>    tar <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span> <span style="color:#8b949e;font-style:italic"># 主串中将要匹配的位置</span>
+</span></span><span style="display:flex;"><span>    pos <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span> <span style="color:#8b949e;font-style:italic"># 子串中将要匹配的位置</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">while</span> tar <span style="color:#ff7b72;font-weight:bold">&lt;</span> len(s):
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> s[tar] <span style="color:#ff7b72;font-weight:bold">==</span> p[pos]: <span style="color:#8b949e;font-style:italic"># 若两个字符相同，匹配成功，tar和pos各进一步</span>
+</span></span><span style="display:flex;"><span>            tar <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>            pos <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">elif</span> pos<span style="color:#ff7b72;font-weight:bold">&gt;</span><span style="color:#a5d6ff">0</span>: <span style="color:#8b949e;font-style:italic"># 失配，且pos&gt;0，则next数组移动</span>
+</span></span><span style="display:flex;"><span>            pos <span style="color:#ff7b72;font-weight:bold">=</span> nxt[pos<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">else</span>: <span style="color:#8b949e;font-style:italic"># pos[0]也失配了，则主串前进</span>
+</span></span><span style="display:flex;"><span>            tar <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> pos <span style="color:#ff7b72;font-weight:bold">==</span> len(p): <span style="color:#8b949e;font-style:italic"># pos走到了len(p)，匹配成功</span>
+</span></span><span style="display:flex;"><span>            print(tar<span style="color:#ff7b72;font-weight:bold">-</span>pos) <span style="color:#8b949e;font-style:italic"># 输出起始地点</span>
+</span></span><span style="display:flex;"><span>            pos <span style="color:#ff7b72;font-weight:bold">=</span> nxt[pos<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>] <span style="color:#8b949e;font-style:italic"># 当作失配，继续下一次匹配</span>
 </span></span></code></pre></div><p>时间复杂度为O(n+m)，会比暴力方法小很多。</p>
-<h2 id="快速求next数组">快速求next数组</h2>
+<h2 id="快速求next数组">
+  快速求next数组
+  <a class="heading-link" href="#%e5%bf%ab%e9%80%9f%e6%b1%82next%e6%95%b0%e7%bb%84">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>这一步也是KMP的精髓，前面我没记错的话应该是MP算法，这一步是K算法。
 其核心在于让P自己与自己做匹配。</p>
 <p>next数组的定义是使得前缀与后缀的前k个字符相等的最大的k，隐含着一个匹配。因此可以考虑使用next数组递归求解自身</p>
@@ -167,58 +256,102 @@ _________ X ----__________X
 0 0 0 1 2 0 0 0 1 2 3 4 5 ?
 </code></pre><p>前一个子串为A串，后一个子串为B串在两个X的地方。如果前者等于后者，则？处的next显然等于6，即next[i-1]+1，即得配的情况。
 但是现在是失配了，显然目标是要找到一个新的now，使得前面的前缀与后面的后缀相同，而且注意到前面的A串与B串是相同的，因此就可以利用起A串的next数组。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">nxt</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">buildNxt</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># next[0]一定是0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#求解从1开始</span>
-</span></span><span class="line"><span class="cl">    <span class="n">now</span> <span class="o">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="n">now</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span> <span class="c1">#第一种情况，得配，相前一位</span>
-</span></span><span class="line"><span class="cl">            <span class="n">now</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">            <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">now</span><span class="p">)</span> <span class="c1"># 之前没有，我看了一下意思，我觉得要加上</span>
-</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">now</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># 失配，需要缩小now</span>
-</span></span><span class="line"><span class="cl">            <span class="n">now</span> <span class="o">=</span> <span class="n">nxt</span><span class="p">[</span><span class="n">now</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">nxt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#now最小，此时肯定为0</span>
-</span></span><span class="line"><span class="cl">            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-03-11</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="KMP算法复习" data-hashtags="分类/知识库/计算机/算法/算法学习,分类/知识库/计算机/算法/字符串"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-hashtag="分类/知识库/计算机/算法/算法学习"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="KMP算法复习" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="KMP算法复习"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="KMP算法复习"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="KMP算法复习" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="KMP算法复习"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>nxt <span style="color:#ff7b72;font-weight:bold">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">def</span> <span style="color:#d2a8ff;font-weight:bold">buildNxt</span>():
+</span></span><span style="display:flex;"><span>    nxt<span style="color:#ff7b72;font-weight:bold">.</span>append(<span style="color:#a5d6ff">0</span>) <span style="color:#8b949e;font-style:italic"># next[0]一定是0</span>
+</span></span><span style="display:flex;"><span>    x <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span> <span style="color:#8b949e;font-style:italic">#求解从1开始</span>
+</span></span><span style="display:flex;"><span>    now <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">while</span> x <span style="color:#ff7b72;font-weight:bold">&lt;</span> len(p):
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> p[now] <span style="color:#ff7b72;font-weight:bold">=</span> p[x]: <span style="color:#8b949e;font-style:italic">#第一种情况，得配，相前一位</span>
+</span></span><span style="display:flex;"><span>            now <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>            x <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>            nxt<span style="color:#ff7b72;font-weight:bold">.</span>append(now) <span style="color:#8b949e;font-style:italic"># 之前没有，我看了一下意思，我觉得要加上</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">elif</span> now<span style="color:#ff7b72;font-weight:bold">&gt;</span><span style="color:#a5d6ff">0</span>: <span style="color:#8b949e;font-style:italic"># 失配，需要缩小now</span>
+</span></span><span style="display:flex;"><span>            now <span style="color:#ff7b72;font-weight:bold">=</span> nxt[now<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">else</span>:
+</span></span><span style="display:flex;"><span>            nxt<span style="color:#ff7b72;font-weight:bold">.</span>append(<span style="color:#a5d6ff">0</span>) <span style="color:#8b949e;font-style:italic">#now最小，此时肯定为0</span>
+</span></span><span style="display:flex;"><span>            x <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">分类/知识库/计算机/算法/算法学习</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2/">分类/知识库/计算机/算法/字符串</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/" class="prev" rel="prev" title="分布式系统-CAP理论十二年回顾：规则变了"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>分布式系统-CAP理论十二年回顾：规则变了</a>
-            <a href="/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/" class="next" rel="next" title="【动态规划】最长公共子串问题">【动态规划】最长公共子串问题<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

@@ -1,16 +1,19 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>实践记录 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/</link>
-        <description>实践记录 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/" rel="self" type="application/rss+xml" /><item>
-    <title>基于大模型构建本地知识库</title>
-    <link>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</link>
-    <pubDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</guid>
-    <description><![CDATA[基于大模型构建本地知识库，尝试使用ChatGPT、chatglm和Langchain-chatchat]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>实践记录 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/</link>
+    <description>Recent content in 实践记录 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 03 Jan 2024 11:32:23 +0800</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基于大模型构建本地知识库</title>
+      <link>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</link>
+      <pubDate>Wed, 03 Jan 2024 11:32:23 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</guid>
+      <description>基于大模型构建本地知识库，尝试使用ChatGPT、chatglm和Langchain-chatchat</description>
+    </item>
+  </channel>
 </rss>

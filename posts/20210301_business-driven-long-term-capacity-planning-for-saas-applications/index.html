@@ -1,145 +1,268 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Business-Driven Long-Term Capacity Planning for SaaS Applications - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="Business-Driven Long-Term Capacity Planning for SaaS Applications" />
-<meta property="og:description" content="未完成 本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？ Business-Driven Long-Term Capacity Planning for SaaS Applications 2015 TCC ，没记" />
+<html lang="zh">
+
+<head>
+  <title>
+  Business-Driven Long-Term Capacity Planning for SaaS Applications · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="未完成
+本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？
+Business-Driven Long-Term Capacity Planning for SaaS Applications Link to heading 2015 TCC ，没记错应该是C类
+摘要 Link to heading 本文关注的是capacity planning，从定义上，该技术的目标是估计提供计算资源所需的资源数量，从而实现高的QoS级别，为公司带来更高的经济效益。
+在现实中，可以有这样的场景，SaaS出于经济效益的考虑去购买IaaS服务商的实例。这样，SaaS可以减少在操作上的花费与复杂度，但是需要对自身的长期资源使用情况进行一定程度的估算。
+本文采用了模拟实验，使用同步的电子商务数据流。分析显示，使用启发式方法来优化能够每年提升9.65%的利润。
+重点在于启发式搜索的方式
+3 Utility model Link to heading Utility是微观经济学上的概念，用来描述客户的偏好。一般而言，更大的值代表了更高的偏好性。因此，客户的行为也会受到Utility的影响，即他们会倾向选择最喜欢的输出。
+Utility function将outcome映射到utility value上。
+本文提出的Utility model将SaaS的利润（作为提供一个应用的结果）映射到utility value上。这样，一个capacity planning的agent就可以使用本模型来制作capacity plan来最大化utility value。此时，就可以达到SaaS provider的最大利润。
+3.1 Revenue model Link to heading utility model认为SaaS provider可以提供一个或多个计划给他们的顾客，每一个顾客根据自身的需要选择一个计划并与SaaS provider签订合同。
+revenue model包括：
+SaaS consumer周期性地收取费用（每月或每年） 每一个application有着使用限制，由provider提供 合同包括赔偿条款，即SLA违约的情况 SaaS将提供应用A给一个SaaS顾客的集合$U={u_1,&hellip;,u_{|U|}}$。同时，SaaS provider会构建一个计划的集合$P={p_1,&hellip;,p_{|P|}}$，每一个计划$p_j$会满足一类顾客的需求，因此期望上$|P|&lt;|U|$，每一个顾客会选择一个计划来使用应用A。
+在签订计划后，顾客$u_k$可以在时间$[n_k^b,n_k^e]$区间内使用应用A，比如如果$p_j$是半年计划，这两个时间点的差值就是六个月。简单期间，SaaS提供的所有计划都以一个月作为最小单位。并且，新的顾客只能在每一个周期$n$到达之后才能加入，n随着时间推移单调递增。
+顾客$u_k$签订合同之后，SaaS provider就必须配置并部署应用A来服务。之后，顾客$u_k$需要支付配置费用configuration fee$I_j^b$，该费用由计划$p_j$决定。
+后续太罗嗦了就省了。本文的核心模型是utility model，就是一个收益模型，利润=总收入-总支出，基本没用。
+核心算法有两个
+一个是utilization model，这个utilization指的是reserved instance的利用率，比如说一个reserved instance买一年，需要有效使用50%才能比单纯买on-demand便宜，这个50%就是utilization。">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Business-Driven Long-Term Capacity Planning for SaaS Applications"/>
+<meta name="twitter:description" content="未完成
+本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？
+Business-Driven Long-Term Capacity Planning for SaaS Applications Link to heading 2015 TCC ，没记错应该是C类
+摘要 Link to heading 本文关注的是capacity planning，从定义上，该技术的目标是估计提供计算资源所需的资源数量，从而实现高的QoS级别，为公司带来更高的经济效益。
+在现实中，可以有这样的场景，SaaS出于经济效益的考虑去购买IaaS服务商的实例。这样，SaaS可以减少在操作上的花费与复杂度，但是需要对自身的长期资源使用情况进行一定程度的估算。
+本文采用了模拟实验，使用同步的电子商务数据流。分析显示，使用启发式方法来优化能够每年提升9.65%的利润。
+重点在于启发式搜索的方式
+3 Utility model Link to heading Utility是微观经济学上的概念，用来描述客户的偏好。一般而言，更大的值代表了更高的偏好性。因此，客户的行为也会受到Utility的影响，即他们会倾向选择最喜欢的输出。
+Utility function将outcome映射到utility value上。
+本文提出的Utility model将SaaS的利润（作为提供一个应用的结果）映射到utility value上。这样，一个capacity planning的agent就可以使用本模型来制作capacity plan来最大化utility value。此时，就可以达到SaaS provider的最大利润。
+3.1 Revenue model Link to heading utility model认为SaaS provider可以提供一个或多个计划给他们的顾客，每一个顾客根据自身的需要选择一个计划并与SaaS provider签订合同。
+revenue model包括：
+SaaS consumer周期性地收取费用（每月或每年） 每一个application有着使用限制，由provider提供 合同包括赔偿条款，即SLA违约的情况 SaaS将提供应用A给一个SaaS顾客的集合$U={u_1,&hellip;,u_{|U|}}$。同时，SaaS provider会构建一个计划的集合$P={p_1,&hellip;,p_{|P|}}$，每一个计划$p_j$会满足一类顾客的需求，因此期望上$|P|&lt;|U|$，每一个顾客会选择一个计划来使用应用A。
+在签订计划后，顾客$u_k$可以在时间$[n_k^b,n_k^e]$区间内使用应用A，比如如果$p_j$是半年计划，这两个时间点的差值就是六个月。简单期间，SaaS提供的所有计划都以一个月作为最小单位。并且，新的顾客只能在每一个周期$n$到达之后才能加入，n随着时间推移单调递增。
+顾客$u_k$签订合同之后，SaaS provider就必须配置并部署应用A来服务。之后，顾客$u_k$需要支付配置费用configuration fee$I_j^b$，该费用由计划$p_j$决定。
+后续太罗嗦了就省了。本文的核心模型是utility model，就是一个收益模型，利润=总收入-总支出，基本没用。
+核心算法有两个
+一个是utilization model，这个utilization指的是reserved instance的利用率，比如说一个reserved instance买一年，需要有效使用50%才能比单纯买on-demand便宜，这个50%就是utilization。"/>
+
+<meta property="og:title" content="Business-Driven Long-Term Capacity Planning for SaaS Applications" />
+<meta property="og:description" content="未完成
+本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？
+Business-Driven Long-Term Capacity Planning for SaaS Applications Link to heading 2015 TCC ，没记错应该是C类
+摘要 Link to heading 本文关注的是capacity planning，从定义上，该技术的目标是估计提供计算资源所需的资源数量，从而实现高的QoS级别，为公司带来更高的经济效益。
+在现实中，可以有这样的场景，SaaS出于经济效益的考虑去购买IaaS服务商的实例。这样，SaaS可以减少在操作上的花费与复杂度，但是需要对自身的长期资源使用情况进行一定程度的估算。
+本文采用了模拟实验，使用同步的电子商务数据流。分析显示，使用启发式方法来优化能够每年提升9.65%的利润。
+重点在于启发式搜索的方式
+3 Utility model Link to heading Utility是微观经济学上的概念，用来描述客户的偏好。一般而言，更大的值代表了更高的偏好性。因此，客户的行为也会受到Utility的影响，即他们会倾向选择最喜欢的输出。
+Utility function将outcome映射到utility value上。
+本文提出的Utility model将SaaS的利润（作为提供一个应用的结果）映射到utility value上。这样，一个capacity planning的agent就可以使用本模型来制作capacity plan来最大化utility value。此时，就可以达到SaaS provider的最大利润。
+3.1 Revenue model Link to heading utility model认为SaaS provider可以提供一个或多个计划给他们的顾客，每一个顾客根据自身的需要选择一个计划并与SaaS provider签订合同。
+revenue model包括：
+SaaS consumer周期性地收取费用（每月或每年） 每一个application有着使用限制，由provider提供 合同包括赔偿条款，即SLA违约的情况 SaaS将提供应用A给一个SaaS顾客的集合$U={u_1,&hellip;,u_{|U|}}$。同时，SaaS provider会构建一个计划的集合$P={p_1,&hellip;,p_{|P|}}$，每一个计划$p_j$会满足一类顾客的需求，因此期望上$|P|&lt;|U|$，每一个顾客会选择一个计划来使用应用A。
+在签订计划后，顾客$u_k$可以在时间$[n_k^b,n_k^e]$区间内使用应用A，比如如果$p_j$是半年计划，这两个时间点的差值就是六个月。简单期间，SaaS提供的所有计划都以一个月作为最小单位。并且，新的顾客只能在每一个周期$n$到达之后才能加入，n随着时间推移单调递增。
+顾客$u_k$签订合同之后，SaaS provider就必须配置并部署应用A来服务。之后，顾客$u_k$需要支付配置费用configuration fee$I_j^b$，该费用由计划$p_j$决定。
+后续太罗嗦了就省了。本文的核心模型是utility model，就是一个收益模型，利润=总收入-总支出，基本没用。
+核心算法有两个
+一个是utilization model，这个utilization指的是reserved instance的利用率，比如说一个reserved instance买一年，需要有效使用50%才能比单纯买on-demand便宜，这个50%就是utilization。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-01T16:57:04+08:00" />
-<meta property="article:modified_time" content="2021-03-01T16:57:04+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Business-Driven Long-Term Capacity Planning for SaaS Applications"/>
-<meta name="twitter:description" content="未完成 本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？ Business-Driven Long-Term Capacity Planning for SaaS Applications 2015 TCC ，没记"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" /><link rel="next" href="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Business-Driven Long-Term Capacity Planning for SaaS Applications",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210301_business-driven-long-term-capacity-planning-for-saas-applications\/"
-        },"genre": "posts","keywords": "分类\/学习\/学习笔记\/笔记\/科研\/资源调度预测","wordcount":  1407 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210301_business-driven-long-term-capacity-planning-for-saas-applications\/","datePublished": "2021-03-01T16:57:04+08:00","dateModified": "2021-03-01T16:57:04+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Business-Driven Long-Term Capacity Planning for SaaS Applications</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-03-01">2021-03-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1407 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#摘要">摘要</a></li>
-    <li><a href="#3-utility-model">3 Utility model</a>
-      <ul>
-        <li><a href="#31-revenue-model">3.1 Revenue model</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><p>未完成</p>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/">
+              Business-Driven Long-Term Capacity Planning for SaaS Applications
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-03-01T16:57:04&#43;08:00">
+                三月 1, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/">计算机/科研/资源调度预测</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>未完成</p>
 <p>本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？
 是否可以用强化学习来进行？</p>
-<h1 id="business-driven-long-term-capacity-planning-for-saas-applications">Business-Driven Long-Term Capacity Planning for SaaS Applications</h1>
+<h1 id="business-driven-long-term-capacity-planning-for-saas-applications">
+  Business-Driven Long-Term Capacity Planning for SaaS Applications
+  <a class="heading-link" href="#business-driven-long-term-capacity-planning-for-saas-applications">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
 <p>2015 TCC ，没记错应该是C类</p>
-<h2 id="摘要">摘要</h2>
+<h2 id="摘要">
+  摘要
+  <a class="heading-link" href="#%e6%91%98%e8%a6%81">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>本文关注的是capacity planning，从定义上，该技术的目标是估计提供计算资源所需的资源数量，从而实现高的QoS级别，为公司带来更高的经济效益。</p>
 <p>在现实中，可以有这样的场景，SaaS出于经济效益的考虑去购买IaaS服务商的实例。这样，SaaS可以减少在操作上的花费与复杂度，但是需要对自身的长期资源使用情况进行一定程度的估算。</p>
 <p>本文采用了模拟实验，使用同步的电子商务数据流。分析显示，使用启发式方法来优化能够每年提升9.65%的利润。</p>
 <p>重点在于启发式搜索的方式</p>
-<h2 id="3-utility-model">3 Utility model</h2>
+<h2 id="3-utility-model">
+  3 Utility model
+  <a class="heading-link" href="#3-utility-model">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>Utility是微观经济学上的概念，用来描述客户的偏好。一般而言，更大的值代表了更高的偏好性。因此，客户的行为也会受到Utility的影响，即他们会倾向选择最喜欢的输出。</p>
 <p>Utility function将outcome映射到utility value上。</p>
 <p>本文提出的Utility model将SaaS的利润（作为提供一个应用的结果）映射到utility value上。这样，一个capacity planning的agent就可以使用本模型来制作capacity plan来最大化utility value。此时，就可以达到SaaS provider的最大利润。</p>
-<h3 id="31-revenue-model">3.1 Revenue model</h3>
+<h3 id="31-revenue-model">
+  3.1 Revenue model
+  <a class="heading-link" href="#31-revenue-model">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>utility model认为SaaS provider可以提供一个或多个计划给他们的顾客，每一个顾客根据自身的需要选择一个计划并与SaaS provider签订合同。</p>
 <p>revenue model包括：</p>
 <ol>
@@ -155,43 +278,87 @@
 <p>核心算法有两个</p>
 <p>一个是utilization model，这个utilization指的是reserved instance的利用率，比如说一个reserved instance买一年，需要有效使用50%才能比单纯买on-demand便宜，这个50%就是utilization。</p>
 <p>然后这个算法本身的输入是包含了一个trace，就是说实例是预先分配好的，后续的工作只是在不同的云服务提供商中通过启发式方法比较出最优的那一家。就……挺不相关的。</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-03-01</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" data-title="Business-Driven Long-Term Capacity Planning for SaaS Applications" data-hashtags="分类/学习/学习笔记/笔记/科研/资源调度预测"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" data-hashtag="分类/学习/学习笔记/笔记/科研/资源调度预测"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" data-title="Business-Driven Long-Term Capacity Planning for SaaS Applications" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" data-title="Business-Driven Long-Term Capacity Planning for SaaS Applications"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" data-title="Business-Driven Long-Term Capacity Planning for SaaS Applications"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" data-title="Business-Driven Long-Term Capacity Planning for SaaS Applications" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" data-title="Business-Driven Long-Term Capacity Planning for SaaS Applications"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/">分类/学习/学习笔记/笔记/科研/资源调度预测</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" class="prev" rel="prev" title="阿里春招简历小课堂笔记"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>阿里春招简历小课堂笔记</a>
-            <a href="/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" class="next" rel="next" title="A two-phase cloud resource provisioning algorithm for cost optimization">A two-phase cloud resource provisioning algorithm for cost optimization<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

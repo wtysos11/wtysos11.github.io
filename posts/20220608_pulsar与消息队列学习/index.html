@@ -1,154 +1,247 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>消息队列基本概念与pulsar学习 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="消息队列基本概念与pulsar学习" />
-<meta property="og:description" content="消息队列学习 概念学习 参考资料： IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念 消息（messages）：一组信息的集合 topic。 Top" />
+<html lang="zh">
+
+<head>
+  <title>
+  消息队列基本概念与pulsar学习 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="消息队列学习 Link to heading 概念学习 Link to heading 参考资料：
+IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念
+消息（messages）：一组信息的集合 topic。 Topic和Queue应该指的是两种不同的模型，根据这篇JMS的文章、Kafka is it a topic or a queue、JMS Topic vs Queues。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。 而且在队列中接受者不用担心超时问题；在Topic中接受者必须continuously active并且按时接收，不然消息就会超时。 在pulsar中，topic甚至不用预先创建，会根据{persistent|non-persistent}://tenant/namespace/topic的名称自动生成。 元数据（metadata）：参考BookKeeper Ledger Metadata，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。 Pub/Sub：Pub-Sub Messaging 消息队列的优点：
+分离消息的生产者和消费者，使其在代码层面解耦合 允许消费者对消息进行异步处理，加快处理速度。 访问控制中的峰值控制。 Pulsar Link to heading 参考资料：
+下一代消息队列pulsar到底是什么 pulsar/concepts-messaging 架构上来说，Pulsar是Pub-sub架构
+Broker：无状态服务层，负责接受和传递消息、集群负载均衡 Apache BookKeeper：有状态持久化层，由一组名为Bookie的存储节点组成 Producer：数据生产者，负责发布数据到Topic Consumer：数据消费者，负责从Topic订阅数据 使用ZooKeeper作为元数据存储
+其他消息队列是分区存储，Pulsar是分片存储。
+Pub-sub架构（发布/订阅），异步的服务间通信方式，适用于无服务器和微服务。发布到主题的任何消息都会立即被主题的所有订阅者接收。
+多层架构：
+租户，可以看作是第一个层级，比如大的部门 namespace：命名空间，可以看作是第二个层级。 Subscriptions Link to heading 有四种模式：
+Consumerless subscriptions，这个是例外，没有consumer的时候subscription mode的undefined的。">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="消息队列基本概念与pulsar学习"/>
+<meta name="twitter:description" content="消息队列学习 Link to heading 概念学习 Link to heading 参考资料：
+IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念
+消息（messages）：一组信息的集合 topic。 Topic和Queue应该指的是两种不同的模型，根据这篇JMS的文章、Kafka is it a topic or a queue、JMS Topic vs Queues。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。 而且在队列中接受者不用担心超时问题；在Topic中接受者必须continuously active并且按时接收，不然消息就会超时。 在pulsar中，topic甚至不用预先创建，会根据{persistent|non-persistent}://tenant/namespace/topic的名称自动生成。 元数据（metadata）：参考BookKeeper Ledger Metadata，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。 Pub/Sub：Pub-Sub Messaging 消息队列的优点：
+分离消息的生产者和消费者，使其在代码层面解耦合 允许消费者对消息进行异步处理，加快处理速度。 访问控制中的峰值控制。 Pulsar Link to heading 参考资料：
+下一代消息队列pulsar到底是什么 pulsar/concepts-messaging 架构上来说，Pulsar是Pub-sub架构
+Broker：无状态服务层，负责接受和传递消息、集群负载均衡 Apache BookKeeper：有状态持久化层，由一组名为Bookie的存储节点组成 Producer：数据生产者，负责发布数据到Topic Consumer：数据消费者，负责从Topic订阅数据 使用ZooKeeper作为元数据存储
+其他消息队列是分区存储，Pulsar是分片存储。
+Pub-sub架构（发布/订阅），异步的服务间通信方式，适用于无服务器和微服务。发布到主题的任何消息都会立即被主题的所有订阅者接收。
+多层架构：
+租户，可以看作是第一个层级，比如大的部门 namespace：命名空间，可以看作是第二个层级。 Subscriptions Link to heading 有四种模式：
+Consumerless subscriptions，这个是例外，没有consumer的时候subscription mode的undefined的。"/>
+
+<meta property="og:title" content="消息队列基本概念与pulsar学习" />
+<meta property="og:description" content="消息队列学习 Link to heading 概念学习 Link to heading 参考资料：
+IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念
+消息（messages）：一组信息的集合 topic。 Topic和Queue应该指的是两种不同的模型，根据这篇JMS的文章、Kafka is it a topic or a queue、JMS Topic vs Queues。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。 而且在队列中接受者不用担心超时问题；在Topic中接受者必须continuously active并且按时接收，不然消息就会超时。 在pulsar中，topic甚至不用预先创建，会根据{persistent|non-persistent}://tenant/namespace/topic的名称自动生成。 元数据（metadata）：参考BookKeeper Ledger Metadata，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。 Pub/Sub：Pub-Sub Messaging 消息队列的优点：
+分离消息的生产者和消费者，使其在代码层面解耦合 允许消费者对消息进行异步处理，加快处理速度。 访问控制中的峰值控制。 Pulsar Link to heading 参考资料：
+下一代消息队列pulsar到底是什么 pulsar/concepts-messaging 架构上来说，Pulsar是Pub-sub架构
+Broker：无状态服务层，负责接受和传递消息、集群负载均衡 Apache BookKeeper：有状态持久化层，由一组名为Bookie的存储节点组成 Producer：数据生产者，负责发布数据到Topic Consumer：数据消费者，负责从Topic订阅数据 使用ZooKeeper作为元数据存储
+其他消息队列是分区存储，Pulsar是分片存储。
+Pub-sub架构（发布/订阅），异步的服务间通信方式，适用于无服务器和微服务。发布到主题的任何消息都会立即被主题的所有订阅者接收。
+多层架构：
+租户，可以看作是第一个层级，比如大的部门 namespace：命名空间，可以看作是第二个层级。 Subscriptions Link to heading 有四种模式：
+Consumerless subscriptions，这个是例外，没有consumer的时候subscription mode的undefined的。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-06-08T09:01:42+08:00" />
-<meta property="article:modified_time" content="2022-06-08T09:01:42+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="消息队列基本概念与pulsar学习"/>
-<meta name="twitter:description" content="消息队列学习 概念学习 参考资料： IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念 消息（messages）：一组信息的集合 topic。 Top"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" /><link rel="next" href="http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "消息队列基本概念与pulsar学习",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0\/"
-        },"genre": "posts","keywords": "分类\/状态\/待完善, 分类\/知识库\/计算机\/大数据\/消息队列, 分类\/学习\/学习笔记","wordcount":  1532 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0\/","datePublished": "2022-06-08T09:01:42+08:00","dateModified": "2022-06-08T09:01:42+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">消息队列基本概念与pulsar学习</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>消息队列</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-08">2022-06-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1532 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#概念学习">概念学习</a></li>
-    <li><a href="#pulsar">Pulsar</a>
-      <ul>
-        <li><a href="#subscriptions">Subscriptions</a></li>
-        <li><a href="#partition-topic">partition topic</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="消息队列学习">消息队列学习</h1>
-<h2 id="概念学习">概念学习</h2>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/">
+              消息队列基本概念与pulsar学习
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-06-08T09:01:42&#43;08:00">
+                六月 8, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">消息队列</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">计算机/大数据/消息队列</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">内容/学习笔记</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h1 id="消息队列学习">
+  消息队列学习
+  <a class="heading-link" href="#%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97%e5%ad%a6%e4%b9%a0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
+<h2 id="概念学习">
+  概念学习
+  <a class="heading-link" href="#%e6%a6%82%e5%bf%b5%e5%ad%a6%e4%b9%a0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>参考资料：</p>
 <ul>
-<li><a href="https://www.ibm.com/docs/en/ibm-mq/9.0?topic=queuing-messages-queues" target="_blank" rel="noopener noreffer ">IBM Messages and queues</a></li>
-<li><a href="https://docs.microsoft.com/en-us/previous-versions/windows/desktop/msmq/ms703216%28v=vs.85%29" target="_blank" rel="noopener noreffer ">Microsoft-MSMQ Overview</a></li>
-<li><a href="https://yourpassword/group/1642/articles/show/449542?kmref=search&amp;from_page=1&amp;no=1" target="_blank" rel="noopener noreffer ">KM-消息队列原理简介与对比选型</a></li>
+<li><a href="https://www.ibm.com/docs/en/ibm-mq/9.0?topic=queuing-messages-queues"  class="external-link" target="_blank" rel="noopener">IBM Messages and queues</a></li>
+<li><a href="https://docs.microsoft.com/en-us/previous-versions/windows/desktop/msmq/ms703216%28v=vs.85%29"  class="external-link" target="_blank" rel="noopener">Microsoft-MSMQ Overview</a></li>
+<li><a href="https://yourpassword/group/1642/articles/show/449542?kmref=search&amp;from_page=1&amp;no=1"  class="external-link" target="_blank" rel="noopener">KM-消息队列原理简介与对比选型</a></li>
 </ul>
 <p>基础概念</p>
 <ul>
 <li>消息（messages）：一组信息的集合</li>
 <li>topic。
 <ul>
-<li>Topic和Queue应该指的是两种不同的模型，根据<a href="http://www.differencebetween.net/technology/internet/difference-between-queue-and-topic/" target="_blank" rel="noopener noreffer ">这篇JMS的文章</a>、<a href="https://abhishek1987.medium.com/kafka-is-it-a-topic-or-a-queue-30c85386afd6" target="_blank" rel="noopener noreffer ">Kafka is it a topic or a queue</a>、<a href="https://stackoverflow.com/questions/5576415/jms-topic-vs-queues" target="_blank" rel="noopener noreffer ">JMS Topic vs Queues</a>。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。
+<li>Topic和Queue应该指的是两种不同的模型，根据<a href="http://www.differencebetween.net/technology/internet/difference-between-queue-and-topic/"  class="external-link" target="_blank" rel="noopener">这篇JMS的文章</a>、<a href="https://abhishek1987.medium.com/kafka-is-it-a-topic-or-a-queue-30c85386afd6"  class="external-link" target="_blank" rel="noopener">Kafka is it a topic or a queue</a>、<a href="https://stackoverflow.com/questions/5576415/jms-topic-vs-queues"  class="external-link" target="_blank" rel="noopener">JMS Topic vs Queues</a>。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。
 <ul>
 <li>而且在队列中接受者不用担心超时问题；在Topic中接受者必须continuously active并且按时接收，不然消息就会超时。</li>
 </ul>
 </li>
-<li>在<a href="https://pulsar.apache.org/docs/en/concepts-messaging/#topics" target="_blank" rel="noopener noreffer ">pulsar</a>中，topic甚至不用预先创建，会根据<code>{persistent|non-persistent}://tenant/namespace/topic</code>的名称自动生成。</li>
+<li>在<a href="https://pulsar.apache.org/docs/en/concepts-messaging/#topics"  class="external-link" target="_blank" rel="noopener">pulsar</a>中，topic甚至不用预先创建，会根据<code>{persistent|non-persistent}://tenant/namespace/topic</code>的名称自动生成。</li>
 </ul>
 </li>
-<li>元数据（metadata）：参考<a href="https://pulsar.apache.org/docs/en/cookbooks-bookkeepermetadata/" target="_blank" rel="noopener noreffer ">BookKeeper Ledger Metadata</a>，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。</li>
-<li>Pub/Sub：<a href="https://aws.amazon.com/pub-sub-messaging/?nc1=h_ls" target="_blank" rel="noopener noreffer ">Pub-Sub Messaging</a></li>
+<li>元数据（metadata）：参考<a href="https://pulsar.apache.org/docs/en/cookbooks-bookkeepermetadata/"  class="external-link" target="_blank" rel="noopener">BookKeeper Ledger Metadata</a>，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。</li>
+<li>Pub/Sub：<a href="https://aws.amazon.com/pub-sub-messaging/?nc1=h_ls"  class="external-link" target="_blank" rel="noopener">Pub-Sub Messaging</a></li>
 </ul>
 <p>消息队列的优点：</p>
 <ol>
@@ -156,11 +249,17 @@
 <li>允许消费者对消息进行异步处理，加快处理速度。</li>
 <li>访问控制中的峰值控制。</li>
 </ol>
-<h2 id="pulsar">Pulsar</h2>
+<h2 id="pulsar">
+  Pulsar
+  <a class="heading-link" href="#pulsar">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>参考资料：</p>
 <ul>
-<li><a href="https://juejin.cn/post/6918967598432387085" target="_blank" rel="noopener noreffer ">下一代消息队列pulsar到底是什么</a></li>
-<li><a href="https://pulsar.apache.org/docs/en/concepts-messaging/" target="_blank" rel="noopener noreffer ">pulsar/concepts-messaging</a></li>
+<li><a href="https://juejin.cn/post/6918967598432387085"  class="external-link" target="_blank" rel="noopener">下一代消息队列pulsar到底是什么</a></li>
+<li><a href="https://pulsar.apache.org/docs/en/concepts-messaging/"  class="external-link" target="_blank" rel="noopener">pulsar/concepts-messaging</a></li>
 </ul>
 <p>架构上来说，Pulsar是Pub-sub架构</p>
 <ul>
@@ -177,15 +276,14 @@
 <li>租户，可以看作是第一个层级，比如大的部门</li>
 <li>namespace：命名空间，可以看作是第二个层级。</li>
 </ul>
-<h3 id="subscriptions">Subscriptions</h3>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://pulsar.apache.org/docs/assets/pulsar-subscription-modes.png"
-        data-srcset="https://pulsar.apache.org/docs/assets/pulsar-subscription-modes.png, https://pulsar.apache.org/docs/assets/pulsar-subscription-modes.png 1.5x, https://pulsar.apache.org/docs/assets/pulsar-subscription-modes.png 2x"
-        data-sizes="auto"
-        alt="https://pulsar.apache.org/docs/assets/pulsar-subscription-modes.png"
-        title="Subscriptions" /></p>
+<h3 id="subscriptions">
+  Subscriptions
+  <a class="heading-link" href="#subscriptions">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><img src="https://pulsar.apache.org/docs/assets/pulsar-subscription-modes.png" alt="Subscriptions"></p>
 <p>有四种模式：</p>
 <ul>
 <li>
@@ -219,47 +317,97 @@
 </li>
 </ul>
 <p>pulsar中，一个Consumer可以同时订阅多个topic（multi-topic subscriptions）</p>
-<h3 id="partition-topic">partition topic</h3>
+<h3 id="partition-topic">
+  partition topic
+  <a class="heading-link" href="#partition-topic">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>一般的topic只能够由一个broker服务，这限制了它的最大流量。</p>
 <p>Partitioned topic可以由多个broker处理，本质上由N个内部topic实现，其中N被称为partition的数量。</p>
 <p>当向topic发送数据的时候，每一个message会被转发到其中一个broker</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-06-08</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-hashtags="分类/状态/待完善,分类/知识库/计算机/大数据/消息队列,分类/学习/学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-hashtag="分类/状态/待完善"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" data-title="消息队列基本概念与pulsar学习"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%8A%B6%E6%80%81/%E5%BE%85%E5%AE%8C%E5%96%84/">分类/状态/待完善</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%A4%A7%E6%95%B0%E6%8D%AE/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">分类/知识库/计算机/大数据/消息队列</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">分类/学习/学习笔记</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" class="prev" rel="prev" title="Go基本库阅读：bufio库"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Go基本库阅读：bufio库</a>
-            <a href="/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="腾讯云 cos Go SDK使用学习">腾讯云 cos Go SDK使用学习<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

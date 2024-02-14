@@ -1,88 +1,96 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Go基础学习 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
-        <description>Go基础学习 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
-    <title>腾讯云cos获取文件操作实践--Go SDK</title>
-    <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
-    <pubDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
-    <description><![CDATA[使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证]]></description>
-</item>
-<item>
-    <title>由多个goroutine中获取第一个错误信息出发的CAS学习</title>
-    <link>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</link>
-    <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</guid>
-    <description><![CDATA[主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用]]></description>
-</item>
-<item>
-    <title>Go基本库阅读：bufio库</title>
-    <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</link>
-    <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</guid>
-    <description><![CDATA[bufio 这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考： 1.4 bu]]></description>
-</item>
-<item>
-    <title>Go基本库阅读：io库</title>
-    <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</link>
-    <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</guid>
-    <description><![CDATA[io相关库 阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。]]></description>
-</item>
-<item>
-    <title>关于golang中指针赋值的问题</title>
-    <link>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-    <pubDate>Thu, 15 Jul 2021 18:08:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
-    <description><![CDATA[最近在SO上找到了一个很有意思的问题：SO 这个问题是关于一个指针在外部函数的赋值，当然，解决方法也很简单。 type userIP net.IP func main() { var u *userIP u.defaultIP() fmt.Printf(&#34;%v\n&#34;, u) } func (u *userIP) defaultIP()]]></description>
-</item>
-<item>
-    <title>golang函数参数中接口指针的传递</title>
-    <link>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</link>
-    <pubDate>Thu, 01 Jul 2021 16:34:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</guid>
-    <description><![CDATA[其实是一个很简单的问题，但是如果是之前一直写go的话可能没有意识到指针的本质，就走不出来了。 最近写代码的时候遇到了一个问题：有一个功能需要使]]></description>
-</item>
-<item>
-    <title>Go中nil意义的理解</title>
-    <link>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</link>
-    <pubDate>Mon, 21 Jun 2021 14:28:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
-    <description><![CDATA[对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频htt]]></description>
-</item>
-<item>
-    <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
-    <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
-    <pubDate>Thu, 17 Jun 2021 14:22:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
-    <description><![CDATA[今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是]]></description>
-</item>
-<item>
-    <title>golang中函数如何设置参数默认值</title>
-    <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
-    <pubDate>Sun, 13 Jun 2021 14:50:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
-    <description><![CDATA[参考资料 Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认]]></description>
-</item>
-<item>
-    <title>golang单元测试整理归纳</title>
-    <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
-    <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
-    <description><![CDATA[本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识 参考资料 Go by example，中文版]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go基础学习 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in Go基础学习 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 06 Feb 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>腾讯云cos获取文件操作实践--Go SDK</title>
+      <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Thu, 23 Jun 2022 20:45:23 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
+      <description>使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证</description>
+    </item>
+    <item>
+      <title>由多个goroutine中获取第一个错误信息出发的CAS学习</title>
+      <link>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</link>
+      <pubDate>Wed, 15 Jun 2022 08:43:05 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</guid>
+      <description>主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用</description>
+    </item>
+    <item>
+      <title>Go基本库阅读：bufio库</title>
+      <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</link>
+      <pubDate>Fri, 22 Apr 2022 12:50:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</guid>
+      <description>bufio Link to heading 这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。&#xA;本质上相当于io加上缓冲区。&#xA;参考：&#xA;1.4 bufio库 常见的表述，包括函数功能解释参考此文，本文不再赘述 源代码 代码 Reader Link to heading bufio的Reader本质上是io.Reader的wrap，只是多了一个缓冲区并进行了一些对应的实现&#xA;type Reader struct { buf []byte rd io.Reader // reader provided by the client r, w int // buf read and write positions 其中r代表着缓冲区的开头，w代表着缓冲区的末尾 err error lastByte int // last byte read for UnreadByte; -1 means invalid lastRuneSize int // size of last rune read for UnreadRune; -1 means invalid } 初始化函数，下列函数可以初始化并得到一个新的Reader</description>
+    </item>
+    <item>
+      <title>Go基本库阅读：io库</title>
+      <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</link>
+      <pubDate>Fri, 22 Apr 2022 12:50:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</guid>
+      <description>io相关库 Link to heading 阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。&#xA;io相关的操作我一直没怎么弄明白，特别是后面看到HTTP框架里面使用ioutil读取的时候。虽然C++的底子告诉我这样可以，但是我还是觉得应该一探究竟。&#xA;Golang的IO库那么多，我该怎么选?这篇文章比较概要地介绍了go中涉及到io的库：io库、os库、ioutil库、bufio库、bytes库、string库，其实net部分也有涉及，我看看之后能不能写到这个地方&#xA;可以进一步阅读的地方或资料：&#xA;bytes的buffer，很基本的操作，常见但是涉及到很多inline相关的优化 1.1 io — 基本的 IO 接口 这一章对于io库的叙述比较详尽，可以参考 io的常见用途 Link to heading 我个人学习东西的习惯是比较习惯从应用出发，自己什么时候用到这个东西，这个东西会在哪里被用到，怎么被用到。&#xA;说起IO，一般就是以下几种情况&#xA;标准输入输出：fmt.Printf，fmt.Scanf 读取文件 package main import ( &amp;#34;bufio&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io&amp;#34; &amp;#34;os&amp;#34; ) func main() { inputFile, inputError := os.Open(&amp;#34;input.dat&amp;#34;) if inputError != nil { fmt.Printf(&amp;#34;An error occurred on opening the inputfile\n&amp;#34; + &amp;#34;Does the file exist?\n&amp;#34; + &amp;#34;Have you got acces to it?\n&amp;#34;) return // exit the function on error } defer inputFile.</description>
+    </item>
+    <item>
+      <title>关于golang中指针赋值的问题</title>
+      <link>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 15 Jul 2021 18:08:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
+      <description>最近在SO上找到了一个很有意思的问题：SO&#xA;这个问题是关于一个指针在外部函数的赋值，当然，解决方法也很简单。&#xA;type userIP net.IP func main() { var u *userIP u.defaultIP() fmt.Printf(&amp;#34;%v\n&amp;#34;, u) } func (u *userIP) defaultIP() { defaultIP := userIP(&amp;#34;127.0.0.1&amp;#34;) u = &amp;amp;defaultIP } 但是为什么会这样？如果是学过C风格指针的话应该会发现这条语句是很奇怪的，从语法上讲u中存放的地址会被改变，但是实际上它并不会改变（PS：原来的这个代码需要修改一下，不然会有dereference nil的错误）&#xA;修改后的例子 Link to heading package main import ( &amp;#34;fmt&amp;#34; &amp;#34;net&amp;#34; ) type userIP net.IP func main() { s:= userIP(&amp;#34;123.2.2.1&amp;#34;) var u *userIP = &amp;amp;s fmt.Printf(&amp;#34;address of s %p\n&amp;#34;,&amp;amp;s) fmt.Printf(&amp;#34;what&amp;#39;s in u? u = %p, &amp;amp;u = %p\n&amp;#34;,u,&amp;amp;u) fmt.Println(&amp;#34;In main function&amp;#34;) fmt.Printf(&amp;#34;main(): address of pointer is %v, address inside pointer is %p\n&amp;#34;, &amp;amp;u,u) fmt.</description>
+    </item>
+    <item>
+      <title>golang函数参数中接口指针的传递</title>
+      <link>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</link>
+      <pubDate>Thu, 01 Jul 2021 16:34:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</guid>
+      <description>其实是一个很简单的问题，但是如果是之前一直写go的话可能没有意识到指针的本质，就走不出来了。&#xA;最近写代码的时候遇到了一个问题：有一个功能需要使用一个接口，有多个结构体实现了这个接口（经典OO场景）。这些方法中，有一些方法可以修改结构体中的指定属性，并且有一个对应的方法来返回这个属性。&#xA;出于业务需要，值被修改的地方和它被使用的地方是不同的。由于要和原有代码兼容，希望这个代码尽量表现的与原来的一样。&#xA;一个小demo，直接返回interface值来完成传递。看着很正常，但是因为是传值，所以与原有代码不太一致，也不够直观。&#xA;package main import &amp;#34;fmt&amp;#34; type tt interface { setName(string) getName() string } type testA struct{ name string } type testDouble struct{ name string } func (t *testA) setName(n string){ t.name = n } func (t *testA) getName() string{ return t.name } func (t *testDouble) setName(n string){ t.name = n + n } func (t *testDouble) getName() string{ return t.name } func setName(s tt,n string) tt{ t := testA{} t.</description>
+    </item>
+    <item>
+      <title>Go中nil意义的理解</title>
+      <link>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</link>
+      <pubDate>Mon, 21 Jun 2021 14:28:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
+      <description>对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频https://www.youtube.com/watch?v=ynoY2xz-F8s，Slides：https://speakerdeck.com/campoy/understanding-nil&#xA;nil是什么 Link to heading 就结果来说，nil是绝大部分Go中类型的初始值，包括指针、slices、maps、channels、functions等。而这其中，应该大部分类型最核心的实现都是指针，比如map和slice的本质就是指向内置对象的指针。&#xA;而对于接口而言就更加复杂一些，这个其实涉及到了接口的底层实现，详情参考Go语言接口的原理-Go语言设计与实现。&#xA;接口包括了一个指向值的指针和一个指向类型的指针。对接口来说，接口为nil代表着(nil,nil)，因此如果声明了一个自珍并且把指针赋值给了接口，那类型就不为nil了（*Person,nil）&#xA;type Person struct{ a int } func (p Person) String() string{ return strconv.Itoa(p.a) } func main(){ var s fmt.Stringer//接口类型，要求实现String()函数 fmt.Println(s == nil)//true var p *Person s = p fmt.Println(s == nil)//false，尽管值依旧为nil，但是类型不为nil } 什么时候nil不是nil Link to heading nil可以是一个nil接口/切片或者指针，是有实际意义的&#xA;type doError struct{ errorMessage string } func (err doError) Error() string{ return err.errorMessage } func do() error{ //错误地方：返回了error接口类型。改正：应该返回具体类型 * doError var err *doError return err //类型*doError是空的，但是它实现了接口 } func main(){ err := do() fmt.</description>
+    </item>
+    <item>
+      <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
+      <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
+      <pubDate>Thu, 17 Jun 2021 14:22:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
+      <description>今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是一个结构体，另外一个自然是一个interface。代码的作者称这行代码要求后面的结构体必须实现前面的接口，不然会出现编译错误。&#xA;说实话，我第一眼真的没反应过来。直到我看到了这个问题 这一行实际上是变量赋值的变体var VariableName variableType = variableValue，其中的值是(*HelloServiceClient)类型，实际值为nil。&#xA;另外有类似的语句&#xA;//T is a struct var _ I = T{} // Verify that T implements I. var _ I = (*T)(nil) // Verify that *T implements I. 这个问题的本质其实是接口的定义：结构体只要实现了接口的定义，它就能被赋予该接口的变量。 对于指针来说就要更复杂一些，详见#180 。概要来说，就是对用指针实现的接口，该指针类型的普通结构体不能使用，具体原因也比较复杂（详见Go程序设计与实现-接口相关章节）</description>
+    </item>
+    <item>
+      <title>golang中函数如何设置参数默认值</title>
+      <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
+      <pubDate>Sun, 13 Jun 2021 14:50:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
+      <description>参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。&#xA;设置参数值的好处：&#xA;可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：&#xA;强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &amp;#34;&amp;#34; { a = &amp;#34;default-a&amp;#34; } if b == 0 { b = 5 } return fmt.Sprintf(&amp;#34;%s%d&amp;#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。&#xA;使用可变参数语法糖 Link to heading // a is required, b is optional.</description>
+    </item>
+    <item>
+      <title>golang单元测试整理归纳</title>
+      <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
+      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
+      <description>本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识&#xA;参考资料 Link to heading Go by example，中文版，例子确实是最快的学习方式。 基础知识 Link to heading 一般测试文件应该与被测试文件放在同一个目录下，比如被测试代码为intutils.go时，被测试代码应该写为intutils_test.go。&#xA;通常会编写一个名称以Test开头的函数来创建测试（这个我记得是必须的，不然识别不出来）。例如GoLand自动生成的测试文件(Alt+Insert，之前写Java的时候经常用这个来生成DAO)&#xA;func TestTest(t *testing.T) { type args struct { a int } tests := []struct { name string args args want int }{ // TODO: Add test cases. //{name,args{},want},... } for _, tt := range tests { t.Run(tt.name, func(t *testing.T) { if got := Test(tt.args.a); got != tt.want { t.Errorf(&amp;#34;Test() = %v, want %v&amp;#34;, got, tt.</description>
+    </item>
+    <item>
+      <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
+      <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
+      <pubDate>Sat, 12 Jun 2021 10:38:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
+      <description>遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码&#xA;package main import &amp;#34;fmt&amp;#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&amp;#34;%s, code=%d&amp;#34;, e.Message, e.Code) } func main() { fmt.Println(&amp;#34;In main function&amp;#34;) var rpcErr error = NewRPCError(400, &amp;#34;unknown err&amp;#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</description>
+    </item>
+    <item>
+      <title>go语言函数传值与指针的相关问题</title>
+      <link>http://wtysos11.github.io/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Fri, 04 Jun 2021 16:23:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
+      <description>最近在快速阅读《go语言高级编程》，里面提到Go语言的栈会自动调整大小，所以go程序员是难以关心栈的运行机制。比如说，程序员很难知道局部变量到底是保存在栈中还是保存在堆中&#xA;可以使用下面的代码来作为例子：&#xA;package main import &amp;#34;fmt&amp;#34; func f(x int) *int{ return &amp;amp;x } func main(){ s := 5 t := f(s) s += 1 fmt.Println(s,*t) } 上述代码的输出结果是6,5。这个结果说明t所指向的局部变量确实是函数内部的（如果是指向参数的地址，则参数变化时它也应该跟着变化）。也就是说，这个函数的局部变量的地址在函数结束之后仍然存在。&#xA;PS：如果想要让该指针指向参数&#xA;package main import &amp;#34;fmt&amp;#34; func f(x *int) *int{ return x } func main(){ s := 5 t := f(&amp;amp;s) s += 1 fmt.Println(s,*t) } 书中的这一部分提到了两个观点：&#xA;不用关心Go语言中栈和堆的问题，编译器和运行时会帮我们搞定 不要假设变量在内存中的位置是固定不变的，指针随时可能会变化。 原因：Go语言使用的连续动态栈，在栈增加的时候会需要将数据移动到新的内存空间，导致栈中的内存地址全部变化。 可能出问题的地方：把Go语言的指针保存到数组中；把Go的地址保存到垃圾回收控制器之外，比如CGO） </description>
+    </item>
+  </channel>
 </rss>

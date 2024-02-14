@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机/kubernetes/istio on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/kubernetes/istio/</link>
+    <description>Recent content in 计算机/kubernetes/istio on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/kubernetes/istio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>istio应用对外访问极速入门</title>
+      <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sat, 30 Oct 2021 16:41:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>istio框架下如何暴露服务，其实挺简单的。</description>
+    </item>
+    <item>
+      <title>istio应用对外访问极速入门</title>
+      <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sat, 30 Oct 2021 16:41:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>istio框架下如何暴露服务，其实挺简单的。</description>
+    </item>
+    <item>
+      <title>istio应用对外访问极速入门</title>
+      <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Sat, 30 Oct 2021 16:41:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>istio框架下如何暴露服务，其实挺简单的。</description>
+    </item>
+    <item>
+      <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
+      <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Tue, 13 Oct 2020 12:37:13 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+      <description>后续更新，不一定会记得更新&#xA;kubernetes虚拟机多级环境部署与Istio的安装 Link to heading 标签：项目实践 kubernetes istio&#xA;计划在三台2C4G的机器上安装kubernetes。其中master和slave的系统均为Ubuntu18.04桌面版。（原本想用CentOS的，下载的时候就是这样了，费事改了）&#xA;目前需要在实验室的服务器上进行部署，得了，最终结果也是一样的。&#xA;分为以下几个步骤：&#xA;安装基本软件 访问谷歌镜像仓库gcr.io 完成三台机器关于安装kubeadm的相关工作 安装Istio 部署相关应用（prometheus、grafana） 参考文献：&#xA;掘金 cnblog，这一篇是我后来看到的，写的更好一些。 安装基本软件 Link to heading 如果使用包管理软件，请务必检查自身的包管理软件为最新。&#xA;以Ubuntu的apt为例，首先请务必使用最新的镜像仓库（最好手动弄一下），然后再执行一遍sudo apt-get update来更新。&#xA;配置docker Link to heading 略&#xA;配置kubectl、kubeadm、kubelet Link to heading 在执行命令之前，请首先使用检查是否能够访问到指定的包。以apt为例，使用apt-cache policy &amp;lt;package&amp;gt;可以检查远程仓库中包的版本。&#xA;apt-get install kubectl kubeadm kubelet 系统配置 Link to heading 关闭防火墙 关闭SELinux 关闭swap 下载kubeadm所需镜像 Link to heading 从阿里云下载 Link to heading 首先使用kubeadm config images list列出kubeadm所需要的所有镜像&#xA;k8s.gcr.io/kube-apiserver:v1.19.2 k8s.gcr.io/kube-controller-manager:v1.19.2 k8s.gcr.io/kube-scheduler:v1.19.2 k8s.gcr.io/kube-proxy:v1.19.2 k8s.gcr.io/pause:3.2 k8s.gcr.io/etcd:3.4.13-0 k8s.gcr.io/coredns:1.7.0 即所有的系统镜像为v1.</description>
+    </item>
+    <item>
+      <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
+      <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Tue, 13 Oct 2020 12:37:13 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+      <description>后续更新，不一定会记得更新&#xA;kubernetes虚拟机多级环境部署与Istio的安装 Link to heading 标签：项目实践 kubernetes istio&#xA;计划在三台2C4G的机器上安装kubernetes。其中master和slave的系统均为Ubuntu18.04桌面版。（原本想用CentOS的，下载的时候就是这样了，费事改了）&#xA;目前需要在实验室的服务器上进行部署，得了，最终结果也是一样的。&#xA;分为以下几个步骤：&#xA;安装基本软件 访问谷歌镜像仓库gcr.io 完成三台机器关于安装kubeadm的相关工作 安装Istio 部署相关应用（prometheus、grafana） 参考文献：&#xA;掘金 cnblog，这一篇是我后来看到的，写的更好一些。 安装基本软件 Link to heading 如果使用包管理软件，请务必检查自身的包管理软件为最新。&#xA;以Ubuntu的apt为例，首先请务必使用最新的镜像仓库（最好手动弄一下），然后再执行一遍sudo apt-get update来更新。&#xA;配置docker Link to heading 略&#xA;配置kubectl、kubeadm、kubelet Link to heading 在执行命令之前，请首先使用检查是否能够访问到指定的包。以apt为例，使用apt-cache policy &amp;lt;package&amp;gt;可以检查远程仓库中包的版本。&#xA;apt-get install kubectl kubeadm kubelet 系统配置 Link to heading 关闭防火墙 关闭SELinux 关闭swap 下载kubeadm所需镜像 Link to heading 从阿里云下载 Link to heading 首先使用kubeadm config images list列出kubeadm所需要的所有镜像&#xA;k8s.gcr.io/kube-apiserver:v1.19.2 k8s.gcr.io/kube-controller-manager:v1.19.2 k8s.gcr.io/kube-scheduler:v1.19.2 k8s.gcr.io/kube-proxy:v1.19.2 k8s.gcr.io/pause:3.2 k8s.gcr.io/etcd:3.4.13-0 k8s.gcr.io/coredns:1.7.0 即所有的系统镜像为v1.</description>
+    </item>
+    <item>
+      <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
+      <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Tue, 13 Oct 2020 12:37:13 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+      <description>后续更新，不一定会记得更新&#xA;kubernetes虚拟机多级环境部署与Istio的安装 Link to heading 标签：项目实践 kubernetes istio&#xA;计划在三台2C4G的机器上安装kubernetes。其中master和slave的系统均为Ubuntu18.04桌面版。（原本想用CentOS的，下载的时候就是这样了，费事改了）&#xA;目前需要在实验室的服务器上进行部署，得了，最终结果也是一样的。&#xA;分为以下几个步骤：&#xA;安装基本软件 访问谷歌镜像仓库gcr.io 完成三台机器关于安装kubeadm的相关工作 安装Istio 部署相关应用（prometheus、grafana） 参考文献：&#xA;掘金 cnblog，这一篇是我后来看到的，写的更好一些。 安装基本软件 Link to heading 如果使用包管理软件，请务必检查自身的包管理软件为最新。&#xA;以Ubuntu的apt为例，首先请务必使用最新的镜像仓库（最好手动弄一下），然后再执行一遍sudo apt-get update来更新。&#xA;配置docker Link to heading 略&#xA;配置kubectl、kubeadm、kubelet Link to heading 在执行命令之前，请首先使用检查是否能够访问到指定的包。以apt为例，使用apt-cache policy &amp;lt;package&amp;gt;可以检查远程仓库中包的版本。&#xA;apt-get install kubectl kubeadm kubelet 系统配置 Link to heading 关闭防火墙 关闭SELinux 关闭swap 下载kubeadm所需镜像 Link to heading 从阿里云下载 Link to heading 首先使用kubeadm config images list列出kubeadm所需要的所有镜像&#xA;k8s.gcr.io/kube-apiserver:v1.19.2 k8s.gcr.io/kube-controller-manager:v1.19.2 k8s.gcr.io/kube-scheduler:v1.19.2 k8s.gcr.io/kube-proxy:v1.19.2 k8s.gcr.io/pause:3.2 k8s.gcr.io/etcd:3.4.13-0 k8s.gcr.io/coredns:1.7.0 即所有的系统镜像为v1.</description>
+    </item>
+  </channel>
+</rss>

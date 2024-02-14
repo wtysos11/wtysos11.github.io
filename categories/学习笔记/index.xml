@@ -1,16 +1,19 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>学习笔记 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-        <description>学习笔记 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
-    <title>腾讯云 cos Go SDK使用学习</title>
-    <link>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[参考资料 官方文档 官方示例 基本概念 COS（Cloud Object Storage，云对象存储） Bucket（存储桶） 命名上，由存储桶名称（BucketNa]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>学习笔记 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 学习笔记 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>腾讯云 cos Go SDK使用学习</title>
+      <link>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 13 Jun 2022 09:01:42 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</guid>
+      <description>参考资料 Link to heading 官方文档 官方示例 基本概念 Link to heading COS（Cloud Object Storage，云对象存储）&#xA;Bucket（存储桶）&#xA;命名上，由存储桶名称（BucketName）和APPID两部分组成，中间以&amp;quot;-&amp;ldquo;相连，例如examplebucket-1250000000 存储桶具有着地域（region），对象存储允许用户在不同的地域上创建存储桶。 Object（对象）&#xA;存储桶上存储的内容称为对象，对象是对象存储（Cloud Object Storage, cos）的基本单元，包括对象键、对象值和对象元数据 对象键是对象在存储桶中的唯一标识，可以通俗理解为文件路径。 对象值是上传的对象本身，可以通俗的理解为文件内容 对象元数据是一组键值对，可以通俗的理解为文件的属性 对象存储的特点 Link to heading 文件特点：适合存储unstructure的对象，对象的操作与传统的文件不同，上传时只能选择直接上传和分块上传（类append），不能如传统文件一样根据偏移值实现随机存储。 异地容灾 腾讯云cos的特点：冷热分离 速度限制：cos在设计上并不是为了高并发和强一致性，因此基于事务的操作可能不应该选择使用cos。 速度上对于QPS为3W以下的GET/PUT等操作没有问题，3W以上需要采取优化。 示例代码 Link to heading 本身没什么难度，随便放一段示例代码&#xA;package main import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;github.com/tencentyun/cos-go-sdk-v5&amp;#34; &amp;#34;github.com/tencentyun/cos-go-sdk-v5/debug&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;net/url&amp;#34; ) func log_status(err error) { if err == nil { return } if cos.IsNotFoundError(err) { // WARN fmt.Println(&amp;#34;WARN: Resource is not existed&amp;#34;) } else if e, ok := cos.</description>
+    </item>
+  </channel>
 </rss>

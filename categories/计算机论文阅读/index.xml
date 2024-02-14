@@ -1,88 +1,103 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>计算机论文阅读 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
-        <description>计算机论文阅读 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="self" type="application/rss+xml" /><item>
-    <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
-    <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
-    <pubDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
-    <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
-</item>
-<item>
-    <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>
-    <link>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
-    <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
-    <description><![CDATA[前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g]]></description>
-</item>
-<item>
-    <title>Dynamic Cloud Resource Allocation Considering Demand Uncertainty</title>
-    <link>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</link>
-    <pubDate>Fri, 05 Mar 2021 10:46:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</guid>
-    <description><![CDATA[Dynamic Cloud Resource Allocation Considering Demand Uncertainty 2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合]]></description>
-</item>
-<item>
-    <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
-    <link>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</link>
-    <pubDate>Thu, 04 Mar 2021 11:03:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</guid>
-    <description><![CDATA[Profit Maximization for Cloud Brokers in Cloud Computing CCF A类 IEEE Transactions on Parallel and Distributed Systems，2019 摘要 为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务]]></description>
-</item>
-<item>
-    <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
-    <link>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</link>
-    <pubDate>Mon, 01 Mar 2021 19:49:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</guid>
-    <description><![CDATA[A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction 主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-dema]]></description>
-</item>
-<item>
-    <title>Business-Driven Long-Term Capacity Planning for SaaS Applications</title>
-    <link>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</link>
-    <pubDate>Mon, 01 Mar 2021 16:57:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</guid>
-    <description><![CDATA[未完成 本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？ Business-Driven Long-Term Capacity Planning for SaaS Applications 2015 TCC ，没记]]></description>
-</item>
-<item>
-    <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
-    <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
-    <pubDate>Mon, 15 Feb 2021 11:00:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
-    <description><![CDATA[Temporal fusion transformers for interpretable multi-horizon time series forecasting 摘要 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covari]]></description>
-</item>
-<item>
-    <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
-    <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
-    <pubDate>Wed, 03 Feb 2021 14:24:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
-    <description><![CDATA[Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020. 一篇关于时间序列增强的论文，很有意思。 Time Series Data Augmentation for Deep Learning: A Survey 摘要 时间序列相关的问题中，时间序列数据可能]]></description>
-</item>
-<item>
-    <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
-    <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
-    <pubDate>Tue, 19 Jan 2021 19:50:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
-    <description><![CDATA[Recurrent Neural Networks for Time Series Forecasting: Current status and future directions 2021 International Journal of Forecasting 文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏]]></description>
-</item>
-<item>
-    <title>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</title>
-    <link>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
-    <pubDate>Tue, 22 Dec 2020 19:20:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
-    <description><![CDATA[所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018.]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机论文阅读 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+    <description>Recent content in 计算机论文阅读 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
+      <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
+      <pubDate>Fri, 24 Jun 2022 17:15:23 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
+      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
+    </item>
+    <item>
+      <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>
+      <link>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Mon, 13 Jun 2022 09:01:42 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+      <description>前言 Link to heading 参考资料 Link to heading 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用go run -race main.go应该都可以检出数据竞争。 原论文 感觉自己很多地方翻译的不是很好，省略了很多的内容，还是推荐阅读原文 数据竞争检测 Link to heading data race的检测可以通过go build中加入-race来进行。详情见此文所举的例子&#xA;本文统一将data race译为数据竞争&#xA;摘要 Link to heading Go作为将并发置为首位的语言，在现代基于微服务的系统中变得越来越受欢迎。同样，data race（数据竞争）也因此变得愈发普遍。本文在Uber的工业应用场景中进行了相关的实验，说明Go中语言习语和编写方式的细微差别使得Go非常容易受到数据竞争的影响。&#xA;动态的race detector可以识别（内部），但是面临着可伸缩性和flakiness的挑战。作者将自制的数据竞争检测器应用于Uber2100个微服务共计四千六百万条Go代码上，并最终检测2000个数据竞争，修复了其中的1000个。&#xA;1 Introduction Link to heading 介绍了一些Go的优点，特别是其中适合于编写微服务的部分。 Go中不同goroutine之间的通信包括消息队列传输（channel）和共享内存。这里的共享内存应该指的是对同一个进程内数据的直接访问。&#xA;数据竞争的条件：&#xA;对于两个或者更多访问同一个数据对象(datum)的goroutine而言，至少有一个是写 这些goroutine之间没有顺序（比如channel或者lock所形成的偏序关系） 数据竞争的后果很严重，可能会导致最终的结果出现异常，并造成服务下线。 Go内置的数据竞争检测器采用了基于ThreadSanitizer的动态检测，包括lock-set和happens-before算法。其代价根据程序的大小变化，但是一般会造成内存占用增加5到10倍，执行时间增加2到10倍，并且编译时间会增加2倍。&#xA;本文介绍了使用Go的默认动态检测器来持续在uber的生产环境中检测数据竞争。尽管已经有了很多检测数据竞争的算法，但是这与在真实环境的设置中部署动态分析还有显著的差距。由于动态竞争检测的不确定性，将其作为连续检测的一部分进行集成是不切实际的；部署它作为事后检测过程又在不重复报告的同时确定正确的竞争拥有者这一点上引入了复杂性和挑战。我们根据实际情况精心设计了部署的选择。&#xA;我们使用了十万个Godanyuan测试来检验代码并检测数据竞争。在六个月内，连续监控系统检测了2000条以上的数据竞争，210个开发者使用790个补丁修复了其中多达1000个数据竞争，上下的正在被积极地解决。系统每天能从新引入的代码中检测到5个新的数据竞争。&#xA;分析结果显示除了常见的错误外，Go有着独特的方面来引入并发错误，包括&#xA;transparent capture-by-reference of free variables named return variables deferred functions ability to mix shared memory with message passing indistinguishable value vs pointer semantics extensive use of thread-unsafe built-in map flexible gropu synchronization confusing slice 并且与Go简单的使用goroutine来进行并发的特性结合，使得Go很容易出现数据竞争。 （因此本文主要讨论的是由Go的语法特点引起的数据竞争） 贡献：</description>
+    </item>
+    <item>
+      <title>Dynamic Cloud Resource Allocation Considering Demand Uncertainty</title>
+      <link>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</link>
+      <pubDate>Fri, 05 Mar 2021 10:46:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</guid>
+      <description>Dynamic Cloud Resource Allocation Considering Demand Uncertainty Link to heading 2019 TCC,CCF C类&#xA;看到C类效果这样心里还是有点底，这个用来PK应该是没问题的&#xA;1 Link to heading 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。&#xA;贡献可以分为以下部分：&#xA;部署了动态云资源分配方法，解决了在资源预分配和动态分配两阶段的资源调度问题。开发了随机优化方法来将用户需求建模为随机变量，并实现了10%的部署代价提升。 2 Related work Link to heading 动态资源分配分为两个阶段：&#xA;第一阶段，资源在不考虑用户需求的情况下被分配。 第二阶段，为了保证QoS，采用on-demand的方式分配资源。 由于是离散的，因此不能使用凸优化方法，不能保证有全局最优解。&#xA;Robust Cloud Resouce Provisioning，考虑了三个不确定性：demand、price和cloud resource availability&#xA;在第一阶段，预付费资源完成，将特定数量的资源分配给了应用。 在第二阶段，判定资源是否够用，开始采购on-demand资源 总体来说该作者列的引文都是关于stochastic programming的&#xA;3 System model and assumptions Link to heading 3.1 Problem Definition Link to heading 为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。&#xA;算法主要将数据库应用与一般网络应用进行区分。(database instnace and computing instance)&#xA;然后进行了一系列的数学符号定义&#xA;4 Dynamic Cloud Resource Allocation Algorithm Link to heading 本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。 第二阶段，将non-deterministic user demand建模成随机变量，来动态分配on-demand的资源。</description>
+    </item>
+    <item>
+      <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
+      <link>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</link>
+      <pubDate>Thu, 04 Mar 2021 11:03:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</guid>
+      <description>Profit Maximization for Cloud Brokers in Cloud Computing Link to heading CCF A类&#xA;IEEE Transactions on Parallel and Distributed Systems，2019&#xA;摘要 Link to heading 为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务提供商处以reserved instance的形式租用VM，并把它们以比on-demand更低的价格与相同的付费模式租给用户。&#xA;本文关注于如何设置中间商的价格模型，为它的VM定价使得其利润最大化，在其能为用户节省成本的前提下。将最优化的多服务器配置问题和VM的定价问题建模为利润最优化问题，并使用启发式的方法来求解。近-最优解可以被用来指导配置和虚拟机的定价。&#xA;3 The Models Link to heading 模型主要使用的是多服务器排队论模型、收入模型和花费模型&#xA;reserved instance和on demand instance的价格使用$\beta_{re}$和$\beta_{od}$来指代，单位为dollar per unit time，一般unit time指的是小时。&#xA;3.2 Multiserver queue system Link to heading 本文所研究的中间商broker只从单一的云服务提供商处租用资源，并把它们提供给用户。因此，中间商提供的VM是同构的(homogeneous)。资源在CPU、内存、带宽等方面是一致的。本文假设用户使用了M/M/n/n的排队系统，来对其流量等进行建模。&#xA;在M/M/n/n排队系统中，VM的到达流量被认为是一个速率$\lambda$的泊松流，到达时间独立同分布且呈指数分布。考虑到中间商使用价格来吸引用户，因此实际速率$lambda$会受到两个因素的影响，即实际用户需求$\lambda_{max}$与资源价格。&#xA;通过租用VM并搭建私有云的方式，中间商可以向用户提供on-demand的产品。现假设中间商所拥有的虚拟机数量为n，则多队列系统的队列长度不超过n，此时可以根据排队论公式计算出平均服务时间与资源占用率。&#xA;得到等式1，描述$\pi_k$的式子，这个变量为在排队论系统中有k个服务请求的概率。&#xA;显然，如果请求得不到满足，用户就会流失。因此流失概率等于系统中有n个请求的概率，即$P_L = \pi_n$&#xA;3.3 Cost Modeling Link to heading 即购买服务器的钱，显然是$C=n\beta_{re}$&#xA;3.4 Revenue modeling Link to heading 3.</description>
+    </item>
+    <item>
+      <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
+      <link>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</link>
+      <pubDate>Mon, 01 Mar 2021 19:49:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</guid>
+      <description>A two-phase cloud resource provisioning algorithm for cost optimization Link to heading 1 Introduction Link to heading 主要的三种付费方式：&#xA;On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-demand和reserved的收费方式。但是它们的目标都只是使用reserved收费的资源来满足最低服务需求，并用on-demand的资源来满足剩余需求。&#xA;本文的目标是找到最佳的实例数，即resource provisioning problem。为了降低资源的租用成本，本文使用了on-demand和reserved instance两种方式来进行一个两阶段的资源分配，并决定最佳的reserved instance的实例数来最小化花费。为此，需要基于预测的流量信息来满足SLA的要求。&#xA;主要贡献：&#xA;使用on-demand和reserved instance的两阶段资源部署算法来减少资源租用花费 在第一阶段，将资源配置问题建模为two-stage stochastic programming problem，并用sample average approximation的方式和dual decomposition method的方式来求解 在第二阶段，使用ARIMA-Kalman model来预测流量，并决定on-demand的实例数量。 使用现实世界的流量和Amazon EC2购买模型来验证结果。 2 related work Link to heading 主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。</description>
+    </item>
+    <item>
+      <title>Business-Driven Long-Term Capacity Planning for SaaS Applications</title>
+      <link>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</link>
+      <pubDate>Mon, 01 Mar 2021 16:57:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</guid>
+      <description>未完成&#xA;本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？&#xA;Business-Driven Long-Term Capacity Planning for SaaS Applications Link to heading 2015 TCC ，没记错应该是C类&#xA;摘要 Link to heading 本文关注的是capacity planning，从定义上，该技术的目标是估计提供计算资源所需的资源数量，从而实现高的QoS级别，为公司带来更高的经济效益。&#xA;在现实中，可以有这样的场景，SaaS出于经济效益的考虑去购买IaaS服务商的实例。这样，SaaS可以减少在操作上的花费与复杂度，但是需要对自身的长期资源使用情况进行一定程度的估算。&#xA;本文采用了模拟实验，使用同步的电子商务数据流。分析显示，使用启发式方法来优化能够每年提升9.65%的利润。&#xA;重点在于启发式搜索的方式&#xA;3 Utility model Link to heading Utility是微观经济学上的概念，用来描述客户的偏好。一般而言，更大的值代表了更高的偏好性。因此，客户的行为也会受到Utility的影响，即他们会倾向选择最喜欢的输出。&#xA;Utility function将outcome映射到utility value上。&#xA;本文提出的Utility model将SaaS的利润（作为提供一个应用的结果）映射到utility value上。这样，一个capacity planning的agent就可以使用本模型来制作capacity plan来最大化utility value。此时，就可以达到SaaS provider的最大利润。&#xA;3.1 Revenue model Link to heading utility model认为SaaS provider可以提供一个或多个计划给他们的顾客，每一个顾客根据自身的需要选择一个计划并与SaaS provider签订合同。&#xA;revenue model包括：&#xA;SaaS consumer周期性地收取费用（每月或每年） 每一个application有着使用限制，由provider提供 合同包括赔偿条款，即SLA违约的情况 SaaS将提供应用A给一个SaaS顾客的集合$U={u_1,&amp;hellip;,u_{|U|}}$。同时，SaaS provider会构建一个计划的集合$P={p_1,&amp;hellip;,p_{|P|}}$，每一个计划$p_j$会满足一类顾客的需求，因此期望上$|P|&amp;lt;|U|$，每一个顾客会选择一个计划来使用应用A。&#xA;在签订计划后，顾客$u_k$可以在时间$[n_k^b,n_k^e]$区间内使用应用A，比如如果$p_j$是半年计划，这两个时间点的差值就是六个月。简单期间，SaaS提供的所有计划都以一个月作为最小单位。并且，新的顾客只能在每一个周期$n$到达之后才能加入，n随着时间推移单调递增。&#xA;顾客$u_k$签订合同之后，SaaS provider就必须配置并部署应用A来服务。之后，顾客$u_k$需要支付配置费用configuration fee$I_j^b$，该费用由计划$p_j$决定。&#xA;后续太罗嗦了就省了。本文的核心模型是utility model，就是一个收益模型，利润=总收入-总支出，基本没用。&#xA;核心算法有两个&#xA;一个是utilization model，这个utilization指的是reserved instance的利用率，比如说一个reserved instance买一年，需要有效使用50%才能比单纯买on-demand便宜，这个50%就是utilization。</description>
+    </item>
+    <item>
+      <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
+      <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
+      <pubDate>Mon, 15 Feb 2021 11:00:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
+      <description>Temporal fusion transformers for interpretable multi-horizon time series forecasting Link to heading 摘要 Link to heading 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。&#xA;作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。&#xA;为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。&#xA;TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。&#xA;通过一系列真实世界的数据库，我们证明了其卓越的性能。&#xA;1 Introduction Link to heading 与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）&#xA;传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。&#xA;DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。&#xA;现有的这些模型大多都是黑盒模型，其中的参数之间包含了复杂的非线性关系。这使得实现模型难以解释它们的预测结果，使得用户难以去相信模型的输出并让模型建设者去进行修改与调试。&#xA;可惜的是，通用的可解释性方法并不适用于时间序列。在它们过去的工作中（LIME和SHAP）并咩有考虑输入特征的时间顺序问题。&#xA;核心的贡献包括：&#xA;static covariate encoder，对一些静态的数据进行编码并送入到神经网络中。 贯穿全局的门机制与基于样本的变量选择，来最小化不相关输入的贡献。 Seq2Seq的架构来进行本地处理已知输入 temporal self-attention decoder层，来学习长期关系 2 Related work Link to heading multi-horizon预测可以分为两种：&#xA;Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。 另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。 3 Multi-horizon forecasting Link to heading 时间序列预测的定义</description>
+    </item>
+    <item>
+      <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
+      <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
+      <pubDate>Wed, 03 Feb 2021 14:24:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
+      <description>Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020.&#xA;一篇关于时间序列增强的论文，很有意思。&#xA;Time Series Data Augmentation for Deep Learning: A Survey Link to heading 摘要 Link to heading 时间序列相关的问题中，时间序列数据可能并不充足。因此，数据增强方式（CV中所使用的）就变得十分重要了。&#xA;同时从经验上比较不同的时间序列数据增强方式，比如时域与频域、增强组合，以及对不平衡类的加权。&#xA;1 Introduction Link to heading 基于时间序列的各种工作都取得了比较好的成绩，但是这些成功都严重依赖于大量的训练数据来避免过拟合。很不幸的是，并不是所有的时间序列工作都有这么充足的训练数据，因此数据增强方法对于一个成功的深度学习模型来说是非常重要的。&#xA;数据增强的基本想法是产生合成的数据集来覆盖没有探索到的输入空间，并维护正确的分类标签。数据增强方法在AlexNet于图像分类任务中得到了验证。&#xA;尽管如此，很少有工作注重于通过增强方法找到更好的时间序列数据。&#xA;时间序列数据的本质属性并没有被现在的数据增强方法所使用。时间序列数据的一个重要属性是所谓的temporal dependency。时间序列数据可以被转换为时域和频域，因此可以基于这个来设计数据增强方法，并被用于转换的领域。特别是作用于多变量时间序列预测中。因此，简单的将图像或者语言处理领域的增强方法使用过来可能并不会产生比较好的效果。 此外，数据增强方法是基于任务的。比如，对于时间序列分类任务有效的增强方法并不一定对异常检测有效。 此外，时间序列分类问题中可能会遇到类别不均匀的情况，如果产生比较平衡的类别数据也是一个问题。 结构：首先从时域的简单转换开始。 讨论更多时间序列中的高级转换，在时域与频域变换方面 引入高级方法，比如基于分解的方法、基于模型的方法、基于学习的方法等。最后还介绍了GAN在时间序列领域的应用。&#xA;基于分解的方法：就是普通的时间序列分解方法，把时间序列分解为趋势项+周期项+残差 基于模型的方法，使用统计学方法学习数据，并用这个模型产生更多的数据 数据压缩方法：GAN方法 评价方法在时间序列预测、时间序列分类与时间序列异常检测中进行。&#xA;2 Basic Data Augmentation Methods Link to heading 2.1 Time Domain Link to heading 时域上的变化是最直接的，比如注入高斯噪声或更复杂的噪声（spike、step-like trend、slope-like trend）此外还有在异常检测领域中使用的标签扩展方法</description>
+    </item>
+    <item>
+      <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
+      <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
+      <pubDate>Tue, 19 Jan 2021 19:50:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
+      <description>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions Link to heading 2021 International Journal of Forecasting&#xA;文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向于预测本身，而不是模型。 文章结构：第二部分是背景知识，包括传统univariate forecasting technique和不同的NN预测；第三部分包括RNN的实现细节和相关的数据预处理方法；第四部分解释了本文评测时所用的方法与数据集；第五部分进行了批判性的分析；第六部分进行总结；第七部分给出对未来的表述。&#xA;第二部分 Link to heading 2.1 Univariate Forecasting Link to heading 传统的单变量方法即为时间序列基于其过去的值来完成对未来值的预测，即给定序列X={x1,x2,&amp;hellip;,xT}，需要完成{X_{T+1},&amp;hellip;,X_{T+H}} = F(x1,x2,&amp;hellip;,xT) + \epislon，这里的F是一个函数，经过序列X的训练产生得到，H是预测的跨度（horizon）\&#xA;传统的时间序列预测方法在NN3、NN5和M3竞赛上都取得了最佳成绩，它们在数据量很小时表现非常好。但是由于数据量的限制，它们面对大量数据时的表现就不如机器学习算法了。&#xA;2.2 ANN Link to heading 之前一直使用的是传统的FCNN，但是目前更多用的是RNN。RNN的cell比较常用的有Elman RNN cell, LSTM和GRUB，此外还有一些其他的架构。这些架构都同时在时间序列预测领域和自然语言处理中得到了使用。 一些架构介绍：&#xA;Smyl所用的简单复合LSTM，他后来将其与ES算法结合并取得了M4竞赛的冠军 Seq2Seq，被Sutskever引入。传统的S2S架构中Encoder与Decoder都是RNN，这方面比较出色的工作是Amazon的DeepAR。在后续的一些工作中，S2S架构不再作为直接的预测手段，而是作为一种特征提取方式被整合进时间序列预测框架中。 Seq2Seq的一种变体是引入注意力机制。S2S机制的一个问题是将所有的输入数据编码成向量会造成信息损失，而注意力机制通过对更重要的信息加权，可以尽量减少这种信息损失。比如对于以年为周期的月度数据，显然上一年的相同月份的权重应该会更大 使用RNN的组合(ensemble RNN)，比如Smyl将这个问题分成两部分，即产生一组专门的RNN，并将其组合起来进行预测。也可以使用其他的组合方式，比如将meta-learner的输出作为RNN的输入继续进行预测，也有boosting的方法。 global方法，即权重全局计算（跨越不同的时间序列），但是状态保留在各自的时间序列中。 第三部分 Methodology Link to heading 都是很简单的介绍，没什么细节&#xA;第四部分 测试框架 Link to heading 数据集：用的挺全的&#xA;在这部分中我比较关心的是时间序列预处理的方式。时间序列预处理是非常麻烦的，最优的肯定是全局预处理，但是这只对于波动不大的时间序列管用，而且对于极端情况处理的很糟糕。Smyl还是NBEATS提出了局部时间序列处理方式，即每次使用滑动窗口的最后一个值进行时间序列预处理。</description>
+    </item>
+    <item>
+      <title>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</title>
+      <link>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+      <pubDate>Tue, 22 Dec 2020 19:20:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
+      <description>所有的论文都放在这边&#xA;Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018. Do Bitcoin Users Really Care About Anonymity? Link to heading Do Bitcoin Users Really Care about Anonymity?</description>
+    </item>
+    <item>
+      <title>Response Time Characterization of Microservice-Based Systems</title>
+      <link>http://wtysos11.github.io/posts/20200422_response-time-characterization-of-microservice-based-systems/</link>
+      <pubDate>Thu, 23 Apr 2020 17:21:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20200422_response-time-characterization-of-microservice-based-systems/</guid>
+      <description>原文地址&#xA;看到的挺好的一篇文章 November 2018 DOI: 10.1109/NCA.2018.8548062 Conference: 2018 IEEE 17th International Symposium on Network Computing and Applications (NCA) ConferenceIEEE International Symposium on Network Computing and Applications&#xA;以排队论分析响应时间的一篇论文。 说实话，我一没看懂排队论的过程，二没看懂他的实验。 师兄的说法是排队论依据的假设太多了，比如要求请求以泊松分布到来之类的，现实世界根本做不到，以此建模误差太大了，就到此为止吧。&#xA;Response Time Characterization of Microservice-Based Systems Link to heading 涉及到的词语与翻译：&#xA;bottleneck，翻译为瓶颈、瓶颈层、瓶颈点 multi-server，我认为这里指的是多层服务，和multi-tier应该是同义的。 摘要 Link to heading 背景：微服务架构较之传统的单体应用有着很多的优势，但是它也阻碍了系统的可视化(hinders system observability)。特别地，对于服务性能的监控和分析变得更加有挑战，特别是对于那些重要的生产系统，必须要迭代增长、连续操作且不能够进行线上的基准测试(benchmark)。这些系统一般非常的巨大且昂贵，因此成为了完全调度的较差选择。 为这样的服务和系统来创建一个模型来进行特征分析可以很好地缓解上述的问题。性能，特别是响应时间，是本工作关注的重点，我们注重于瓶颈点检测(bottleneck detection)和资源最优化调度（optimal rsource scheduling）。我们采用了一个方法来对生产应用建模，使用请求数据的排队系统。除此之外，我们提供了对响应时间进行分析和资源最优化调度的分析工具。我们的结果显示一个有着单个队列和数个同构(homogeneous)的服务器的简单的排队系统有着一个较小的参数空间，可以在生产中被估算出来。这个结果的模型可以被用来预测响应时间的分布和必要的实例数来维护期望的服务级别，在给定的流量下。&#xA;1 introduction Link to heading 对于生产环境来说，黑盒监控是非常轻量且高效的，然而这样的监控是无法去分辨和预测服务质量。除了已经收集到的指标、警示和配置项目之外，分析任务主要依赖于管理员。为此，我们设计了一个建模组件，比如同构多层服务队列，这使得可以从统计学上去分析一些性能指标，比如延迟或流量。而且由于队列可以组成网络，该方法可以用于微服务架构中的建模。为了更加准确地对独立的服务进行建模，我们需要对它们的性能进行更细致地分析。 在得到了额外的记录信息之后，我们就能够去为微服务系统来创建和更新一个动态的依赖模型。这允许我们去提取服务端点之间的依存关系，且更重要的是，可以对每一个微服务的表现进行建模。目标是简单但重要的：取得使每一个服务表现最佳的动作。这会导向不同的分支，比如明白什么时候应该进行调度、减少基础设施的消耗，以及保证SLA。额外地，可以在瓶颈出现前去解决它(the possibility of pinpointing bottlenecks in the system without stressing it)，这也是一个主要的优点。 在本文中，我们开发并部署了一个基于微服务架构的系统，对它的记录结果进行排序，来对multi-server queues进行建模(M/M/c)。该方法可以预测响应时间的分布范围以及服务的最佳动作区域，同时决定需要多少个实例数来维护指定流量下服务的理想服务质量。更重要的是，建立一个模型使得方法可以建立一个最大容量的定义，这是全系统性能最优化和瓶颈检测的第一步。我们的结果证明了尽管十分简单，我们的模型能够准确地预测微服务的动作，更精确地来说，预测响应时间分布，同时不需要更加复杂的模型或参数。从结果上来说，这样的模型对于线上的分析是足够的。 剩下的部分如此组成：S2描述了我们用来对微服务建模的基于队列的模型；S3描述了实验设置；S4展示了我们的实验结果；S5评价了实验结果；S6列出了相关工作；S7对该论文进行了总结。</description>
+    </item>
+    <item>
+      <title>bottleneck detection</title>
+      <link>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</link>
+      <pubDate>Wed, 22 Apr 2020 17:36:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</guid>
+      <description>原文地址&#xA;主要还是针对微服务调度中bottleneck的定义入手&#xA;瓶颈点定义 Link to heading 从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。 在多层应用(multi-tier applications)中，其中的bottleneck指的是资源层面的，即在某一层增加资源能够最大化的优化服务的性能。&#xA;多层服务中的bottleneck Link to heading Agile Dynamic Provisioning of Multi-Tier Internet Applications Link to heading Chapter 1 Link to heading 师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。 定义：每一层的处理能力是固定的 x req/s，如果说中间有一层处理能力最低，显然整个服务的处理速度都将受到影响。 需要注意的是，对瓶颈层的增加并不代表对整个服务的服务质量都会增加，可能需要在消除所有的瓶颈层之后整个服务的服务性能才能得到提升。&#xA;因为现在已经有很多的单层调度机制被使用了，要给很简单的想法就是给每一层都配置一个单层调度器。因此，我们的第一步就是在每一层的流量超过容纳上限的时候增加实例数量，这个可以通过监控队列长度、层间响应时间、或者丢包率来实现，这个方法称为independent per-tier provisioning.&#xA;想法1：多层模型，逐个找到bottleneck并增加。问题在于增加的速度可能很慢，最多可能需要遍历所有层才能完成实例扩缩，这对于变化较快的网络流量显然是不行的。 想法2：直接将多层模型作为一个黑箱进行考虑。问题在于需要增加多少个实例，以及在哪里增加。因为多层模型是一个黑箱，显然调度器无法获取内部的信息，即不知道究竟是哪一层出了问题。对于单层服务模型，可以建立一个应用模型来决定在响应时间范围内对于给定的流量需要多少个服务，从而进行对应的扩缩。但是将这个模型用于多层模型中并不一定可行，因为每一层的服务与应用性质都是不同的。以简单的电子商务应用为例，这意味着将HTTP服务器、Java服务器和数据库系统一起建模，这将是一个困难的工作。第三，不是所有的层都可以增加实例，比如数据库系统就很难实时增加实例。 综上，不能将多层应用作为黑箱进行调度。 特色：&#xA;predictive and reactive provisioning:使用预测式调度来进行小时或天级别、使用响应式调度来进行更细致的调度。 使用了基于排队论的分析模型来同时对多层网络应用进行分析 快速的服务器切换，允许虚拟机来处理更快发生的网络波动。 能够处理基于session的流量。 这个调度方法可以被归类为自适应adaptive或半自动的semi-autonomous，它们是能够快速适应环境同时只需要人类有限的接触。&#xA;Chapter2 System Overview Link to heading 2.1 Multi-tier Internet Applications 多层网络架构：整个网络架构由顺序连接的多个应用层组成，如同管道一样，中间的一层会收到前面预处理的数据，并将自己处理好的数据传输给下一层。 本文定义的SLA，使用平均响应时间(average response time)或一个合适的响应时间分位点（a suitable high percentile of the response time distribution）</description>
+    </item>
+    <item>
+      <title>【总结性】微服务调度相关论文</title>
+      <link>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</link>
+      <pubDate>Sat, 11 Apr 2020 10:20:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</guid>
+      <description>原始地址&#xA;阅读和微服务相关的论文&#xA;【论文名称】 调度类型，调度方法，调度对象，索引 综述文献：&#xA;A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014年的综述文献。 Elasticity in Cloud Computing : State of the Art and Research Challenges，弹性调度的综述文献，对调度的不同方法、使用虚拟机还是docker进行调度等方向进行了分类。 Auto-Scaling Web Applications in Clouds: A Taxonomy and Survey，另外一篇综述文献 A Survey and Taxonomy of Self-Aware and Self-Adaptive Cloud Autoscaling Systems 高价值文献：&#xA;A reliable and cost-efficient auto-scaling system for web applications using heterogeneous spot instances&#xA;Renewable-aware geographical load balancing of web applications for sustainable data centers</description>
+    </item>
+  </channel>
 </rss>

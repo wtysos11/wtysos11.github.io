@@ -1,32 +1,25 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>计算机/软件工程 - 标签 - 实践出真知</title>
-        <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</link>
-        <description>计算机/软件工程 - 标签 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="self" type="application/rss+xml" /><item>
-    <title>Vegeta压测工具学习与使用</title>
-    <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-    <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-    <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
-</item>
-<item>
-    <title>Git分支开发模式学习</title>
-    <link>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备 参考资料 segmentationfault official-分支开发工作流 按照官方的分]]></description>
-</item>
-<item>
-    <title>golang单元测试整理归纳</title>
-    <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
-    <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
-    <description><![CDATA[本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识 参考资料 Go by example，中文版]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机/软件工程 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/</link>
+    <description>Recent content in 计算机/软件工程 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git分支开发模式学习</title>
+      <link>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
+      <description> 本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备&#xA;参考资料 Link to heading segmentationfault official-分支开发工作流 按照官方的分类就比较简单：&#xA;长期分支：分支将长期存在，不同分支之间的区别将是稳定性的区别。其中master最稳定，dev比较不稳定，topic次之。 短期分支：除了master外不存在长期分支，所有分支都将短期存在，目标为实现一种主题（单一的特性或工作）。实现完成之后就合并到master中 阿里的分支模式分类就更接近生产，除了强调开发外也强调发布。&#xA;TBD（主干开发模式），有点类似长期分支，但是比长期分支简单很多。最简单的版本就是所有团队成员共有一个开发分支，这样的问题在于如果团队变大的话，每天各个成员光是在合并提交上就会花费很多时间。因此要求每次变更提交都要足够小，且能快速完成验证。 特性分支开发模式(Git-Flow)：这个是真的有点类似Git官方中长期分支与短期分支的结合。就每一个特性来说，所有关于该特性的开发工作都会集中在一个分支上，当完成该特性的工作之后，再把特性分支合并回代码主路径上并准备发布 长期存在着多个分支，比如feature分支（功能开发）、develop（功能集成）、release（版本发布）、hotfix（线上修改）、master（最新已发布版本基线） 每个特性都在对应的feature分支上开发。特性开发完毕并验证通过后会merge到develop分支（大部分时间都与master接近）进行集中验证。然后验证完毕之后单独拉到release分支进行发布。中间的任何错误都会从release分支往回传，其中master分支永远是最新的可运行分支。 缺点：分支特别多，而且非常复杂。develop分支等的意义比较冗余（与master等相比） Github-Flow，任务导向型，更贴近短期分支。实际上也是大部分开源项目所采用的方法。 master分支的所有代码都应该是最新的可部署、可工作版本 新的工作从master拉取分支，并以工作任务进行命名 完成任务后提交pull-request合并到master分支并提起代码评审，评审通过后进行合并。 Gitlab-Flow，将pull-request改为了merge-request，与Github-Flow非常相似 最大的区别是发布侧，引入了对应生产环境的production分支和预发环境的pre-production分支。 </description>
+    </item>
+    <item>
+      <title>Git分支开发模式学习</title>
+      <link>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
+      <description> 本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备&#xA;参考资料 Link to heading segmentationfault official-分支开发工作流 按照官方的分类就比较简单：&#xA;长期分支：分支将长期存在，不同分支之间的区别将是稳定性的区别。其中master最稳定，dev比较不稳定，topic次之。 短期分支：除了master外不存在长期分支，所有分支都将短期存在，目标为实现一种主题（单一的特性或工作）。实现完成之后就合并到master中 阿里的分支模式分类就更接近生产，除了强调开发外也强调发布。&#xA;TBD（主干开发模式），有点类似长期分支，但是比长期分支简单很多。最简单的版本就是所有团队成员共有一个开发分支，这样的问题在于如果团队变大的话，每天各个成员光是在合并提交上就会花费很多时间。因此要求每次变更提交都要足够小，且能快速完成验证。 特性分支开发模式(Git-Flow)：这个是真的有点类似Git官方中长期分支与短期分支的结合。就每一个特性来说，所有关于该特性的开发工作都会集中在一个分支上，当完成该特性的工作之后，再把特性分支合并回代码主路径上并准备发布 长期存在着多个分支，比如feature分支（功能开发）、develop（功能集成）、release（版本发布）、hotfix（线上修改）、master（最新已发布版本基线） 每个特性都在对应的feature分支上开发。特性开发完毕并验证通过后会merge到develop分支（大部分时间都与master接近）进行集中验证。然后验证完毕之后单独拉到release分支进行发布。中间的任何错误都会从release分支往回传，其中master分支永远是最新的可运行分支。 缺点：分支特别多，而且非常复杂。develop分支等的意义比较冗余（与master等相比） Github-Flow，任务导向型，更贴近短期分支。实际上也是大部分开源项目所采用的方法。 master分支的所有代码都应该是最新的可部署、可工作版本 新的工作从master拉取分支，并以工作任务进行命名 完成任务后提交pull-request合并到master分支并提起代码评审，评审通过后进行合并。 Gitlab-Flow，将pull-request改为了merge-request，与Github-Flow非常相似 最大的区别是发布侧，引入了对应生产环境的production分支和预发环境的pre-production分支。 </description>
+    </item>
+  </channel>
 </rss>

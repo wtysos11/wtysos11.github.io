@@ -1,146 +1,232 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>软件测试复习 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="软件测试复习" />
-<meta property="og:description" content="原文地址 软件测试复习 对大三下学期的软件测试课程进行复习 第一章 计算机软件体系结构 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的" />
+<html lang="zh">
+
+<head>
+  <title>
+  软件测试复习 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="原文地址
+软件测试复习 Link to heading 对大三下学期的软件测试课程进行复习
+第一章 Link to heading 计算机软件体系结构 Link to heading 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的组织结构和拓扑结构，规定系统需求和构成系统的元素之间的对应关系。
+Layered Architecture：n层模型，比如TCP\IP使用的那种。例子：Presentation Layer-&gt;Business Layer-&gt; Persistent Layer-&gt; Database Layer。核心思想是组件间的分离与功能上的聚合。 Event-Driven Architecture：常用于异步通信架构，由高度解耦合且单一目的的事件处理组件所构成。 MicroKernal Architecture：用于实现基于产品的应用的自然表示，即将大量第三方库插入进核心代码中。Core system提供了核心功能，plug-in module则可以是第三方库等能够轻松调换的代码。通过分离可以实现应用特性和具体实现的分离。 Microservices Architecture：微服务架构，面向服务的架构。按照单元分解，采用分布式架构，一般具有统一的用户交互层。 Space-Based Architecture：特定于解决扩展与并发问题。应用数据统一存储于内存中，同时通过扩展处理单元的方式实现应用处理能力的增加。 软件=程序&#43;数据&#43;文档&#43;服务、 是能够完成预定性能和功能的、可执行的计算机指令。 软件需要有描述程序的操作和使用的文档。 1976: Algorithm&#43;Data Structure = Programs
+生产软件产品的基本步骤：软件规格说明、设计与实现、确认、演进。
+软件开发方法：
+面向数据流的结构化程序开发方法。指导思想是自顶向下，逐步求精；基本原则是功能的分解与抽象。很适合数据处理领域的问题。 面向数据结构的开发方法(Jackson方法)：描述问题的输入、输出数据结构，分析其对应性，设计相应的程序结构，从而给出问题的软件过程描述。以数据结构为驱动。 基于模型的方法，支持程序开发的形式化方法，把软件系统当作模型来给予描述，把软件的输入、输出看作模型对象，把这些对象在计算机内的状态看作该模型在对象上的操作。 面向对象的开发方法：指导思想是尽量按照人类认识世界的方法和思维方式来分析和解决问题。 第一章 1.2 软件工程生命周期 Link to heading 软件生命周期的6个阶段：
+可行性分析与计划阶段：确认软件开发的总体目标、估计可利用的开发资源，最后提交可行性分析报告。 需求分析阶段：分析用户提出的要求 设计阶段：概要设计/逻辑设计（把各项软件需求转换成软件的体系结构）、详细设计/物理设计（按照概要设计分解的每个模块所要完成的工作进行具体的描述）、提交概要结构设计说明书等文档 实现阶段：完成源程序的编码、编译和运行调试、编写进度日报周报、测试计划、提交用户手册等 测试阶段：全面测试目标软件系统，并检查审阅已编制的文档。 运行与维护阶段：软件提交给用户后，在运行使用中得到持续的维护；改正性维护、适应性维护和完善性维护。 前五个阶段合称开发阶段。
+软件生命周期模型 Link to heading 包括瀑布模型、VW模型、快速应用开发模型、原型模型、迭代模型、螺旋模型、喷泉模型、基于构建的开发模型、Rational统一过程模型、敏捷开发模型与极限编程。
+瀑布模型 Link to heading 特征：">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="软件测试复习"/>
+<meta name="twitter:description" content="原文地址
+软件测试复习 Link to heading 对大三下学期的软件测试课程进行复习
+第一章 Link to heading 计算机软件体系结构 Link to heading 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的组织结构和拓扑结构，规定系统需求和构成系统的元素之间的对应关系。
+Layered Architecture：n层模型，比如TCP\IP使用的那种。例子：Presentation Layer-&gt;Business Layer-&gt; Persistent Layer-&gt; Database Layer。核心思想是组件间的分离与功能上的聚合。 Event-Driven Architecture：常用于异步通信架构，由高度解耦合且单一目的的事件处理组件所构成。 MicroKernal Architecture：用于实现基于产品的应用的自然表示，即将大量第三方库插入进核心代码中。Core system提供了核心功能，plug-in module则可以是第三方库等能够轻松调换的代码。通过分离可以实现应用特性和具体实现的分离。 Microservices Architecture：微服务架构，面向服务的架构。按照单元分解，采用分布式架构，一般具有统一的用户交互层。 Space-Based Architecture：特定于解决扩展与并发问题。应用数据统一存储于内存中，同时通过扩展处理单元的方式实现应用处理能力的增加。 软件=程序&#43;数据&#43;文档&#43;服务、 是能够完成预定性能和功能的、可执行的计算机指令。 软件需要有描述程序的操作和使用的文档。 1976: Algorithm&#43;Data Structure = Programs
+生产软件产品的基本步骤：软件规格说明、设计与实现、确认、演进。
+软件开发方法：
+面向数据流的结构化程序开发方法。指导思想是自顶向下，逐步求精；基本原则是功能的分解与抽象。很适合数据处理领域的问题。 面向数据结构的开发方法(Jackson方法)：描述问题的输入、输出数据结构，分析其对应性，设计相应的程序结构，从而给出问题的软件过程描述。以数据结构为驱动。 基于模型的方法，支持程序开发的形式化方法，把软件系统当作模型来给予描述，把软件的输入、输出看作模型对象，把这些对象在计算机内的状态看作该模型在对象上的操作。 面向对象的开发方法：指导思想是尽量按照人类认识世界的方法和思维方式来分析和解决问题。 第一章 1.2 软件工程生命周期 Link to heading 软件生命周期的6个阶段：
+可行性分析与计划阶段：确认软件开发的总体目标、估计可利用的开发资源，最后提交可行性分析报告。 需求分析阶段：分析用户提出的要求 设计阶段：概要设计/逻辑设计（把各项软件需求转换成软件的体系结构）、详细设计/物理设计（按照概要设计分解的每个模块所要完成的工作进行具体的描述）、提交概要结构设计说明书等文档 实现阶段：完成源程序的编码、编译和运行调试、编写进度日报周报、测试计划、提交用户手册等 测试阶段：全面测试目标软件系统，并检查审阅已编制的文档。 运行与维护阶段：软件提交给用户后，在运行使用中得到持续的维护；改正性维护、适应性维护和完善性维护。 前五个阶段合称开发阶段。
+软件生命周期模型 Link to heading 包括瀑布模型、VW模型、快速应用开发模型、原型模型、迭代模型、螺旋模型、喷泉模型、基于构建的开发模型、Rational统一过程模型、敏捷开发模型与极限编程。
+瀑布模型 Link to heading 特征："/>
+
+<meta property="og:title" content="软件测试复习" />
+<meta property="og:description" content="原文地址
+软件测试复习 Link to heading 对大三下学期的软件测试课程进行复习
+第一章 Link to heading 计算机软件体系结构 Link to heading 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的组织结构和拓扑结构，规定系统需求和构成系统的元素之间的对应关系。
+Layered Architecture：n层模型，比如TCP\IP使用的那种。例子：Presentation Layer-&gt;Business Layer-&gt; Persistent Layer-&gt; Database Layer。核心思想是组件间的分离与功能上的聚合。 Event-Driven Architecture：常用于异步通信架构，由高度解耦合且单一目的的事件处理组件所构成。 MicroKernal Architecture：用于实现基于产品的应用的自然表示，即将大量第三方库插入进核心代码中。Core system提供了核心功能，plug-in module则可以是第三方库等能够轻松调换的代码。通过分离可以实现应用特性和具体实现的分离。 Microservices Architecture：微服务架构，面向服务的架构。按照单元分解，采用分布式架构，一般具有统一的用户交互层。 Space-Based Architecture：特定于解决扩展与并发问题。应用数据统一存储于内存中，同时通过扩展处理单元的方式实现应用处理能力的增加。 软件=程序&#43;数据&#43;文档&#43;服务、 是能够完成预定性能和功能的、可执行的计算机指令。 软件需要有描述程序的操作和使用的文档。 1976: Algorithm&#43;Data Structure = Programs
+生产软件产品的基本步骤：软件规格说明、设计与实现、确认、演进。
+软件开发方法：
+面向数据流的结构化程序开发方法。指导思想是自顶向下，逐步求精；基本原则是功能的分解与抽象。很适合数据处理领域的问题。 面向数据结构的开发方法(Jackson方法)：描述问题的输入、输出数据结构，分析其对应性，设计相应的程序结构，从而给出问题的软件过程描述。以数据结构为驱动。 基于模型的方法，支持程序开发的形式化方法，把软件系统当作模型来给予描述，把软件的输入、输出看作模型对象，把这些对象在计算机内的状态看作该模型在对象上的操作。 面向对象的开发方法：指导思想是尽量按照人类认识世界的方法和思维方式来分析和解决问题。 第一章 1.2 软件工程生命周期 Link to heading 软件生命周期的6个阶段：
+可行性分析与计划阶段：确认软件开发的总体目标、估计可利用的开发资源，最后提交可行性分析报告。 需求分析阶段：分析用户提出的要求 设计阶段：概要设计/逻辑设计（把各项软件需求转换成软件的体系结构）、详细设计/物理设计（按照概要设计分解的每个模块所要完成的工作进行具体的描述）、提交概要结构设计说明书等文档 实现阶段：完成源程序的编码、编译和运行调试、编写进度日报周报、测试计划、提交用户手册等 测试阶段：全面测试目标软件系统，并检查审阅已编制的文档。 运行与维护阶段：软件提交给用户后，在运行使用中得到持续的维护；改正性维护、适应性维护和完善性维护。 前五个阶段合称开发阶段。
+软件生命周期模型 Link to heading 包括瀑布模型、VW模型、快速应用开发模型、原型模型、迭代模型、螺旋模型、喷泉模型、基于构建的开发模型、Rational统一过程模型、敏捷开发模型与极限编程。
+瀑布模型 Link to heading 特征：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-06T20:15:14+08:00" />
-<meta property="article:modified_time" content="2020-04-06T20:15:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2020-04-06T20:15:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="软件测试复习"/>
-<meta name="twitter:description" content="原文地址 软件测试复习 对大三下学期的软件测试课程进行复习 第一章 计算机软件体系结构 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/" /><link rel="next" href="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "软件测试复习",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0\/"
-        },"genre": "posts","keywords": "分类\/学习\/学习笔记\/笔记\/考研, 分类\/知识库\/计算机\/基础\/软件测试","wordcount":  5286 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0\/","datePublished": "2020-04-06T20:15:14+08:00","dateModified": "2020-04-06T20:15:14+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">软件测试复习</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机基础</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-04-06">2020-04-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 5286 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#第一章">第一章</a>
-      <ul>
-        <li><a href="#计算机软件体系结构">计算机软件体系结构</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-    <li><a href="#第一章-12-软件工程生命周期">第一章 1.2 软件工程生命周期</a>
-      <ul>
-        <li><a href="#软件生命周期模型">软件生命周期模型</a></li>
-      </ul>
-    </li>
-    <li><a href="#软件复杂度分析">软件复杂度分析</a></li>
-    <li><a href="#白盒测试">白盒测试</a></li>
-    <li><a href="#黑盒测试">黑盒测试</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><p><a href="https://github.com/wtysos11/blogWiki/issues/5" target="_blank" rel="noopener noreffer ">原文地址</a></p>
-<h1 id="软件测试复习">软件测试复习</h1>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/">
+              软件测试复习
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-04-06T20:15:14&#43;08:00">
+                四月 6, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E7%9F%A5%E8%AF%86/%E8%80%83%E7%A0%94/">知识/考研</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">计算机/软件测试</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p><a href="https://github.com/wtysos11/blogWiki/issues/5"  class="external-link" target="_blank" rel="noopener">原文地址</a></p>
+<h1 id="软件测试复习">
+  软件测试复习
+  <a class="heading-link" href="#%e8%bd%af%e4%bb%b6%e6%b5%8b%e8%af%95%e5%a4%8d%e4%b9%a0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
 <p>对大三下学期的软件测试课程进行复习</p>
-<h2 id="第一章">第一章</h2>
-<h3 id="计算机软件体系结构">计算机软件体系结构</h3>
+<h2 id="第一章">
+  第一章
+  <a class="heading-link" href="#%e7%ac%ac%e4%b8%80%e7%ab%a0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h3 id="计算机软件体系结构">
+  计算机软件体系结构
+  <a class="heading-link" href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e8%bd%af%e4%bb%b6%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的组织结构和拓扑结构，规定系统需求和构成系统的元素之间的对应关系。</p>
 <ul>
 <li>Layered Architecture：n层模型，比如TCP\IP使用的那种。例子：Presentation Layer-&gt;Business Layer-&gt; Persistent Layer-&gt; Database Layer。核心思想是组件间的分离与功能上的聚合。</li>
@@ -161,7 +247,13 @@
 <li>基于模型的方法，支持程序开发的形式化方法，把软件系统当作模型来给予描述，把软件的输入、输出看作模型对象，把这些对象在计算机内的状态看作该模型在对象上的操作。</li>
 <li>面向对象的开发方法：指导思想是尽量按照人类认识世界的方法和思维方式来分析和解决问题。</li>
 </ul>
-<h2 id="第一章-12-软件工程生命周期">第一章 1.2 软件工程生命周期</h2>
+<h2 id="第一章-12-软件工程生命周期">
+  第一章 1.2 软件工程生命周期
+  <a class="heading-link" href="#%e7%ac%ac%e4%b8%80%e7%ab%a0-12-%e8%bd%af%e4%bb%b6%e5%b7%a5%e7%a8%8b%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>软件生命周期的6个阶段：</p>
 <ol>
 <li>可行性分析与计划阶段：确认软件开发的总体目标、估计可利用的开发资源，最后提交可行性分析报告。</li>
@@ -172,9 +264,21 @@
 <li>运行与维护阶段：软件提交给用户后，在运行使用中得到持续的维护；改正性维护、适应性维护和完善性维护。</li>
 </ol>
 <p>前五个阶段合称开发阶段。</p>
-<h3 id="软件生命周期模型">软件生命周期模型</h3>
+<h3 id="软件生命周期模型">
+  软件生命周期模型
+  <a class="heading-link" href="#%e8%bd%af%e4%bb%b6%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>包括瀑布模型、VW模型、快速应用开发模型、原型模型、迭代模型、螺旋模型、喷泉模型、基于构建的开发模型、Rational统一过程模型、敏捷开发模型与极限编程。</p>
-<h4 id="瀑布模型">瀑布模型</h4>
+<h4 id="瀑布模型">
+  瀑布模型
+  <a class="heading-link" href="#%e7%80%91%e5%b8%83%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>特征：</p>
 <ol>
 <li>本阶段活动的工作对象来自于上一项活动的输出。输出一般代表本阶段活动结束的里程碑文档。</li>
@@ -192,32 +296,36 @@
 <li>瀑布模型中的软件活动是文档驱动的，当阶段之间规定过多的文档时，会极大地增加系统的工作量。</li>
 <li>管理人员仅以文档的完成情况来评估项目完成进度，容易产生误判。</li>
 </ol>
-<h4 id="v模型">V模型</h4>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://user-images.githubusercontent.com/21279827/78519614-88436600-77f6-11ea-8b60-13e8db421963.png"
-        data-srcset="https://user-images.githubusercontent.com/21279827/78519614-88436600-77f6-11ea-8b60-13e8db421963.png, https://user-images.githubusercontent.com/21279827/78519614-88436600-77f6-11ea-8b60-13e8db421963.png 1.5x, https://user-images.githubusercontent.com/21279827/78519614-88436600-77f6-11ea-8b60-13e8db421963.png 2x"
-        data-sizes="auto"
-        alt="https://user-images.githubusercontent.com/21279827/78519614-88436600-77f6-11ea-8b60-13e8db421963.png"
-        title="V模型" />
+<h4 id="v模型">
+  V模型
+  <a class="heading-link" href="#v%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p><img src="https://user-images.githubusercontent.com/21279827/78519614-88436600-77f6-11ea-8b60-13e8db421963.png" alt="V模型">
 主要贡献：以测试为中心，明确标明了测试过程中存在的不同级别，并清楚地描述了这些测试级别与软件生命周期各阶段的对应关系。
 局限性：
 把测试作为编码之后的最后一个活动，会导致需求分析等前期阶段产生的错误直到后期的验收测试才能被发现，无法体现”尽早地和不断地进行软件测试“的原则。这会大幅地提高修补需求缺陷的成本。</p>
-<h4 id="w模型">W模型</h4>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://user-images.githubusercontent.com/21279827/78519721-d193b580-77f6-11ea-912e-e1036762710d.png"
-        data-srcset="https://user-images.githubusercontent.com/21279827/78519721-d193b580-77f6-11ea-912e-e1036762710d.png, https://user-images.githubusercontent.com/21279827/78519721-d193b580-77f6-11ea-912e-e1036762710d.png 1.5x, https://user-images.githubusercontent.com/21279827/78519721-d193b580-77f6-11ea-912e-e1036762710d.png 2x"
-        data-sizes="auto"
-        alt="https://user-images.githubusercontent.com/21279827/78519721-d193b580-77f6-11ea-912e-e1036762710d.png"
-        title="W模型" />
+<h4 id="w模型">
+  W模型
+  <a class="heading-link" href="#w%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p><img src="https://user-images.githubusercontent.com/21279827/78519721-d193b580-77f6-11ea-912e-e1036762710d.png" alt="W模型">
 W模型是V模型的演进，在开发中是一个V，在测试中是另外一个并行的V。基于”尽早地和不断地进行软件测试“的原则。
 W模型强调测试是伴随着整个软件开发周期，而且测试的对象不仅仅是程序，同样也需要测试需求、功能和设计。
 局限性：
 将软件的开发视为需求、设计、编码等一系列按时间顺序串行的活动。无法支持迭代、自发性以及需求功能的变更调整。</p>
-<h4 id="快速应用开发模型">快速应用开发模型</h4>
+<h4 id="快速应用开发模型">
+  快速应用开发模型
+  <a class="heading-link" href="#%e5%bf%ab%e9%80%9f%e5%ba%94%e7%94%a8%e5%bc%80%e5%8f%91%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>Rapid Application Development，能够使得开发小组在很短时间内创建出一个功能完善的系统。
 优点：</p>
 <ol>
@@ -229,36 +337,46 @@ W模型强调测试是伴随着整个软件开发周期，而且测试的对象�
 <li>对模块化要求较高，如果存在不能被模块化的功能，那么构件会存在问题。</li>
 <li>技术风险很高的情况下，不能够使用RAD模型。</li>
 </ol>
-<h4 id="原型模型">原型模型</h4>
+<h4 id="原型模型">
+  原型模型
+  <a class="heading-link" href="#%e5%8e%9f%e5%9e%8b%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>线性顺序方法的局限：如果前一个阶段的工作无法完成，则后一个阶段的任务无法开始。而很多时候，开发者难以获得完成的系统需求规格说明。
 原型方法：在获得一组基本需求后，通过快速分析构建出一个小型的软件系统原型，满足用户的基本要求。
 这样，用户通过使用原型系统提出修改意见，从而减少用户与开发人员关于系统需求的误解，使需求尽可能的准确。
 优点：符合人们认知事物的一般规律
 缺点：大型系统难以使用。而且容易忽略文档工作，带来资源浪费、项目规划和管理困难等问题。</p>
-<h4 id="演化模型">演化模型</h4>
+<h4 id="演化模型">
+  演化模型
+  <a class="heading-link" href="#%e6%bc%94%e5%8c%96%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>两次开发。第一次试验开发，得到试验性的原型产品，目标在于探索可行性，确定软件需求。第二次产品开发，在原型产品的基础上获得最终软件产品。</p>
-<h4 id="迭代和增量模型">迭代和增量模型</h4>
+<h4 id="迭代和增量模型">
+  迭代和增量模型
+  <a class="heading-link" href="#%e8%bf%ad%e4%bb%a3%e5%92%8c%e5%a2%9e%e9%87%8f%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>迭代开发是事前确定好要开发什么，然后一步步将其完成。
 增量开发是事前并不确定开发出的制成品，一步步实现后补齐。
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://user-images.githubusercontent.com/21279827/78520110-09e7c380-77f8-11ea-8c98-21b186455d40.png"
-        data-srcset="https://user-images.githubusercontent.com/21279827/78520110-09e7c380-77f8-11ea-8c98-21b186455d40.png, https://user-images.githubusercontent.com/21279827/78520110-09e7c380-77f8-11ea-8c98-21b186455d40.png 1.5x, https://user-images.githubusercontent.com/21279827/78520110-09e7c380-77f8-11ea-8c98-21b186455d40.png 2x"
-        data-sizes="auto"
-        alt="https://user-images.githubusercontent.com/21279827/78520110-09e7c380-77f8-11ea-8c98-21b186455d40.png"
-        title="增量" />
+<img src="https://user-images.githubusercontent.com/21279827/78520110-09e7c380-77f8-11ea-8c98-21b186455d40.png" alt="增量">
 优点：降低失败风险、提高系统可靠性
 缺点：建立初始模型的时候，需要确定基本业务服务。而且增量粒度难以确定。</p>
-<h4 id="螺旋模型">螺旋模型</h4>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://user-images.githubusercontent.com/21279827/78520153-2e43a000-77f8-11ea-9369-66037c7704c3.png"
-        data-srcset="https://user-images.githubusercontent.com/21279827/78520153-2e43a000-77f8-11ea-9369-66037c7704c3.png, https://user-images.githubusercontent.com/21279827/78520153-2e43a000-77f8-11ea-9369-66037c7704c3.png 1.5x, https://user-images.githubusercontent.com/21279827/78520153-2e43a000-77f8-11ea-9369-66037c7704c3.png 2x"
-        data-sizes="auto"
-        alt="https://user-images.githubusercontent.com/21279827/78520153-2e43a000-77f8-11ea-9369-66037c7704c3.png"
-        title="螺旋" />
+<h4 id="螺旋模型">
+  螺旋模型
+  <a class="heading-link" href="#%e8%9e%ba%e6%97%8b%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<p><img src="https://user-images.githubusercontent.com/21279827/78520153-2e43a000-77f8-11ea-9369-66037c7704c3.png" alt="螺旋">
 计划-&gt;风险分析-&gt;实现与测试-&gt;评估，如此反复。
 主要针对大型软件项目的开发。
 四个象限：</p>
@@ -275,29 +393,40 @@ W模型强调测试是伴随着整个软件开发周期，而且测试的对象�
 <li>风险分析需要额外的成本</li>
 <li>失误的风险分析可能问题更加严重。</li>
 </ul>
-<h4 id="喷泉模型">喷泉模型</h4>
+<h4 id="喷泉模型">
+  喷泉模型
+  <a class="heading-link" href="#%e5%96%b7%e6%b3%89%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>喷泉模型是一个迭代模型。软件开发的各个极端是相互重叠和多次反复的，就像喷泉一样，水喷上去又可以落下去，既可以落在中间，又可以落到底部。
 优点是可以提高开发效率、缩短开发周期
 缺点是管理有一定的难度</p>
-<h4 id="构建组装模型">构建组装模型</h4>
+<h4 id="构建组装模型">
+  构建组装模型
+  <a class="heading-link" href="#%e6%9e%84%e5%bb%ba%e7%bb%84%e8%a3%85%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>利用模块化思想讲整个系统模块化，并在一定构建模型的支持下复用构建库中的一个或多个软件构件，并通过组装过程高效率、高质量地构造软件系统。
 优点是允许软件复用从而提高软件开发效率，同时允许多个项目同时开发，降低费用、提高可维护性，可实现分布提交软件产品。
 缺点：缺乏通用的构建组装结构标准，带来较大的开发风险。构建可重用性和系统高效性之间不易协调；由于过分依赖构件，构件的质量影响着最终产品的质量。</p>
-<h4 id="rup统一过程模型">RUP统一过程模型</h4>
+<h4 id="rup统一过程模型">
+  RUP统一过程模型
+  <a class="heading-link" href="#rup%e7%bb%9f%e4%b8%80%e8%bf%87%e7%a8%8b%e6%a8%a1%e5%9e%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>Rational Unified Process，是一种基于UML的、以构架为中心、用例驱动与风险驱动相结合的迭代增量过程。
 基本结构：
 传统的瀑布模型是一个单维的时间顺序模型，开发工作被划分为多个连续的阶段。在一个时间段内，只能实施某一个阶段的工作比如分析、设计或实现。</p>
 <ul>
 <li>RUP是一个二维空间。时间维度从组织管理的角度描述整个软件开发生命周期，是RUP的动态组成部分，它可以进一步描述为周期cycle、阶段phase和迭代iteration</li>
 <li>核心工作流程维度是从技术角度描述RUP的静态组成部分，它可以进一步描述为工作流workflow、角色worker、行为activities和产品/工件artifact。
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://user-images.githubusercontent.com/21279827/78521110-61d3f980-77fb-11ea-9368-6170c519fc37.png"
-        data-srcset="https://user-images.githubusercontent.com/21279827/78521110-61d3f980-77fb-11ea-9368-6170c519fc37.png, https://user-images.githubusercontent.com/21279827/78521110-61d3f980-77fb-11ea-9368-6170c519fc37.png 1.5x, https://user-images.githubusercontent.com/21279827/78521110-61d3f980-77fb-11ea-9368-6170c519fc37.png 2x"
-        data-sizes="auto"
-        alt="https://user-images.githubusercontent.com/21279827/78521110-61d3f980-77fb-11ea-9368-6170c519fc37.png"
-        title="RUP" /></li>
+<img src="https://user-images.githubusercontent.com/21279827/78521110-61d3f980-77fb-11ea-9368-6170c519fc37.png" alt="RUP"></li>
 </ul>
 <p>时间维度：
 RUP中的软件生命周期在时间维度上被分解为四个顺序的阶段：初始阶段Inception、精化阶段Elaboration、构建阶段Construction和产品交付阶段Transition。每个阶段结束于一个主要的里程碑，并在阶段结尾执行一次评估以确定这个阶段的目标是否已经满足。</p>
@@ -317,22 +446,27 @@ RUP中的软件生命周期在时间维度上被分解为四个顺序的阶段�
 <li>部署</li>
 </ul>
 <p>RUP的迭代增量开发思想
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://user-images.githubusercontent.com/21279827/78521514-a7dd8d00-77fc-11ea-9d89-d34cd63f37c5.png"
-        data-srcset="https://user-images.githubusercontent.com/21279827/78521514-a7dd8d00-77fc-11ea-9d89-d34cd63f37c5.png, https://user-images.githubusercontent.com/21279827/78521514-a7dd8d00-77fc-11ea-9d89-d34cd63f37c5.png 1.5x, https://user-images.githubusercontent.com/21279827/78521514-a7dd8d00-77fc-11ea-9d89-d34cd63f37c5.png 2x"
-        data-sizes="auto"
-        alt="https://user-images.githubusercontent.com/21279827/78521514-a7dd8d00-77fc-11ea-9d89-d34cd63f37c5.png"
-        title="RUP迭代" /></p>
-<h2 id="软件复杂度分析">软件复杂度分析</h2>
+<img src="https://user-images.githubusercontent.com/21279827/78521514-a7dd8d00-77fc-11ea-9d89-d34cd63f37c5.png" alt="RUP迭代"></p>
+<h2 id="软件复杂度分析">
+  软件复杂度分析
+  <a class="heading-link" href="#%e8%bd%af%e4%bb%b6%e5%a4%8d%e6%9d%82%e5%ba%a6%e5%88%86%e6%9e%90">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <ol>
 <li>规模：通常由总共指令数，或源程序行数表示。例如line count复杂度。基本的思想是统计一个程序模块的源代码行数。</li>
 <li>难度：通常由程序中出现的操作数的数据所决定的量表示。例如Halstead复杂度，使用操作符和操作数的量来衡量。设n1表示程序中不同的操作符个数，n2表示程序中不同的操作数个数，N1表示程序中操作符总数，N2表示程序中的操作数总数。可以计算出各种参数。</li>
 <li>结构：通常由与程序结构有关的度量表示。例如McCabe复杂度，包括环路复杂度、基本复杂度等。McCabe环路复杂度，数量上可以表现为程序控制流图，V(G)=m-n+2p，m是G的边数，n个G的点数，p是G的连通分支数。</li>
 <li>智能度：算法的难易程度。</li>
 </ol>
-<h2 id="白盒测试">白盒测试</h2>
+<h2 id="白盒测试">
+  白盒测试
+  <a class="heading-link" href="#%e7%99%bd%e7%9b%92%e6%b5%8b%e8%af%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>定义：白盒测试按照程序内部逻辑结构和编码结构来设计测试数据并完成测试，是一种动态测试方法。</p>
 <p>逻辑覆盖：以程序内部的逻辑结构为基础的一种白盒测试方法，建立在测试人员对程序的逻辑结构清晰了解的基础上，是一大类测试过程的总称。包括语句覆盖、判定覆盖、条件覆盖、判定-条件覆盖、条件组合覆盖、路径覆盖等。
 DD-路径测试：Decision-to-Decision path，要求测试所有的路径。
@@ -340,7 +474,13 @@ DD-路径测试：Decision-to-Decision path，要求测试所有的路径。
 <p>基本路径测试：在实际的应用中，即使是不大的应用，想要测试所有路径也是不现实的。在不能做到覆盖程序所有路径的情况下，如果能够对程序的每一个独立路径进行测试，那么可以认为程序中的每个语句都已经检验过或覆盖到。
 基本路径测试在程序控制流图的基础上，通过分析McCabe环路复杂性，导出基本可执行路径集合，据此设计测试用例，保证在测试中程序的每一个可执行语句至少执行一次。
 独立路径：至少沿一条新的边移动的路径。</p>
-<h2 id="黑盒测试">黑盒测试</h2>
+<h2 id="黑盒测试">
+  黑盒测试
+  <a class="heading-link" href="#%e9%bb%91%e7%9b%92%e6%b5%8b%e8%af%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>黑盒测试不考虑测试程序内部结构和处理过程，仅仅依据程序功能的需求规格设计测试用例，并推断测试结果的正确性。
 黑河测试要求被测程序的特性或功能必须被一个测试用例或一个被认可的异常所覆盖，既要考察”程序是否做了应该做的“，也要考察”程序是否没有做不应该做的“。</p>
 <p>方法：
@@ -356,45 +496,95 @@ DD-路径测试：Decision-to-Decision path，要求测试所有的路径。
 <p>四是随机测试法，即从被测程序中所有可能输入值中随机选取，基本的黑盒测试方法。</p>
 <p>五是判定表法，要使得各个条件都能充分满足。
 六是因果图法，考虑被测程序输入条件之间的联系和组合关系。</p>
-<h4 id="灰盒测试">灰盒测试</h4>
+<h4 id="灰盒测试">
+  灰盒测试
+  <a class="heading-link" href="#%e7%81%b0%e7%9b%92%e6%b5%8b%e8%af%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>结合黑盒测试、白盒测试、回归测试和变异测试，是一种软件全生命周期测试方法。</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2020-04-06</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" data-title="软件测试复习" data-hashtags="分类/学习/学习笔记/笔记/考研,分类/知识库/计算机/基础/软件测试"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" data-hashtag="分类/学习/学习笔记/笔记/考研"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" data-title="软件测试复习" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" data-title="软件测试复习"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" data-title="软件测试复习"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" data-title="软件测试复习" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" data-title="软件测试复习"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E8%80%83%E7%A0%94/">分类/学习/学习笔记/笔记/考研</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%9F%BA%E7%A1%80/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">分类/知识库/计算机/基础/软件测试</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/" class="prev" rel="prev" title="中山大学考研复试内容复习"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>中山大学考研复试内容复习</a>
-            <a href="/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" class="next" rel="next" title="数据结构与算法复习">数据结构与算法复习<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

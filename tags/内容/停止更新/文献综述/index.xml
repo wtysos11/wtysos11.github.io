@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>内容/停止更新/文献综述 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/</link>
+    <description>Recent content in 内容/停止更新/文献综述 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
+      <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
+      <pubDate>Fri, 24 Jun 2022 17:15:23 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
+      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
+    </item>
+    <item>
+      <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
+      <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
+      <pubDate>Wed, 03 Feb 2021 14:24:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
+      <description>Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020.&#xA;一篇关于时间序列增强的论文，很有意思。&#xA;Time Series Data Augmentation for Deep Learning: A Survey Link to heading 摘要 Link to heading 时间序列相关的问题中，时间序列数据可能并不充足。因此，数据增强方式（CV中所使用的）就变得十分重要了。&#xA;同时从经验上比较不同的时间序列数据增强方式，比如时域与频域、增强组合，以及对不平衡类的加权。&#xA;1 Introduction Link to heading 基于时间序列的各种工作都取得了比较好的成绩，但是这些成功都严重依赖于大量的训练数据来避免过拟合。很不幸的是，并不是所有的时间序列工作都有这么充足的训练数据，因此数据增强方法对于一个成功的深度学习模型来说是非常重要的。&#xA;数据增强的基本想法是产生合成的数据集来覆盖没有探索到的输入空间，并维护正确的分类标签。数据增强方法在AlexNet于图像分类任务中得到了验证。&#xA;尽管如此，很少有工作注重于通过增强方法找到更好的时间序列数据。&#xA;时间序列数据的本质属性并没有被现在的数据增强方法所使用。时间序列数据的一个重要属性是所谓的temporal dependency。时间序列数据可以被转换为时域和频域，因此可以基于这个来设计数据增强方法，并被用于转换的领域。特别是作用于多变量时间序列预测中。因此，简单的将图像或者语言处理领域的增强方法使用过来可能并不会产生比较好的效果。 此外，数据增强方法是基于任务的。比如，对于时间序列分类任务有效的增强方法并不一定对异常检测有效。 此外，时间序列分类问题中可能会遇到类别不均匀的情况，如果产生比较平衡的类别数据也是一个问题。 结构：首先从时域的简单转换开始。 讨论更多时间序列中的高级转换，在时域与频域变换方面 引入高级方法，比如基于分解的方法、基于模型的方法、基于学习的方法等。最后还介绍了GAN在时间序列领域的应用。&#xA;基于分解的方法：就是普通的时间序列分解方法，把时间序列分解为趋势项+周期项+残差 基于模型的方法，使用统计学方法学习数据，并用这个模型产生更多的数据 数据压缩方法：GAN方法 评价方法在时间序列预测、时间序列分类与时间序列异常检测中进行。&#xA;2 Basic Data Augmentation Methods Link to heading 2.1 Time Domain Link to heading 时域上的变化是最直接的，比如注入高斯噪声或更复杂的噪声（spike、step-like trend、slope-like trend）此外还有在异常检测领域中使用的标签扩展方法</description>
+    </item>
+    <item>
+      <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
+      <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
+      <pubDate>Tue, 19 Jan 2021 19:50:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
+      <description>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions Link to heading 2021 International Journal of Forecasting&#xA;文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向于预测本身，而不是模型。 文章结构：第二部分是背景知识，包括传统univariate forecasting technique和不同的NN预测；第三部分包括RNN的实现细节和相关的数据预处理方法；第四部分解释了本文评测时所用的方法与数据集；第五部分进行了批判性的分析；第六部分进行总结；第七部分给出对未来的表述。&#xA;第二部分 Link to heading 2.1 Univariate Forecasting Link to heading 传统的单变量方法即为时间序列基于其过去的值来完成对未来值的预测，即给定序列X={x1,x2,&amp;hellip;,xT}，需要完成{X_{T+1},&amp;hellip;,X_{T+H}} = F(x1,x2,&amp;hellip;,xT) + \epislon，这里的F是一个函数，经过序列X的训练产生得到，H是预测的跨度（horizon）\&#xA;传统的时间序列预测方法在NN3、NN5和M3竞赛上都取得了最佳成绩，它们在数据量很小时表现非常好。但是由于数据量的限制，它们面对大量数据时的表现就不如机器学习算法了。&#xA;2.2 ANN Link to heading 之前一直使用的是传统的FCNN，但是目前更多用的是RNN。RNN的cell比较常用的有Elman RNN cell, LSTM和GRUB，此外还有一些其他的架构。这些架构都同时在时间序列预测领域和自然语言处理中得到了使用。 一些架构介绍：&#xA;Smyl所用的简单复合LSTM，他后来将其与ES算法结合并取得了M4竞赛的冠军 Seq2Seq，被Sutskever引入。传统的S2S架构中Encoder与Decoder都是RNN，这方面比较出色的工作是Amazon的DeepAR。在后续的一些工作中，S2S架构不再作为直接的预测手段，而是作为一种特征提取方式被整合进时间序列预测框架中。 Seq2Seq的一种变体是引入注意力机制。S2S机制的一个问题是将所有的输入数据编码成向量会造成信息损失，而注意力机制通过对更重要的信息加权，可以尽量减少这种信息损失。比如对于以年为周期的月度数据，显然上一年的相同月份的权重应该会更大 使用RNN的组合(ensemble RNN)，比如Smyl将这个问题分成两部分，即产生一组专门的RNN，并将其组合起来进行预测。也可以使用其他的组合方式，比如将meta-learner的输出作为RNN的输入继续进行预测，也有boosting的方法。 global方法，即权重全局计算（跨越不同的时间序列），但是状态保留在各自的时间序列中。 第三部分 Methodology Link to heading 都是很简单的介绍，没什么细节&#xA;第四部分 测试框架 Link to heading 数据集：用的挺全的&#xA;在这部分中我比较关心的是时间序列预处理的方式。时间序列预处理是非常麻烦的，最优的肯定是全局预处理，但是这只对于波动不大的时间序列管用，而且对于极端情况处理的很糟糕。Smyl还是NBEATS提出了局部时间序列处理方式，即每次使用滑动窗口的最后一个值进行时间序列预处理。</description>
+    </item>
+  </channel>
+</rss>

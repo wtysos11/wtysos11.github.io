@@ -1,522 +1,675 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Leetcode数组专题 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="Leetcode数组专题" />
+<html lang="zh">
+
+<head>
+  <title>
+  Leetcode数组专题 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="Leetcode中与数组相关的题目，包括704、35">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Leetcode数组专题"/>
+<meta name="twitter:description" content="Leetcode中与数组相关的题目，包括704、35"/>
+
+<meta property="og:title" content="Leetcode数组专题" />
 <meta property="og:description" content="Leetcode中与数组相关的题目，包括704、35" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-04-08T18:52:02+08:00" />
-<meta property="article:modified_time" content="2022-04-08T18:52:02+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2022-04-08T18:52:02+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Leetcode数组专题"/>
-<meta name="twitter:description" content="Leetcode中与数组相关的题目，包括704、35"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220408_leetcode_4/" /><link rel="next" href="http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Leetcode数组专题",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/算法\/算法题解, 分类\/知识库\/计算机\/算法\/专题, 分类\/知识库\/计算机\/算法\/数组","wordcount":  2388 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98\/","datePublished": "2022-04-08T18:52:02+08:00","dateModified": "2022-04-08T18:52:02+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Leetcode数组专题</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Leetcode刷题记录</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-04-08">2022-04-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2388 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#二分查找相关">二分查找相关</a>
-      <ul>
-        <li><a href="#704-二分查找">704 二分查找</a></li>
-        <li><a href="#35-搜索插入位置">35 搜索插入位置</a></li>
-        <li><a href="#34-在排序数组中查找元素的第一个和最后一个位置">34 在排序数组中查找元素的第一个和最后一个位置</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-    <li><a href="#移除元素">移除元素</a>
-      <ul>
-        <li><a href="#27-移除元素">27 移除元素</a></li>
-        <li><a href="#283-移动零">283 移动零</a></li>
-      </ul>
-    </li>
-    <li><a href="#长度最小的子数组">长度最小的子数组</a>
-      <ul>
-        <li><a href="#209-长度最小的子数组">209 长度最小的子数组</a></li>
-        <li><a href="#904-水果成篮">904 水果成篮</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="数组专题刷题记录">数组：专题刷题记录</h1>
-<p><a href="https://programmercarl.com/0704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.html#%E6%80%BB%E7%BB%93" target="_blank" rel="noopener noreffer ">数组专题</a>，包括二分查找</p>
-<h2 id="二分查找相关">二分查找相关</h2>
-<h3 id="704-二分查找">704 二分查找</h3>
-<p><a href="https://programmercarl.com/0704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.html#_704-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE" target="_blank" rel="noopener noreffer ">704-二分查找</a></p>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/">
+              Leetcode数组专题
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-04-08T18:52:02&#43;08:00">
+                四月 8, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">Leetcode刷题记录</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">计算机/算法/算法题解</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%B8%93%E9%A2%98/">计算机/算法/专题</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84/">计算机/算法/数组</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h1 id="数组专题刷题记录">
+  数组：专题刷题记录
+  <a class="heading-link" href="#%e6%95%b0%e7%bb%84%e4%b8%93%e9%a2%98%e5%88%b7%e9%a2%98%e8%ae%b0%e5%bd%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
+<p><a href="https://programmercarl.com/0704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.html#%E6%80%BB%E7%BB%93"  class="external-link" target="_blank" rel="noopener">数组专题</a>，包括二分查找</p>
+<h2 id="二分查找相关">
+  二分查找相关
+  <a class="heading-link" href="#%e4%ba%8c%e5%88%86%e6%9f%a5%e6%89%be%e7%9b%b8%e5%85%b3">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h3 id="704-二分查找">
+  704 二分查找
+  <a class="heading-link" href="#704-%e4%ba%8c%e5%88%86%e6%9f%a5%e6%89%be">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><a href="https://programmercarl.com/0704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.html#_704-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"  class="external-link" target="_blank" rel="noopener">704-二分查找</a></p>
 <p>这里原文所说的两种二分查找的区间写法我觉得是要注意一下的。我之前没有注意这个，一直都是写的第一种，但是经常会有问题（比如下面这个，实际上是没有判断相等，导致看起来比较累赘）</p>
 <p>对于二分查找来说，边界条件非常重要。关键点有两个，一个是二分查找区间是否是闭区间，另一个是二分查找后区间该如何移动。解决了这两个问题，二分查找应该是没有难度的。</p>
 <p>具体代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">search</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">right</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">right</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">right</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span><span class="o">==</span><span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">right</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h3 id="35-搜索插入位置">35 搜索插入位置</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> search(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums, <span style="color:#ff7b72">int</span> target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> left <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>, right <span style="color:#ff7b72;font-weight:bold">=</span> nums.size()<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">while</span>(left<span style="color:#ff7b72;font-weight:bold">&lt;</span>right){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(nums[(left<span style="color:#ff7b72;font-weight:bold">+</span>right)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">&lt;</span> target){
+</span></span><span style="display:flex;"><span>                left <span style="color:#ff7b72;font-weight:bold">=</span> (left<span style="color:#ff7b72;font-weight:bold">+</span>right)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span><span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>(nums[(left<span style="color:#ff7b72;font-weight:bold">+</span>right)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">&gt;</span> target){
+</span></span><span style="display:flex;"><span>                right <span style="color:#ff7b72;font-weight:bold">=</span> (left<span style="color:#ff7b72;font-weight:bold">+</span>right)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span><span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">return</span> (left<span style="color:#ff7b72;font-weight:bold">+</span>right)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(left<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size() <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> nums[left] <span style="color:#ff7b72;font-weight:bold">==</span> target){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> left;
+</span></span><span style="display:flex;"><span>        }<span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>(right<span style="color:#ff7b72;font-weight:bold">&gt;=</span><span style="color:#a5d6ff">0</span> <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> nums[right]<span style="color:#ff7b72;font-weight:bold">==</span>target){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> right;
+</span></span><span style="display:flex;"><span>        }<span style="color:#ff7b72">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h3 id="35-搜索插入位置">
+  35 搜索插入位置
+  <a class="heading-link" href="#35-%e6%90%9c%e7%b4%a2%e6%8f%92%e5%85%a5%e4%bd%8d%e7%bd%ae">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>简单题，基本和二分查找是一样的</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">searchInsert</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;=</span><span class="n">right</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">mid</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">left</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">nums</span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">12</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">searchInsert</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="34-在排序数组中查找元素的第一个和最后一个位置">34 在排序数组中查找元素的第一个和最后一个位置</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> searchInsert(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums, <span style="color:#ff7b72">int</span> target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> left<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>, right<span style="color:#ff7b72;font-weight:bold">=</span>nums.size()<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">while</span>(left<span style="color:#ff7b72;font-weight:bold">&lt;=</span>right){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> mid <span style="color:#ff7b72;font-weight:bold">=</span> (left<span style="color:#ff7b72;font-weight:bold">+</span>right)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(nums[mid] <span style="color:#ff7b72;font-weight:bold">&lt;</span> target){
+</span></span><span style="display:flex;"><span>                left <span style="color:#ff7b72;font-weight:bold">=</span> mid<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>(nums[mid] <span style="color:#ff7b72;font-weight:bold">&gt;</span> target){
+</span></span><span style="display:flex;"><span>                right <span style="color:#ff7b72;font-weight:bold">=</span> mid<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">return</span> mid;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> left;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>){
+</span></span><span style="display:flex;"><span>    Solution s;
+</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> nums{<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>,<span style="color:#a5d6ff">0</span>,<span style="color:#a5d6ff">3</span>,<span style="color:#a5d6ff">5</span>,<span style="color:#a5d6ff">9</span>,<span style="color:#a5d6ff">12</span>};
+</span></span><span style="display:flex;"><span>    cout<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>s.searchInsert(nums,<span style="color:#a5d6ff">8</span>)<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="34-在排序数组中查找元素的第一个和最后一个位置">
+  34 在排序数组中查找元素的第一个和最后一个位置
+  <a class="heading-link" href="#34-%e5%9c%a8%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84%e4%b8%ad%e6%9f%a5%e6%89%be%e5%85%83%e7%b4%a0%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%92%8c%e6%9c%80%e5%90%8e%e4%b8%80%e4%b8%aa%e4%bd%8d%e7%bd%ae">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>中等难度，感觉有点麻烦。肯定是使用二分法，但是由于目标不唯一，需要对经典的二分法进行一定的修改。
 这里只写了最简单的改进版本，但如果是用很多的相同数据该算法会迅速退化。
 对于这种情况，目前我只想出可以找前一个和后一个数对其进行二分查找，从而获取两端的方法。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">searchRange</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// 最简单的实现：二分找到后进行扩大搜索
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">bool</span> <span class="n">isFound</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;=</span><span class="n">right</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">right</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">isFound</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">index</span> <span class="o">=</span> <span class="n">mid</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">isFound</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">l</span><span class="o">=</span><span class="n">index</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="n">index</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span><span class="p">(</span><span class="n">l</span><span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">)</span> <span class="n">l</span><span class="o">--</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span><span class="p">(</span><span class="n">r</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">nums</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">)</span> <span class="n">r</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">r</span><span class="o">-</span><span class="mi">1</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">nums</span><span class="p">{};</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">searchRange</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="s">&#34; &#34;</span><span class="o">&lt;&lt;</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>分别二分查找两个边界的方法,<a href="https://programmercarl.com/0034.%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE.html" target="_blank" rel="noopener noreffer ">source</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">searchRange</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">leftBorder</span> <span class="o">=</span> <span class="n">getLeftBorder</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">rightBorder</span> <span class="o">=</span> <span class="n">getRightBorder</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// 情况一
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">leftBorder</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span> <span class="o">||</span> <span class="n">rightBorder</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="k">return</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// 情况三
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">rightBorder</span> <span class="o">-</span> <span class="n">leftBorder</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="p">{</span><span class="n">leftBorder</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rightBorder</span> <span class="o">-</span> <span class="mi">1</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// 情况二
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">     <span class="kt">int</span> <span class="n">getRightBorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">rightBorder</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="c1">// 记录一下rightBorder没有被赋值的情况
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">middle</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">((</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// 寻找右边界，nums[middle] == target的时候更新left
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">left</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">rightBorder</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">rightBorder</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">getLeftBorder</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">leftBorder</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">;</span> <span class="c1">// 记录一下leftBorder没有被赋值的情况
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">middle</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">((</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 寻找左边界，nums[middle] == target的时候更新right
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">right</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">leftBorder</span> <span class="o">=</span> <span class="n">right</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">=</span> <span class="n">middle</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">leftBorder</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h2 id="移除元素">移除元素</h2>
-<h3 id="27-移除元素">27 移除元素</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> searchRange(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums, <span style="color:#ff7b72">int</span> target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> left<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>,right<span style="color:#ff7b72;font-weight:bold">=</span>nums.size()<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 最简单的实现：二分找到后进行扩大搜索
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">bool</span> isFound <span style="color:#ff7b72;font-weight:bold">=</span> false;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> index <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">while</span>(left<span style="color:#ff7b72;font-weight:bold">&lt;=</span>right){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> mid <span style="color:#ff7b72;font-weight:bold">=</span> (left<span style="color:#ff7b72;font-weight:bold">+</span>right)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(nums[mid] <span style="color:#ff7b72;font-weight:bold">&lt;</span> target){
+</span></span><span style="display:flex;"><span>                left <span style="color:#ff7b72;font-weight:bold">=</span> mid<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>(nums[mid] <span style="color:#ff7b72;font-weight:bold">&gt;</span> target){
+</span></span><span style="display:flex;"><span>                right <span style="color:#ff7b72;font-weight:bold">=</span> mid<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>                isFound <span style="color:#ff7b72;font-weight:bold">=</span> true;
+</span></span><span style="display:flex;"><span>                index <span style="color:#ff7b72;font-weight:bold">=</span> mid;
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">break</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(<span style="color:#ff7b72;font-weight:bold">!</span>isFound){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>,<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>};
+</span></span><span style="display:flex;"><span>        }<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> l<span style="color:#ff7b72;font-weight:bold">=</span>index,r<span style="color:#ff7b72;font-weight:bold">=</span>index;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">while</span>(l<span style="color:#ff7b72;font-weight:bold">&gt;=</span><span style="color:#a5d6ff">0</span> <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> nums[l] <span style="color:#ff7b72;font-weight:bold">==</span> target) l<span style="color:#ff7b72;font-weight:bold">--</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">while</span>(r<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size() <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> nums[r] <span style="color:#ff7b72;font-weight:bold">==</span> target) r<span style="color:#ff7b72;font-weight:bold">++</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{l<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>,r<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>};
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>){
+</span></span><span style="display:flex;"><span>    Solution s;
+</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> nums{};
+</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> result(s.searchRange(nums,<span style="color:#a5d6ff">0</span>));
+</span></span><span style="display:flex;"><span>    cout<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>result[<span style="color:#a5d6ff">0</span>]<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span><span style="color:#a5d6ff">&#34; &#34;</span><span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>result[<span style="color:#a5d6ff">1</span>]<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>分别二分查找两个边界的方法,<a href="https://programmercarl.com/0034.%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%92%8C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE.html"  class="external-link" target="_blank" rel="noopener">source</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> searchRange(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums, <span style="color:#ff7b72">int</span> target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> leftBorder <span style="color:#ff7b72;font-weight:bold">=</span> getLeftBorder(nums, target);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> rightBorder <span style="color:#ff7b72;font-weight:bold">=</span> getRightBorder(nums, target);
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 情况一
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">if</span> (leftBorder <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">||</span> rightBorder <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">2</span>) <span style="color:#ff7b72">return</span> {<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>, <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>};
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 情况三
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">if</span> (rightBorder <span style="color:#ff7b72;font-weight:bold">-</span> leftBorder <span style="color:#ff7b72;font-weight:bold">&gt;</span> <span style="color:#a5d6ff">1</span>) <span style="color:#ff7b72">return</span> {leftBorder <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, rightBorder <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>};
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 情况二
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">return</span> {<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>, <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>};
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">private</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#ff7b72">int</span> getRightBorder(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums, <span style="color:#ff7b72">int</span> target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> left <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> right <span style="color:#ff7b72;font-weight:bold">=</span> nums.size() <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> rightBorder <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">2</span>; <span style="color:#8b949e;font-style:italic">// 记录一下rightBorder没有被赋值的情况
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">while</span> (left <span style="color:#ff7b72;font-weight:bold">&lt;=</span> right) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> middle <span style="color:#ff7b72;font-weight:bold">=</span> left <span style="color:#ff7b72;font-weight:bold">+</span> ((right <span style="color:#ff7b72;font-weight:bold">-</span> left) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span> (nums[middle] <span style="color:#ff7b72;font-weight:bold">&gt;</span> target) {
+</span></span><span style="display:flex;"><span>                right <span style="color:#ff7b72;font-weight:bold">=</span> middle <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff7b72">else</span> { <span style="color:#8b949e;font-style:italic">// 寻找右边界，nums[middle] == target的时候更新left
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                left <span style="color:#ff7b72;font-weight:bold">=</span> middle <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>                rightBorder <span style="color:#ff7b72;font-weight:bold">=</span> left;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> rightBorder;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">getLeftBorder</span>(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums, <span style="color:#ff7b72">int</span> target) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> left <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> right <span style="color:#ff7b72;font-weight:bold">=</span> nums.size() <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> leftBorder <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">2</span>; <span style="color:#8b949e;font-style:italic">// 记录一下leftBorder没有被赋值的情况
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">while</span> (left <span style="color:#ff7b72;font-weight:bold">&lt;=</span> right) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> middle <span style="color:#ff7b72;font-weight:bold">=</span> left <span style="color:#ff7b72;font-weight:bold">+</span> ((right <span style="color:#ff7b72;font-weight:bold">-</span> left) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span> (nums[middle] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> target) { <span style="color:#8b949e;font-style:italic">// 寻找左边界，nums[middle] == target的时候更新right
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                right <span style="color:#ff7b72;font-weight:bold">=</span> middle <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>                leftBorder <span style="color:#ff7b72;font-weight:bold">=</span> right;
+</span></span><span style="display:flex;"><span>            } <span style="color:#ff7b72">else</span> {
+</span></span><span style="display:flex;"><span>                left <span style="color:#ff7b72;font-weight:bold">=</span> middle <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> leftBorder;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h2 id="移除元素">
+  移除元素
+  <a class="heading-link" href="#%e7%a7%bb%e9%99%a4%e5%85%83%e7%b4%a0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h3 id="27-移除元素">
+  27 移除元素
+  <a class="heading-link" href="#27-%e7%a7%bb%e9%99%a4%e5%85%83%e7%b4%a0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>要求原地移除数组中的指定元素。一个很自然的想法就是双指针。</p>
 <p>具体来说，可以假定现在有两个数组，一个旧的原始数组old，一个新的去除元素的数组new。
 一个很自然的想法是将old中的数据一个个拷贝到new上，如果中间有需要删除的目标数据就跳过。又因为这个步骤是顺序的，所以其实并不需要新数组new，可以直接在旧数组上完成。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">removeElement</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">np</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">op</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(;</span><span class="n">op</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">op</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">op</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="k">continue</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">np</span><span class="o">!=</span><span class="n">op</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">nums</span><span class="p">[</span><span class="n">np</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">op</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">                <span class="n">np</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">np</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h3 id="283-移动零">283 移动零</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">moveZeroes</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">np</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">op</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(;</span><span class="n">op</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">op</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">op</span><span class="p">]</span> <span class="o">==</span> <span class="n">val</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="k">continue</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">np</span><span class="o">!=</span><span class="n">op</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">nums</span><span class="p">[</span><span class="n">np</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">op</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">                <span class="n">np</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(;</span><span class="n">np</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">np</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">nums</span><span class="p">[</span><span class="n">np</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h2 id="长度最小的子数组">长度最小的子数组</h2>
-<h3 id="209-长度最小的子数组">209 长度最小的子数组</h3>
-<p><a href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/" target="_blank" rel="noopener noreffer ">原题</a>，给定一个target，要求计算原数组中长度最小的连续子数组，使得子数组中元素之和大于target。
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> removeElement(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums, <span style="color:#ff7b72">int</span> val) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> np <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>, op <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(;op<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size();op<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(nums[op] <span style="color:#ff7b72;font-weight:bold">==</span> val){
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">continue</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">if</span>(np<span style="color:#ff7b72;font-weight:bold">!=</span>op)
+</span></span><span style="display:flex;"><span>                    nums[np] <span style="color:#ff7b72;font-weight:bold">=</span> nums[op];
+</span></span><span style="display:flex;"><span>                np<span style="color:#ff7b72;font-weight:bold">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> np;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h3 id="283-移动零">
+  283 移动零
+  <a class="heading-link" href="#283-%e7%a7%bb%e5%8a%a8%e9%9b%b6">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">void</span> moveZeroes(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> val <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> np <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>, op <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(;op<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size();op<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(nums[op] <span style="color:#ff7b72;font-weight:bold">==</span> val){
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">continue</span>;
+</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">if</span>(np<span style="color:#ff7b72;font-weight:bold">!=</span>op)
+</span></span><span style="display:flex;"><span>                    nums[np] <span style="color:#ff7b72;font-weight:bold">=</span> nums[op];
+</span></span><span style="display:flex;"><span>                np<span style="color:#ff7b72;font-weight:bold">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(;np<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size();np<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            nums[np] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h2 id="长度最小的子数组">
+  长度最小的子数组
+  <a class="heading-link" href="#%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h3 id="209-长度最小的子数组">
+  209 长度最小的子数组
+  <a class="heading-link" href="#209-%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<p><a href="https://leetcode-cn.com/problems/minimum-size-subarray-sum/"  class="external-link" target="_blank" rel="noopener">原题</a>，给定一个target，要求计算原数组中长度最小的连续子数组，使得子数组中元素之和大于target。
 尽管是中等题，但难度还是不小。</p>
 <p>一个比较初步的想法是双重循环比较，这个一定是能够算出来，但是时间复杂度为O(n^2)，应该是过不了的（但可以检验答案）。</p>
 <p>另外一个想法是用树的想法，自顶向下构建一个二叉树（原节点为二叉树的叶子），然后向上计算和。如果说某个节点的和大于target，那在这个节点下将可能存在大于target的子数组。这个想法的问题是真正的连续子数组可能刚好横跨了两个二叉树的区域，计算起来会比较困难。
 稍微改进一点的想法是采用模拟构造的方法，即第一层为全部的子节点，第二层为全部的连续两个节点，以此类推……这样子确实能够解决跨界问题，但是其时间复杂度可能会退化为n^2级别。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">minSubArrayLen</span><span class="p">(</span><span class="kt">int</span> <span class="n">target</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">(</span><span class="n">nums</span><span class="p">);</span> <span class="c1">// arr[i]表示从i开始的累计和
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span> <span class="c1">// 代表子数组长度为i时
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">&gt;=</span><span class="n">target</span><span class="p">){</span> <span class="c1">// 如果大于target
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">                <span class="c1">// 更新j
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()){</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> minSubArrayLen(<span style="color:#ff7b72">int</span> target, vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums) {
+</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> arr(nums); <span style="color:#8b949e;font-style:italic">// arr[i]表示从i开始的累计和
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">1</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;=</span>nums.size();i<span style="color:#ff7b72;font-weight:bold">++</span>){ <span style="color:#8b949e;font-style:italic">// 代表子数组长度为i时
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>            <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> j<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;j<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size()<span style="color:#ff7b72;font-weight:bold">-</span>i<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;j<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">if</span>(arr[j]<span style="color:#ff7b72;font-weight:bold">&gt;=</span>target){ <span style="color:#8b949e;font-style:italic">// 如果大于target
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    <span style="color:#ff7b72">return</span> i;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#8b949e;font-style:italic">// 更新j
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                <span style="color:#ff7b72">if</span>(j<span style="color:#ff7b72;font-weight:bold">+</span>i<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size()){
+</span></span><span style="display:flex;"><span>                    arr[j] <span style="color:#ff7b72;font-weight:bold">+=</span> nums[j<span style="color:#ff7b72;font-weight:bold">+</span>i];
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
 </span></span></code></pre></div><p>虽然通过了，但是仅超过了5.07%，速度比较慢。</p>
-<p><a href="https://programmercarl.com/0209.%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.html#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3" target="_blank" rel="noopener noreffer ">题解</a>提到使用滑动窗口方法。具体来说，先使用滑动窗口探索到一个可行解，再不断优化这个可行解。</p>
+<p><a href="https://programmercarl.com/0209.%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.html#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"  class="external-link" target="_blank" rel="noopener">题解</a>提到使用滑动窗口方法。具体来说，先使用滑动窗口探索到一个可行解，再不断优化这个可行解。</p>
 <p>探索可行解的方法为设置一个滑动窗口，一直扩大直到达到target（或者超过数组长度后发现不可能）。
 扩展可行解的方法为每次向右扩展，然后尝试向左收缩。</p>
 <p>显而易见，滑动窗口方法的复杂度是O(n)的，在最不利的情况下，左区间指针和右区间指针也只是遍历了两遍数组而没有其他的操作。
 我自己写了一个滑动窗口版的代码，感觉比题解的版本要累赘很多。
 滑动窗口法的精髓在于两个指针是如何运动的，如何描述两个指针运动之间的切换。我这个版本明显就没有描述好，第一个部分其实是多余的。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">minSubArrayLen</span><span class="p">(</span><span class="kt">int</span> <span class="n">target</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// 使用闭区间
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">int</span> <span class="n">cur_val</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">min_len</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// 获得第一个滑动窗口
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="n">right</span><span class="o">=</span><span class="n">right</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">right</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">right</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">cur_val</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">cur_val</span><span class="o">&gt;=</span><span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">cur_val</span><span class="o">&lt;</span><span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">min_len</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">right</span><span class="o">+</span><span class="mi">1</span><span class="o">&gt;=</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">cur_val</span> <span class="o">-</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cur_val</span> <span class="o">-=</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">                <span class="n">left</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">min_len</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">min_len</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 尝试扩展，首先扩展一位
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span><span class="p">(</span><span class="n">right</span><span class="o">=</span><span class="n">right</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">right</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">right</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="n">cur_val</span> <span class="o">+=</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">cur_val</span> <span class="o">-</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cur_val</span> <span class="o">-=</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">                <span class="n">left</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="n">min_len</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">min_len</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">min_len</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h3 id="904-水果成篮">904 水果成篮</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> minSubArrayLen(<span style="color:#ff7b72">int</span> target, vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> nums) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(nums.size() <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">0</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> left <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>, right <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>; <span style="color:#8b949e;font-style:italic">// 使用闭区间
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">int</span> cur_val <span style="color:#ff7b72;font-weight:bold">=</span> nums[<span style="color:#a5d6ff">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> min_len <span style="color:#ff7b72;font-weight:bold">=</span> nums.size();
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 获得第一个滑动窗口
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">if</span>(nums[<span style="color:#a5d6ff">0</span>] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> target){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(right<span style="color:#ff7b72;font-weight:bold">=</span>right<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;right<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size();right<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            cur_val <span style="color:#ff7b72;font-weight:bold">+=</span> nums[right];
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(cur_val<span style="color:#ff7b72;font-weight:bold">&gt;=</span>target){
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">break</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(cur_val<span style="color:#ff7b72;font-weight:bold">&lt;</span>target){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        min_len <span style="color:#ff7b72;font-weight:bold">=</span> right<span style="color:#ff7b72;font-weight:bold">-</span>left<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(right<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span><span style="color:#ff7b72;font-weight:bold">&gt;=</span>nums.size()){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">while</span>(left<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size() <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> cur_val <span style="color:#ff7b72;font-weight:bold">-</span> nums[left] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> target){
+</span></span><span style="display:flex;"><span>                cur_val <span style="color:#ff7b72;font-weight:bold">-=</span> nums[left];
+</span></span><span style="display:flex;"><span>                left<span style="color:#ff7b72;font-weight:bold">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(right<span style="color:#ff7b72;font-weight:bold">-</span>left<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span> <span style="color:#ff7b72;font-weight:bold">&lt;</span> min_len){
+</span></span><span style="display:flex;"><span>                min_len <span style="color:#ff7b72;font-weight:bold">=</span> right<span style="color:#ff7b72;font-weight:bold">-</span>left<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> min_len;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// 尝试扩展，首先扩展一位
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">for</span>(right<span style="color:#ff7b72;font-weight:bold">=</span>right<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;right<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size();right<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            cur_val <span style="color:#ff7b72;font-weight:bold">+=</span> nums[right];
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">while</span>(left<span style="color:#ff7b72;font-weight:bold">&lt;</span>nums.size() <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> cur_val <span style="color:#ff7b72;font-weight:bold">-</span> nums[left] <span style="color:#ff7b72;font-weight:bold">&gt;=</span> target){
+</span></span><span style="display:flex;"><span>                cur_val <span style="color:#ff7b72;font-weight:bold">-=</span> nums[left];
+</span></span><span style="display:flex;"><span>                left<span style="color:#ff7b72;font-weight:bold">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(right<span style="color:#ff7b72;font-weight:bold">-</span>left<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span> <span style="color:#ff7b72;font-weight:bold">&lt;</span> min_len){
+</span></span><span style="display:flex;"><span>                min_len <span style="color:#ff7b72;font-weight:bold">=</span> right<span style="color:#ff7b72;font-weight:bold">-</span>left<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> min_len;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h3 id="904-水果成篮">
+  904 水果成篮
+  <a class="heading-link" href="#904-%e6%b0%b4%e6%9e%9c%e6%88%90%e7%af%ae">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>这个难度明显要高了一截，但思路总体都是相同的。题目的概要意思就是求一个连续子数组使得其和最大，但是这个连续子数组有一个要求，即其中只能包含两种类型的数字。
 显而易见，也可以使用滑动窗口法过一遍。唯一的问题在于左区间的指针更新逻辑会有些不一样，因为涉及到只有两个不同元素这个限制，因此更新的时候采用从右区间出发的方法。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">totalFruit</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">fruits</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">right</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">cur</span><span class="p">;</span> <span class="c1">// 当前已有的水果种类
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">int</span> <span class="n">max_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(;</span><span class="n">right</span><span class="o">&lt;</span><span class="n">fruits</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">right</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">fruits</span><span class="p">[</span><span class="n">right</span><span class="p">])</span> <span class="o">==</span> <span class="n">cur</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span> <span class="c1">// 假如没有找到
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span><span class="p">(</span><span class="n">cur</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">){</span> <span class="c1">// 如果此时已经满了，则需要从right移动探测新的left
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="kt">int</span> <span class="n">rest_ele</span> <span class="o">=</span> <span class="n">fruits</span><span class="p">[</span><span class="n">right</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">left</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                    <span class="k">while</span><span class="p">(</span><span class="n">left</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">&amp;&amp;</span><span class="n">fruits</span><span class="p">[</span><span class="n">left</span><span class="p">]</span><span class="o">==</span><span class="n">rest_ele</span><span class="p">)</span> <span class="n">left</span><span class="o">--</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">cur</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">fruits</span><span class="p">[</span><span class="n">left</span><span class="p">]);</span> <span class="c1">// delete old
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="n">cur</span><span class="p">[</span><span class="n">fruits</span><span class="p">[</span><span class="n">right</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">// and replace to new
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="n">left</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span><span class="k">else</span><span class="p">{</span><span class="c1">// 反之，则只需要将该元素加入
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="n">cur</span><span class="p">[</span><span class="n">fruits</span><span class="p">[</span><span class="n">right</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 反之，如果已经找到该元素，则直接继续搜索即可
-</span></span></span><span class="line"><span class="cl"><span class="c1">//            cout&lt;&lt;left&lt;&lt;&#34; &#34;&lt;&lt;right&lt;&lt;endl;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span><span class="p">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="o">&gt;</span><span class="n">max_len</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">max_len</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">max_len</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">nums</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">totalFruit</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-04-08</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" data-title="Leetcode数组专题" data-hashtags="分类/知识库/计算机/算法/算法题解,分类/知识库/计算机/算法/专题,分类/知识库/计算机/算法/数组"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" data-hashtag="分类/知识库/计算机/算法/算法题解"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" data-title="Leetcode数组专题" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" data-title="Leetcode数组专题"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" data-title="Leetcode数组专题"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" data-title="Leetcode数组专题" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/" data-title="Leetcode数组专题"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;map&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> totalFruit(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&amp;</span> fruits) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> left<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>,right<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        map<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span>,<span style="color:#ff7b72">bool</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> cur; <span style="color:#8b949e;font-style:italic">// 当前已有的水果种类
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">int</span> max_len <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(;right<span style="color:#ff7b72;font-weight:bold">&lt;</span>fruits.size();right<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(cur.find(fruits[right]) <span style="color:#ff7b72;font-weight:bold">==</span> cur.end()){ <span style="color:#8b949e;font-style:italic">// 假如没有找到
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                <span style="color:#ff7b72">if</span>(cur.size()<span style="color:#ff7b72;font-weight:bold">&gt;=</span><span style="color:#a5d6ff">2</span>){ <span style="color:#8b949e;font-style:italic">// 如果此时已经满了，则需要从right移动探测新的left
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    <span style="color:#ff7b72">int</span> rest_ele <span style="color:#ff7b72;font-weight:bold">=</span> fruits[right<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>];
+</span></span><span style="display:flex;"><span>                    left <span style="color:#ff7b72;font-weight:bold">=</span> right<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">while</span>(left<span style="color:#ff7b72;font-weight:bold">&gt;=</span><span style="color:#a5d6ff">0</span><span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span>fruits[left]<span style="color:#ff7b72;font-weight:bold">==</span>rest_ele) left<span style="color:#ff7b72;font-weight:bold">--</span>;
+</span></span><span style="display:flex;"><span>                    cur.erase(fruits[left]); <span style="color:#8b949e;font-style:italic">// delete old
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    cur[fruits[right]] <span style="color:#ff7b72;font-weight:bold">=</span> true; <span style="color:#8b949e;font-style:italic">// and replace to new
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    left <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>                }<span style="color:#ff7b72">else</span>{<span style="color:#8b949e;font-style:italic">// 反之，则只需要将该元素加入
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    cur[fruits[right]] <span style="color:#ff7b72;font-weight:bold">=</span> true;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#8b949e;font-style:italic">// 反之，如果已经找到该元素，则直接继续搜索即可
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//            cout&lt;&lt;left&lt;&lt;&#34; &#34;&lt;&lt;right&lt;&lt;endl;
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>            <span style="color:#ff7b72">if</span>(right<span style="color:#ff7b72;font-weight:bold">-</span>left<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>max_len){
+</span></span><span style="display:flex;"><span>                max_len <span style="color:#ff7b72;font-weight:bold">=</span> right<span style="color:#ff7b72;font-weight:bold">-</span>left<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> max_len;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>){
+</span></span><span style="display:flex;"><span>    Solution s;
+</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> nums{<span style="color:#a5d6ff">0</span>,<span style="color:#a5d6ff">1</span>,<span style="color:#a5d6ff">1</span>,<span style="color:#a5d6ff">4</span>,<span style="color:#a5d6ff">3</span>};
+</span></span><span style="display:flex;"><span>    cout<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>s.totalFruit(nums)<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">分类/知识库/计算机/算法/算法题解</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%B8%93%E9%A2%98/">分类/知识库/计算机/算法/专题</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%95%B0%E7%BB%84/">分类/知识库/计算机/算法/数组</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20220408_leetcode_4/" class="prev" rel="prev" title="Leetcode 4: 寻找两个正序数组的中位数"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Leetcode 4: 寻找两个正序数组的中位数</a>
-            <a href="/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/" class="next" rel="next" title="Leetcode 780: 到达终点">Leetcode 780: 到达终点<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

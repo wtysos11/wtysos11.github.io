@@ -1,135 +1,193 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Vegeta压测工具学习与使用 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="Vegeta压测工具学习与使用" />
+<html lang="zh">
+
+<head>
+  <title>
+  Vegeta压测工具学习与使用 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Vegeta压测工具学习与使用"/>
+<meta name="twitter:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能"/>
+
+<meta property="og:title" content="Vegeta压测工具学习与使用" />
 <meta property="og:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-06-24T17:27:23+08:00" />
-<meta property="article:modified_time" content="2022-06-24T17:27:23+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2022-06-24T17:27:23+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Vegeta压测工具学习与使用"/>
-<meta name="twitter:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" /><link rel="next" href="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Vegeta压测工具学习与使用",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/go, 分类\/学习\/学习笔记, 分类\/知识库\/计算机\/软件工程\/软件测试\/压力测试","wordcount":  4494 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5\/","datePublished": "2022-06-24T17:27:23+08:00","dateModified": "2022-06-24T17:27:23+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Vegeta压测工具学习与使用</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>开源代码学习笔记</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-06-24">2022-06-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 4494 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#安装">安装</a></li>
-    <li><a href="#简易使用">简易使用</a></li>
-    <li><a href="#从golang程序中启动vegeta">从golang程序中启动Vegeta</a>
-      <ul>
-        <li><a href="#attack分析">Attack分析</a></li>
-        <li><a href="#读取文件设计动态访问">读取文件设计动态访问</a></li>
-        <li><a href="#新的demo">新的demo</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-    <li><a href="#服务端代码与之前一致">服务端代码与之前一致</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="vegeta压测工具学习与使用">Vegeta压测工具学习与使用</h1>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/">
+              Vegeta压测工具学习与使用
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-06-24T17:27:23&#43;08:00">
+                六月 24, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">开源代码学习笔记</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">计算机/go</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">内容/学习笔记</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/">计算机/软件工程/软件测试/压力测试</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h1 id="vegeta压测工具学习与使用">
+  Vegeta压测工具学习与使用
+  <a class="heading-link" href="#vegeta%e5%8e%8b%e6%b5%8b%e5%b7%a5%e5%85%b7%e5%ad%a6%e4%b9%a0%e4%b8%8e%e4%bd%bf%e7%94%a8">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
 <blockquote>
 <p>目标：</p>
 <ol>
@@ -141,500 +199,547 @@
 </blockquote>
 <p>参考资料：</p>
 <ul>
-<li><a href="https://github.com/tsenart/vegeta" target="_blank" rel="noopener noreffer ">source-tsenart/vegeta</a></li>
-<li><a href="https://www.hi-linux.com/posts/4650.html" target="_blank" rel="noopener noreffer ">中文介绍</a></li>
+<li><a href="https://github.com/tsenart/vegeta"  class="external-link" target="_blank" rel="noopener">source-tsenart/vegeta</a></li>
+<li><a href="https://www.hi-linux.com/posts/4650.html"  class="external-link" target="_blank" rel="noopener">中文介绍</a></li>
 </ul>
-<h2 id="安装">安装</h2>
+<h2 id="安装">
+  安装
+  <a class="heading-link" href="#%e5%ae%89%e8%a3%85">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>在确定GOBIN在PATH内时，直接使用<code>go get -u github.com/tsenart/vegeta </code>即可完成安装。</p>
-<h2 id="简易使用">简易使用</h2>
+<h2 id="简易使用">
+  简易使用
+  <a class="heading-link" href="#%e7%ae%80%e6%98%93%e4%bd%bf%e7%94%a8">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>在iris服务器中开启一个简单的router</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;/test/{name}&#34;</span><span class="p">,</span><span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">iris</span><span class="p">.</span><span class="nx">Context</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">name</span> <span class="o">:=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">Params</span><span class="p">().</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;/test/{name}&#34;</span>,<span style="color:#ff7b72">func</span>(ctx iris.Context){
+</span></span><span style="display:flex;"><span>		name <span style="color:#ff7b72;font-weight:bold">:=</span> ctx.<span style="color:#d2a8ff;font-weight:bold">Params</span>().<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;name&#34;</span>)
+</span></span><span style="display:flex;"><span>		log.<span style="color:#d2a8ff;font-weight:bold">Println</span>(name)
+</span></span><span style="display:flex;"><span>	})
 </span></span></code></pre></div><p>声明一个简单的txt（必须带上HTTP）</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">GET http://localhost:8080/test/name1
-</span></span><span class="line"><span class="cl">GET http://localhost:8080/test/name2
-</span></span><span class="line"><span class="cl">GET http://localhost:8080/test/name3
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>GET http://localhost:8080/test/name1
+</span></span><span style="display:flex;"><span>GET http://localhost:8080/test/name2
+</span></span><span style="display:flex;"><span>GET http://localhost:8080/test/name3
 </span></span></code></pre></div><p>执行命令<code>vegeta attack -targets ./test.txt -duration=30s -rate=10000 &gt; result.bin</code>，即可开启服务，进行测试。（PS：不知道为什么<code>-rate=0</code>不支持，会报错误要求一个大于0的数）</p>
 <p>执行<code>vegeta report result.bin</code>即可拿到执行报告</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">Requests      [total, rate]            300000, 9985.22
-</span></span><span class="line"><span class="cl">Duration      [total, attack, wait]    31.3856523s, 30.044419s, 1.3412333s
-</span></span><span class="line"><span class="cl">Latencies     [mean, 50, 95, 99, max]  1.367112453s, 4.50456ms, 4.511788108s, 6.305999861s, 7.6157462s
-</span></span><span class="line"><span class="cl">Bytes In      [total, mean]            0, 0.00
-</span></span><span class="line"><span class="cl">Bytes Out     [total, mean]            0, 0.00
-</span></span><span class="line"><span class="cl">Success       [ratio]                  48.38%
-</span></span><span class="line"><span class="cl">Status Codes  [code:count]             200:145132  0:154868
-</span></span><span class="line"><span class="cl">Error Set:
-</span></span><span class="line"><span class="cl">Get http://localhost:8080/test/name3: dial tcp 0.0.0.0:0-&gt;[::1]:8080: bind: An operation on a socket could not be performed because the system lacked su
-</span></span><span class="line"><span class="cl">fficient buffer space or because a queue was full.
-</span></span><span class="line"><span class="cl">Get http://localhost:8080/test/name1: dial tcp 0.0.0.0:0-&gt;[::1]:8080: bind: An operation on a socket could not be performed because the system lacked su
-</span></span><span class="line"><span class="cl">fficient buffer space or because a queue was full.
-</span></span><span class="line"><span class="cl">Get http://localhost:8080/test/name2: dial tcp 0.0.0.0:0-&gt;[::1]:8080: bind: An operation on a socket could not be performed because the system lacked su
-</span></span><span class="line"><span class="cl">fficient buffer space or because a queue was full.
-</span></span><span class="line"><span class="cl">Get http://localhost:8080/test/name1: dial tcp 0.0.0.0:0-&gt;[::1]:8080: connectex: Only one usage of each socket address (protocol/network address/port) i
-</span></span><span class="line"><span class="cl">s normally permitted.
-</span></span><span class="line"><span class="cl">Get http://localhost:8080/test/name2: dial tcp 0.0.0.0:0-&gt;[::1]:8080: connectex: Only one usage of each socket address (protocol/network address/port) i
-</span></span><span class="line"><span class="cl">s normally permitted.
-</span></span><span class="line"><span class="cl">Get http://localhost:8080/test/name3: dial tcp 0.0.0.0:0-&gt;[::1]:8080: connectex: Only one usage of each socket address (protocol/network address/port) i
-</span></span><span class="line"><span class="cl">s normally permitted.
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>Requests      [total, rate]            300000, 9985.22
+</span></span><span style="display:flex;"><span>Duration      [total, attack, wait]    31.3856523s, 30.044419s, 1.3412333s
+</span></span><span style="display:flex;"><span>Latencies     [mean, 50, 95, 99, max]  1.367112453s, 4.50456ms, 4.511788108s, 6.305999861s, 7.6157462s
+</span></span><span style="display:flex;"><span>Bytes In      [total, mean]            0, 0.00
+</span></span><span style="display:flex;"><span>Bytes Out     [total, mean]            0, 0.00
+</span></span><span style="display:flex;"><span>Success       [ratio]                  48.38%
+</span></span><span style="display:flex;"><span>Status Codes  [code:count]             200:145132  0:154868
+</span></span><span style="display:flex;"><span>Error Set:
+</span></span><span style="display:flex;"><span>Get http://localhost:8080/test/name3: dial tcp 0.0.0.0:0-&gt;[::1]:8080: bind: An operation on a socket could not be performed because the system lacked su
+</span></span><span style="display:flex;"><span>fficient buffer space or because a queue was full.
+</span></span><span style="display:flex;"><span>Get http://localhost:8080/test/name1: dial tcp 0.0.0.0:0-&gt;[::1]:8080: bind: An operation on a socket could not be performed because the system lacked su
+</span></span><span style="display:flex;"><span>fficient buffer space or because a queue was full.
+</span></span><span style="display:flex;"><span>Get http://localhost:8080/test/name2: dial tcp 0.0.0.0:0-&gt;[::1]:8080: bind: An operation on a socket could not be performed because the system lacked su
+</span></span><span style="display:flex;"><span>fficient buffer space or because a queue was full.
+</span></span><span style="display:flex;"><span>Get http://localhost:8080/test/name1: dial tcp 0.0.0.0:0-&gt;[::1]:8080: connectex: Only one usage of each socket address (protocol/network address/port) i
+</span></span><span style="display:flex;"><span>s normally permitted.
+</span></span><span style="display:flex;"><span>Get http://localhost:8080/test/name2: dial tcp 0.0.0.0:0-&gt;[::1]:8080: connectex: Only one usage of each socket address (protocol/network address/port) i
+</span></span><span style="display:flex;"><span>s normally permitted.
+</span></span><span style="display:flex;"><span>Get http://localhost:8080/test/name3: dial tcp 0.0.0.0:0-&gt;[::1]:8080: connectex: Only one usage of each socket address (protocol/network address/port) i
+</span></span><span style="display:flex;"><span>s normally permitted.
 </span></span></code></pre></div><p>此外还支持golang的库内部链接，例如：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;time&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">vegeta</span> <span class="s">&#34;github.com/tsenart/vegeta/v12/lib&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">rate</span> <span class="o">:=</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Rate</span><span class="p">{</span><span class="nx">Freq</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nx">Per</span><span class="p">:</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">duration</span> <span class="o">:=</span> <span class="mi">4</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">targeter</span> <span class="o">:=</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nf">NewStaticTargeter</span><span class="p">(</span><span class="nx">vegeta</span><span class="p">.</span><span class="nx">Target</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">Method</span><span class="p">:</span> <span class="s">&#34;GET&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">URL</span><span class="p">:</span>    <span class="s">&#34;http://localhost:8080/test&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//测试的实现需要基于Attacker
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">attacker</span> <span class="o">:=</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nf">NewAttacker</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">metrics</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Metrics</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">res</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">attacker</span><span class="p">.</span><span class="nf">Attack</span><span class="p">(</span><span class="nx">targeter</span><span class="p">,</span> <span class="nx">rate</span><span class="p">,</span> <span class="nx">duration</span><span class="p">,</span> <span class="s">&#34;Big Bang!&#34;</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">//res是Result向量，执行结果。拿到的时候代表一次执行已经结束
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">metrics</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">metrics</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;99th percentile: %s\n&#34;</span><span class="p">,</span> <span class="nx">metrics</span><span class="p">.</span><span class="nx">Latencies</span><span class="p">.</span><span class="nx">P99</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h2 id="从golang程序中启动vegeta">从golang程序中启动Vegeta</h2>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	vegeta <span style="color:#a5d6ff">&#34;github.com/tsenart/vegeta/v12/lib&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	rate <span style="color:#ff7b72;font-weight:bold">:=</span> vegeta.Rate{Freq: <span style="color:#a5d6ff">100</span>, Per: time.Second}
+</span></span><span style="display:flex;"><span>	duration <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">4</span> <span style="color:#ff7b72;font-weight:bold">*</span> time.Second
+</span></span><span style="display:flex;"><span>	targeter <span style="color:#ff7b72;font-weight:bold">:=</span> vegeta.<span style="color:#d2a8ff;font-weight:bold">NewStaticTargeter</span>(vegeta.Target{
+</span></span><span style="display:flex;"><span>		Method: <span style="color:#a5d6ff">&#34;GET&#34;</span>,
+</span></span><span style="display:flex;"><span>		URL:    <span style="color:#a5d6ff">&#34;http://localhost:8080/test&#34;</span>,
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//测试的实现需要基于Attacker
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	attacker <span style="color:#ff7b72;font-weight:bold">:=</span> vegeta.<span style="color:#d2a8ff;font-weight:bold">NewAttacker</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> metrics vegeta.Metrics
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> res <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72">range</span> attacker.<span style="color:#d2a8ff;font-weight:bold">Attack</span>(targeter, rate, duration, <span style="color:#a5d6ff">&#34;Big Bang!&#34;</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">//res是Result向量，执行结果。拿到的时候代表一次执行已经结束
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		metrics.<span style="color:#d2a8ff;font-weight:bold">Add</span>(res)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	metrics.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;99th percentile: %s\n&#34;</span>, metrics.Latencies.P99)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="从golang程序中启动vegeta">
+  从golang程序中启动Vegeta
+  <a class="heading-link" href="#%e4%bb%8egolang%e7%a8%8b%e5%ba%8f%e4%b8%ad%e5%90%af%e5%8a%a8vegeta">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>由于需要输入不同的元素或者控制元素的数量，一个想法是直接生成一个百万行的文件并插入，另外一个想法是直接在程序内启动。出于对更灵活的性能的追求，我还是想尝试一下后者。</p>
 <p>使用DEBUG单步调试，发现<code>attack.Attack</code></p>
-<p>根据<a href="https://github.com/tsenart/vegeta/issues/330" target="_blank" rel="noopener noreffer ">issue</a>中的回复可以看到，只要返回一个能够产生Targeter的函数即可。其中Targeter也是一个函数（类型为<code>type Targeter func(*Target) error</code>，而Target在我的理解中是即将发送的请求，原文为<code>HTTP request blueprint</code>）</p>
+<p>根据<a href="https://github.com/tsenart/vegeta/issues/330"  class="external-link" target="_blank" rel="noopener">issue</a>中的回复可以看到，只要返回一个能够产生Targeter的函数即可。其中Targeter也是一个函数（类型为<code>type Targeter func(*Target) error</code>，而Target在我的理解中是即将发送的请求，原文为<code>HTTP request blueprint</code>）</p>
 <p>而例子中的<code>atacker.Attack</code>的返回值是一个channel，相当于是<code>vegeta attack</code>命令。其中<code>attacker</code>对象由<code>NewAttacker</code>创建，可以指定一些参数（比如最大并行数量等）</p>
-<h3 id="attack分析">Attack分析</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Attack reads its Targets from the passed Targeter and attacks them at
-</span></span></span><span class="line"><span class="cl"><span class="c1">// the rate specified by the Pacer. When the duration is zero the attack
-</span></span></span><span class="line"><span class="cl"><span class="c1">// runs until Stop is called. Results are sent to the returned channel as soon
-</span></span></span><span class="line"><span class="cl"><span class="c1">// as they arrive and will have their Attack field set to the given name.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">Attacker</span><span class="p">)</span> <span class="nf">Attack</span><span class="p">(</span><span class="nx">tr</span> <span class="nx">Targeter</span><span class="p">,</span> <span class="nx">p</span> <span class="nx">Pacer</span><span class="p">,</span> <span class="nx">du</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="o">*</span><span class="nx">Result</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">//最大并发数的限制由Attacker提供
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">workers</span> <span class="o">:=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">workers</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">workers</span> <span class="p">&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">maxWorkers</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">workers</span> <span class="p">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">maxWorkers</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">//返回的结果队列
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">results</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="o">*</span><span class="nx">Result</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">ticks</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{})</span> <span class="c1">//ticks是控制速度用的，attack需要消费ticks中的数据才能继续执行
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nb">uint64</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">workers</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="c1">//wait group
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">go</span> <span class="nx">a</span><span class="p">.</span><span class="nf">attack</span><span class="p">(</span><span class="nx">tr</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">wg</span><span class="p">,</span> <span class="nx">ticks</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span><span class="c1">//使用go协程来控制。其中results被放入，在其中产生
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">//defer的实现上类似于栈，因此是先关闭ticks队列，再等待所有的a.attack函数执行完毕，最后关闭results队列
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">defer</span> <span class="nb">close</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="k">defer</span> <span class="nb">close</span><span class="p">(</span><span class="nx">ticks</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="nx">began</span><span class="p">,</span> <span class="nx">count</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">(),</span> <span class="nb">uint64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">elapsed</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Since</span><span class="p">(</span><span class="nx">began</span><span class="p">)</span><span class="c1">//拿到过去的时间
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">if</span> <span class="nx">du</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">elapsed</span> <span class="p">&gt;</span> <span class="nx">du</span> <span class="p">{</span><span class="c1">//du即为duration，如果持续时间超过则直接结束
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="k">return</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">			<span class="nx">wait</span><span class="p">,</span> <span class="nx">stop</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nf">Pace</span><span class="p">(</span><span class="nx">elapsed</span><span class="p">,</span> <span class="nx">count</span><span class="p">)</span><span class="c1">//Pacer，负责控制速度
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">if</span> <span class="nx">stop</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="c1">//如果发完了，则返回
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">			<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">wait</span><span class="p">)</span><span class="c1">//等待剩余时间
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">workers</span> <span class="p">&lt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">maxWorkers</span> <span class="p">{</span><span class="c1">//如果并发没有打满
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="k">select</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="k">case</span> <span class="nx">ticks</span> <span class="o">&lt;-</span> <span class="kd">struct</span><span class="p">{}{}:</span><span class="c1">//向ticks中传入数据。由于ticks没有缓冲，所以如果其数据没有消耗掉则不能放入
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">count</span><span class="o">++</span>
-</span></span><span class="line"><span class="cl">					<span class="k">continue</span>
-</span></span><span class="line"><span class="cl">				<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">.</span><span class="nx">stopch</span><span class="p">:</span><span class="c1">//接受到停止信号，直接中断
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="k">return</span>
-</span></span><span class="line"><span class="cl">				<span class="k">default</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">					<span class="c1">// all workers are blocked. start one more and try again
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="c1">// 动态调整并发
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">workers</span><span class="o">++</span>
-</span></span><span class="line"><span class="cl">					<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">					<span class="k">go</span> <span class="nx">a</span><span class="p">.</span><span class="nf">attack</span><span class="p">(</span><span class="nx">tr</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">wg</span><span class="p">,</span> <span class="nx">ticks</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">				<span class="p">}</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">			<span class="k">select</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nx">ticks</span> <span class="o">&lt;-</span> <span class="kd">struct</span><span class="p">{}{}:</span>
-</span></span><span class="line"><span class="cl">				<span class="nx">count</span><span class="o">++</span>
-</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">a</span><span class="p">.</span><span class="nx">stopch</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">				<span class="k">return</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">results</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<h3 id="attack分析">
+  Attack分析
+  <a class="heading-link" href="#attack%e5%88%86%e6%9e%90">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// Attack reads its Targets from the passed Targeter and attacks them at
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// the rate specified by the Pacer. When the duration is zero the attack
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// runs until Stop is called. Results are sent to the returned channel as soon
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// as they arrive and will have their Attack field set to the given name.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">func</span> (a <span style="color:#ff7b72;font-weight:bold">*</span>Attacker) <span style="color:#d2a8ff;font-weight:bold">Attack</span>(tr Targeter, p Pacer, du time.Duration, name <span style="color:#ff7b72">string</span>) <span style="color:#ff7b72;font-weight:bold">&lt;-</span><span style="color:#ff7b72">chan</span> <span style="color:#ff7b72;font-weight:bold">*</span>Result {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> wg sync.WaitGroup
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">//最大并发数的限制由Attacker提供
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	workers <span style="color:#ff7b72;font-weight:bold">:=</span> a.workers
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> workers &gt; a.maxWorkers {
+</span></span><span style="display:flex;"><span>		workers = a.maxWorkers
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">//返回的结果队列
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	results <span style="color:#ff7b72;font-weight:bold">:=</span> make(<span style="color:#ff7b72">chan</span> <span style="color:#ff7b72;font-weight:bold">*</span>Result)
+</span></span><span style="display:flex;"><span>	ticks <span style="color:#ff7b72;font-weight:bold">:=</span> make(<span style="color:#ff7b72">chan</span> <span style="color:#ff7b72">struct</span>{}) <span style="color:#8b949e;font-style:italic">//ticks是控制速度用的，attack需要消费ticks中的数据才能继续执行
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> uint64(<span style="color:#a5d6ff">0</span>); i &lt; workers; i<span style="color:#ff7b72;font-weight:bold">++</span> {
+</span></span><span style="display:flex;"><span>		wg.<span style="color:#d2a8ff;font-weight:bold">Add</span>(<span style="color:#a5d6ff">1</span>)<span style="color:#8b949e;font-style:italic">//wait group
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#ff7b72">go</span> a.<span style="color:#d2a8ff;font-weight:bold">attack</span>(tr, name, <span style="color:#ff7b72;font-weight:bold">&amp;</span>wg, ticks, results)<span style="color:#8b949e;font-style:italic">//使用go协程来控制。其中results被放入，在其中产生
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">go</span> <span style="color:#ff7b72">func</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">//defer的实现上类似于栈，因此是先关闭ticks队列，再等待所有的a.attack函数执行完毕，最后关闭results队列
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#ff7b72">defer</span> close(results)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">defer</span> wg.<span style="color:#d2a8ff;font-weight:bold">Wait</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">defer</span> close(ticks)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		began, count <span style="color:#ff7b72;font-weight:bold">:=</span> time.<span style="color:#d2a8ff;font-weight:bold">Now</span>(), uint64(<span style="color:#a5d6ff">0</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">for</span> {
+</span></span><span style="display:flex;"><span>			elapsed <span style="color:#ff7b72;font-weight:bold">:=</span> time.<span style="color:#d2a8ff;font-weight:bold">Since</span>(began)<span style="color:#8b949e;font-style:italic">//拿到过去的时间
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			<span style="color:#ff7b72">if</span> du &gt; <span style="color:#a5d6ff">0</span> <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> elapsed &gt; du {<span style="color:#8b949e;font-style:italic">//du即为duration，如果持续时间超过则直接结束
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>				<span style="color:#ff7b72">return</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			wait, stop <span style="color:#ff7b72;font-weight:bold">:=</span> p.<span style="color:#d2a8ff;font-weight:bold">Pace</span>(elapsed, count)<span style="color:#8b949e;font-style:italic">//Pacer，负责控制速度
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			<span style="color:#ff7b72">if</span> stop {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">return</span> <span style="color:#8b949e;font-style:italic">//如果发完了，则返回
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			time.<span style="color:#d2a8ff;font-weight:bold">Sleep</span>(wait)<span style="color:#8b949e;font-style:italic">//等待剩余时间
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> workers &lt; a.maxWorkers {<span style="color:#8b949e;font-style:italic">//如果并发没有打满
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>				<span style="color:#ff7b72">select</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">case</span> ticks <span style="color:#ff7b72;font-weight:bold">&lt;-</span> <span style="color:#ff7b72">struct</span>{}{}:<span style="color:#8b949e;font-style:italic">//向ticks中传入数据。由于ticks没有缓冲，所以如果其数据没有消耗掉则不能放入
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>					count<span style="color:#ff7b72;font-weight:bold">++</span>
+</span></span><span style="display:flex;"><span>					<span style="color:#ff7b72">continue</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">case</span> <span style="color:#ff7b72;font-weight:bold">&lt;-</span>a.stopch:<span style="color:#8b949e;font-style:italic">//接受到停止信号，直接中断
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>					<span style="color:#ff7b72">return</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">default</span>:
+</span></span><span style="display:flex;"><span>					<span style="color:#8b949e;font-style:italic">// all workers are blocked. start one more and try again
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    <span style="color:#8b949e;font-style:italic">// 动态调整并发
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>					workers<span style="color:#ff7b72;font-weight:bold">++</span>
+</span></span><span style="display:flex;"><span>					wg.<span style="color:#d2a8ff;font-weight:bold">Add</span>(<span style="color:#a5d6ff">1</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#ff7b72">go</span> a.<span style="color:#d2a8ff;font-weight:bold">attack</span>(tr, name, <span style="color:#ff7b72;font-weight:bold">&amp;</span>wg, ticks, results)
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">select</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">case</span> ticks <span style="color:#ff7b72;font-weight:bold">&lt;-</span> <span style="color:#ff7b72">struct</span>{}{}:
+</span></span><span style="display:flex;"><span>				count<span style="color:#ff7b72;font-weight:bold">++</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">case</span> <span style="color:#ff7b72;font-weight:bold">&lt;-</span>a.stopch:
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">return</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> results
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>attcker.attack</code></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">Attacker</span><span class="p">)</span> <span class="nf">attack</span><span class="p">(</span><span class="nx">tr</span> <span class="nx">Targeter</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">workers</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">,</span> <span class="nx">ticks</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{},</span> <span class="nx">results</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="o">*</span><span class="nx">Result</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">workers</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span><span class="c1">//完成后返回，除非ticks被关闭不然也不会执行到这里。
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="k">range</span> <span class="nx">ticks</span> <span class="p">{</span><span class="c1">//每次要消费ticks的数据才能继续进行
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">results</span> <span class="o">&lt;-</span> <span class="nx">a</span><span class="p">.</span><span class="nf">hit</span><span class="p">(</span><span class="nx">tr</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span><span class="c1">//数据写入到results channel之中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">Attacker</span><span class="p">)</span> <span class="nf">hit</span><span class="p">(</span><span class="nx">tr</span> <span class="nx">Targeter</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">Result</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">res</span> <span class="p">=</span> <span class="nx">Result</span><span class="p">{</span><span class="nx">Attack</span><span class="p">:</span> <span class="nx">name</span><span class="p">}</span> <span class="c1">//最终返回的结果
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">tgt</span> <span class="nx">Target</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">err</span> <span class="kt">error</span>
-</span></span><span class="line"><span class="cl">	<span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">a</span><span class="p">.</span><span class="nx">seqmu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span><span class="c1">//加锁，保证对临街资源a.seq的访问与写入是正确的
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">res</span><span class="p">.</span><span class="nx">Timestamp</span> <span class="p">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">began</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Since</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">began</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">res</span><span class="p">.</span><span class="nx">Seq</span> <span class="p">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">seq</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">a</span><span class="p">.</span><span class="nx">seq</span><span class="o">++</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">a</span><span class="p">.</span><span class="nx">seqmu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span><span class="c1">//解锁
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">res</span><span class="p">.</span><span class="nx">Latency</span> <span class="p">=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Since</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">Timestamp</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">res</span><span class="p">.</span><span class="nx">Error</span> <span class="p">=</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 此处的tr就是传入的targeter的终点，这也解释了这个函数是干什么的
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// 传入的tgt实际上没有任何意义，看做是返回值会更好一些
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">tr</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">tgt</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">a</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="o">&amp;</span><span class="nx">res</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">res</span><span class="p">.</span><span class="nx">Method</span> <span class="p">=</span> <span class="nx">tgt</span><span class="p">.</span><span class="nx">Method</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">res</span><span class="p">.</span><span class="nx">URL</span> <span class="p">=</span> <span class="nx">tgt</span><span class="p">.</span><span class="nx">URL</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">req</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">tgt</span><span class="p">.</span><span class="nf">Request</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="o">&amp;</span><span class="nx">res</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">name</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">req</span><span class="p">.</span><span class="nx">Header</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">&#34;X-Vegeta-Attack&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">req</span><span class="p">.</span><span class="nx">Header</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">&#34;X-Vegeta-Seq&#34;</span><span class="p">,</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">FormatUint</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">Seq</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">chunked</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">req</span><span class="p">.</span><span class="nx">TransferEncoding</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">TransferEncoding</span><span class="p">,</span> <span class="s">&#34;chunked&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">r</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="o">&amp;</span><span class="nx">res</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">body</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">Reader</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">maxBody</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">body</span> <span class="p">=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">LimitReader</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Body</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">maxBody</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">res</span><span class="p">.</span><span class="nx">Body</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="o">&amp;</span><span class="nx">res</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">Copy</span><span class="p">(</span><span class="nx">ioutil</span><span class="p">.</span><span class="nx">Discard</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Body</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="o">&amp;</span><span class="nx">res</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">res</span><span class="p">.</span><span class="nx">BytesIn</span> <span class="p">=</span> <span class="nb">uint64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">Body</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">ContentLength</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">res</span><span class="p">.</span><span class="nx">BytesOut</span> <span class="p">=</span> <span class="nb">uint64</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">ContentLength</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">res</span><span class="p">.</span><span class="nx">Code</span> <span class="p">=</span> <span class="nb">uint16</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">StatusCode</span><span class="p">);</span> <span class="nx">res</span><span class="p">.</span><span class="nx">Code</span> <span class="p">&lt;</span> <span class="mi">200</span> <span class="o">||</span> <span class="nx">res</span><span class="p">.</span><span class="nx">Code</span> <span class="o">&gt;=</span> <span class="mi">400</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">res</span><span class="p">.</span><span class="nx">Error</span> <span class="p">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Status</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">res</span><span class="p">.</span><span class="nx">Headers</span> <span class="p">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Header</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">res</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="读取文件设计动态访问">读取文件设计动态访问</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> (a <span style="color:#ff7b72;font-weight:bold">*</span>Attacker) <span style="color:#d2a8ff;font-weight:bold">attack</span>(tr Targeter, name <span style="color:#ff7b72">string</span>, workers <span style="color:#ff7b72;font-weight:bold">*</span>sync.WaitGroup, ticks <span style="color:#ff7b72;font-weight:bold">&lt;-</span><span style="color:#ff7b72">chan</span> <span style="color:#ff7b72">struct</span>{}, results <span style="color:#ff7b72">chan</span><span style="color:#ff7b72;font-weight:bold">&lt;-</span> <span style="color:#ff7b72;font-weight:bold">*</span>Result) {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">defer</span> workers.<span style="color:#d2a8ff;font-weight:bold">Done</span>()<span style="color:#8b949e;font-style:italic">//完成后返回，除非ticks被关闭不然也不会执行到这里。
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">for</span> <span style="color:#ff7b72">range</span> ticks {<span style="color:#8b949e;font-style:italic">//每次要消费ticks的数据才能继续进行
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		results <span style="color:#ff7b72;font-weight:bold">&lt;-</span> a.<span style="color:#d2a8ff;font-weight:bold">hit</span>(tr, name)<span style="color:#8b949e;font-style:italic">//数据写入到results channel之中
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> (a <span style="color:#ff7b72;font-weight:bold">*</span>Attacker) <span style="color:#d2a8ff;font-weight:bold">hit</span>(tr Targeter, name <span style="color:#ff7b72">string</span>) <span style="color:#ff7b72;font-weight:bold">*</span>Result {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> (
+</span></span><span style="display:flex;"><span>		res = Result{Attack: name} <span style="color:#8b949e;font-style:italic">//最终返回的结果
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		tgt Target
+</span></span><span style="display:flex;"><span>		err <span style="color:#ff7b72">error</span>
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	a.seqmu.<span style="color:#d2a8ff;font-weight:bold">Lock</span>()<span style="color:#8b949e;font-style:italic">//加锁，保证对临街资源a.seq的访问与写入是正确的
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	res.Timestamp = a.began.<span style="color:#d2a8ff;font-weight:bold">Add</span>(time.<span style="color:#d2a8ff;font-weight:bold">Since</span>(a.began))
+</span></span><span style="display:flex;"><span>	res.Seq = a.seq
+</span></span><span style="display:flex;"><span>	a.seq<span style="color:#ff7b72;font-weight:bold">++</span>
+</span></span><span style="display:flex;"><span>	a.seqmu.<span style="color:#d2a8ff;font-weight:bold">Unlock</span>()<span style="color:#8b949e;font-style:italic">//解锁
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">defer</span> <span style="color:#ff7b72">func</span>() {
+</span></span><span style="display:flex;"><span>		res.Latency = time.<span style="color:#d2a8ff;font-weight:bold">Since</span>(res.Timestamp)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>			res.Error = err.<span style="color:#d2a8ff;font-weight:bold">Error</span>()
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">// 此处的tr就是传入的targeter的终点，这也解释了这个函数是干什么的
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    <span style="color:#8b949e;font-style:italic">// 传入的tgt实际上没有任何意义，看做是返回值会更好一些
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">if</span> err = <span style="color:#d2a8ff;font-weight:bold">tr</span>(<span style="color:#ff7b72;font-weight:bold">&amp;</span>tgt); err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		a.<span style="color:#d2a8ff;font-weight:bold">Stop</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>res
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	res.Method = tgt.Method
+</span></span><span style="display:flex;"><span>	res.URL = tgt.URL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	req, err <span style="color:#ff7b72;font-weight:bold">:=</span> tgt.<span style="color:#d2a8ff;font-weight:bold">Request</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>res
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> name <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#a5d6ff">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		req.Header.<span style="color:#d2a8ff;font-weight:bold">Set</span>(<span style="color:#a5d6ff">&#34;X-Vegeta-Attack&#34;</span>, name)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	req.Header.<span style="color:#d2a8ff;font-weight:bold">Set</span>(<span style="color:#a5d6ff">&#34;X-Vegeta-Seq&#34;</span>, strconv.<span style="color:#d2a8ff;font-weight:bold">FormatUint</span>(res.Seq, <span style="color:#a5d6ff">10</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> a.chunked {
+</span></span><span style="display:flex;"><span>		req.TransferEncoding = append(req.TransferEncoding, <span style="color:#a5d6ff">&#34;chunked&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	r, err <span style="color:#ff7b72;font-weight:bold">:=</span> a.client.<span style="color:#d2a8ff;font-weight:bold">Do</span>(req)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>res
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">defer</span> r.Body.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	body <span style="color:#ff7b72;font-weight:bold">:=</span> io.<span style="color:#d2a8ff;font-weight:bold">Reader</span>(r.Body)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> a.maxBody <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">0</span> {
+</span></span><span style="display:flex;"><span>		body = io.<span style="color:#d2a8ff;font-weight:bold">LimitReader</span>(r.Body, a.maxBody)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> res.Body, err = ioutil.<span style="color:#d2a8ff;font-weight:bold">ReadAll</span>(body); err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>res
+</span></span><span style="display:flex;"><span>	} <span style="color:#ff7b72">else</span> <span style="color:#ff7b72">if</span> _, err = io.<span style="color:#d2a8ff;font-weight:bold">Copy</span>(ioutil.Discard, r.Body); err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>res
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	res.BytesIn = uint64(len(res.Body))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> req.ContentLength <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span> {
+</span></span><span style="display:flex;"><span>		res.BytesOut = uint64(req.ContentLength)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> res.Code = uint16(r.StatusCode); res.Code &lt; <span style="color:#a5d6ff">200</span> <span style="color:#ff7b72;font-weight:bold">||</span> res.Code <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">400</span> {
+</span></span><span style="display:flex;"><span>		res.Error = r.Status
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	res.Headers = r.Header
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>res
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="读取文件设计动态访问">
+  读取文件设计动态访问
+  <a class="heading-link" href="#%e8%af%bb%e5%8f%96%e6%96%87%e4%bb%b6%e8%ae%be%e8%ae%a1%e5%8a%a8%e6%80%81%e8%ae%bf%e9%97%ae">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>因此，动态访问的实现原理就很明确了：</p>
 <ol>
-<li>实现一个能够返回targeter的函数，并将id作为参数传入其中，如同<a href="https://github.com/tsenart/vegeta/issues/330" target="_blank" rel="noopener noreffer ">这个issue</a>所写的那样，或者这个<a href="https://github.com/hairqles/vegeta-targeter/blob/master/main.go" target="_blank" rel="noopener noreffer ">example code</a></li>
+<li>实现一个能够返回targeter的函数，并将id作为参数传入其中，如同<a href="https://github.com/tsenart/vegeta/issues/330"  class="external-link" target="_blank" rel="noopener">这个issue</a>所写的那样，或者这个<a href="https://github.com/hairqles/vegeta-targeter/blob/master/main.go"  class="external-link" target="_blank" rel="noopener">example code</a></li>
 <li>如何让其中的内容不同：
 <ol>
-<li><a href="https://github.com/hairqles/vegeta-targeter/blob/master/main.go" target="_blank" rel="noopener noreffer ">example code</a>使用了随机数。在我的需求中，我可以将所需要的文件读入其中作为数组，然后使用随机数索引访问。</li>
+<li><a href="https://github.com/hairqles/vegeta-targeter/blob/master/main.go"  class="external-link" target="_blank" rel="noopener">example code</a>使用了随机数。在我的需求中，我可以将所需要的文件读入其中作为数组，然后使用随机数索引访问。</li>
 <li>直接使用函数内变量，利用闭包的性质。考虑到targeter每次都会被调用（<code>attack.go</code>的第365行），因此计数器向上移动的时候就可以实现遍历。</li>
 </ol>
 </li>
 </ol>
 <p>下面做了一个小的demo来展示这个思想，服务端会接受一个<code>/test/nameX</code>作为接受变量，发送端会发送随机的<code>/test/XXX</code>过去。</p>
-<h4 id="服务端">服务端</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/kataras/iris/v12&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">prometheusMiddleware</span> <span class="s">&#34;github.com/iris-contrib/middleware/prometheus&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;github.com/prometheus/client_golang/prometheus/promhttp&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;math/rand&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;strconv&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;time&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span> <span class="o">:=</span> <span class="nx">iris</span><span class="p">.</span><span class="nf">Default</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="nf">registerCuckooFilter</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nf">registerPrometheus</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">Listen</span><span class="p">(</span><span class="s">&#34;:8080&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">registerCuckooFilter</span><span class="p">(</span><span class="nx">app</span> <span class="o">*</span><span class="nx">iris</span><span class="p">.</span><span class="nx">Application</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">filter</span> <span class="o">:=</span> <span class="nx">cuckooFilter</span><span class="p">.</span><span class="nx">CuckooFilter</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">test</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;/test/{name}&#34;</span><span class="p">,</span><span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">iris</span><span class="p">.</span><span class="nx">Context</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">name</span> <span class="o">:=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">Params</span><span class="p">().</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">_</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="nx">test</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span><span class="nx">ok</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">test</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">++</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">test</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="p">=</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">StatusCode</span><span class="p">(</span><span class="nx">iris</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;/get/{name}&#34;</span><span class="p">,</span><span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">iris</span><span class="p">.</span><span class="nx">Context</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">name</span> <span class="o">:=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">Params</span><span class="p">().</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">val</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="nx">test</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span><span class="nx">ok</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;key number is %v&#34;</span><span class="p">,</span><span class="nx">val</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;key doestn&#39;t exist&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">StatusCode</span><span class="p">(</span><span class="nx">iris</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//查询
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//batch操作
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//批量插入
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//批量查询
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//批量删除
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">registerPrometheus</span><span class="p">(</span><span class="nx">app</span> <span class="o">*</span><span class="nx">iris</span><span class="p">.</span><span class="nx">Application</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="nx">prometheusMiddleware</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;serviceName&#34;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">Use</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">ServeHTTP</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">OnErrorCode</span><span class="p">(</span><span class="nx">iris</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">iris</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// error code handlers are not sharing the same middleware as other routes, so we have
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// to call them inside their body.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">m</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">Writef</span><span class="p">(</span><span class="s">&#34;Not Found&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">iris</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">sleep</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">4999</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Duration</span><span class="p">(</span><span class="nx">sleep</span><span class="p">)</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">ctx</span><span class="p">.</span><span class="nf">Writef</span><span class="p">(</span><span class="s">&#34;Slept for %d milliseconds&#34;</span><span class="p">,</span> <span class="nx">sleep</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">app</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;/metrics&#34;</span><span class="p">,</span> <span class="nx">iris</span><span class="p">.</span><span class="nf">FromStd</span><span class="p">(</span><span class="nx">promhttp</span><span class="p">.</span><span class="nf">Handler</span><span class="p">()))</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="压测端">压测端</h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;bufio&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;io&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;math/rand&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;os&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;strconv&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;strings&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;time&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">vegeta</span> <span class="s">&#34;github.com/tsenart/vegeta/v12/lib&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">rate</span> <span class="o">:=</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Rate</span><span class="p">{</span><span class="nx">Freq</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nx">Per</span><span class="p">:</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">duration</span> <span class="o">:=</span> <span class="mi">4</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">targeter</span> <span class="o">:=</span> <span class="nf">NewCustomTargeter</span><span class="p">(</span><span class="nx">vegeta</span><span class="p">.</span><span class="nx">Target</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">Method</span><span class="p">:</span> <span class="s">&#34;GET&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">URL</span><span class="p">:</span>    <span class="s">&#34;http://localhost:8080/test&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//测试的实现需要基于Attacker
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">attacker</span> <span class="o">:=</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nf">NewAttacker</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">metrics</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Metrics</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">res</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">attacker</span><span class="p">.</span><span class="nf">Attack</span><span class="p">(</span><span class="nx">targeter</span><span class="p">,</span> <span class="nx">rate</span><span class="p">,</span> <span class="nx">duration</span><span class="p">,</span> <span class="s">&#34;random&#34;</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">metrics</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">metrics</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;99th percentile: %s\n&#34;</span><span class="p">,</span> <span class="nx">metrics</span><span class="p">.</span><span class="nx">Latencies</span><span class="p">.</span><span class="nx">P99</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewCustomTargeter</span><span class="p">(</span><span class="nx">target</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Target</span><span class="p">)</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Targeter</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//读取id文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//idData,err := readRealData()
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//if err != nil{
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//	panic(err)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//}
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//cachedArray := make([]bool,len(idData))
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">tgt</span> <span class="o">*</span><span class="nx">vegeta</span><span class="p">.</span><span class="nx">Target</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//其中，tgt是作为指针传入的，是需要被修改的。后续HTTP请求的赋值都是来自tgt，所以看做是另外一个返回值会更好一些
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="o">*</span><span class="nx">tgt</span> <span class="p">=</span> <span class="nx">target</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">tgt</span><span class="p">.</span><span class="nx">URL</span> <span class="o">+=</span> <span class="s">&#34;/custom&#34;</span><span class="o">+</span><span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//tgt.Header = http.Header{}
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">readRealData</span><span class="p">()</span> <span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//读取id.txt文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">filePath</span> <span class="o">:=</span> <span class="s">&#34;../../resources/id.txt&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">OpenFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_RDONLY</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">//数据格式为音频id，字符串`TRA_{albumid}_index`，albumid为6-10位数字,index为5位数字以内
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//将其作为字符串读取并写入到slices中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">idData</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1400000</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">buf</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">line</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">buf</span><span class="p">.</span><span class="nf">ReadString</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">line</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimSpace</span><span class="p">(</span><span class="nx">line</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">idData</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">idData</span><span class="p">,</span> <span class="nx">line</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="k">break</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">idData</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<h4 id="服务端">
+  服务端
+  <a class="heading-link" href="#%e6%9c%8d%e5%8a%a1%e7%ab%af">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;github.com/kataras/iris/v12&#34;</span>
+</span></span><span style="display:flex;"><span>	prometheusMiddleware <span style="color:#a5d6ff">&#34;github.com/iris-contrib/middleware/prometheus&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;github.com/prometheus/client_golang/prometheus/promhttp&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;math/rand&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	app <span style="color:#ff7b72;font-weight:bold">:=</span> iris.<span style="color:#d2a8ff;font-weight:bold">Default</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#d2a8ff;font-weight:bold">registerCuckooFilter</span>(app)
+</span></span><span style="display:flex;"><span>	<span style="color:#d2a8ff;font-weight:bold">registerPrometheus</span>(app)
+</span></span><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">Listen</span>(<span style="color:#a5d6ff">&#34;:8080&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">registerCuckooFilter</span>(app <span style="color:#ff7b72;font-weight:bold">*</span>iris.Application){
+</span></span><span style="display:flex;"><span>	filter <span style="color:#ff7b72;font-weight:bold">:=</span> cuckooFilter.CuckooFilter{}
+</span></span><span style="display:flex;"><span>	test <span style="color:#ff7b72;font-weight:bold">:=</span> make(<span style="color:#ff7b72">map</span>[<span style="color:#ff7b72">string</span>]<span style="color:#ff7b72">int</span>,<span style="color:#a5d6ff">0</span>)
+</span></span><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;/test/{name}&#34;</span>,<span style="color:#ff7b72">func</span>(ctx iris.Context){
+</span></span><span style="display:flex;"><span>		name <span style="color:#ff7b72;font-weight:bold">:=</span> ctx.<span style="color:#d2a8ff;font-weight:bold">Params</span>().<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;name&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> _,ok <span style="color:#ff7b72;font-weight:bold">:=</span> test[name];ok{
+</span></span><span style="display:flex;"><span>			test[name] <span style="color:#ff7b72;font-weight:bold">++</span>
+</span></span><span style="display:flex;"><span>		}<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>			test[name] = <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		ctx.<span style="color:#d2a8ff;font-weight:bold">StatusCode</span>(iris.StatusOK)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;/get/{name}&#34;</span>,<span style="color:#ff7b72">func</span>(ctx iris.Context){
+</span></span><span style="display:flex;"><span>		name <span style="color:#ff7b72;font-weight:bold">:=</span> ctx.<span style="color:#d2a8ff;font-weight:bold">Params</span>().<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;name&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> val,ok <span style="color:#ff7b72;font-weight:bold">:=</span> test[name];ok{
+</span></span><span style="display:flex;"><span>			log.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;key number is %v&#34;</span>,val)
+</span></span><span style="display:flex;"><span>		}<span style="color:#ff7b72">else</span>{
+</span></span><span style="display:flex;"><span>			log.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;key doestn&#39;t exist&#34;</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		ctx.<span style="color:#d2a8ff;font-weight:bold">StatusCode</span>(iris.StatusOK)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//查询
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//batch操作
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//批量插入
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//批量查询
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//批量删除
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">registerPrometheus</span>(app <span style="color:#ff7b72;font-weight:bold">*</span>iris.Application){
+</span></span><span style="display:flex;"><span>	m <span style="color:#ff7b72;font-weight:bold">:=</span> prometheusMiddleware.<span style="color:#d2a8ff;font-weight:bold">New</span>(<span style="color:#a5d6ff">&#34;serviceName&#34;</span>, <span style="color:#a5d6ff">0.3</span>, <span style="color:#a5d6ff">1.2</span>, <span style="color:#a5d6ff">5.0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">Use</span>(m.ServeHTTP)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">OnErrorCode</span>(iris.StatusNotFound, <span style="color:#ff7b72">func</span>(ctx iris.Context) {
+</span></span><span style="display:flex;"><span>		<span style="color:#8b949e;font-style:italic">// error code handlers are not sharing the same middleware as other routes, so we have
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#8b949e;font-style:italic">// to call them inside their body.
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		m.<span style="color:#d2a8ff;font-weight:bold">ServeHTTP</span>(ctx)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		ctx.<span style="color:#d2a8ff;font-weight:bold">Writef</span>(<span style="color:#a5d6ff">&#34;Not Found&#34;</span>)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;/&#34;</span>, <span style="color:#ff7b72">func</span>(ctx iris.Context) {
+</span></span><span style="display:flex;"><span>		sleep <span style="color:#ff7b72;font-weight:bold">:=</span> rand.<span style="color:#d2a8ff;font-weight:bold">Intn</span>(<span style="color:#a5d6ff">4999</span>) <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>
+</span></span><span style="display:flex;"><span>		time.<span style="color:#d2a8ff;font-weight:bold">Sleep</span>(time.<span style="color:#d2a8ff;font-weight:bold">Duration</span>(sleep) <span style="color:#ff7b72;font-weight:bold">*</span> time.Millisecond)
+</span></span><span style="display:flex;"><span>		ctx.<span style="color:#d2a8ff;font-weight:bold">Writef</span>(<span style="color:#a5d6ff">&#34;Slept for %d milliseconds&#34;</span>, sleep)
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	app.<span style="color:#d2a8ff;font-weight:bold">Get</span>(<span style="color:#a5d6ff">&#34;/metrics&#34;</span>, iris.<span style="color:#d2a8ff;font-weight:bold">FromStd</span>(promhttp.<span style="color:#d2a8ff;font-weight:bold">Handler</span>()))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="压测端">
+  压测端
+  <a class="heading-link" href="#%e5%8e%8b%e6%b5%8b%e7%ab%af">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;math/rand&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	vegeta <span style="color:#a5d6ff">&#34;github.com/tsenart/vegeta/v12/lib&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	rate <span style="color:#ff7b72;font-weight:bold">:=</span> vegeta.Rate{Freq: <span style="color:#a5d6ff">100</span>, Per: time.Second}
+</span></span><span style="display:flex;"><span>	duration <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">4</span> <span style="color:#ff7b72;font-weight:bold">*</span> time.Second
+</span></span><span style="display:flex;"><span>	targeter <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">NewCustomTargeter</span>(vegeta.Target{
+</span></span><span style="display:flex;"><span>		Method: <span style="color:#a5d6ff">&#34;GET&#34;</span>,
+</span></span><span style="display:flex;"><span>		URL:    <span style="color:#a5d6ff">&#34;http://localhost:8080/test&#34;</span>,
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//测试的实现需要基于Attacker
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	attacker <span style="color:#ff7b72;font-weight:bold">:=</span> vegeta.<span style="color:#d2a8ff;font-weight:bold">NewAttacker</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> metrics vegeta.Metrics
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> res <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72">range</span> attacker.<span style="color:#d2a8ff;font-weight:bold">Attack</span>(targeter, rate, duration, <span style="color:#a5d6ff">&#34;random&#34;</span>) {
+</span></span><span style="display:flex;"><span>		metrics.<span style="color:#d2a8ff;font-weight:bold">Add</span>(res)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	metrics.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;99th percentile: %s\n&#34;</span>, metrics.Latencies.P99)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">NewCustomTargeter</span>(target vegeta.Target) vegeta.Targeter{
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//读取id文件
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//idData,err := readRealData()
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//if err != nil{
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//	panic(err)
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//}
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//cachedArray := make([]bool,len(idData))
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> <span style="color:#ff7b72">func</span>(tgt <span style="color:#ff7b72;font-weight:bold">*</span>vegeta.Target) <span style="color:#ff7b72">error</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#8b949e;font-style:italic">//其中，tgt是作为指针传入的，是需要被修改的。后续HTTP请求的赋值都是来自tgt，所以看做是另外一个返回值会更好一些
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#ff7b72;font-weight:bold">*</span>tgt = target
+</span></span><span style="display:flex;"><span>		tgt.URL <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">&#34;/custom&#34;</span><span style="color:#ff7b72;font-weight:bold">+</span>strconv.<span style="color:#d2a8ff;font-weight:bold">Itoa</span>(rand.<span style="color:#d2a8ff;font-weight:bold">Intn</span>(<span style="color:#a5d6ff">100</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#8b949e;font-style:italic">//tgt.Header = http.Header{}
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#ff7b72">return</span> <span style="color:#79c0ff">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">readRealData</span>() ([]<span style="color:#ff7b72">string</span>, <span style="color:#ff7b72">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//读取id.txt文件
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	filePath <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">&#34;../../resources/id.txt&#34;</span>
+</span></span><span style="display:flex;"><span>	file, err <span style="color:#ff7b72;font-weight:bold">:=</span> os.<span style="color:#d2a8ff;font-weight:bold">OpenFile</span>(filePath, os.O_RDONLY, <span style="color:#a5d6ff">0666</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span> <span style="color:#79c0ff">nil</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">defer</span> file.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//数据格式为音频id，字符串`TRA_{albumid}_index`，albumid为6-10位数字,index为5位数字以内
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//将其作为字符串读取并写入到slices中
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	idData <span style="color:#ff7b72;font-weight:bold">:=</span> make([]<span style="color:#ff7b72">string</span>, <span style="color:#a5d6ff">0</span>, <span style="color:#a5d6ff">1400000</span>)
+</span></span><span style="display:flex;"><span>	buf <span style="color:#ff7b72;font-weight:bold">:=</span> bufio.<span style="color:#d2a8ff;font-weight:bold">NewReader</span>(file)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> {
+</span></span><span style="display:flex;"><span>		line, err <span style="color:#ff7b72;font-weight:bold">:=</span> buf.<span style="color:#d2a8ff;font-weight:bold">ReadString</span>(<span style="color:#a5d6ff">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span>		line = strings.<span style="color:#d2a8ff;font-weight:bold">TrimSpace</span>(line)
+</span></span><span style="display:flex;"><span>		idData = append(idData, line)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">==</span> io.EOF {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">break</span>
+</span></span><span style="display:flex;"><span>			} <span style="color:#ff7b72">else</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">return</span> <span style="color:#79c0ff">nil</span>, err
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> idData, <span style="color:#79c0ff">nil</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>之后，通过发送请求<code>curl http://localhost:8080/get/custom54</code>就可以查看触发的数量。</p>
 <p>最终输出结果除了一般的分位点（P99）之外，还有HDR图。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/assets/20220624_vegeta%e5%8e%8b%e6%b5%8b%e6%a1%86%e6%9e%b6%e5%ad%a6%e4%b9%a0%e4%b8%8e%e5%ae%9e%e8%b7%b5/vegeta_test.png"
-        data-srcset="/assets/20220624_vegeta%e5%8e%8b%e6%b5%8b%e6%a1%86%e6%9e%b6%e5%ad%a6%e4%b9%a0%e4%b8%8e%e5%ae%9e%e8%b7%b5/vegeta_test.png, /assets/20220624_vegeta%e5%8e%8b%e6%b5%8b%e6%a1%86%e6%9e%b6%e5%ad%a6%e4%b9%a0%e4%b8%8e%e5%ae%9e%e8%b7%b5/vegeta_test.png 1.5x, /assets/20220624_vegeta%e5%8e%8b%e6%b5%8b%e6%a1%86%e6%9e%b6%e5%ad%a6%e4%b9%a0%e4%b8%8e%e5%ae%9e%e8%b7%b5/vegeta_test.png 2x"
-        data-sizes="auto"
-        alt="/assets/20220624_vegeta压测框架学习与实践/vegeta_test.png"
-        title="HDR图" /></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Value<span class="o">(</span>ms<span class="o">)</span>    Percentile  TotalCount  1/<span class="o">(</span>1-Percentile<span class="o">)</span>
-</span></span><span class="line"><span class="cl">0.000000     0.000000    <span class="m">0</span>           1.000000
-</span></span><span class="line"><span class="cl">0.000000     0.100000    <span class="m">800</span>         1.111111
-</span></span><span class="line"><span class="cl">0.000000     0.200000    <span class="m">1600</span>        1.250000
-</span></span><span class="line"><span class="cl">41.403452    0.300000    <span class="m">2400</span>        1.428571
-</span></span><span class="line"><span class="cl">97.939712    0.400000    <span class="m">3200</span>        1.666667
-</span></span><span class="line"><span class="cl">142.381740   0.500000    <span class="m">4000</span>        2.000000
-</span></span><span class="line"><span class="cl">162.678710   0.550000    <span class="m">4400</span>        2.222222
-</span></span><span class="line"><span class="cl">183.896175   0.600000    <span class="m">4800</span>        2.500000
-</span></span><span class="line"><span class="cl">203.870917   0.650000    <span class="m">5200</span>        2.857143
-</span></span><span class="line"><span class="cl">222.808221   0.700000    <span class="m">5600</span>        3.333333
-</span></span><span class="line"><span class="cl">241.782645   0.750000    <span class="m">6000</span>        4.000000
-</span></span><span class="line"><span class="cl">252.824780   0.775000    <span class="m">6200</span>        4.444444
-</span></span><span class="line"><span class="cl">279.751398   0.800000    <span class="m">6400</span>        5.000000
-</span></span><span class="line"><span class="cl">307.471717   0.825000    <span class="m">6600</span>        5.714286
-</span></span><span class="line"><span class="cl">339.415889   0.850000    <span class="m">6800</span>        6.666667
-</span></span><span class="line"><span class="cl">371.413354   0.875000    <span class="m">7000</span>        8.000000
-</span></span><span class="line"><span class="cl">390.505284   0.887500    <span class="m">7100</span>        8.888889
-</span></span><span class="line"><span class="cl">408.344121   0.900000    <span class="m">7200</span>        10.000000
-</span></span><span class="line"><span class="cl">427.964702   0.912500    <span class="m">7300</span>        11.428571
-</span></span><span class="line"><span class="cl">453.307363   0.925000    <span class="m">7400</span>        13.333333
-</span></span><span class="line"><span class="cl">483.224073   0.937500    <span class="m">7500</span>        16.000000
-</span></span><span class="line"><span class="cl">504.911659   0.943750    <span class="m">7550</span>        17.777778
-</span></span><span class="line"><span class="cl">526.433221   0.950000    <span class="m">7600</span>        20.000000
-</span></span><span class="line"><span class="cl">554.693406   0.956250    <span class="m">7650</span>        22.857143
-</span></span><span class="line"><span class="cl">583.532213   0.962500    <span class="m">7700</span>        26.666667
-</span></span><span class="line"><span class="cl">612.195055   0.968750    <span class="m">7750</span>        32.000000
-</span></span><span class="line"><span class="cl">629.163420   0.971875    <span class="m">7775</span>        35.555556
-</span></span><span class="line"><span class="cl">647.068860   0.975000    <span class="m">7800</span>        40.000000
-</span></span><span class="line"><span class="cl">667.629935   0.978125    <span class="m">7825</span>        45.714286
-</span></span><span class="line"><span class="cl">691.831905   0.981250    <span class="m">7850</span>        53.333333
-</span></span><span class="line"><span class="cl">729.039830   0.984375    <span class="m">7875</span>        64.000000
-</span></span><span class="line"><span class="cl">748.329730   0.985938    <span class="m">7888</span>        71.113640
-</span></span><span class="line"><span class="cl">768.471540   0.987500    <span class="m">7900</span>        80.000000
-</span></span><span class="line"><span class="cl">788.390297   0.989062    <span class="m">7912</span>        91.424392
-</span></span><span class="line"><span class="cl">807.614078   0.990625    <span class="m">7925</span>        106.666667
-</span></span><span class="line"><span class="cl">831.889128   0.992188    <span class="m">7938</span>        128.008193
-</span></span><span class="line"><span class="cl">845.000015   0.992969    <span class="m">7944</span>        142.227279
-</span></span><span class="line"><span class="cl">865.313345   0.993750    <span class="m">7950</span>        160.000000
-</span></span><span class="line"><span class="cl">887.424404   0.994531    <span class="m">7956</span>        182.848784
-</span></span><span class="line"><span class="cl">909.572865   0.995313    <span class="m">7963</span>        213.356091
-</span></span><span class="line"><span class="cl">945.882794   0.996094    <span class="m">7969</span>        256.016385
-</span></span><span class="line"><span class="cl">964.014513   0.996484    <span class="m">7972</span>        284.414107
-</span></span><span class="line"><span class="cl">985.114464   0.996875    <span class="m">7975</span>        320.000000
-</span></span><span class="line"><span class="cl">1021.571080  0.997266    <span class="m">7978</span>        365.764448
-</span></span><span class="line"><span class="cl">1057.934456  0.997656    <span class="m">7981</span>        426.621160
-</span></span><span class="line"><span class="cl">1093.910902  0.998047    <span class="m">7984</span>        512.032770
-</span></span><span class="line"><span class="cl">1110.100395  0.998242    <span class="m">7986</span>        568.828214
-</span></span><span class="line"><span class="cl">1126.289888  0.998437    <span class="m">7987</span>        639.795266
-</span></span><span class="line"><span class="cl">1142.562404  0.998633    <span class="m">7989</span>        731.528895
-</span></span><span class="line"><span class="cl">1158.751897  0.998828    <span class="m">7991</span>        853.242321
-</span></span><span class="line"><span class="cl">1174.941389  0.999023    <span class="m">7992</span>        1023.541453
-</span></span><span class="line"><span class="cl">1194.670357  0.999121    <span class="m">7993</span>        1137.656428
-</span></span><span class="line"><span class="cl">1222.226880  0.999219    <span class="m">7994</span>        1280.409731
-</span></span><span class="line"><span class="cl">1249.502214  0.999316    <span class="m">7995</span>        1461.988304
-</span></span><span class="line"><span class="cl">1277.058738  0.999414    <span class="m">7995</span>        1706.484642
-</span></span><span class="line"><span class="cl">1304.615261  0.999512    <span class="m">7996</span>        2049.180328
-</span></span><span class="line"><span class="cl">1318.393523  0.999561    <span class="m">7996</span>        2277.904328
-</span></span><span class="line"><span class="cl">1331.890595  0.999609    <span class="m">7997</span>        2557.544757
-</span></span><span class="line"><span class="cl">1345.668857  0.999658    <span class="m">7997</span>        2923.976608
-</span></span><span class="line"><span class="cl">1385.470751  0.999707    <span class="m">7998</span>        3412.969283
-</span></span><span class="line"><span class="cl">1464.641730  0.999756    <span class="m">7998</span>        4098.360656
-</span></span><span class="line"><span class="cl">1503.419352  0.999780    <span class="m">7998</span>        4545.454545
-</span></span><span class="line"><span class="cl">1543.812709  0.999805    <span class="m">7998</span>        5128.205128
-</span></span><span class="line"><span class="cl">1582.590332  0.999829    <span class="m">7999</span>        5847.953216
-</span></span><span class="line"><span class="cl">1622.983688  0.999854    <span class="m">7999</span>        6849.315068
-</span></span><span class="line"><span class="cl">1661.761311  0.999878    <span class="m">7999</span>        8196.721311
-</span></span><span class="line"><span class="cl">1681.150122  0.999890    <span class="m">7999</span>        9090.909091
-</span></span><span class="line"><span class="cl">1700.538933  0.999902    <span class="m">7999</span>        10204.081633
-</span></span><span class="line"><span class="cl">1721.543478  0.999915    <span class="m">7999</span>        11764.705882
-</span></span><span class="line"><span class="cl">1740.932290  0.999927    <span class="m">7999</span>        13698.630137
-</span></span><span class="line"><span class="cl">1757.897500  0.999939    <span class="m">8000</span>        16393.442623
-</span></span><span class="line"><span class="cl">1757.897500  0.999945    <span class="m">8000</span>        18181.818182
-</span></span><span class="line"><span class="cl">1757.897500  0.999951    <span class="m">8000</span>        20408.163265
-</span></span><span class="line"><span class="cl">1757.897500  0.999957    <span class="m">8000</span>        23255.813953
-</span></span><span class="line"><span class="cl">1757.897500  0.999963    <span class="m">8000</span>        27027.027027
-</span></span><span class="line"><span class="cl">1757.897500  0.999969    <span class="m">8000</span>        32258.064516
-</span></span><span class="line"><span class="cl">1757.897500  0.999973    <span class="m">8000</span>        37037.037037
-</span></span><span class="line"><span class="cl">1757.897500  0.999976    <span class="m">8000</span>        41666.666667
-</span></span><span class="line"><span class="cl">1757.897500  0.999979    <span class="m">8000</span>        47619.047619
-</span></span><span class="line"><span class="cl">1757.897500  0.999982    <span class="m">8000</span>        55555.555556
-</span></span><span class="line"><span class="cl">1757.897500  0.999985    <span class="m">8000</span>        66666.666667
-</span></span><span class="line"><span class="cl">1757.897500  0.999986    <span class="m">8000</span>        71428.571429
-</span></span><span class="line"><span class="cl">1757.897500  0.999988    <span class="m">8000</span>        83333.333333
-</span></span><span class="line"><span class="cl">1757.897500  0.999989    <span class="m">8000</span>        90909.090909
-</span></span><span class="line"><span class="cl">1757.897500  0.999991    <span class="m">8000</span>        111111.111111
-</span></span><span class="line"><span class="cl">1757.897500  0.999992    <span class="m">8000</span>        125000.000000
-</span></span><span class="line"><span class="cl">1757.897500  0.999993    <span class="m">8000</span>        142857.142858
-</span></span><span class="line"><span class="cl">1757.897500  0.999994    <span class="m">8000</span>        166666.666668
-</span></span><span class="line"><span class="cl">1757.897500  0.999995    <span class="m">8000</span>        199999.999999
-</span></span><span class="line"><span class="cl">1757.897500  0.999996    <span class="m">8000</span>        250000.000000
-</span></span><span class="line"><span class="cl">1757.897500  0.999997    <span class="m">8000</span>        333333.333336
-</span></span><span class="line"><span class="cl">1757.897500  0.999998    <span class="m">8000</span>        500000.000013
-</span></span><span class="line"><span class="cl">1757.897500  0.999999    <span class="m">8000</span>        999999.999971
-</span></span><span class="line"><span class="cl">1757.897500  1.000000    <span class="m">8000</span>        10000000.000000
-</span></span></code></pre></div><h3 id="新的demo">新的demo</h3>
+<p><img src="/assets/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/vegeta_test.png" alt="HDR图"></p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Value<span style="color:#ff7b72;font-weight:bold">(</span>ms<span style="color:#ff7b72;font-weight:bold">)</span>    Percentile  TotalCount  1/<span style="color:#ff7b72;font-weight:bold">(</span>1-Percentile<span style="color:#ff7b72;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>0.000000     0.000000    <span style="color:#a5d6ff">0</span>           1.000000
+</span></span><span style="display:flex;"><span>0.000000     0.100000    <span style="color:#a5d6ff">800</span>         1.111111
+</span></span><span style="display:flex;"><span>0.000000     0.200000    <span style="color:#a5d6ff">1600</span>        1.250000
+</span></span><span style="display:flex;"><span>41.403452    0.300000    <span style="color:#a5d6ff">2400</span>        1.428571
+</span></span><span style="display:flex;"><span>97.939712    0.400000    <span style="color:#a5d6ff">3200</span>        1.666667
+</span></span><span style="display:flex;"><span>142.381740   0.500000    <span style="color:#a5d6ff">4000</span>        2.000000
+</span></span><span style="display:flex;"><span>162.678710   0.550000    <span style="color:#a5d6ff">4400</span>        2.222222
+</span></span><span style="display:flex;"><span>183.896175   0.600000    <span style="color:#a5d6ff">4800</span>        2.500000
+</span></span><span style="display:flex;"><span>203.870917   0.650000    <span style="color:#a5d6ff">5200</span>        2.857143
+</span></span><span style="display:flex;"><span>222.808221   0.700000    <span style="color:#a5d6ff">5600</span>        3.333333
+</span></span><span style="display:flex;"><span>241.782645   0.750000    <span style="color:#a5d6ff">6000</span>        4.000000
+</span></span><span style="display:flex;"><span>252.824780   0.775000    <span style="color:#a5d6ff">6200</span>        4.444444
+</span></span><span style="display:flex;"><span>279.751398   0.800000    <span style="color:#a5d6ff">6400</span>        5.000000
+</span></span><span style="display:flex;"><span>307.471717   0.825000    <span style="color:#a5d6ff">6600</span>        5.714286
+</span></span><span style="display:flex;"><span>339.415889   0.850000    <span style="color:#a5d6ff">6800</span>        6.666667
+</span></span><span style="display:flex;"><span>371.413354   0.875000    <span style="color:#a5d6ff">7000</span>        8.000000
+</span></span><span style="display:flex;"><span>390.505284   0.887500    <span style="color:#a5d6ff">7100</span>        8.888889
+</span></span><span style="display:flex;"><span>408.344121   0.900000    <span style="color:#a5d6ff">7200</span>        10.000000
+</span></span><span style="display:flex;"><span>427.964702   0.912500    <span style="color:#a5d6ff">7300</span>        11.428571
+</span></span><span style="display:flex;"><span>453.307363   0.925000    <span style="color:#a5d6ff">7400</span>        13.333333
+</span></span><span style="display:flex;"><span>483.224073   0.937500    <span style="color:#a5d6ff">7500</span>        16.000000
+</span></span><span style="display:flex;"><span>504.911659   0.943750    <span style="color:#a5d6ff">7550</span>        17.777778
+</span></span><span style="display:flex;"><span>526.433221   0.950000    <span style="color:#a5d6ff">7600</span>        20.000000
+</span></span><span style="display:flex;"><span>554.693406   0.956250    <span style="color:#a5d6ff">7650</span>        22.857143
+</span></span><span style="display:flex;"><span>583.532213   0.962500    <span style="color:#a5d6ff">7700</span>        26.666667
+</span></span><span style="display:flex;"><span>612.195055   0.968750    <span style="color:#a5d6ff">7750</span>        32.000000
+</span></span><span style="display:flex;"><span>629.163420   0.971875    <span style="color:#a5d6ff">7775</span>        35.555556
+</span></span><span style="display:flex;"><span>647.068860   0.975000    <span style="color:#a5d6ff">7800</span>        40.000000
+</span></span><span style="display:flex;"><span>667.629935   0.978125    <span style="color:#a5d6ff">7825</span>        45.714286
+</span></span><span style="display:flex;"><span>691.831905   0.981250    <span style="color:#a5d6ff">7850</span>        53.333333
+</span></span><span style="display:flex;"><span>729.039830   0.984375    <span style="color:#a5d6ff">7875</span>        64.000000
+</span></span><span style="display:flex;"><span>748.329730   0.985938    <span style="color:#a5d6ff">7888</span>        71.113640
+</span></span><span style="display:flex;"><span>768.471540   0.987500    <span style="color:#a5d6ff">7900</span>        80.000000
+</span></span><span style="display:flex;"><span>788.390297   0.989062    <span style="color:#a5d6ff">7912</span>        91.424392
+</span></span><span style="display:flex;"><span>807.614078   0.990625    <span style="color:#a5d6ff">7925</span>        106.666667
+</span></span><span style="display:flex;"><span>831.889128   0.992188    <span style="color:#a5d6ff">7938</span>        128.008193
+</span></span><span style="display:flex;"><span>845.000015   0.992969    <span style="color:#a5d6ff">7944</span>        142.227279
+</span></span><span style="display:flex;"><span>865.313345   0.993750    <span style="color:#a5d6ff">7950</span>        160.000000
+</span></span><span style="display:flex;"><span>887.424404   0.994531    <span style="color:#a5d6ff">7956</span>        182.848784
+</span></span><span style="display:flex;"><span>909.572865   0.995313    <span style="color:#a5d6ff">7963</span>        213.356091
+</span></span><span style="display:flex;"><span>945.882794   0.996094    <span style="color:#a5d6ff">7969</span>        256.016385
+</span></span><span style="display:flex;"><span>964.014513   0.996484    <span style="color:#a5d6ff">7972</span>        284.414107
+</span></span><span style="display:flex;"><span>985.114464   0.996875    <span style="color:#a5d6ff">7975</span>        320.000000
+</span></span><span style="display:flex;"><span>1021.571080  0.997266    <span style="color:#a5d6ff">7978</span>        365.764448
+</span></span><span style="display:flex;"><span>1057.934456  0.997656    <span style="color:#a5d6ff">7981</span>        426.621160
+</span></span><span style="display:flex;"><span>1093.910902  0.998047    <span style="color:#a5d6ff">7984</span>        512.032770
+</span></span><span style="display:flex;"><span>1110.100395  0.998242    <span style="color:#a5d6ff">7986</span>        568.828214
+</span></span><span style="display:flex;"><span>1126.289888  0.998437    <span style="color:#a5d6ff">7987</span>        639.795266
+</span></span><span style="display:flex;"><span>1142.562404  0.998633    <span style="color:#a5d6ff">7989</span>        731.528895
+</span></span><span style="display:flex;"><span>1158.751897  0.998828    <span style="color:#a5d6ff">7991</span>        853.242321
+</span></span><span style="display:flex;"><span>1174.941389  0.999023    <span style="color:#a5d6ff">7992</span>        1023.541453
+</span></span><span style="display:flex;"><span>1194.670357  0.999121    <span style="color:#a5d6ff">7993</span>        1137.656428
+</span></span><span style="display:flex;"><span>1222.226880  0.999219    <span style="color:#a5d6ff">7994</span>        1280.409731
+</span></span><span style="display:flex;"><span>1249.502214  0.999316    <span style="color:#a5d6ff">7995</span>        1461.988304
+</span></span><span style="display:flex;"><span>1277.058738  0.999414    <span style="color:#a5d6ff">7995</span>        1706.484642
+</span></span><span style="display:flex;"><span>1304.615261  0.999512    <span style="color:#a5d6ff">7996</span>        2049.180328
+</span></span><span style="display:flex;"><span>1318.393523  0.999561    <span style="color:#a5d6ff">7996</span>        2277.904328
+</span></span><span style="display:flex;"><span>1331.890595  0.999609    <span style="color:#a5d6ff">7997</span>        2557.544757
+</span></span><span style="display:flex;"><span>1345.668857  0.999658    <span style="color:#a5d6ff">7997</span>        2923.976608
+</span></span><span style="display:flex;"><span>1385.470751  0.999707    <span style="color:#a5d6ff">7998</span>        3412.969283
+</span></span><span style="display:flex;"><span>1464.641730  0.999756    <span style="color:#a5d6ff">7998</span>        4098.360656
+</span></span><span style="display:flex;"><span>1503.419352  0.999780    <span style="color:#a5d6ff">7998</span>        4545.454545
+</span></span><span style="display:flex;"><span>1543.812709  0.999805    <span style="color:#a5d6ff">7998</span>        5128.205128
+</span></span><span style="display:flex;"><span>1582.590332  0.999829    <span style="color:#a5d6ff">7999</span>        5847.953216
+</span></span><span style="display:flex;"><span>1622.983688  0.999854    <span style="color:#a5d6ff">7999</span>        6849.315068
+</span></span><span style="display:flex;"><span>1661.761311  0.999878    <span style="color:#a5d6ff">7999</span>        8196.721311
+</span></span><span style="display:flex;"><span>1681.150122  0.999890    <span style="color:#a5d6ff">7999</span>        9090.909091
+</span></span><span style="display:flex;"><span>1700.538933  0.999902    <span style="color:#a5d6ff">7999</span>        10204.081633
+</span></span><span style="display:flex;"><span>1721.543478  0.999915    <span style="color:#a5d6ff">7999</span>        11764.705882
+</span></span><span style="display:flex;"><span>1740.932290  0.999927    <span style="color:#a5d6ff">7999</span>        13698.630137
+</span></span><span style="display:flex;"><span>1757.897500  0.999939    <span style="color:#a5d6ff">8000</span>        16393.442623
+</span></span><span style="display:flex;"><span>1757.897500  0.999945    <span style="color:#a5d6ff">8000</span>        18181.818182
+</span></span><span style="display:flex;"><span>1757.897500  0.999951    <span style="color:#a5d6ff">8000</span>        20408.163265
+</span></span><span style="display:flex;"><span>1757.897500  0.999957    <span style="color:#a5d6ff">8000</span>        23255.813953
+</span></span><span style="display:flex;"><span>1757.897500  0.999963    <span style="color:#a5d6ff">8000</span>        27027.027027
+</span></span><span style="display:flex;"><span>1757.897500  0.999969    <span style="color:#a5d6ff">8000</span>        32258.064516
+</span></span><span style="display:flex;"><span>1757.897500  0.999973    <span style="color:#a5d6ff">8000</span>        37037.037037
+</span></span><span style="display:flex;"><span>1757.897500  0.999976    <span style="color:#a5d6ff">8000</span>        41666.666667
+</span></span><span style="display:flex;"><span>1757.897500  0.999979    <span style="color:#a5d6ff">8000</span>        47619.047619
+</span></span><span style="display:flex;"><span>1757.897500  0.999982    <span style="color:#a5d6ff">8000</span>        55555.555556
+</span></span><span style="display:flex;"><span>1757.897500  0.999985    <span style="color:#a5d6ff">8000</span>        66666.666667
+</span></span><span style="display:flex;"><span>1757.897500  0.999986    <span style="color:#a5d6ff">8000</span>        71428.571429
+</span></span><span style="display:flex;"><span>1757.897500  0.999988    <span style="color:#a5d6ff">8000</span>        83333.333333
+</span></span><span style="display:flex;"><span>1757.897500  0.999989    <span style="color:#a5d6ff">8000</span>        90909.090909
+</span></span><span style="display:flex;"><span>1757.897500  0.999991    <span style="color:#a5d6ff">8000</span>        111111.111111
+</span></span><span style="display:flex;"><span>1757.897500  0.999992    <span style="color:#a5d6ff">8000</span>        125000.000000
+</span></span><span style="display:flex;"><span>1757.897500  0.999993    <span style="color:#a5d6ff">8000</span>        142857.142858
+</span></span><span style="display:flex;"><span>1757.897500  0.999994    <span style="color:#a5d6ff">8000</span>        166666.666668
+</span></span><span style="display:flex;"><span>1757.897500  0.999995    <span style="color:#a5d6ff">8000</span>        199999.999999
+</span></span><span style="display:flex;"><span>1757.897500  0.999996    <span style="color:#a5d6ff">8000</span>        250000.000000
+</span></span><span style="display:flex;"><span>1757.897500  0.999997    <span style="color:#a5d6ff">8000</span>        333333.333336
+</span></span><span style="display:flex;"><span>1757.897500  0.999998    <span style="color:#a5d6ff">8000</span>        500000.000013
+</span></span><span style="display:flex;"><span>1757.897500  0.999999    <span style="color:#a5d6ff">8000</span>        999999.999971
+</span></span><span style="display:flex;"><span>1757.897500  1.000000    <span style="color:#a5d6ff">8000</span>        10000000.000000
+</span></span></code></pre></div><h3 id="新的demo">
+  新的demo
+  <a class="heading-link" href="#%e6%96%b0%e7%9a%84demo">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>动态访问部分写的有点问题，新demo可以实现targeter的计数效果。</p>
 <hr>
-<h2 id="服务端代码与之前一致">服务端代码与之前一致</h2>
+<h2 id="服务端代码与之前一致">
+  服务端代码与之前一致
+  <a class="heading-link" href="#%e6%9c%8d%e5%8a%a1%e7%ab%af%e4%bb%a3%e7%a0%81%e4%b8%8e%e4%b9%8b%e5%89%8d%e4%b8%80%e8%87%b4">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>id.txt</p>
 <pre tabindex="0"><code>TRA_1_index
 TRA_2_index
@@ -643,87 +748,87 @@ TRA_4_index
 TRA_5_index
 </code></pre><hr>
 <p>压测端</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;bufio&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;io&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;os&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;strings&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="s">&#34;time&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">vegeta</span> <span class="s">&#34;github.com/tsenart/vegeta/v12/lib&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">rate</span> <span class="o">:=</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Rate</span><span class="p">{</span><span class="nx">Freq</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="nx">Per</span><span class="p">:</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">duration</span> <span class="o">:=</span> <span class="mi">4</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">targeter</span> <span class="o">:=</span> <span class="nf">NewCustomTargeter</span><span class="p">(</span><span class="nx">vegeta</span><span class="p">.</span><span class="nx">Target</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">Method</span><span class="p">:</span> <span class="s">&#34;GET&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">URL</span><span class="p">:</span>    <span class="s">&#34;http://localhost:8080/test&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="p">})</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//测试的实现需要基于Attacker
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">attacker</span> <span class="o">:=</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nf">NewAttacker</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">metrics</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Metrics</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">res</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">attacker</span><span class="p">.</span><span class="nf">Attack</span><span class="p">(</span><span class="nx">targeter</span><span class="p">,</span> <span class="nx">rate</span><span class="p">,</span> <span class="nx">duration</span><span class="p">,</span> <span class="s">&#34;random&#34;</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">metrics</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">metrics</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;99th percentile: %s\n&#34;</span><span class="p">,</span> <span class="nx">metrics</span><span class="p">.</span><span class="nx">Latencies</span><span class="p">.</span><span class="nx">P99</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewCustomTargeter</span><span class="p">(</span><span class="nx">target</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Target</span><span class="p">)</span> <span class="nx">vegeta</span><span class="p">.</span><span class="nx">Targeter</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//读取id文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">idData</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">readRealData</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//cachedArray := make([]bool, len(idData))
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">x</span> <span class="o">:=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">tgt</span> <span class="o">*</span><span class="nx">vegeta</span><span class="p">.</span><span class="nx">Target</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//其中，tgt是作为指针传入的，是需要被修改的。后续HTTP请求的赋值都是来自tgt，所以看做是另外一个返回值会更好一些
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="o">*</span><span class="nx">tgt</span> <span class="p">=</span> <span class="nx">target</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//tgt.URL += &#34;/custom&#34; + strconv.Itoa(rand.Intn(100))
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">tgt</span><span class="p">.</span><span class="nx">URL</span> <span class="o">+=</span> <span class="s">&#34;/&#34;</span> <span class="o">+</span> <span class="nx">idData</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">x</span><span class="o">++</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">x</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">idData</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">x</span> <span class="p">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">//tgt.Header = http.Header{}
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">readRealData</span><span class="p">()</span> <span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">//读取id.txt文件
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">filePath</span> <span class="o">:=</span> <span class="s">&#34;id.txt&#34;</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">OpenFile</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">O_RDONLY</span><span class="p">,</span> <span class="mo">0666</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">//数据格式为音频id，字符串`TRA_{albumid}_index`，albumid为6-10位数字,index为5位数字以内
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">//将其作为字符串读取并写入到slices中
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">idData</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1400000</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">buf</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">line</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">buf</span><span class="p">.</span><span class="nf">ReadString</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">line</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">TrimSpace</span><span class="p">(</span><span class="nx">line</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">idData</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">idData</span><span class="p">,</span> <span class="nx">line</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="k">break</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">idData</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;bufio&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a5d6ff">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	vegeta <span style="color:#a5d6ff">&#34;github.com/tsenart/vegeta/v12/lib&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	rate <span style="color:#ff7b72;font-weight:bold">:=</span> vegeta.Rate{Freq: <span style="color:#a5d6ff">100</span>, Per: time.Second}
+</span></span><span style="display:flex;"><span>	duration <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">4</span> <span style="color:#ff7b72;font-weight:bold">*</span> time.Second
+</span></span><span style="display:flex;"><span>	targeter <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">NewCustomTargeter</span>(vegeta.Target{
+</span></span><span style="display:flex;"><span>		Method: <span style="color:#a5d6ff">&#34;GET&#34;</span>,
+</span></span><span style="display:flex;"><span>		URL:    <span style="color:#a5d6ff">&#34;http://localhost:8080/test&#34;</span>,
+</span></span><span style="display:flex;"><span>	})
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//测试的实现需要基于Attacker
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	attacker <span style="color:#ff7b72;font-weight:bold">:=</span> vegeta.<span style="color:#d2a8ff;font-weight:bold">NewAttacker</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> metrics vegeta.Metrics
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> res <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72">range</span> attacker.<span style="color:#d2a8ff;font-weight:bold">Attack</span>(targeter, rate, duration, <span style="color:#a5d6ff">&#34;random&#34;</span>) {
+</span></span><span style="display:flex;"><span>		metrics.<span style="color:#d2a8ff;font-weight:bold">Add</span>(res)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	metrics.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;99th percentile: %s\n&#34;</span>, metrics.Latencies.P99)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">NewCustomTargeter</span>(target vegeta.Target) vegeta.Targeter {
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//读取id文件
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	idData, err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">readRealData</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//cachedArray := make([]bool, len(idData))
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	x <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> <span style="color:#ff7b72">func</span>(tgt <span style="color:#ff7b72;font-weight:bold">*</span>vegeta.Target) <span style="color:#ff7b72">error</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#8b949e;font-style:italic">//其中，tgt是作为指针传入的，是需要被修改的。后续HTTP请求的赋值都是来自tgt，所以看做是另外一个返回值会更好一些
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#ff7b72;font-weight:bold">*</span>tgt = target
+</span></span><span style="display:flex;"><span>		<span style="color:#8b949e;font-style:italic">//tgt.URL += &#34;/custom&#34; + strconv.Itoa(rand.Intn(100))
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		tgt.URL <span style="color:#ff7b72;font-weight:bold">+=</span> <span style="color:#a5d6ff">&#34;/&#34;</span> <span style="color:#ff7b72;font-weight:bold">+</span> idData[x]
+</span></span><span style="display:flex;"><span>		x<span style="color:#ff7b72;font-weight:bold">++</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> x <span style="color:#ff7b72;font-weight:bold">&gt;=</span> len(idData) {
+</span></span><span style="display:flex;"><span>			x = <span style="color:#a5d6ff">0</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#8b949e;font-style:italic">//tgt.Header = http.Header{}
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#ff7b72">return</span> <span style="color:#79c0ff">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">readRealData</span>() ([]<span style="color:#ff7b72">string</span>, <span style="color:#ff7b72">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//读取id.txt文件
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	filePath <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">&#34;id.txt&#34;</span>
+</span></span><span style="display:flex;"><span>	file, err <span style="color:#ff7b72;font-weight:bold">:=</span> os.<span style="color:#d2a8ff;font-weight:bold">OpenFile</span>(filePath, os.O_RDONLY, <span style="color:#a5d6ff">0666</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span> <span style="color:#79c0ff">nil</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">defer</span> file.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">//数据格式为音频id，字符串`TRA_{albumid}_index`，albumid为6-10位数字,index为5位数字以内
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#8b949e;font-style:italic">//将其作为字符串读取并写入到slices中
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	idData <span style="color:#ff7b72;font-weight:bold">:=</span> make([]<span style="color:#ff7b72">string</span>, <span style="color:#a5d6ff">0</span>, <span style="color:#a5d6ff">1400000</span>)
+</span></span><span style="display:flex;"><span>	buf <span style="color:#ff7b72;font-weight:bold">:=</span> bufio.<span style="color:#d2a8ff;font-weight:bold">NewReader</span>(file)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> {
+</span></span><span style="display:flex;"><span>		line, err <span style="color:#ff7b72;font-weight:bold">:=</span> buf.<span style="color:#d2a8ff;font-weight:bold">ReadString</span>(<span style="color:#a5d6ff">&#39;\n&#39;</span>)
+</span></span><span style="display:flex;"><span>		line = strings.<span style="color:#d2a8ff;font-weight:bold">TrimSpace</span>(line)
+</span></span><span style="display:flex;"><span>		idData = append(idData, line)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">==</span> io.EOF {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">break</span>
+</span></span><span style="display:flex;"><span>			} <span style="color:#ff7b72">else</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">return</span> <span style="color:#79c0ff">nil</span>, err
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> idData, <span style="color:#79c0ff">nil</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><hr>
 <p>服务端部分的结果是</p>
 <pre tabindex="0"><code>2022-06-07 16:55:49|14.132µs|200|GET|/test/TRA_1_index|::1|name=TRA_1_index|0 B|0 B||
@@ -737,43 +842,87 @@ TRA_5_index
 2022-06-07 16:55:49|45.1µs|200|GET|/test/TRA_4_index|::1|name=TRA_4_index|0 B|0 B||
 2022-06-07 16:55:49|17.428µs|200|GET具体的|/test/TRA_5_index|::1|name=TRA_5_index|0 B|0 B||
 </code></pre><p>这样就可以实现对id.txt中每一行数据的遍历，targeter范例在压测端的<code>NewCustomTargeter</code>，其中的x可以视为一个闭包实现的静态变量</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-06-24</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" data-title="Vegeta压测工具学习与使用" data-hashtags="分类/知识库/计算机/go,分类/学习/学习笔记,分类/知识库/计算机/软件工程/软件测试/压力测试"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" data-hashtag="分类/知识库/计算机/go"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" data-title="Vegeta压测工具学习与使用" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" data-title="Vegeta压测工具学习与使用"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" data-title="Vegeta压测工具学习与使用"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" data-title="Vegeta压测工具学习与使用" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" data-title="Vegeta压测工具学习与使用"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">分类/知识库/计算机/go</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">分类/学习/学习笔记</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/">分类/知识库/计算机/软件工程/软件测试/压力测试</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" class="prev" rel="prev" title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</a>
-            <a href="/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" class="next" rel="next" title="Gopherfest 2015：Go Proverbs with Rob Pike">Gopherfest 2015：Go Proverbs with Rob Pike<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

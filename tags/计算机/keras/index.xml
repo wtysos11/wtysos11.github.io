@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机/Keras on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/keras/</link>
+    <description>Recent content in 计算机/Keras on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/keras/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Keras中的Embedding层是如何工作的</title>
+      <link>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
+      <pubDate>Tue, 08 Sep 2020 20:57:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
+      <description>在学习的过程中遇到了这个问题，同时也看到了SO中有相同的问题。而keras-github中这个问题也挺有意思的，记录一下。&#xA;这个解释很不错，假如现在有这么两句话&#xA;Hope to see you soon Nice to see you again 在神经网络中，我们将这个作为输入，一般就会将每个单词用一个正整数代替，这样，上面的两句话在输入中是这样的&#xA;[0, 1, 2, 3, 4] [5, 1, 2, 3, 6] 在神经网络中，第一层是&#xA;Embedding(7, 2, input_length=5) 其中，第一个参数是input_dim，上面的值是7，代表的是单词表的长度；第二个参数是output_dim，上面的值是2，代表输出后向量长度为2；第三个参数是input_length，上面的值是5，代表输入序列的长度。&#xA;一旦神经网络被训练了，Embedding层就会被赋予一个权重，计算出来的结果如下：&#xA;+------------+------------+ | index | Embedding | +------------+------------+ | 0 | [1.2, 3.1] | | 1 | [0.1, 4.2] | | 2 | [1.0, 3.1] | | 3 | [0.3, 2.1] | | 4 | [2.2, 1.4] | | 5 | [0.7, 1.</description>
+    </item>
+    <item>
+      <title>Keras中的Embedding层是如何工作的</title>
+      <link>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
+      <pubDate>Tue, 08 Sep 2020 20:57:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
+      <description>在学习的过程中遇到了这个问题，同时也看到了SO中有相同的问题。而keras-github中这个问题也挺有意思的，记录一下。&#xA;这个解释很不错，假如现在有这么两句话&#xA;Hope to see you soon Nice to see you again 在神经网络中，我们将这个作为输入，一般就会将每个单词用一个正整数代替，这样，上面的两句话在输入中是这样的&#xA;[0, 1, 2, 3, 4] [5, 1, 2, 3, 6] 在神经网络中，第一层是&#xA;Embedding(7, 2, input_length=5) 其中，第一个参数是input_dim，上面的值是7，代表的是单词表的长度；第二个参数是output_dim，上面的值是2，代表输出后向量长度为2；第三个参数是input_length，上面的值是5，代表输入序列的长度。&#xA;一旦神经网络被训练了，Embedding层就会被赋予一个权重，计算出来的结果如下：&#xA;+------------+------------+ | index | Embedding | +------------+------------+ | 0 | [1.2, 3.1] | | 1 | [0.1, 4.2] | | 2 | [1.0, 3.1] | | 3 | [0.3, 2.1] | | 4 | [2.2, 1.4] | | 5 | [0.7, 1.</description>
+    </item>
+  </channel>
+</rss>

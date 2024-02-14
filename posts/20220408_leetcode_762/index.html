@@ -1,122 +1,217 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Leetcode 762: 二进制表示中质数个计算置位 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="Leetcode 762: 二进制表示中质数个计算置位" />
-<meta property="og:description" content="762 二进制表示中质数个计算置位 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。 比如说$(21){10}=(10101){2}$，" />
+<html lang="zh">
+
+<head>
+  <title>
+  Leetcode 762: 二进制表示中质数个计算置位 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。
+比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。
+换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。
+考虑以下情况
+十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。
+换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。
+最终还是用了简单的解法
+https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/
+#include &lt;iostream&gt; #include &lt;vector&gt; #include &lt;map&gt; #include &lt;cmath&gt; using namespace std; class Prime{ map&lt;int,bool&gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&lt;=sqrt(v);i&#43;&#43;){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&gt;=0;i--){ if(v&gt;=val){ v-=val; count&#43;&#43;; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&lt;=right;i&#43;&#43;){ int val = this-&gt;calculate_one(i); if(prime.">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Leetcode 762: 二进制表示中质数个计算置位"/>
+<meta name="twitter:description" content="762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。
+比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。
+换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。
+考虑以下情况
+十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。
+换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。
+最终还是用了简单的解法
+https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/
+#include &lt;iostream&gt; #include &lt;vector&gt; #include &lt;map&gt; #include &lt;cmath&gt; using namespace std; class Prime{ map&lt;int,bool&gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&lt;=sqrt(v);i&#43;&#43;){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&gt;=0;i--){ if(v&gt;=val){ v-=val; count&#43;&#43;; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&lt;=right;i&#43;&#43;){ int val = this-&gt;calculate_one(i); if(prime."/>
+
+<meta property="og:title" content="Leetcode 762: 二进制表示中质数个计算置位" />
+<meta property="og:description" content="762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。
+比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。
+换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。
+考虑以下情况
+十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。
+换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。
+最终还是用了简单的解法
+https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/
+#include &lt;iostream&gt; #include &lt;vector&gt; #include &lt;map&gt; #include &lt;cmath&gt; using namespace std; class Prime{ map&lt;int,bool&gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&lt;=sqrt(v);i&#43;&#43;){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&gt;=0;i--){ if(v&gt;=val){ v-=val; count&#43;&#43;; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&lt;=right;i&#43;&#43;){ int val = this-&gt;calculate_one(i); if(prime." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220408_leetcode_762/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-04-08T17:52:02+08:00" />
-<meta property="article:modified_time" content="2022-04-08T17:52:02+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2022-04-08T17:52:02+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Leetcode 762: 二进制表示中质数个计算置位"/>
-<meta name="twitter:description" content="762 二进制表示中质数个计算置位 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。 比如说$(21){10}=(10101){2}$，"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20220408_leetcode_762/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/" /><link rel="next" href="http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Leetcode 762: 二进制表示中质数个计算置位",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20220408_leetcode_762\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/算法\/算法题解, 分类\/知识库\/计算机\/算法\/难度\/简单, 分类\/知识库\/计算机\/算法\/位运算","wordcount":  427 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20220408_leetcode_762\/","datePublished": "2022-04-08T17:52:02+08:00","dateModified": "2022-04-08T17:52:02+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20220408_leetcode_762/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20220408_leetcode_762/">
+              Leetcode 762: 二进制表示中质数个计算置位
+            </a>
+          </h1>
         </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20220408_leetcode_762/" selected>简体中文</option></select>
-                </a></div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2022-04-08T17:52:02&#43;08:00">
+                四月 8, 2022
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">Leetcode刷题记录</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">计算机/算法/算法题解</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%80%E5%8D%95/">计算机/算法/简单</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/">计算机/算法/位运算</a>
+    </span></div>
+
         </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20220408_leetcode_762/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Leetcode 762: 二进制表示中质数个计算置位</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Leetcode刷题记录</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-04-08">2022-04-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 427 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><h1 id="762-二进制表示中质数个计算置位">762 二进制表示中质数个计算置位</h1>
+      </header>
+
+      <div class="post-content">
+        
+        <h1 id="762-二进制表示中质数个计算置位">
+  762 二进制表示中质数个计算置位
+  <a class="heading-link" href="#762-%e4%ba%8c%e8%bf%9b%e5%88%b6%e8%a1%a8%e7%a4%ba%e4%b8%ad%e8%b4%a8%e6%95%b0%e4%b8%aa%e8%ae%a1%e7%ae%97%e7%bd%ae%e4%bd%8d">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
 <p>题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。</p>
 <p>比如说$(21)<em>{10}=(10101)</em>{2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。</p>
 <p>换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。</p>
@@ -166,108 +261,152 @@
 <p>从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。</p>
 <p>换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。</p>
 <p>最终还是用了简单的解法</p>
-<p><a href="https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/" target="_blank" rel="noopener noreffer ">https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cmath&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Prime</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">store</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Prime</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">        <span class="n">store</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">store</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="nf">judge</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">v</span><span class="o">&lt;</span><span class="mi">2</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">store</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">!=</span><span class="n">store</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">v</span><span class="o">%</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">store</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">calculate_one</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">max_2</span> <span class="o">=</span> <span class="n">log2</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">max_2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">max_2</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">v</span><span class="o">&gt;=</span><span class="n">val</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">v</span><span class="o">-=</span><span class="n">val</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">val</span><span class="o">/=</span><span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">countPrimeSetBits</span><span class="p">(</span><span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Prime</span> <span class="n">prime</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">left</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;=</span><span class="n">right</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">calculate_one</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">prime</span><span class="p">.</span><span class="n">judge</span><span class="p">(</span><span class="n">val</span><span class="p">)){</span>
-</span></span><span class="line"><span class="cl">                <span class="n">count</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">countPrimeSetBits</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2022-04-08</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220408_leetcode_762/" data-title="Leetcode 762: 二进制表示中质数个计算置位" data-hashtags="分类/知识库/计算机/算法/算法题解,分类/知识库/计算机/算法/难度/简单,分类/知识库/计算机/算法/位运算"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220408_leetcode_762/" data-hashtag="分类/知识库/计算机/算法/算法题解"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220408_leetcode_762/" data-title="Leetcode 762: 二进制表示中质数个计算置位" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220408_leetcode_762/" data-title="Leetcode 762: 二进制表示中质数个计算置位"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220408_leetcode_762/" data-title="Leetcode 762: 二进制表示中质数个计算置位"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220408_leetcode_762/" data-title="Leetcode 762: 二进制表示中质数个计算置位" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220408_leetcode_762/" data-title="Leetcode 762: 二进制表示中质数个计算置位"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+<p><a href="https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/"  class="external-link" target="_blank" rel="noopener">https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;map&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;cmath&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Prime</span>{
+</span></span><span style="display:flex;"><span>    map<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span>,<span style="color:#ff7b72">bool</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> store;
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    Prime(){
+</span></span><span style="display:flex;"><span>        store[<span style="color:#a5d6ff">2</span>]<span style="color:#ff7b72;font-weight:bold">=</span>true;
+</span></span><span style="display:flex;"><span>        store[<span style="color:#a5d6ff">3</span>]<span style="color:#ff7b72;font-weight:bold">=</span>true;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">bool</span> <span style="color:#d2a8ff;font-weight:bold">judge</span>(<span style="color:#ff7b72">int</span> v){
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(v<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#a5d6ff">2</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> false;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(store.find(v)<span style="color:#ff7b72;font-weight:bold">!=</span>store.end()){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> true;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">2</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;=</span>sqrt(v);i<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(v<span style="color:#ff7b72;font-weight:bold">%</span>i<span style="color:#ff7b72;font-weight:bold">==</span><span style="color:#a5d6ff">0</span>){
+</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">return</span> false;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        store[v] <span style="color:#ff7b72;font-weight:bold">=</span> true;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> true;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> calculate_one(<span style="color:#ff7b72">int</span> v){
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> max_2 <span style="color:#ff7b72;font-weight:bold">=</span> log2(v);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> val <span style="color:#ff7b72;font-weight:bold">=</span> pow(<span style="color:#a5d6ff">2</span>,max_2);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> count <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span>max_2;i<span style="color:#ff7b72;font-weight:bold">&gt;=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">--</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(v<span style="color:#ff7b72;font-weight:bold">&gt;=</span>val){
+</span></span><span style="display:flex;"><span>                v<span style="color:#ff7b72;font-weight:bold">-=</span>val;
+</span></span><span style="display:flex;"><span>                count<span style="color:#ff7b72;font-weight:bold">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            val<span style="color:#ff7b72;font-weight:bold">/=</span><span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> count;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">countPrimeSetBits</span>(<span style="color:#ff7b72">int</span> left, <span style="color:#ff7b72">int</span> right) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> count <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>        Prime prime;
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span>left;i<span style="color:#ff7b72;font-weight:bold">&lt;=</span>right;i<span style="color:#ff7b72;font-weight:bold">++</span>){
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> val <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">this</span><span style="color:#ff7b72;font-weight:bold">-&gt;</span>calculate_one(i);
+</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(prime.judge(val)){
+</span></span><span style="display:flex;"><span>                count<span style="color:#ff7b72;font-weight:bold">++</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> count;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(<span style="color:#ff7b72">void</span>){
+</span></span><span style="display:flex;"><span>    Solution s;
+</span></span><span style="display:flex;"><span>    cout<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>s.countPrimeSetBits(<span style="color:#a5d6ff">10</span>,<span style="color:#a5d6ff">15</span>)<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">分类/知识库/计算机/算法/算法题解</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E9%9A%BE%E5%BA%A6/%E7%AE%80%E5%8D%95/">分类/知识库/计算机/算法/难度/简单</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/">分类/知识库/计算机/算法/位运算</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="prev" rel="prev" title="Leetcode 796: 旋转字符串"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Leetcode 796: 旋转字符串</a>
-            <a href="/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/" class="next" rel="next" title="Leetcode 429: N叉树的层次遍历">Leetcode 429: N叉树的层次遍历<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

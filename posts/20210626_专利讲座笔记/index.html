@@ -1,134 +1,244 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>专利讲座笔记 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="专利讲座笔记" />
-<meta property="og:description" content="专利学习 内容： 专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座 专利基本知识 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念" />
+<html lang="zh">
+
+<head>
+  <title>
+  专利讲座笔记 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content=" 专利学习 Link to heading 内容：
+专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座
+专利基本知识 Link to heading 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念。专利具体来说是分为三个类型：发明、实用新型、外观设计。
+发明也分为产品发明和方法发明，一般毕业所注册的专利都是方法发明这一类，包括制造方法和控制方法或使用方法。发明专利是对产品、方法或者改进所提出的技术方案。
+实用新型，又称为产品发明，定义上为对产品的形状、构造以其结合提出的适用于使用的新的技术方案。一般被称为小发明，不包含方法。（算法这类虚拟的方法类内容是不包含在实用新型中的）
+外观设计，又称为产品设计。对产品的形状、图案、色彩或者其结合所作出的富有美感并适于工作上应用的新设计。
+毕业要求的1分为公开发明专利，成果必须署名中山的数学，且必须为国家发明专利的第一发明人。
+不能获得专利的情况：
+科学发现，比如发现一种自然现象 智力活动的规则和方法，比如一种游戏规则（三国杀）。具体来说是可以人为地随意篡改也不影响技术方面的体现。 疾病的诊断和治疗方法。出于人道主义的考虑和社会伦理的原因。 动物和植物新品种（产品的生产方法除外） 用原子核变换方法获得的物质 专利的性质：
+独占性 专利权人具有对其发明创造的制造、使用、销售、许诺销售和进出口的权利，也是最重要的性质。 时间性 从申请日到授权日大概要2-3年，审查周期很长。 地域性 只能在某个国家单独申请 专利权授予条件：
+新颖性 指申请日以前没有同样的发明创造 在国内外的出版物上公开发表过。这一点比较经常遇到，在期刊发表后是不能申请专利的 在国内外公开使用过或者以其他方式为公众所知。 创造性 比新颖性要高。 要求具有突出的实质性特点和显著的进步（实用新型只需要具有实质性特点和进步即可） 涉及计算机程序的专利：
+通常是以发明专利申请的形式提出 涉及计算机程序的发明是指：为解决发明提出的问题，全部或部分以计算机程序处理流程为基础（算法流程图），通过计算机执行按上述流程编制的计算机程序，对计算机外部对象或者内部对象进行控制或处理的解决方案。 并不一定要包含对计算机硬件的改变。 五类可以申请专利的计算机软件：
+将计算机程序输入到一个公知的计算机来控制该计算机的内部操作，从而实现计算机内部性能的改进 用计算机程序来控制某一工业过程 用计算机程序来控制某一测量或者测试过程 使用一个计算机程序来实现外部数据处理 文件 Link to heading 主要是说明书（范围限定）和说明书附图
+专利挖掘途径：
+找出完成任务的组成部分：比如网站的前端、后台、服务器 分析各组成部分的技术要素：比如前端界面的多个功能模块 找出各技术要素的创新点：比如具体的权限功能模块 根据创新点总结技术方案：比如实现该模块的算法 ">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="专利讲座笔记"/>
+<meta name="twitter:description" content=" 专利学习 Link to heading 内容：
+专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座
+专利基本知识 Link to heading 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念。专利具体来说是分为三个类型：发明、实用新型、外观设计。
+发明也分为产品发明和方法发明，一般毕业所注册的专利都是方法发明这一类，包括制造方法和控制方法或使用方法。发明专利是对产品、方法或者改进所提出的技术方案。
+实用新型，又称为产品发明，定义上为对产品的形状、构造以其结合提出的适用于使用的新的技术方案。一般被称为小发明，不包含方法。（算法这类虚拟的方法类内容是不包含在实用新型中的）
+外观设计，又称为产品设计。对产品的形状、图案、色彩或者其结合所作出的富有美感并适于工作上应用的新设计。
+毕业要求的1分为公开发明专利，成果必须署名中山的数学，且必须为国家发明专利的第一发明人。
+不能获得专利的情况：
+科学发现，比如发现一种自然现象 智力活动的规则和方法，比如一种游戏规则（三国杀）。具体来说是可以人为地随意篡改也不影响技术方面的体现。 疾病的诊断和治疗方法。出于人道主义的考虑和社会伦理的原因。 动物和植物新品种（产品的生产方法除外） 用原子核变换方法获得的物质 专利的性质：
+独占性 专利权人具有对其发明创造的制造、使用、销售、许诺销售和进出口的权利，也是最重要的性质。 时间性 从申请日到授权日大概要2-3年，审查周期很长。 地域性 只能在某个国家单独申请 专利权授予条件：
+新颖性 指申请日以前没有同样的发明创造 在国内外的出版物上公开发表过。这一点比较经常遇到，在期刊发表后是不能申请专利的 在国内外公开使用过或者以其他方式为公众所知。 创造性 比新颖性要高。 要求具有突出的实质性特点和显著的进步（实用新型只需要具有实质性特点和进步即可） 涉及计算机程序的专利：
+通常是以发明专利申请的形式提出 涉及计算机程序的发明是指：为解决发明提出的问题，全部或部分以计算机程序处理流程为基础（算法流程图），通过计算机执行按上述流程编制的计算机程序，对计算机外部对象或者内部对象进行控制或处理的解决方案。 并不一定要包含对计算机硬件的改变。 五类可以申请专利的计算机软件：
+将计算机程序输入到一个公知的计算机来控制该计算机的内部操作，从而实现计算机内部性能的改进 用计算机程序来控制某一工业过程 用计算机程序来控制某一测量或者测试过程 使用一个计算机程序来实现外部数据处理 文件 Link to heading 主要是说明书（范围限定）和说明书附图
+专利挖掘途径：
+找出完成任务的组成部分：比如网站的前端、后台、服务器 分析各组成部分的技术要素：比如前端界面的多个功能模块 找出各技术要素的创新点：比如具体的权限功能模块 根据创新点总结技术方案：比如实现该模块的算法 "/>
+
+<meta property="og:title" content="专利讲座笔记" />
+<meta property="og:description" content=" 专利学习 Link to heading 内容：
+专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座
+专利基本知识 Link to heading 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念。专利具体来说是分为三个类型：发明、实用新型、外观设计。
+发明也分为产品发明和方法发明，一般毕业所注册的专利都是方法发明这一类，包括制造方法和控制方法或使用方法。发明专利是对产品、方法或者改进所提出的技术方案。
+实用新型，又称为产品发明，定义上为对产品的形状、构造以其结合提出的适用于使用的新的技术方案。一般被称为小发明，不包含方法。（算法这类虚拟的方法类内容是不包含在实用新型中的）
+外观设计，又称为产品设计。对产品的形状、图案、色彩或者其结合所作出的富有美感并适于工作上应用的新设计。
+毕业要求的1分为公开发明专利，成果必须署名中山的数学，且必须为国家发明专利的第一发明人。
+不能获得专利的情况：
+科学发现，比如发现一种自然现象 智力活动的规则和方法，比如一种游戏规则（三国杀）。具体来说是可以人为地随意篡改也不影响技术方面的体现。 疾病的诊断和治疗方法。出于人道主义的考虑和社会伦理的原因。 动物和植物新品种（产品的生产方法除外） 用原子核变换方法获得的物质 专利的性质：
+独占性 专利权人具有对其发明创造的制造、使用、销售、许诺销售和进出口的权利，也是最重要的性质。 时间性 从申请日到授权日大概要2-3年，审查周期很长。 地域性 只能在某个国家单独申请 专利权授予条件：
+新颖性 指申请日以前没有同样的发明创造 在国内外的出版物上公开发表过。这一点比较经常遇到，在期刊发表后是不能申请专利的 在国内外公开使用过或者以其他方式为公众所知。 创造性 比新颖性要高。 要求具有突出的实质性特点和显著的进步（实用新型只需要具有实质性特点和进步即可） 涉及计算机程序的专利：
+通常是以发明专利申请的形式提出 涉及计算机程序的发明是指：为解决发明提出的问题，全部或部分以计算机程序处理流程为基础（算法流程图），通过计算机执行按上述流程编制的计算机程序，对计算机外部对象或者内部对象进行控制或处理的解决方案。 并不一定要包含对计算机硬件的改变。 五类可以申请专利的计算机软件：
+将计算机程序输入到一个公知的计算机来控制该计算机的内部操作，从而实现计算机内部性能的改进 用计算机程序来控制某一工业过程 用计算机程序来控制某一测量或者测试过程 使用一个计算机程序来实现外部数据处理 文件 Link to heading 主要是说明书（范围限定）和说明书附图
+专利挖掘途径：
+找出完成任务的组成部分：比如网站的前端、后台、服务器 分析各组成部分的技术要素：比如前端界面的多个功能模块 找出各技术要素的创新点：比如具体的权限功能模块 根据创新点总结技术方案：比如实现该模块的算法 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-06-26T21:13:14+08:00" />
-<meta property="article:modified_time" content="2021-06-26T21:13:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-06-26T21:13:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="专利讲座笔记"/>
-<meta name="twitter:description" content="专利学习 内容： 专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座 专利基本知识 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/" /><link rel="next" href="http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "专利讲座笔记",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0\/"
-        },"genre": "posts","keywords": "分类\/知识库\/专利, 分类\/学习\/学习笔记","wordcount":  1096 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0\/","datePublished": "2021-06-26T21:13:14+08:00","dateModified": "2021-06-26T21:13:14+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/">
+              专利讲座笔记
+            </a>
+          </h1>
         </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" selected>简体中文</option></select>
-                </a></div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-06-26T21:13:14&#43;08:00">
+                六月 26, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E6%97%A0%E5%85%B3%E9%9A%8F%E7%AC%94/">无关随笔</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E7%9F%A5%E8%AF%86/%E4%B8%93%E5%88%A9/">知识/专利</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">内容/学习笔记</a>
+    </span></div>
+
         </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">专利讲座笔记</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%97%A0%E5%85%B3%E9%9A%8F%E7%AC%94/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>无关随笔</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-06-26">2021-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1096 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#专利基本知识">专利基本知识</a></li>
-    <li><a href="#文件">文件</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="专利学习">专利学习</h1>
+      </header>
+
+      <div class="post-content">
+        
+        <h1 id="专利学习">
+  专利学习
+  <a class="heading-link" href="#%e4%b8%93%e5%88%a9%e5%ad%a6%e4%b9%a0">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
 <p>内容：</p>
 <ul>
 <li>专利基础知识</li>
 <li>标书撰写</li>
 </ul>
 <p>来自嘉权专利商标事务所的相关讲座</p>
-<h2 id="专利基本知识">专利基本知识</h2>
+<h2 id="专利基本知识">
+  专利基本知识
+  <a class="heading-link" href="#%e4%b8%93%e5%88%a9%e5%9f%ba%e6%9c%ac%e7%9f%a5%e8%af%86">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念。专利具体来说是分为三个类型：发明、实用新型、外观设计。</p>
 <ul>
 <li>
@@ -199,7 +309,13 @@
 <li>用计算机程序来控制某一测量或者测试过程</li>
 <li>使用一个计算机程序来实现外部数据处理</li>
 </ol>
-<h2 id="文件">文件</h2>
+<h2 id="文件">
+  文件
+  <a class="heading-link" href="#%e6%96%87%e4%bb%b6">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>主要是说明书（范围限定）和说明书附图</p>
 <p>专利挖掘途径：</p>
 <ul>
@@ -208,43 +324,87 @@
 <li>找出各技术要素的创新点：比如具体的权限功能模块</li>
 <li>根据创新点总结技术方案：比如实现该模块的算法</li>
 </ul>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-06-26</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" data-title="专利讲座笔记" data-hashtags="分类/知识库/专利,分类/学习/学习笔记"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" data-hashtag="分类/知识库/专利"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" data-title="专利讲座笔记" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" data-title="专利讲座笔记"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" data-title="专利讲座笔记"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" data-title="专利讲座笔记" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/" data-title="专利讲座笔记"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E4%B8%93%E5%88%A9/">分类/知识库/专利</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">分类/学习/学习笔记</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/" class="prev" rel="prev" title="Go中nil意义的理解"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Go中nil意义的理解</a>
-            <a href="/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/" class="next" rel="next" title="golang函数参数中接口指针的传递">golang函数参数中接口指针的传递<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

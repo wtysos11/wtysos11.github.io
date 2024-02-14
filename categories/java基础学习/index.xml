@@ -1,16 +1,19 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Java基础学习 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
-        <description>Java基础学习 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 03 Mar 2021 18:08:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
-    <title>《Java核心技术 卷I：基础知识》读书笔记</title>
-    <link>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
-    <pubDate>Wed, 03 Mar 2021 18:08:14 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
-    <description><![CDATA[第一章 Java程序设计概述 太简单了，直接略过。 1.2 Java“白皮书”的关键术语 简单性：指相对于C++简单（指针、多重继承等），但设计者也并没有]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java基础学习 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in Java基础学习 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 03 Mar 2021 18:08:14 +0800</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《Java核心技术 卷I：基础知识》读书笔记</title>
+      <link>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Wed, 03 Mar 2021 18:08:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description>第一章 Java程序设计概述 Link to heading 太简单了，直接略过。&#xA;1.2 Java“白皮书”的关键术语 Link to heading 简单性：指相对于C++简单（指针、多重继承等），但设计者也并没有试图清楚C++中所有不适当的特性 面向对象：java与C++主要不同在于多重集成，以及接口概念 网络技能 健壮性 安全性 体系结构中立 可移植性 解释性：过去Java解释器可以在任何移植了解释器的机器上执行java字节码，现在使用即使编译器将字节码再翻译成机器码 高性能 多线程 动态性 第二章 Java程序设计环境 Link to heading 我选择使用了JetBrainde IDEA社区版，直接忽略&#xA;第三章 Java的基本程序设计结构 Link to heading 3.3 数据类型 Link to heading 主要关心的是boolean类型，包含false和true，与C++是同一个类型的&#xA;3.4 变量 Link to heading 合法特殊字符为任何代表字母的Unicode字符，但是不能出现+(操作符)和copyright（除字母外的其他Unicode字符）。其中$尽量不要在自己的代码中使用，一般出现在Java编译器或者其他工具生成的名字中。&#xA;需要显示初始化变量，与C++一致。&#xA;在java中，使用final指示常量，如final double CM_PER_INC=2.54。final表示该变量只能赋值一次，一旦赋值就不能修改，习惯上常量名使用大写。&#xA;类常量可以使用static final进行设定，在某个类内部定义&#xA;public class test{ public static final double CM_PER_INC=2.54; } 3.5 运算符 Link to heading 求余符号为%&#xA;3.5.6 强制类型转换 Link to heading double x = 9,997; int nx = (int) x; 3.</description>
+    </item>
+  </channel>
 </rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>内容/问题/问题解答 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/</link>
+    <description>Recent content in 内容/问题/问题解答 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>多协程写同一个slice的最佳实践</title>
+      <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Wed, 15 Jun 2022 14:40:05 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>问题描述 Link to heading main.go&#xA;func main() { fmt.Println(&amp;#34;in waitgroup test&amp;#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &amp;lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &amp;lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会发生数据竞争。其中在append的时候会发生两种竞争，一个是slice的容量增加时会发生问题，另一个是单纯读写时也会发生问题。 这使得最终的长度总是小于预期。</description>
+    </item>
+    <item>
+      <title>多协程写同一个slice的最佳实践</title>
+      <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Wed, 15 Jun 2022 14:40:05 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>问题描述 Link to heading main.go&#xA;func main() { fmt.Println(&amp;#34;in waitgroup test&amp;#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &amp;lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &amp;lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会发生数据竞争。其中在append的时候会发生两种竞争，一个是slice的容量增加时会发生问题，另一个是单纯读写时也会发生问题。 这使得最终的长度总是小于预期。</description>
+    </item>
+  </channel>
+</rss>

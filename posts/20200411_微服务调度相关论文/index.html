@@ -1,159 +1,198 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>【总结性】微服务调度相关论文 - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="【总结性】微服务调度相关论文" />
-<meta property="og:description" content="原始地址 阅读和微服务相关的论文 【论文名称】 调度类型，调度方法，调度对象，索引 综述文献： A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014" />
+<html lang="zh">
+
+<head>
+  <title>
+  【总结性】微服务调度相关论文 · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="原始地址
+阅读和微服务相关的论文
+【论文名称】 调度类型，调度方法，调度对象，索引 综述文献：
+A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014年的综述文献。 Elasticity in Cloud Computing : State of the Art and Research Challenges，弹性调度的综述文献，对调度的不同方法、使用虚拟机还是docker进行调度等方向进行了分类。 Auto-Scaling Web Applications in Clouds: A Taxonomy and Survey，另外一篇综述文献 A Survey and Taxonomy of Self-Aware and Self-Adaptive Cloud Autoscaling Systems 高价值文献：
+A reliable and cost-efficient auto-scaling system for web applications using heterogeneous spot instances
+Renewable-aware geographical load balancing of web applications for sustainable data centers">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="【总结性】微服务调度相关论文"/>
+<meta name="twitter:description" content="原始地址
+阅读和微服务相关的论文
+【论文名称】 调度类型，调度方法，调度对象，索引 综述文献：
+A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014年的综述文献。 Elasticity in Cloud Computing : State of the Art and Research Challenges，弹性调度的综述文献，对调度的不同方法、使用虚拟机还是docker进行调度等方向进行了分类。 Auto-Scaling Web Applications in Clouds: A Taxonomy and Survey，另外一篇综述文献 A Survey and Taxonomy of Self-Aware and Self-Adaptive Cloud Autoscaling Systems 高价值文献：
+A reliable and cost-efficient auto-scaling system for web applications using heterogeneous spot instances
+Renewable-aware geographical load balancing of web applications for sustainable data centers"/>
+
+<meta property="og:title" content="【总结性】微服务调度相关论文" />
+<meta property="og:description" content="原始地址
+阅读和微服务相关的论文
+【论文名称】 调度类型，调度方法，调度对象，索引 综述文献：
+A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014年的综述文献。 Elasticity in Cloud Computing : State of the Art and Research Challenges，弹性调度的综述文献，对调度的不同方法、使用虚拟机还是docker进行调度等方向进行了分类。 Auto-Scaling Web Applications in Clouds: A Taxonomy and Survey，另外一篇综述文献 A Survey and Taxonomy of Self-Aware and Self-Adaptive Cloud Autoscaling Systems 高价值文献：
+A reliable and cost-efficient auto-scaling system for web applications using heterogeneous spot instances
+Renewable-aware geographical load balancing of web applications for sustainable data centers" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-11T10:20:04+08:00" />
-<meta property="article:modified_time" content="2020-04-11T10:20:04+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="【总结性】微服务调度相关论文"/>
-<meta name="twitter:description" content="原始地址 阅读和微服务相关的论文 【论文名称】 调度类型，调度方法，调度对象，索引 综述文献： A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" /><link rel="prev" href="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" /><link rel="next" href="http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "【总结性】微服务调度相关论文",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87\/"
-        },"genre": "posts","keywords": "分类\/论文\/论文总结, 分类\/学习\/学习笔记\/笔记\/科研\/微服务调度","wordcount":  2969 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87\/","datePublished": "2020-04-11T10:20:04+08:00","dateModified": "2020-04-11T10:20:04+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">【总结性】微服务调度相关论文</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-04-11">2020-04-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2969 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#机器学习方法">机器学习方法</a></li>
-        <li><a href="#arma类方法">ARMA类方法</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-    <li><a href="#其他方法">其他方法</a>
-      <ul>
-        <li><a href="#混合方法">混合方法</a></li>
-        <li><a href="#马尔科夫">马尔科夫</a></li>
-      </ul>
-    </li>
-    <li><a href="#缓存">缓存</a>
-      <ul>
-        <li><a href="#auto-scaling-provision-basing-on-workload-prediction-in-the-virtualized-data-center">Auto-Scaling Provision Basing on Workload Prediction in the Virtualized Data Center</a></li>
-        <li><a href="#dynamic-provisioning-of-cloud-resources-based-on-workload-prediction">Dynamic Provisioning of Cloud Resources Based on Workload Prediction</a></li>
-        <li><a href="#stream-data-load-prediction-for-resource-scaling-using-online-support-vector-regression">Stream Data Load Prediction for Resource Scaling Using Online Support Vector Regression</a></li>
-        <li><a href="#tasm-technocrat-arima-and-svr-model-for-workload-prediction-of-web-applications-in-cloud">TASM: technocrat ARIMA and SVR model for workload prediction of web applications in cloud</a></li>
-        <li><a href="#an-ensemble-multiscale-wavelet-garch-hybrid-svr-algorithm-for-mobile-cloud-computing-workload-prediction">An ensemble multiscale wavelet-GARCH hybrid SVR algorithm for mobile cloud computing workload prediction</a></li>
-        <li><a href="#adaptive-prediction-models-for-data-center-resources-utilization-estimation">Adaptive Prediction Models for Data Center Resources Utilization Estimation</a></li>
-        <li><a href="#t-dcoral-a-threshold-based-dynamic-controller-resource-allocation-for-elastic-control-plane-in-software-defined-data-center-networks">T-DCORAL: A Threshold-Based Dynamic Controller Resource Allocation for Elastic Control Plane in Software-Defined Data Center Networks</a></li>
-        <li><a href="#alvec-auto-scaling-by-lotka-volterra-elastic-cloud-a-qos-aware-non-linear-dynamical-allocation-model">ALVEC: Auto-scaling by Lotka Volterra elastic cloud: A QoS aware non linear dynamical allocation model</a></li>
-        <li><a href="#chameleon-a-hybrid-proactive-auto-scaling-mechanism-on-a-level-playing-field">Chameleon: A Hybrid, Proactive Auto-Scaling Mechanism on a Level-Playing Field</a></li>
-        <li><a href="#rlpas-reinforcement-learning-based-proactive-auto-scaler-for-resource-provisioning-in-cloud-environment">RLPAS: Reinforcement Learning-based Proactive Auto-Scaler for Resource Provisioning in Cloud Environment</a></li>
-        <li><a href="#pascal-an-architecture-for-proactive-auto-scaling-of-distributed-services">PASCAL: An architecture for proactive auto-scaling of distributed services</a></li>
-        <li><a href="#dynamic-workload-patterns-prediction-for-proactive-auto-scaling-of-web-applications">Dynamic workload patterns prediction for proactive auto-scaling of web applications</a></li>
-        <li><a href="#supporting-programmable-autoscaling-rules-for-containers-and-virtual-machines-on-clouds">Supporting Programmable Autoscaling Rules for Containers and Virtual Machines on Clouds</a></li>
-        <li><a href="#a-fuzzy-based-autoscaling-approach-for-process-centered-cloud-systems">A Fuzzy-based Autoscaling Approach for Process Centered Cloud Systems</a></li>
-        <li><a href="#tosca-based-and-federation-aware-cloud-orchestration-for-kubernetes-container-platform">TOSCA-Based and Federation-Aware Cloud Orchestration for Kubernetes Container Platform</a></li>
-        <li><a href="#serverless-computing-for-container-based-architectures">Serverless computing for container-based architectures</a></li>
-        <li><a href="#dynamic-sar-for-efficient-container-auto-scaling-based-on-network-traffic-prediction">Dynamic SAR for Efficient Container Auto-Scaling based on Network Traffic Prediction</a></li>
-        <li><a href="#k8-scalar-a-workbench-to-compare-autoscalers-for-container-orchestrated-database-clusters">K8-Scalar: a workbench to compare autoscalers for container-orchestrated database clusters</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><p><a href="https://github.com/wtysos11/blogWiki/issues/11" target="_blank" rel="noopener noreffer ">原始地址</a></p>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/">
+              【总结性】微服务调度相关论文
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2020-04-11T10:20:04&#43;08:00">
+                四月 11, 2020
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">内容/停止更新/论文总结</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/">计算机/微服务调度</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p><a href="https://github.com/wtysos11/blogWiki/issues/11"  class="external-link" target="_blank" rel="noopener">原始地址</a></p>
 <p>阅读和微服务相关的论文</p>
 <pre tabindex="0"><code>【论文名称】 调度类型，调度方法，调度对象，索引 
 </code></pre><p>综述文献：</p>
@@ -199,7 +238,13 @@
 <p>Dependable Horizontal Scaling Based on Probabilistic Model Checking，使用KMeans进行聚类复用。</p>
 </li>
 </ul>
-<h3 id="机器学习方法">机器学习方法</h3>
+<h3 id="机器学习方法">
+  机器学习方法
+  <a class="heading-link" href="#%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e6%96%b9%e6%b3%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <ul>
 <li>Auto-Scaling VNFs Using Machine Learning to Improve QoS and Reduce Cost，使用机器学习方法，对VNF设备的访问数据。重点在于两个，一个是特征提取的方式，因为文章使用的是机器学习分类器，所以数据处理还是很有意思的；一个是它将启动时间等虚拟化参数引入其中。</li>
 <li>Online Machine Learning for Cloud Resource Provisioning of Microservice Backend Systems，使用了多元线性回归，使用了cross-validation的方式选择最佳的预测器来进行预测。</li>
@@ -208,103 +253,285 @@
 <ul>
 <li>Efficient resource provisioning for elastic Cloud services based on machine learning techniques</li>
 </ul>
-<h3 id="arma类方法">ARMA类方法</h3>
+<h3 id="arma类方法">
+  ARMA类方法
+  <a class="heading-link" href="#arma%e7%b1%bb%e6%96%b9%e6%b3%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <ul>
 <li>DoCloud: An elastic cloud platform for Web applications based on Docker，#12，使用了响应式调度与预测式调度相结合的方法，其中响应式调度使用了阈值法，预测式调度使用了ARMA。同时使用了慢减少的思想。</li>
 <li>Auto-scaling web applications in hybrid cloud based on docker，使用了响应式调度与又粗恶时调度相结合的方法。其中响应式调度使用了阈值法，预测式调度使用了MA方法。同时使用了慢减少的思想。</li>
 </ul>
-<h2 id="其他方法">其他方法</h2>
-<h3 id="混合方法">混合方法</h3>
+<h2 id="其他方法">
+  其他方法
+  <a class="heading-link" href="#%e5%85%b6%e4%bb%96%e6%96%b9%e6%b3%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h3 id="混合方法">
+  混合方法
+  <a class="heading-link" href="#%e6%b7%b7%e5%90%88%e6%96%b9%e6%b3%95">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <ul>
 <li>Study on proactive auto scaling for instance through the prediction of network traffic on the container environment，使用响应式调度与预测式调度相结合的方法。响应式调度使用基于静态阈值法的基于规则的调度，预测式调度使用时间序列分析、控制论、强化学习和排队论，具体来说是使用MA方法预测CPU利用率，但有其他的优化</li>
 </ul>
-<h3 id="马尔科夫">马尔科夫</h3>
+<h3 id="马尔科夫">
+  马尔科夫
+  <a class="heading-link" href="#%e9%a9%ac%e5%b0%94%e7%a7%91%e5%a4%ab">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <ul>
 <li>TIRAMOLA: Elastic nosql provisioning through a cloud management platform，对NoSQL集群调用马尔科夫过程指导调度。</li>
 </ul>
-<h2 id="缓存">缓存</h2>
+<h2 id="缓存">
+  缓存
+  <a class="heading-link" href="#%e7%bc%93%e5%ad%98">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>以下为2019年以来的文章</p>
-<h3 id="auto-scaling-provision-basing-on-workload-prediction-in-the-virtualized-data-center">Auto-Scaling Provision Basing on Workload Prediction in the Virtualized Data Center</h3>
+<h3 id="auto-scaling-provision-basing-on-workload-prediction-in-the-virtualized-data-center">
+  Auto-Scaling Provision Basing on Workload Prediction in the Virtualized Data Center
+  <a class="heading-link" href="#auto-scaling-provision-basing-on-workload-prediction-in-the-virtualized-data-center">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 With the development in the Cloud datacenters, the purpose of the efficient resource allocation is to meet the demand of the users instantly with the minimum rent cost. Thus, the elastic resource allocation strategy is usually combined with the prediction technology. This article proposes a novel predict method combination forecast technique, including both exponential smoothing (ES) and auto-regressive and polynomial fitting (PF) model. The aim of combination prediction is to achieve an efficient forecast technique according to the periodic and random feature of the workload and meet the application service level agreement (SLA) with the minimum cost. Moreover, the ES prediction with PSO algorithm gives a fine-grained scaling up and down the resources combining the heuristic algorithm in the future. APWP would solve the periodical or hybrid fluctuation of the workload in the cloud data centers. Finally, experiments improve that the combined prediction model meets the SLA with the better precision accuracy with the minimum renting cost.
 预测式策略，使用功能了exponential smoothing and auto-regressive and polynomical fitting model，组合预测模型的目的是满足不同流量的需要同时满足服务SLA的要求使用PSO算法来进行一个细粒度的调度。用更低的租用成本实现更高的预测精度。</p>
-<h3 id="dynamic-provisioning-of-cloud-resources-based-on-workload-prediction">Dynamic Provisioning of Cloud Resources Based on Workload Prediction</h3>
+<h3 id="dynamic-provisioning-of-cloud-resources-based-on-workload-prediction">
+  Dynamic Provisioning of Cloud Resources Based on Workload Prediction
+  <a class="heading-link" href="#dynamic-provisioning-of-cloud-resources-based-on-workload-prediction">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 Most of the businesses nowadays have started using cloud platforms to host their software applications. A cloud platform is a shared resource that provides various services like software as a service (SAAS), infrastructure as a service (IAAS) or anything as a service (XAAS) that is required to develop and deploy any business application. These cloud services are provided as virtual machines (VM) that can handle the end-user’s requirements. The cloud providers have to ensure efficient resource handling mechanisms for different time intervals to avoid wastage of resources. Auto-scaling mechanisms would take care of using these resources appropriately along with providing an excellent quality of service. The researchers have used various approaches to perform auto-scaling. In this paper, a framework based on dynamic provisioning of cloud resources using workload prediction is discussed.
 使用了预测式算法指导调度，但是并没有提及用了什么样的方法。</p>
-<h3 id="stream-data-load-prediction-for-resource-scaling-using-online-support-vector-regression">Stream Data Load Prediction for Resource Scaling Using Online Support Vector Regression</h3>
+<h3 id="stream-data-load-prediction-for-resource-scaling-using-online-support-vector-regression">
+  Stream Data Load Prediction for Resource Scaling Using Online Support Vector Regression
+  <a class="heading-link" href="#stream-data-load-prediction-for-resource-scaling-using-online-support-vector-regression">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 A distributed data stream processing system handles real-time, changeable and sudden streaming data load. Its elastic resource allocation has become a fundamental and challenging problem with a fixed strategy that will result in waste of resources or a reduction in QoS (quality of service). Spark Streaming as an emerging system has been developed to process real time stream data analytics by using micro-batch approach. In this paper, first, we propose an improved SVR (support vector regression) based stream data load prediction scheme. Then, we design a spark-based maximum sustainable throughput of time window (MSTW) performance model to find the optimized number of virtual machines. Finally, we present a resource scaling algorithm TWRES (time window resource elasticity scaling algorithm) with MSTW constraint and streaming data load prediction. The evaluation results show that TWRES could improve resource utilization and mitigate SLA (service level agreement) violation.
 使用了SVR方法对流量数据进行预测，然后使用了spark-based maximum sustainable throughput of time window(MSTW)性能模型来找到最合适的VM数，然后使用TWRES(time window resource elasticity scaling algorithm)来进行调度。</p>
-<h3 id="tasm-technocrat-arima-and-svr-model-for-workload-prediction-of-web-applications-in-cloud">TASM: technocrat ARIMA and SVR model for workload prediction of web applications in cloud</h3>
+<h3 id="tasm-technocrat-arima-and-svr-model-for-workload-prediction-of-web-applications-in-cloud">
+  TASM: technocrat ARIMA and SVR model for workload prediction of web applications in cloud
+  <a class="heading-link" href="#tasm-technocrat-arima-and-svr-model-for-workload-prediction-of-web-applications-in-cloud">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 Workload patterns of cloud applications are changing regularly. The workload prediction model is key for auto-scaling of resources in a cloud environment. It is helping with cost reduction and efficient resource utilization. The workload for the web applications is usually mixed for different application at different time span. The single prediction model is not able to predict different kinds of workload pattern of cloud applications. In this paper, an adaptive prediction model has been proposed using linear regression, ARIMA, and support vector regression for web applications. Workload classifier has been proposed to select the model as per workload features. Further the model parameters are selected through a heuristic approach. We have used real trace files to evaluate the proposed model with existing state-of-the-art models. The experiment results describe the significant improvement in root-mean-squared error and mean absolute percentage error metrics, and improve the quality of service of web applications in a cloud environment.
 单一的预测模型不能够预测多种不同的流量，使用线性回归、ARIMA和SVR方法一起预测，使用RMSE来作为衡量指标。</p>
-<h3 id="an-ensemble-multiscale-wavelet-garch-hybrid-svr-algorithm-for-mobile-cloud-computing-workload-prediction">An ensemble multiscale wavelet-GARCH hybrid SVR algorithm for mobile cloud computing workload prediction</h3>
+<h3 id="an-ensemble-multiscale-wavelet-garch-hybrid-svr-algorithm-for-mobile-cloud-computing-workload-prediction">
+  An ensemble multiscale wavelet-GARCH hybrid SVR algorithm for mobile cloud computing workload prediction
+  <a class="heading-link" href="#an-ensemble-multiscale-wavelet-garch-hybrid-svr-algorithm-for-mobile-cloud-computing-workload-prediction">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 Dynamic resource allocation and auto scalability are important aspects in mobile cloud computing environment. Predicting the cloud workload is a crucial task for dynamic resource allocation and auto scaling. Accuracy of workload prediction algorithm has significant impact on cloud quality of service and total cost of provided service. Since, existing prediction algorithms have competition for better accuracy and faster run time, in this paper we proposed a hybrid prediction algorithm to address both of these concerns. First we apply three level wavelet transform to decompose the workload time series into different resolution of time–frequency scales. An approximate and three details components. Second, we use support vector regression (SVR) for prediction of approximate and two low frequency detail components. The SVR parameters are tuned by a novel chaotic particle swarm optimization algorithm. Since the last detail component of time series has high frequency and is more likely to noise, we used generalized autoregressive conditional heteroskedasticity (GARCH) model to predict it. Finally, an ensemble method is applied to recompose these predicted samples from four multi scale predictions to achieve workload prediction for the next time step. The proposed method named wavelet decomposed 3 PSO optimized SVR plus GARCH (W3PSG). We evaluate the proposed W3PSG method with three different real cloud workload traces. Based on the results, the proposed method has relatively better prediction accuracy in comparison with competitive methods. According to mean absolute percentage error metric, in best case W3PSG method achieves 29.93%, 29.91%, and 24.53% of improvement in accuracy over three rival methods: GARCH, artificial neural network, and SVR respectively.
 预测性模型，使用了三层的小波变换来分解时间序列到不同的尺度，然后使用SVR方法，SVR方法的参数使用chaotic particle swarm optimization方法调参。</p>
-<h3 id="adaptive-prediction-models-for-data-center-resources-utilization-estimation">Adaptive Prediction Models for Data Center Resources Utilization Estimation</h3>
+<h3 id="adaptive-prediction-models-for-data-center-resources-utilization-estimation">
+  Adaptive Prediction Models for Data Center Resources Utilization Estimation
+  <a class="heading-link" href="#adaptive-prediction-models-for-data-center-resources-utilization-estimation">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 Accurate estimation of data center resource utilization is a challenging task due to multi-tenant co-hosted applications having dynamic and time-varying workloads. Accurate estimation of future resources utilization helps in better job scheduling, workload placement, capacity planning, proactive auto-scaling, and load balancing. The inaccurate estimation leads to either under or over-provisioning of data center resources. Most existing estimation methods are based on a single model that often does not appropriately estimate different workload scenarios. To address these problems, we propose a novel method to adaptively and automatically identify the most appropriate model to accurately estimate data center resources utilization. The proposed approach trains a classifier based on statistical features of historical resources usage to decide the appropriate prediction model to use for given resource utilization observations collected during a specific time interval. We evaluated our approach on real datasets and compared the results with multiple baseline methods. The experimental evaluation shows that the proposed approach outperforms the state-of-the-art approaches and delivers 6% to 27% improved resource utilization estimation accuracy compared to baseline methods.
 预测式方法，针对的是资源使用率。</p>
-<h3 id="t-dcoral-a-threshold-based-dynamic-controller-resource-allocation-for-elastic-control-plane-in-software-defined-data-center-networks">T-DCORAL: A Threshold-Based Dynamic Controller Resource Allocation for Elastic Control Plane in Software-Defined Data Center Networks</h3>
+<h3 id="t-dcoral-a-threshold-based-dynamic-controller-resource-allocation-for-elastic-control-plane-in-software-defined-data-center-networks">
+  T-DCORAL: A Threshold-Based Dynamic Controller Resource Allocation for Elastic Control Plane in Software-Defined Data Center Networks
+  <a class="heading-link" href="#t-dcoral-a-threshold-based-dynamic-controller-resource-allocation-for-elastic-control-plane-in-software-defined-data-center-networks">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 The existing elastic control planes (ECPs) suffer from the immediacy and the computing overhead issues in software-defined data center networks (SD-DCNs). In this letter, we propose T-DCORAL which is a new ECP to mitigate both issues in SD-DCNs. T-DCORAL accelerates/decelerates the control plane by allocating a virtual CPU to controllers in runtime, whereas the existing ECPs resize the controller pool. As a result, T-DCORAL maximally reduces the latency to adjust the control plane from 46 s to 38 ms, the average CPU load by 22%, and the average rule installation time by 64.28%.
 阈值法</p>
-<h3 id="alvec-auto-scaling-by-lotka-volterra-elastic-cloud-a-qos-aware-non-linear-dynamical-allocation-model">ALVEC: Auto-scaling by Lotka Volterra elastic cloud: A QoS aware non linear dynamical allocation model</h3>
+<h3 id="alvec-auto-scaling-by-lotka-volterra-elastic-cloud-a-qos-aware-non-linear-dynamical-allocation-model">
+  ALVEC: Auto-scaling by Lotka Volterra elastic cloud: A QoS aware non linear dynamical allocation model
+  <a class="heading-link" href="#alvec-auto-scaling-by-lotka-volterra-elastic-cloud-a-qos-aware-non-linear-dynamical-allocation-model">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 Measurement of the dynamic elasticity of resource allocation in cloud computing continues to be a relevant problem in the related literature. Yet, there is scant evidence on determining the dynamic scaling quotient in such operations. Elasticity is defined as the ability to adapt to the changing workloads by provisioning and de-provisioning of Cloud resources and scaling is essential for maintaining elasticity in resource allocation. We propose ALVEC, as a model of resource allocation in Cloud data centers (Sarkar et al. , 2016) [7], [16], to address dynamic allocation by auto-tuning the model parameters. The proposed model, governed by a coupled differential equation known as Lotka Volterra (LV), fares better for management of Service Level Agreement (SLA) and Quality of Services (QoS). We show evidence of true elasticity both in theoretical and numerical applications. Additionally, we show that ALVEC as an example of unsupervised resource allocation, is able to predict the future load and allocate virtual machines efficiently.</p>
-<h3 id="chameleon-a-hybrid-proactive-auto-scaling-mechanism-on-a-level-playing-field">Chameleon: A Hybrid, Proactive Auto-Scaling Mechanism on a Level-Playing Field</h3>
+<h3 id="chameleon-a-hybrid-proactive-auto-scaling-mechanism-on-a-level-playing-field">
+  Chameleon: A Hybrid, Proactive Auto-Scaling Mechanism on a Level-Playing Field
+  <a class="heading-link" href="#chameleon-a-hybrid-proactive-auto-scaling-mechanism-on-a-level-playing-field">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>摘要：
 Auto-scalers for clouds promise stable service quality at low costs when facing changing workload intensity. The major public cloud providers provide trigger-based auto-scalers based on thresholds. However, trigger-based auto-scaling has reaction times in the order of minutes. Novel auto-scalers from literature try to overcome the limitations of reactive mechanisms by employing proactive prediction methods. However, the adoption of proactive auto-scalers in production is still very low due to the high risk of relying on a single proactive method. This paper tackles the challenge of reducing this risk by proposing a new hybrid auto-scaling mechanism, called Chameleon, combining multiple different proactive methods coupled with a reactive fallback mechanism. Chameleon employs on-demand, automated time series-based forecasting methods to predict the arriving load intensity in combination with run-time service demand estimation to calculate the required resource consumption per work unit without the need for application instrumentation. We benchmark Chameleon against five different state-of-the-art proactive and reactive auto-scalers one in three different private and public cloud environments. We generate five different representative workloads each taken from different real-world system traces. Overall, Chameleon achieves the best scaling behavior based on user and elasticity performance metrics, analyzing the results from 400 hours aggregated experiment time.
 含预测式模型的混合模型。</p>
-<h3 id="rlpas-reinforcement-learning-based-proactive-auto-scaler-for-resource-provisioning-in-cloud-environment">RLPAS: Reinforcement Learning-based Proactive Auto-Scaler for Resource Provisioning in Cloud Environment</h3>
-<h3 id="pascal-an-architecture-for-proactive-auto-scaling-of-distributed-services">PASCAL: An architecture for proactive auto-scaling of distributed services</h3>
-<h3 id="dynamic-workload-patterns-prediction-for-proactive-auto-scaling-of-web-applications">Dynamic workload patterns prediction for proactive auto-scaling of web applications</h3>
-<h3 id="supporting-programmable-autoscaling-rules-for-containers-and-virtual-machines-on-clouds">Supporting Programmable Autoscaling Rules for Containers and Virtual Machines on Clouds</h3>
-<h3 id="a-fuzzy-based-autoscaling-approach-for-process-centered-cloud-systems">A Fuzzy-based Autoscaling Approach for Process Centered Cloud Systems</h3>
-<h3 id="tosca-based-and-federation-aware-cloud-orchestration-for-kubernetes-container-platform">TOSCA-Based and Federation-Aware Cloud Orchestration for Kubernetes Container Platform</h3>
-<h3 id="serverless-computing-for-container-based-architectures">Serverless computing for container-based architectures</h3>
-<h3 id="dynamic-sar-for-efficient-container-auto-scaling-based-on-network-traffic-prediction">Dynamic SAR for Efficient Container Auto-Scaling based on Network Traffic Prediction</h3>
-<h3 id="k8-scalar-a-workbench-to-compare-autoscalers-for-container-orchestrated-database-clusters">K8-Scalar: a workbench to compare autoscalers for container-orchestrated database clusters</h3>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2020-04-11</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" data-title="【总结性】微服务调度相关论文" data-hashtags="分类/论文/论文总结,分类/学习/学习笔记/笔记/科研/微服务调度"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" data-hashtag="分类/论文/论文总结"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" data-title="【总结性】微服务调度相关论文" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" data-title="【总结性】微服务调度相关论文"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" data-title="【总结性】微服务调度相关论文"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" data-title="【总结性】微服务调度相关论文" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" data-title="【总结性】微服务调度相关论文"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+<h3 id="rlpas-reinforcement-learning-based-proactive-auto-scaler-for-resource-provisioning-in-cloud-environment">
+  RLPAS: Reinforcement Learning-based Proactive Auto-Scaler for Resource Provisioning in Cloud Environment
+  <a class="heading-link" href="#rlpas-reinforcement-learning-based-proactive-auto-scaler-for-resource-provisioning-in-cloud-environment">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="pascal-an-architecture-for-proactive-auto-scaling-of-distributed-services">
+  PASCAL: An architecture for proactive auto-scaling of distributed services
+  <a class="heading-link" href="#pascal-an-architecture-for-proactive-auto-scaling-of-distributed-services">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="dynamic-workload-patterns-prediction-for-proactive-auto-scaling-of-web-applications">
+  Dynamic workload patterns prediction for proactive auto-scaling of web applications
+  <a class="heading-link" href="#dynamic-workload-patterns-prediction-for-proactive-auto-scaling-of-web-applications">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="supporting-programmable-autoscaling-rules-for-containers-and-virtual-machines-on-clouds">
+  Supporting Programmable Autoscaling Rules for Containers and Virtual Machines on Clouds
+  <a class="heading-link" href="#supporting-programmable-autoscaling-rules-for-containers-and-virtual-machines-on-clouds">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="a-fuzzy-based-autoscaling-approach-for-process-centered-cloud-systems">
+  A Fuzzy-based Autoscaling Approach for Process Centered Cloud Systems
+  <a class="heading-link" href="#a-fuzzy-based-autoscaling-approach-for-process-centered-cloud-systems">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="tosca-based-and-federation-aware-cloud-orchestration-for-kubernetes-container-platform">
+  TOSCA-Based and Federation-Aware Cloud Orchestration for Kubernetes Container Platform
+  <a class="heading-link" href="#tosca-based-and-federation-aware-cloud-orchestration-for-kubernetes-container-platform">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="serverless-computing-for-container-based-architectures">
+  Serverless computing for container-based architectures
+  <a class="heading-link" href="#serverless-computing-for-container-based-architectures">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="dynamic-sar-for-efficient-container-auto-scaling-based-on-network-traffic-prediction">
+  Dynamic SAR for Efficient Container Auto-Scaling based on Network Traffic Prediction
+  <a class="heading-link" href="#dynamic-sar-for-efficient-container-auto-scaling-based-on-network-traffic-prediction">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h3 id="k8-scalar-a-workbench-to-compare-autoscalers-for-container-orchestrated-database-clusters">
+  K8-Scalar: a workbench to compare autoscalers for container-orchestrated database clusters
+  <a class="heading-link" href="#k8-scalar-a-workbench-to-compare-autoscalers-for-container-orchestrated-database-clusters">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E8%AE%BA%E6%96%87/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">分类/论文/论文总结</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/">分类/学习/学习笔记/笔记/科研/微服务调度</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" class="prev" rel="prev" title="数据结构与算法复习"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>数据结构与算法复习</a>
-            <a href="/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/" class="next" rel="next" title="使用ADEPT方法学习困难概念">使用ADEPT方法学习困难概念<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

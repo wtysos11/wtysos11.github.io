@@ -1,146 +1,240 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting" />
-<meta property="og:description" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting 摘要 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covari" />
+<html lang="zh">
+
+<head>
+  <title>
+  Temporal fusion transformers for interpretable multi-horizon time series forecasting · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting Link to heading 摘要 Link to heading 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。
+作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。
+为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。
+TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。
+通过一系列真实世界的数据库，我们证明了其卓越的性能。
+1 Introduction Link to heading 与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）
+传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。
+DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。
+现有的这些模型大多都是黑盒模型，其中的参数之间包含了复杂的非线性关系。这使得实现模型难以解释它们的预测结果，使得用户难以去相信模型的输出并让模型建设者去进行修改与调试。
+可惜的是，通用的可解释性方法并不适用于时间序列。在它们过去的工作中（LIME和SHAP）并咩有考虑输入特征的时间顺序问题。
+核心的贡献包括：
+static covariate encoder，对一些静态的数据进行编码并送入到神经网络中。 贯穿全局的门机制与基于样本的变量选择，来最小化不相关输入的贡献。 Seq2Seq的架构来进行本地处理已知输入 temporal self-attention decoder层，来学习长期关系 2 Related work Link to heading multi-horizon预测可以分为两种：
+Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。 另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。 3 Multi-horizon forecasting Link to heading 时间序列预测的定义">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting"/>
+<meta name="twitter:description" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting Link to heading 摘要 Link to heading 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。
+作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。
+为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。
+TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。
+通过一系列真实世界的数据库，我们证明了其卓越的性能。
+1 Introduction Link to heading 与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）
+传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。
+DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。
+现有的这些模型大多都是黑盒模型，其中的参数之间包含了复杂的非线性关系。这使得实现模型难以解释它们的预测结果，使得用户难以去相信模型的输出并让模型建设者去进行修改与调试。
+可惜的是，通用的可解释性方法并不适用于时间序列。在它们过去的工作中（LIME和SHAP）并咩有考虑输入特征的时间顺序问题。
+核心的贡献包括：
+static covariate encoder，对一些静态的数据进行编码并送入到神经网络中。 贯穿全局的门机制与基于样本的变量选择，来最小化不相关输入的贡献。 Seq2Seq的架构来进行本地处理已知输入 temporal self-attention decoder层，来学习长期关系 2 Related work Link to heading multi-horizon预测可以分为两种：
+Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。 另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。 3 Multi-horizon forecasting Link to heading 时间序列预测的定义"/>
+
+<meta property="og:title" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting" />
+<meta property="og:description" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting Link to heading 摘要 Link to heading 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。
+作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。
+为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。
+TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。
+通过一系列真实世界的数据库，我们证明了其卓越的性能。
+1 Introduction Link to heading 与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）
+传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。
+DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。
+现有的这些模型大多都是黑盒模型，其中的参数之间包含了复杂的非线性关系。这使得实现模型难以解释它们的预测结果，使得用户难以去相信模型的输出并让模型建设者去进行修改与调试。
+可惜的是，通用的可解释性方法并不适用于时间序列。在它们过去的工作中（LIME和SHAP）并咩有考虑输入特征的时间顺序问题。
+核心的贡献包括：
+static covariate encoder，对一些静态的数据进行编码并送入到神经网络中。 贯穿全局的门机制与基于样本的变量选择，来最小化不相关输入的贡献。 Seq2Seq的架构来进行本地处理已知输入 temporal self-attention decoder层，来学习长期关系 2 Related work Link to heading multi-horizon预测可以分为两种：
+Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。 另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。 3 Multi-horizon forecasting Link to heading 时间序列预测的定义" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-02-15T11:00:04+08:00" />
-<meta property="article:modified_time" content="2021-02-15T11:00:04+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-02-15T11:00:04+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting"/>
-<meta name="twitter:description" content="Temporal fusion transformers for interpretable multi-horizon time series forecasting 摘要 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covari"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/" /><link rel="next" href="http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Temporal fusion transformers for interpretable multi-horizon time series forecasting",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting\/"
-        },"genre": "posts","keywords": "分类\/学习\/学习笔记\/笔记\/科研\/时间序列预测","wordcount":  2634 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting\/","datePublished": "2021-02-15T11:00:04+08:00","dateModified": "2021-02-15T11:00:04+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Temporal fusion transformers for interpretable multi-horizon time series forecasting</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-02-15">2021-02-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2634 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#摘要">摘要</a></li>
-    <li><a href="#1-introduction">1 Introduction</a></li>
-    <li><a href="#2-related-work">2 Related work</a></li>
-    <li><a href="#3-multi-horizon-forecasting">3 Multi-horizon forecasting</a></li>
-    <li><a href="#4-model-architecture">4 Model Architecture</a>
-      <ul>
-        <li><a href="#41-gating-mechanisms">4.1 Gating mechanisms</a></li>
-        <li><a href="#42-variable-selection-network">4.2 Variable Selection Network</a></li>
-        <li><a href="#43-static-covariate-encoder">4.3 Static Covariate Encoder</a></li>
-        <li><a href="#44-interpretable-mutli-head-attention">4.4 Interpretable mutli-head attention</a></li>
-        <li><a href="#45-temporal-fusion-decoder">4.5 Temporal Fusion Decoder</a></li>
-        <li><a href="#46-quantile-outputs">4.6 Quantile outputs</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting">Temporal fusion transformers for interpretable multi-horizon time series forecasting</h1>
-<h2 id="摘要">摘要</h2>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/">
+              Temporal fusion transformers for interpretable multi-horizon time series forecasting
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-02-15T11:00:04&#43;08:00">
+                二月 15, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/">计算机/科研/时间序列预测</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h1 id="temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting">
+  Temporal fusion transformers for interpretable multi-horizon time series forecasting
+  <a class="heading-link" href="#temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
+<h2 id="摘要">
+  摘要
+  <a class="heading-link" href="#%e6%91%98%e8%a6%81">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。</p>
 <p>作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。</p>
 <p>为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。</p>
 <p>TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。</p>
 <p>通过一系列真实世界的数据库，我们证明了其卓越的性能。</p>
-<h2 id="1-introduction">1 Introduction</h2>
+<h2 id="1-introduction">
+  1 Introduction
+  <a class="heading-link" href="#1-introduction">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）</p>
 <p>传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。</p>
 <p>DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。</p>
@@ -153,15 +247,33 @@
 <li>Seq2Seq的架构来进行本地处理已知输入</li>
 <li>temporal self-attention decoder层，来学习长期关系</li>
 </ol>
-<h2 id="2-related-work">2 Related work</h2>
+<h2 id="2-related-work">
+  2 Related work
+  <a class="heading-link" href="#2-related-work">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>multi-horizon预测可以分为两种：</p>
 <ol>
 <li>Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。</li>
 <li>另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。</li>
 </ol>
-<h2 id="3-multi-horizon-forecasting">3 Multi-horizon forecasting</h2>
+<h2 id="3-multi-horizon-forecasting">
+  3 Multi-horizon forecasting
+  <a class="heading-link" href="#3-multi-horizon-forecasting">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>时间序列预测的定义</p>
-<h2 id="4-model-architecture">4 Model Architecture</h2>
+<h2 id="4-model-architecture">
+  4 Model Architecture
+  <a class="heading-link" href="#4-model-architecture">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>主要部件</p>
 <ol>
 <li>Gating mechanism，用来跳过架构中没有使用的组件，提供一种自适应的深度和网络复杂度来应对不同的环境</li>
@@ -171,66 +283,152 @@
 <li>Prediction interval，使用quantile forecast进行预测。但是这个可以不用做进一个模型里面，传统的时间序列预测方法中就有类似的做法。</li>
 </ol>
 <p>我的感觉是，最大的区别在于attention层的位置。原版中attention层是在每一个Block中的，总共有6个Block来组成一个区域。而现在TFT只在中间使用了一个self-attention层，更接近于原本的Seq2Seq模型。</p>
-<h3 id="41-gating-mechanisms">4.1 Gating mechanisms</h3>
+<h3 id="41-gating-mechanisms">
+  4.1 Gating mechanisms
+  <a class="heading-link" href="#41-gating-mechanisms">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>外部输入与目标的关系一般是不知道的，这使得知晓哪些变量是相关变得非常困难。更重要的是，决定是否采用非线性处理同样非常困难，有些时候使用简单的模型可能效果反而更好，比如数据集很小或者充满噪声。</p>
 <p>作者实现了Gated Residual Network，输入为已知输入a和可选context vector c。与传统的Transformer相比，</p>
 <p>核心层是Gated Residual Network，$GRN(a,c) = LayerNorm(a+GLU( &hellip;  )))$，与原版的区别有两个，一个是使用了GLU来抑制不需要的输入变量，一个是用了ELU(Exponential Linear Unit activation function)，ELU的一个性质是当输入远远大于0的时候会作为identity function，当其远远小于0的时候则是一个常数。</p>
 <p>GLU则是使用了sigmoid来进行激活函数，并做Hadamard乘积来完成这个压制功能。GLU可以控制GRN中原始输入a的贡献。GLU的输出接近于0的时候这就是一个跳层，从而抑制非线性关系的贡献。dropout在Layer Norm之间进行。</p>
-<h3 id="42-variable-selection-network">4.2 Variable Selection Network</h3>
+<h3 id="42-variable-selection-network">
+  4.2 Variable Selection Network
+  <a class="heading-link" href="#42-variable-selection-network">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>虽然知道有很多的输入变量，但是它们之间的相关性与对输出的贡献仍然是未知的。</p>
 <p>变量选择网络除了让TFT知道哪一个变量是最重要的之外，同样使得它能够移除不必要的、可能对性能产生负面效果的noisy input。</p>
 <p>使用entity embedding来作为分类变量的特征表示方法，对连续变量用线性转换（使得向量长度符合网络要求）。</p>
-<h3 id="43-static-covariate-encoder">4.3 Static Covariate Encoder</h3>
+<h3 id="43-static-covariate-encoder">
+  4.3 Static Covariate Encoder
+  <a class="heading-link" href="#43-static-covariate-encoder">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>与其他的时间序列预测架构不同，TFT将静态的元数据中有用的信息也整合进了预测过程中。</p>
 <p>这一部分产生context vector，四个context vector会作为输入导入到不同的网络过程中。</p>
-<h3 id="44-interpretable-mutli-head-attention">4.4 Interpretable mutli-head attention</h3>
+<h3 id="44-interpretable-mutli-head-attention">
+  4.4 Interpretable mutli-head attention
+  <a class="heading-link" href="#44-interpretable-mutli-head-attention">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>说实话没太看明白，不过这里主要的改进不是对注意力机制本身，而是对其可解释性。具体来说是对A函数进行修改。</p>
-<h3 id="45-temporal-fusion-decoder">4.5 Temporal Fusion Decoder</h3>
+<h3 id="45-temporal-fusion-decoder">
+  4.5 Temporal Fusion Decoder
+  <a class="heading-link" href="#45-temporal-fusion-decoder">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>这里都没怎么看明白，比较细节</p>
-<h4 id="451-locality-enhancement-with-sequence-to-sequence-layer">4.5.1 Locality Enhancement with Sequence-to-Sequence Layer</h4>
+<h4 id="451-locality-enhancement-with-sequence-to-sequence-layer">
+  4.5.1 Locality Enhancement with Sequence-to-Sequence Layer
+  <a class="heading-link" href="#451-locality-enhancement-with-sequence-to-sequence-layer">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>作者在这里支出，时间序列中的点的重要性并不是由它自己决定的，而是由它周围的值决定的，比如离群点、变点或者循环模式等。通过利用本地内容，构建利用特征信息的特征，就可以提升最终的预测性能。</p>
 <p>比如[12]采用了单个CNN来进行locality enhancement，使用同一个过滤器来提取本地的特征。但是对于observed input存在的情况下，这种方法可能并不成立，因为过去和未来的输入并不总是一致的。</p>
 <p>为此，作者实现了Seq2Seq架构的模型来处理这种特征维数的变化，将前k个给encoder，将后d个给decoder，然后产生一组时序特征，输入到decoder中。</p>
-<h3 id="46-quantile-outputs">4.6 Quantile outputs</h3>
+<h3 id="46-quantile-outputs">
+  4.6 Quantile outputs
+  <a class="heading-link" href="#46-quantile-outputs">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>我不太清楚为什么置信区间输出是放在神经网络里面的，从理论上置信区间输出应该是根据过去预测值与过去真实值的残差进行的，通过对残差的方差进行估计，拟合正态分布可以得到未来的预测值的置信区间。</p>
 <p>文中输出的是10th,50th和90th，产生的方法是对原预测值进行线性转换。但是监督数据是怎么来的，挺奇怪的。</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-02-15</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" data-title="Temporal fusion transformers for interpretable multi-horizon time series forecasting" data-hashtags="分类/学习/学习笔记/笔记/科研/时间序列预测"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" data-hashtag="分类/学习/学习笔记/笔记/科研/时间序列预测"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" data-title="Temporal fusion transformers for interpretable multi-horizon time series forecasting" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" data-title="Temporal fusion transformers for interpretable multi-horizon time series forecasting"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" data-title="Temporal fusion transformers for interpretable multi-horizon time series forecasting"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" data-title="Temporal fusion transformers for interpretable multi-horizon time series forecasting" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/" data-title="Temporal fusion transformers for interpretable multi-horizon time series forecasting"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/">分类/学习/学习笔记/笔记/科研/时间序列预测</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/" class="prev" rel="prev" title="Time Series Data Augmentation for Deep Learning: A Survey"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Time Series Data Augmentation for Deep Learning: A Survey</a>
-            <a href="/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/" class="next" rel="next" title="阿里春招简历小课堂笔记">阿里春招简历小课堂笔记<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

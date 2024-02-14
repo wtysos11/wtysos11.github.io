@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>知识/学习 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E7%9F%A5%E8%AF%86/%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 知识/学习 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E7%9F%A5%E8%AF%86/%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用ADEPT方法学习困难概念</title>
+      <link>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</link>
+      <pubDate>Tue, 14 Apr 2020 09:51:04 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</guid>
+      <description>原文地址&#xA;参考资料：&#xA;Learning Difficult Concepts with the ADEPT Method 缘起-强化学习 困难的概念往往让人疯狂，仅仅看一遍几乎没有任何效果，实际操作又过于繁琐。使用5个步骤来科学学习：&#xA;Analogy：tell me what it&amp;rsquo;s like. Diagram：help me visualize it Example：allow me to experience it Plain English：Describe it with everyday works. Technical Definition：Discuss the formal details（这里最好能够自行推导一下公式、算法正确性之类的，会比较深刻） Analogy：What Else is it like Link to heading 许多新的概念本身就是已有概念的改进、扩展和延伸，所以可以通过根据旧概念来学习新的概念。 以虚数为例，简单的介绍可以是负数的平方根。以下为一些更好的解释：&#xA;负数在1700之前都没有被认可，为什么会有比没有还小的东西。 数字是在数轴上，沿着数轴向0前进和后退 为什么不能向上或向下移动，数轴不一定是一维的。二维的轴就是虚数轴。 这样通过曲折的绕行，使用现实/过往例子来进行双向印证，能够帮助人更好地理解、记忆一些概念。&#xA;Diagram：Engage that half of your brain Link to heading 画个图总是好的，无论是思维导图、概念图还是干脆就是随手涂鸦。画图能够在最短时间内将心中所想具现出来，而且往往很容易让人理解。&#xA;Example：Let Me Experience The Idea Link to heading 很多时候，讲再久不如上手做一下，动作的信息量要高于语言。 不一定非要付诸于实际，可以选择去看别人的视频，看别人如何做实验。即使是数学这样抽象的学科，也有3Blue1Brown这样用动画来表现数学概念的人。 例子：Khan Academy或一些经典问题（最好带上答案甚至解析）</description>
+    </item>
+  </channel>
+</rss>

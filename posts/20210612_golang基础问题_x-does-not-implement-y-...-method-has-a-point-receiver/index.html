@@ -1,196 +1,277 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>golang基础问题：X does not implement Y (... method has a point receiver) - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="golang基础问题：X does not implement Y (... method has a point receiver)" />
-<meta property="og:description" content="遇到问题 这个问题的来源是今天在复习接口的时候遇到了一份代码 package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err" />
+<html lang="zh">
+
+<head>
+  <title>
+  golang基础问题：X does not implement Y (... method has a point receiver) · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码
+package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="golang基础问题：X does not implement Y (... method has a point receiver)"/>
+<meta name="twitter:description" content="遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码
+package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误"/>
+
+<meta property="og:title" content="golang基础问题：X does not implement Y (... method has a point receiver)" />
+<meta property="og:description" content="遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码
+package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-06-12T10:38:14+08:00" />
-<meta property="article:modified_time" content="2021-06-12T10:38:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-06-12T10:38:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="golang基础问题：X does not implement Y (... method has a point receiver)"/>
-<meta name="twitter:description" content="遇到问题 这个问题的来源是今天在复习接口的时候遇到了一份代码 package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/" /><link rel="next" href="http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "golang基础问题：X does not implement Y (... method has a point receiver)",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/问题\/问题解答, 分类\/知识库\/计算机\/go","wordcount":  753 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver\/","datePublished": "2021-06-12T10:38:14+08:00","dateModified": "2021-06-12T10:38:14+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/">
+              golang基础问题：X does not implement Y (... method has a point receiver)
+            </a>
+          </h1>
         </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" selected>简体中文</option></select>
-                </a></div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-06-12T10:38:14&#43;08:00">
+                六月 12, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">Go基础学习</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/">计算机/问题/问题解答</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">计算机/go</a>
+    </span></div>
+
         </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang基础问题：X does not implement Y (... method has a point receiver)</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Go基础学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-06-12">2021-06-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 753 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#遇到问题">遇到问题</a></li>
-    <li><a href="#找到共性">找到共性</a></li>
-    <li><a href="#回溯">回溯</a></li>
-    <li><a href="#根源">根源</a></li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h2 id="遇到问题">遇到问题</h2>
+      </header>
+
+      <div class="post-content">
+        
+        <h2 id="遇到问题">
+  遇到问题
+  <a class="heading-link" href="#%e9%81%87%e5%88%b0%e9%97%ae%e9%a2%98">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>这个问题的来源是今天在复习接口的时候遇到了一份代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">RPCError</span> <span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">Code</span>    <span class="kt">int64</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">Message</span> <span class="kt">string</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">RPCError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s, code=%d&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Message</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Code</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;In main function&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">rpcErr</span> <span class="kt">error</span> <span class="p">=</span> <span class="nf">NewRPCError</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="s">&#34;unknown err&#34;</span><span class="p">)</span> <span class="c1">// typecheck1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">err</span> <span class="o">:=</span> <span class="nf">AsErr</span><span class="p">(</span><span class="nx">rpcErr</span><span class="p">)</span> <span class="c1">// typecheck2
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nb">println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewRPCError</span><span class="p">(</span><span class="nx">code</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">msg</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">RPCError</span><span class="p">{</span> <span class="c1">// typecheck3， must be &amp;RPCError
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">Code</span><span class="p">:</span>    <span class="nx">code</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">Message</span><span class="p">:</span> <span class="nx">msg</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">AsErr</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#a5d6ff">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">type</span> RPCError <span style="color:#ff7b72">struct</span> {
+</span></span><span style="display:flex;"><span>	Code    <span style="color:#ff7b72">int64</span>
+</span></span><span style="display:flex;"><span>	Message <span style="color:#ff7b72">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> (e <span style="color:#ff7b72;font-weight:bold">*</span>RPCError) <span style="color:#d2a8ff;font-weight:bold">Error</span>() <span style="color:#ff7b72">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> fmt.<span style="color:#d2a8ff;font-weight:bold">Sprintf</span>(<span style="color:#a5d6ff">&#34;%s, code=%d&#34;</span>, e.Message, e.Code)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;In main function&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> rpcErr <span style="color:#ff7b72">error</span> = <span style="color:#d2a8ff;font-weight:bold">NewRPCError</span>(<span style="color:#a5d6ff">400</span>, <span style="color:#a5d6ff">&#34;unknown err&#34;</span>) <span style="color:#8b949e;font-style:italic">// typecheck1
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">AsErr</span>(rpcErr) <span style="color:#8b949e;font-style:italic">// typecheck2
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	println(err)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">NewRPCError</span>(code <span style="color:#ff7b72">int64</span>, msg <span style="color:#ff7b72">string</span>) <span style="color:#ff7b72">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> RPCError{ <span style="color:#8b949e;font-style:italic">// typecheck3， must be &amp;RPCError
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		Code:    code,
+</span></span><span style="display:flex;"><span>		Message: msg,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">AsErr</span>(err <span style="color:#ff7b72">error</span>) <span style="color:#ff7b72">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> err
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</p>
 <pre tabindex="0"><code>./main.go:22:17: cannot use RPCError{...} (type RPCError) as type error in return argument:
 	RPCError does not implement error (Error method has pointer receiver)
 </code></pre><p>解决方案是将返回的<code>RPCError</code>改为<code>&amp;RPCError</code>，即传回指针而不是实值。</p>
 <p>但是这显然是与常识相违背的，因为error类型本身也并不是什么指针之类的东西，那这个指针是定义在哪里的？</p>
-<h2 id="找到共性">找到共性</h2>
-<p>在<a href="https://stackoverflow.com/questions/40823315/x-does-not-implement-y-method-has-a-pointer-receiver" target="_blank" rel="noopener noreffer ">SO</a>上找到了一个对应的问题，回答中构造了一个类似的情况</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Stringer</span> <span class="kd">interface</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nf">String</span><span class="p">()</span> <span class="kt">string</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">MyType</span> <span class="kd">struct</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">value</span> <span class="kt">string</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">MyType</span><span class="p">)</span> <span class="nf">String</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">value</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="nx">MyType</span><span class="p">{</span><span class="nx">value</span><span class="p">:</span><span class="s">&#34;something&#34;</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">s</span> <span class="nx">Stringer</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">s</span> <span class="p">=</span> <span class="nx">m</span> <span class="c1">// s=&amp;m
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<h2 id="找到共性">
+  找到共性
+  <a class="heading-link" href="#%e6%89%be%e5%88%b0%e5%85%b1%e6%80%a7">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p>在<a href="https://stackoverflow.com/questions/40823315/x-does-not-implement-y-method-has-a-pointer-receiver"  class="external-link" target="_blank" rel="noopener">SO</a>上找到了一个对应的问题，回答中构造了一个类似的情况</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">import</span> <span style="color:#a5d6ff">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">type</span> Stringer <span style="color:#ff7b72">interface</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#d2a8ff;font-weight:bold">String</span>() <span style="color:#ff7b72">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">type</span> MyType <span style="color:#ff7b72">struct</span> {
+</span></span><span style="display:flex;"><span>	value <span style="color:#ff7b72">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> (m <span style="color:#ff7b72;font-weight:bold">*</span>MyType) <span style="color:#d2a8ff;font-weight:bold">String</span>() <span style="color:#ff7b72">string</span> { <span style="color:#ff7b72">return</span> m.value }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(){
+</span></span><span style="display:flex;"><span>	m <span style="color:#ff7b72;font-weight:bold">:=</span> MyType{value:<span style="color:#a5d6ff">&#34;something&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> s Stringer
+</span></span><span style="display:flex;"><span>	s = m <span style="color:#8b949e;font-style:italic">// s=&amp;m
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(s)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>大意就是，为了实现接口Stringer，结构体必须有一个方法String。而在实际的实现中，String是被绑在方法*MyType上而不是MyType，所以接口对应的类型也只能是*MyType，因此必须传递一个指针。</p>
-<h2 id="回溯">回溯</h2>
+<h2 id="回溯">
+  回溯
+  <a class="heading-link" href="#%e5%9b%9e%e6%ba%af">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>而在原问题中，对Error方法的实现为</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">RPCError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s, code=%d&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Message</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Code</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> (e <span style="color:#ff7b72;font-weight:bold">*</span>RPCError) <span style="color:#d2a8ff;font-weight:bold">Error</span>() <span style="color:#ff7b72">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> fmt.<span style="color:#d2a8ff;font-weight:bold">Sprintf</span>(<span style="color:#a5d6ff">&#34;%s, code=%d&#34;</span>, e.Message, e.Code)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>所以如果将这个地方进行修改的话一样是可行的。
 问题解决。</p>
-<h2 id="根源">根源</h2>
+<h2 id="根源">
+  根源
+  <a class="heading-link" href="#%e6%a0%b9%e6%ba%90">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>该问题的根源在于，结构体与结构体的指针本质上是两种不同的类型。就像不能向一个接受指针的函数传递结构体一样，反过来也是不行的。只是这两种类型可以比较方便地进行快速转换，所以可能导致一些理解上的偏差</p>
 <p>比如下面两种实现接口的方法，其实都是可以的，而且是两种不同的实现方法。（当然，下面这样写肯定是不行的，指针类型和非指针类型对接口的实现不能同时出现）</p>
 <pre tabindex="0"><code>type Duck interface{
@@ -210,44 +291,88 @@ func (c Cat) Walk(){
 func (c Cat) Quack(){
     fmt.Println(&#34;Cat meow&#34;)
 }
-</code></pre><p>详情可以看<a href="https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-interface/" target="_blank" rel="noopener noreffer ">面向信仰编程-4.2接口</a></p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-06-12</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" data-title="golang基础问题：X does not implement Y (... method has a point receiver)" data-hashtags="分类/知识库/计算机/问题/问题解答,分类/知识库/计算机/go"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" data-hashtag="分类/知识库/计算机/问题/问题解答"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" data-title="golang基础问题：X does not implement Y (... method has a point receiver)" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" data-title="golang基础问题：X does not implement Y (... method has a point receiver)"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" data-title="golang基础问题：X does not implement Y (... method has a point receiver)"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" data-title="golang基础问题：X does not implement Y (... method has a point receiver)" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/" data-title="golang基础问题：X does not implement Y (... method has a point receiver)"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+</code></pre><p>详情可以看<a href="https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-interface/"  class="external-link" target="_blank" rel="noopener">面向信仰编程-4.2接口</a></p>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/">分类/知识库/计算机/问题/问题解答</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">分类/知识库/计算机/go</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/" class="prev" rel="prev" title="kubernetes服务：学习ingress与暴露服务简单实验"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>kubernetes服务：学习ingress与暴露服务简单实验</a>
-            <a href="/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/" class="next" rel="next" title="golang单元测试整理归纳">golang单元测试整理归纳<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

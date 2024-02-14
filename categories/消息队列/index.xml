@@ -1,16 +1,19 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>消息队列 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</link>
-        <description>消息队列 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 08 Jun 2022 09:01:42 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="self" type="application/rss+xml" /><item>
-    <title>消息队列基本概念与pulsar学习</title>
-    <link>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Wed, 08 Jun 2022 09:01:42 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</guid>
-    <description><![CDATA[消息队列学习 概念学习 参考资料： IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念 消息（messages）：一组信息的集合 topic。 Top]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>消息队列 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</link>
+    <description>Recent content in 消息队列 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>消息队列基本概念与pulsar学习</title>
+      <link>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Wed, 08 Jun 2022 09:01:42 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</guid>
+      <description>消息队列学习 Link to heading 概念学习 Link to heading 参考资料：&#xA;IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念&#xA;消息（messages）：一组信息的集合 topic。 Topic和Queue应该指的是两种不同的模型，根据这篇JMS的文章、Kafka is it a topic or a queue、JMS Topic vs Queues。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。 而且在队列中接受者不用担心超时问题；在Topic中接受者必须continuously active并且按时接收，不然消息就会超时。 在pulsar中，topic甚至不用预先创建，会根据{persistent|non-persistent}://tenant/namespace/topic的名称自动生成。 元数据（metadata）：参考BookKeeper Ledger Metadata，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。 Pub/Sub：Pub-Sub Messaging 消息队列的优点：&#xA;分离消息的生产者和消费者，使其在代码层面解耦合 允许消费者对消息进行异步处理，加快处理速度。 访问控制中的峰值控制。 Pulsar Link to heading 参考资料：&#xA;下一代消息队列pulsar到底是什么 pulsar/concepts-messaging 架构上来说，Pulsar是Pub-sub架构&#xA;Broker：无状态服务层，负责接受和传递消息、集群负载均衡 Apache BookKeeper：有状态持久化层，由一组名为Bookie的存储节点组成 Producer：数据生产者，负责发布数据到Topic Consumer：数据消费者，负责从Topic订阅数据 使用ZooKeeper作为元数据存储&#xA;其他消息队列是分区存储，Pulsar是分片存储。&#xA;Pub-sub架构（发布/订阅），异步的服务间通信方式，适用于无服务器和微服务。发布到主题的任何消息都会立即被主题的所有订阅者接收。&#xA;多层架构：&#xA;租户，可以看作是第一个层级，比如大的部门 namespace：命名空间，可以看作是第二个层级。 Subscriptions Link to heading 有四种模式：&#xA;Consumerless subscriptions，这个是例外，没有consumer的时候subscription mode的undefined的。</description>
+    </item>
+  </channel>
 </rss>

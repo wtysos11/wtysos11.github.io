@@ -1,145 +1,236 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions" />
-<meta property="og:description" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions 2021 International Journal of Forecasting 文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏" />
+<html lang="zh">
+
+<head>
+  <title>
+  Recurrent Neural Networks for Time Series Forecasting: Current status and future directions · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions Link to heading 2021 International Journal of Forecasting
+文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向于预测本身，而不是模型。 文章结构：第二部分是背景知识，包括传统univariate forecasting technique和不同的NN预测；第三部分包括RNN的实现细节和相关的数据预处理方法；第四部分解释了本文评测时所用的方法与数据集；第五部分进行了批判性的分析；第六部分进行总结；第七部分给出对未来的表述。
+第二部分 Link to heading 2.1 Univariate Forecasting Link to heading 传统的单变量方法即为时间序列基于其过去的值来完成对未来值的预测，即给定序列X={x1,x2,&hellip;,xT}，需要完成{X_{T&#43;1},&hellip;,X_{T&#43;H}} = F(x1,x2,&hellip;,xT) &#43; \epislon，这里的F是一个函数，经过序列X的训练产生得到，H是预测的跨度（horizon）\
+传统的时间序列预测方法在NN3、NN5和M3竞赛上都取得了最佳成绩，它们在数据量很小时表现非常好。但是由于数据量的限制，它们面对大量数据时的表现就不如机器学习算法了。
+2.2 ANN Link to heading 之前一直使用的是传统的FCNN，但是目前更多用的是RNN。RNN的cell比较常用的有Elman RNN cell, LSTM和GRUB，此外还有一些其他的架构。这些架构都同时在时间序列预测领域和自然语言处理中得到了使用。 一些架构介绍：
+Smyl所用的简单复合LSTM，他后来将其与ES算法结合并取得了M4竞赛的冠军 Seq2Seq，被Sutskever引入。传统的S2S架构中Encoder与Decoder都是RNN，这方面比较出色的工作是Amazon的DeepAR。在后续的一些工作中，S2S架构不再作为直接的预测手段，而是作为一种特征提取方式被整合进时间序列预测框架中。 Seq2Seq的一种变体是引入注意力机制。S2S机制的一个问题是将所有的输入数据编码成向量会造成信息损失，而注意力机制通过对更重要的信息加权，可以尽量减少这种信息损失。比如对于以年为周期的月度数据，显然上一年的相同月份的权重应该会更大 使用RNN的组合(ensemble RNN)，比如Smyl将这个问题分成两部分，即产生一组专门的RNN，并将其组合起来进行预测。也可以使用其他的组合方式，比如将meta-learner的输出作为RNN的输入继续进行预测，也有boosting的方法。 global方法，即权重全局计算（跨越不同的时间序列），但是状态保留在各自的时间序列中。 第三部分 Methodology Link to heading 都是很简单的介绍，没什么细节
+第四部分 测试框架 Link to heading 数据集：用的挺全的
+在这部分中我比较关心的是时间序列预处理的方式。时间序列预处理是非常麻烦的，最优的肯定是全局预处理，但是这只对于波动不大的时间序列管用，而且对于极端情况处理的很糟糕。Smyl还是NBEATS提出了局部时间序列处理方式，即每次使用滑动窗口的最后一个值进行时间序列预处理。">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions"/>
+<meta name="twitter:description" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions Link to heading 2021 International Journal of Forecasting
+文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向于预测本身，而不是模型。 文章结构：第二部分是背景知识，包括传统univariate forecasting technique和不同的NN预测；第三部分包括RNN的实现细节和相关的数据预处理方法；第四部分解释了本文评测时所用的方法与数据集；第五部分进行了批判性的分析；第六部分进行总结；第七部分给出对未来的表述。
+第二部分 Link to heading 2.1 Univariate Forecasting Link to heading 传统的单变量方法即为时间序列基于其过去的值来完成对未来值的预测，即给定序列X={x1,x2,&hellip;,xT}，需要完成{X_{T&#43;1},&hellip;,X_{T&#43;H}} = F(x1,x2,&hellip;,xT) &#43; \epislon，这里的F是一个函数，经过序列X的训练产生得到，H是预测的跨度（horizon）\
+传统的时间序列预测方法在NN3、NN5和M3竞赛上都取得了最佳成绩，它们在数据量很小时表现非常好。但是由于数据量的限制，它们面对大量数据时的表现就不如机器学习算法了。
+2.2 ANN Link to heading 之前一直使用的是传统的FCNN，但是目前更多用的是RNN。RNN的cell比较常用的有Elman RNN cell, LSTM和GRUB，此外还有一些其他的架构。这些架构都同时在时间序列预测领域和自然语言处理中得到了使用。 一些架构介绍：
+Smyl所用的简单复合LSTM，他后来将其与ES算法结合并取得了M4竞赛的冠军 Seq2Seq，被Sutskever引入。传统的S2S架构中Encoder与Decoder都是RNN，这方面比较出色的工作是Amazon的DeepAR。在后续的一些工作中，S2S架构不再作为直接的预测手段，而是作为一种特征提取方式被整合进时间序列预测框架中。 Seq2Seq的一种变体是引入注意力机制。S2S机制的一个问题是将所有的输入数据编码成向量会造成信息损失，而注意力机制通过对更重要的信息加权，可以尽量减少这种信息损失。比如对于以年为周期的月度数据，显然上一年的相同月份的权重应该会更大 使用RNN的组合(ensemble RNN)，比如Smyl将这个问题分成两部分，即产生一组专门的RNN，并将其组合起来进行预测。也可以使用其他的组合方式，比如将meta-learner的输出作为RNN的输入继续进行预测，也有boosting的方法。 global方法，即权重全局计算（跨越不同的时间序列），但是状态保留在各自的时间序列中。 第三部分 Methodology Link to heading 都是很简单的介绍，没什么细节
+第四部分 测试框架 Link to heading 数据集：用的挺全的
+在这部分中我比较关心的是时间序列预处理的方式。时间序列预处理是非常麻烦的，最优的肯定是全局预处理，但是这只对于波动不大的时间序列管用，而且对于极端情况处理的很糟糕。Smyl还是NBEATS提出了局部时间序列处理方式，即每次使用滑动窗口的最后一个值进行时间序列预处理。"/>
+
+<meta property="og:title" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions" />
+<meta property="og:description" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions Link to heading 2021 International Journal of Forecasting
+文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向于预测本身，而不是模型。 文章结构：第二部分是背景知识，包括传统univariate forecasting technique和不同的NN预测；第三部分包括RNN的实现细节和相关的数据预处理方法；第四部分解释了本文评测时所用的方法与数据集；第五部分进行了批判性的分析；第六部分进行总结；第七部分给出对未来的表述。
+第二部分 Link to heading 2.1 Univariate Forecasting Link to heading 传统的单变量方法即为时间序列基于其过去的值来完成对未来值的预测，即给定序列X={x1,x2,&hellip;,xT}，需要完成{X_{T&#43;1},&hellip;,X_{T&#43;H}} = F(x1,x2,&hellip;,xT) &#43; \epislon，这里的F是一个函数，经过序列X的训练产生得到，H是预测的跨度（horizon）\
+传统的时间序列预测方法在NN3、NN5和M3竞赛上都取得了最佳成绩，它们在数据量很小时表现非常好。但是由于数据量的限制，它们面对大量数据时的表现就不如机器学习算法了。
+2.2 ANN Link to heading 之前一直使用的是传统的FCNN，但是目前更多用的是RNN。RNN的cell比较常用的有Elman RNN cell, LSTM和GRUB，此外还有一些其他的架构。这些架构都同时在时间序列预测领域和自然语言处理中得到了使用。 一些架构介绍：
+Smyl所用的简单复合LSTM，他后来将其与ES算法结合并取得了M4竞赛的冠军 Seq2Seq，被Sutskever引入。传统的S2S架构中Encoder与Decoder都是RNN，这方面比较出色的工作是Amazon的DeepAR。在后续的一些工作中，S2S架构不再作为直接的预测手段，而是作为一种特征提取方式被整合进时间序列预测框架中。 Seq2Seq的一种变体是引入注意力机制。S2S机制的一个问题是将所有的输入数据编码成向量会造成信息损失，而注意力机制通过对更重要的信息加权，可以尽量减少这种信息损失。比如对于以年为周期的月度数据，显然上一年的相同月份的权重应该会更大 使用RNN的组合(ensemble RNN)，比如Smyl将这个问题分成两部分，即产生一组专门的RNN，并将其组合起来进行预测。也可以使用其他的组合方式，比如将meta-learner的输出作为RNN的输入继续进行预测，也有boosting的方法。 global方法，即权重全局计算（跨越不同的时间序列），但是状态保留在各自的时间序列中。 第三部分 Methodology Link to heading 都是很简单的介绍，没什么细节
+第四部分 测试框架 Link to heading 数据集：用的挺全的
+在这部分中我比较关心的是时间序列预处理的方式。时间序列预处理是非常麻烦的，最优的肯定是全局预处理，但是这只对于波动不大的时间序列管用，而且对于极端情况处理的很糟糕。Smyl还是NBEATS提出了局部时间序列处理方式，即每次使用滑动窗口的最后一个值进行时间序列预处理。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-01-19T19:50:04+08:00" />
-<meta property="article:modified_time" content="2021-01-19T19:50:04+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions"/>
-<meta name="twitter:description" content="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions 2021 International Journal of Forecasting 文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" /><link rel="next" href="http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "Recurrent Neural Networks for Time Series Forecasting: Current status and future directions",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions\/"
-        },"genre": "posts","keywords": "分类\/学习\/学习笔记\/笔记\/科研\/时间序列预测, 分类\/学习\/学习笔记\/笔记\/科研\/文献综述","wordcount":  1813 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions\/","datePublished": "2021-01-19T19:50:04+08:00","dateModified": "2021-01-19T19:50:04+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-01-19">2021-01-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 1813 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#第二部分">第二部分</a>
-      <ul>
-        <li><a href="#21-univariate-forecasting">2.1 Univariate Forecasting</a></li>
-        <li><a href="#22-ann">2.2 ANN</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-    <li><a href="#第三部分-methodology">第三部分 Methodology</a></li>
-    <li><a href="#第四部分-测试框架">第四部分 测试框架</a>
-      <ul>
-        <li><a href="#42-数据预处理">4.2 数据预处理</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><h1 id="recurrent-neural-networks-for-time-series-forecasting-current-status-and-future-directions">Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</h1>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/">
+              Recurrent Neural Networks for Time Series Forecasting: Current status and future directions
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-01-19T19:50:04&#43;08:00">
+                一月 19, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/">内容/停止更新/文献综述</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/">计算机/时间序列预测</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <h1 id="recurrent-neural-networks-for-time-series-forecasting-current-status-and-future-directions">
+  Recurrent Neural Networks for Time Series Forecasting: Current status and future directions
+  <a class="heading-link" href="#recurrent-neural-networks-for-time-series-forecasting-current-status-and-future-directions">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h1>
 <p>2021 International Journal of Forecasting</p>
 <p>文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向于预测本身，而不是模型。
 文章结构：第二部分是背景知识，包括传统univariate forecasting technique和不同的NN预测；第三部分包括RNN的实现细节和相关的数据预处理方法；第四部分解释了本文评测时所用的方法与数据集；第五部分进行了批判性的分析；第六部分进行总结；第七部分给出对未来的表述。</p>
-<h2 id="第二部分">第二部分</h2>
-<h3 id="21-univariate-forecasting">2.1 Univariate Forecasting</h3>
+<h2 id="第二部分">
+  第二部分
+  <a class="heading-link" href="#%e7%ac%ac%e4%ba%8c%e9%83%a8%e5%88%86">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<h3 id="21-univariate-forecasting">
+  2.1 Univariate Forecasting
+  <a class="heading-link" href="#21-univariate-forecasting">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>传统的单变量方法即为时间序列基于其过去的值来完成对未来值的预测，即给定序列X={x1,x2,&hellip;,xT}，需要完成{X_{T+1},&hellip;,X_{T+H}} = F(x1,x2,&hellip;,xT) + \epislon，这里的F是一个函数，经过序列X的训练产生得到，H是预测的跨度（horizon）\</p>
 <p>传统的时间序列预测方法在NN3、NN5和M3竞赛上都取得了最佳成绩，它们在数据量很小时表现非常好。但是由于数据量的限制，它们面对大量数据时的表现就不如机器学习算法了。</p>
-<h3 id="22-ann">2.2 ANN</h3>
+<h3 id="22-ann">
+  2.2 ANN
+  <a class="heading-link" href="#22-ann">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>之前一直使用的是传统的FCNN，但是目前更多用的是RNN。RNN的cell比较常用的有Elman RNN cell, LSTM和GRUB，此外还有一些其他的架构。这些架构都同时在时间序列预测领域和自然语言处理中得到了使用。
 一些架构介绍：</p>
 <ol>
@@ -149,19 +240,61 @@
 <li>使用RNN的组合(ensemble RNN)，比如Smyl将这个问题分成两部分，即产生一组专门的RNN，并将其组合起来进行预测。也可以使用其他的组合方式，比如将meta-learner的输出作为RNN的输入继续进行预测，也有boosting的方法。</li>
 <li>global方法，即权重全局计算（跨越不同的时间序列），但是状态保留在各自的时间序列中。</li>
 </ol>
-<h2 id="第三部分-methodology">第三部分 Methodology</h2>
+<h2 id="第三部分-methodology">
+  第三部分 Methodology
+  <a class="heading-link" href="#%e7%ac%ac%e4%b8%89%e9%83%a8%e5%88%86-methodology">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>都是很简单的介绍，没什么细节</p>
-<h2 id="第四部分-测试框架">第四部分 测试框架</h2>
+<h2 id="第四部分-测试框架">
+  第四部分 测试框架
+  <a class="heading-link" href="#%e7%ac%ac%e5%9b%9b%e9%83%a8%e5%88%86-%e6%b5%8b%e8%af%95%e6%a1%86%e6%9e%b6">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>数据集：用的挺全的</p>
 <p>在这部分中我比较关心的是时间序列预处理的方式。时间序列预处理是非常麻烦的，最优的肯定是全局预处理，但是这只对于波动不大的时间序列管用，而且对于极端情况处理的很糟糕。Smyl还是NBEATS提出了局部时间序列处理方式，即每次使用滑动窗口的最后一个值进行时间序列预处理。</p>
-<h3 id="42-数据预处理">4.2 数据预处理</h3>
-<h4 id="421-数据集切分">4.2.1 数据集切分</h4>
+<h3 id="42-数据预处理">
+  4.2 数据预处理
+  <a class="heading-link" href="#42-%e6%95%b0%e6%8d%ae%e9%a2%84%e5%a4%84%e7%90%86">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
+<h4 id="421-数据集切分">
+  4.2.1 数据集切分
+  <a class="heading-link" href="#421-%e6%95%b0%e6%8d%ae%e9%9b%86%e5%88%87%e5%88%86">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>首先是要留足与forecast horizon等长的validation dataset。</p>
-<h4 id="422-处理缺失值">4.2.2 处理缺失值</h4>
+<h4 id="422-处理缺失值">
+  4.2.2 处理缺失值
+  <a class="heading-link" href="#422-%e5%a4%84%e7%90%86%e7%bc%ba%e5%a4%b1%e5%80%bc">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>对于缺失值可以将其替换成线性插值结果或者直接赋值为0.对于NN5的数据，使用的是中位数。比如某一天的数据缺失了，那这一天的数据就使用所有星期的同一天中对应数据的中位数来填补。</p>
-<h4 id="423-对季节性建模">4.2.3 对季节性建模</h4>
+<h4 id="423-对季节性建模">
+  4.2.3 对季节性建模
+  <a class="heading-link" href="#423-%e5%af%b9%e5%ad%a3%e8%8a%82%e6%80%a7%e5%bb%ba%e6%a8%a1">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>很显然的事情是，对于更长的预测范围，是必须要使用周期性数据。Claveria 2017的工作显示，对季节性进行了调整适应的数据在预测中表现地更好。</p>
-<h4 id="425-多步输出问题">4.2.5 多步输出问题</h4>
+<h4 id="425-多步输出问题">
+  4.2.5 多步输出问题
+  <a class="heading-link" href="#425-%e5%a4%9a%e6%ad%a5%e8%be%93%e5%87%ba%e9%97%ae%e9%a2%98">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <ul>
 <li>Recursive Strategy: 每次预测一步，将前一次的预测结果作为下一次的输入</li>
 <li>Direct Strategy: 使用多个不同的模型，每个模型预测一个horizon中的一个时间点</li>
@@ -176,46 +309,96 @@
 <li>稍微比输出窗口大，m=1.25倍输出窗口大小</li>
 <li>令输入窗口稍微比季节性周期大，m=1.25倍季节性周期大小</li>
 </ol>
-<h4 id="426-trend-normalization">4.2.6 Trend Normalization</h4>
+<h4 id="426-trend-normalization">
+  4.2.6 Trend Normalization
+  <a class="heading-link" href="#426-trend-normalization">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h4>
 <p>RNN所用的激活函数，包括sigmoid或者tanh都有一个区域，超出这个区域后输出都是一个常数。因此使用RNN的时候需要确认输入数据是被正则化过的。
 Smyl提出了一个per window local normalization step，对使用滑动窗口法产生数据的正则化方式提出了一种比较好的局部正则化方法。</p>
-</div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-01-19</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" data-title="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions" data-hashtags="分类/学习/学习笔记/笔记/科研/时间序列预测,分类/学习/学习笔记/笔记/科研/文献综述"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" data-hashtag="分类/学习/学习笔记/笔记/科研/时间序列预测"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" data-title="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" data-title="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" data-title="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" data-title="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/" data-title="Recurrent Neural Networks for Time Series Forecasting: Current status and future directions"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/">分类/学习/学习笔记/笔记/科研/时间序列预测</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/">分类/学习/学习笔记/笔记/科研/文献综述</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" class="prev" rel="prev" title="现代人工智能课程复习"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>现代人工智能课程复习</a>
-            <a href="/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/" class="next" rel="next" title="Time Series Data Augmentation for Deep Learning: A Survey">Time Series Data Augmentation for Deep Learning: A Survey<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

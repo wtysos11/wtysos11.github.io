@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机/算法/简单 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%80%E5%8D%95/</link>
+    <description>Recent content in 计算机/算法/简单 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%80%E5%8D%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+      <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+      <pubDate>Wed, 13 Apr 2022 10:28:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+      <description>Leetcode 380: O(1)时间插入、删除和获取随机元素 Link to heading 22年4月13日每日一题&#xA;初始想法 Link to heading 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈希表的话，插入和删除是O(1)的，但是随机化并不是O(1)。&#xA;因此，只需要将数组和哈希表结合起来，使用哈希表进行插入和删除，并使用数组来进行随机化。问题在于数组中的元素删除代价不一定是O(1)，这个可以使用最后元素的置换来完成。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;ctime&amp;gt; using namespace std; class RandomizedSet { public: map&amp;lt;int,int&amp;gt; store; vector&amp;lt;int&amp;gt; q; RandomizedSet() { store.clear(); q.clear(); } bool insert(int val) { if(store.find(val)==store.end()){ q.emplace_back(val); store[val] = q.size()-1; return true; } return false; } bool remove(int val) { if(store.find(val)==store.end()){ return false; } int cur_pos = store[val]; int last_pos = q.size()-1; if(cur_pos !</description>
+    </item>
+    <item>
+      <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+      <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+      <pubDate>Wed, 13 Apr 2022 10:28:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+      <description>Leetcode 380: O(1)时间插入、删除和获取随机元素 Link to heading 22年4月13日每日一题&#xA;初始想法 Link to heading 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈希表的话，插入和删除是O(1)的，但是随机化并不是O(1)。&#xA;因此，只需要将数组和哈希表结合起来，使用哈希表进行插入和删除，并使用数组来进行随机化。问题在于数组中的元素删除代价不一定是O(1)，这个可以使用最后元素的置换来完成。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;ctime&amp;gt; using namespace std; class RandomizedSet { public: map&amp;lt;int,int&amp;gt; store; vector&amp;lt;int&amp;gt; q; RandomizedSet() { store.clear(); q.clear(); } bool insert(int val) { if(store.find(val)==store.end()){ q.emplace_back(val); store[val] = q.size()-1; return true; } return false; } bool remove(int val) { if(store.find(val)==store.end()){ return false; } int cur_pos = store[val]; int last_pos = q.size()-1; if(cur_pos !</description>
+    </item>
+    <item>
+      <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+      <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+      <pubDate>Wed, 13 Apr 2022 10:28:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+      <description>Leetcode 380: O(1)时间插入、删除和获取随机元素 Link to heading 22年4月13日每日一题&#xA;初始想法 Link to heading 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈希表的话，插入和删除是O(1)的，但是随机化并不是O(1)。&#xA;因此，只需要将数组和哈希表结合起来，使用哈希表进行插入和删除，并使用数组来进行随机化。问题在于数组中的元素删除代价不一定是O(1)，这个可以使用最后元素的置换来完成。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;ctime&amp;gt; using namespace std; class RandomizedSet { public: map&amp;lt;int,int&amp;gt; store; vector&amp;lt;int&amp;gt; q; RandomizedSet() { store.clear(); q.clear(); } bool insert(int val) { if(store.find(val)==store.end()){ q.emplace_back(val); store[val] = q.size()-1; return true; } return false; } bool remove(int val) { if(store.find(val)==store.end()){ return false; } int cur_pos = store[val]; int last_pos = q.size()-1; if(cur_pos !</description>
+    </item>
+    <item>
+      <title>Leetcode 806: 写字符串需要的行数</title>
+      <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+      <pubDate>Tue, 12 Apr 2022 09:15:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+      <description>220412 每日一题，非常简单&#xA;class Solution { public: vector&amp;lt;int&amp;gt; numberOfLines(vector&amp;lt;int&amp;gt;&amp;amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&amp;lt;s.length();i++){ if(rest == 100 &amp;amp;&amp;amp; widths[s[i]-&amp;#39;a&amp;#39;]&amp;gt;0){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; continue; } rest += widths[s[i]-&amp;#39;a&amp;#39;]; if(rest&amp;gt;100){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; } } return vector&amp;lt;int&amp;gt;{linenum,rest}; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 806: 写字符串需要的行数</title>
+      <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+      <pubDate>Tue, 12 Apr 2022 09:15:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+      <description>220412 每日一题，非常简单&#xA;class Solution { public: vector&amp;lt;int&amp;gt; numberOfLines(vector&amp;lt;int&amp;gt;&amp;amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&amp;lt;s.length();i++){ if(rest == 100 &amp;amp;&amp;amp; widths[s[i]-&amp;#39;a&amp;#39;]&amp;gt;0){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; continue; } rest += widths[s[i]-&amp;#39;a&amp;#39;]; if(rest&amp;gt;100){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; } } return vector&amp;lt;int&amp;gt;{linenum,rest}; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 806: 写字符串需要的行数</title>
+      <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+      <pubDate>Tue, 12 Apr 2022 09:15:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+      <description>220412 每日一题，非常简单&#xA;class Solution { public: vector&amp;lt;int&amp;gt; numberOfLines(vector&amp;lt;int&amp;gt;&amp;amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&amp;lt;s.length();i++){ if(rest == 100 &amp;amp;&amp;amp; widths[s[i]-&amp;#39;a&amp;#39;]&amp;gt;0){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; continue; } rest += widths[s[i]-&amp;#39;a&amp;#39;]; if(rest&amp;gt;100){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; } } return vector&amp;lt;int&amp;gt;{linenum,rest}; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 804: 唯一摩尔斯密码词</title>
+      <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
+      <pubDate>Sun, 10 Apr 2022 16:30:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
+      <description> Leetcode 804 唯一摩尔斯密码词 Link to heading 没什么难度，水题。如果不是每日一题不建议刷。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; #include &amp;lt;map&amp;gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&amp;lt;string&amp;gt;&amp;amp; words) { vector&amp;lt;string&amp;gt; password{&amp;#34;.-&amp;#34;,&amp;#34;-...&amp;#34;,&amp;#34;-.-.&amp;#34;,&amp;#34;-..&amp;#34;,&amp;#34;.&amp;#34;,&amp;#34;..-.&amp;#34;,&amp;#34;--.&amp;#34;,&amp;#34;....&amp;#34;,&amp;#34;..&amp;#34;,&amp;#34;.---&amp;#34;,&amp;#34;-.-&amp;#34;,&amp;#34;.-..&amp;#34;,&amp;#34;--&amp;#34;,&amp;#34;-.&amp;#34;,&amp;#34;---&amp;#34;,&amp;#34;.--.&amp;#34;,&amp;#34;--.-&amp;#34;,&amp;#34;.-.&amp;#34;,&amp;#34;...&amp;#34;,&amp;#34;-&amp;#34;,&amp;#34;..-&amp;#34;,&amp;#34;...-&amp;#34;,&amp;#34;.--&amp;#34;,&amp;#34;-..-&amp;#34;,&amp;#34;-.--&amp;#34;,&amp;#34;--..&amp;#34;}; map&amp;lt;string,bool&amp;gt; exist; for(int i=0;i&amp;lt;words.size();i++){ string&amp;amp; word = words[i]; string origin; for(int j=0;j&amp;lt;word.length();j++){ origin = origin + password[word[j]-&amp;#39;a&amp;#39;]; } exist[origin]=true; } return exist.size(); } }; int main(void){ Solution s; vector&amp;lt;string&amp;gt; words; words.emplace_back(&amp;#34;gin&amp;#34;); words.emplace_back(&amp;#34;zen&amp;#34;); words.emplace_back(&amp;#34;gig&amp;#34;); words.emplace_back(&amp;#34;msg&amp;#34;); cout&amp;lt;&amp;lt;s.uniqueMorseRepresentations(words)&amp;lt;&amp;lt;endl; return 0; } </description>
+    </item>
+    <item>
+      <title>Leetcode 804: 唯一摩尔斯密码词</title>
+      <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
+      <pubDate>Sun, 10 Apr 2022 16:30:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
+      <description> Leetcode 804 唯一摩尔斯密码词 Link to heading 没什么难度，水题。如果不是每日一题不建议刷。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; #include &amp;lt;map&amp;gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&amp;lt;string&amp;gt;&amp;amp; words) { vector&amp;lt;string&amp;gt; password{&amp;#34;.-&amp;#34;,&amp;#34;-...&amp;#34;,&amp;#34;-.-.&amp;#34;,&amp;#34;-..&amp;#34;,&amp;#34;.&amp;#34;,&amp;#34;..-.&amp;#34;,&amp;#34;--.&amp;#34;,&amp;#34;....&amp;#34;,&amp;#34;..&amp;#34;,&amp;#34;.---&amp;#34;,&amp;#34;-.-&amp;#34;,&amp;#34;.-..&amp;#34;,&amp;#34;--&amp;#34;,&amp;#34;-.&amp;#34;,&amp;#34;---&amp;#34;,&amp;#34;.--.&amp;#34;,&amp;#34;--.-&amp;#34;,&amp;#34;.-.&amp;#34;,&amp;#34;...&amp;#34;,&amp;#34;-&amp;#34;,&amp;#34;..-&amp;#34;,&amp;#34;...-&amp;#34;,&amp;#34;.--&amp;#34;,&amp;#34;-..-&amp;#34;,&amp;#34;-.--&amp;#34;,&amp;#34;--..&amp;#34;}; map&amp;lt;string,bool&amp;gt; exist; for(int i=0;i&amp;lt;words.size();i++){ string&amp;amp; word = words[i]; string origin; for(int j=0;j&amp;lt;word.length();j++){ origin = origin + password[word[j]-&amp;#39;a&amp;#39;]; } exist[origin]=true; } return exist.size(); } }; int main(void){ Solution s; vector&amp;lt;string&amp;gt; words; words.emplace_back(&amp;#34;gin&amp;#34;); words.emplace_back(&amp;#34;zen&amp;#34;); words.emplace_back(&amp;#34;gig&amp;#34;); words.emplace_back(&amp;#34;msg&amp;#34;); cout&amp;lt;&amp;lt;s.uniqueMorseRepresentations(words)&amp;lt;&amp;lt;endl; return 0; } </description>
+    </item>
+    <item>
+      <title>Leetcode 804: 唯一摩尔斯密码词</title>
+      <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
+      <pubDate>Sun, 10 Apr 2022 16:30:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
+      <description> Leetcode 804 唯一摩尔斯密码词 Link to heading 没什么难度，水题。如果不是每日一题不建议刷。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; #include &amp;lt;map&amp;gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&amp;lt;string&amp;gt;&amp;amp; words) { vector&amp;lt;string&amp;gt; password{&amp;#34;.-&amp;#34;,&amp;#34;-...&amp;#34;,&amp;#34;-.-.&amp;#34;,&amp;#34;-..&amp;#34;,&amp;#34;.&amp;#34;,&amp;#34;..-.&amp;#34;,&amp;#34;--.&amp;#34;,&amp;#34;....&amp;#34;,&amp;#34;..&amp;#34;,&amp;#34;.---&amp;#34;,&amp;#34;-.-&amp;#34;,&amp;#34;.-..&amp;#34;,&amp;#34;--&amp;#34;,&amp;#34;-.&amp;#34;,&amp;#34;---&amp;#34;,&amp;#34;.--.&amp;#34;,&amp;#34;--.-&amp;#34;,&amp;#34;.-.&amp;#34;,&amp;#34;...&amp;#34;,&amp;#34;-&amp;#34;,&amp;#34;..-&amp;#34;,&amp;#34;...-&amp;#34;,&amp;#34;.--&amp;#34;,&amp;#34;-..-&amp;#34;,&amp;#34;-.--&amp;#34;,&amp;#34;--..&amp;#34;}; map&amp;lt;string,bool&amp;gt; exist; for(int i=0;i&amp;lt;words.size();i++){ string&amp;amp; word = words[i]; string origin; for(int j=0;j&amp;lt;word.length();j++){ origin = origin + password[word[j]-&amp;#39;a&amp;#39;]; } exist[origin]=true; } return exist.size(); } }; int main(void){ Solution s; vector&amp;lt;string&amp;gt; words; words.emplace_back(&amp;#34;gin&amp;#34;); words.emplace_back(&amp;#34;zen&amp;#34;); words.emplace_back(&amp;#34;gig&amp;#34;); words.emplace_back(&amp;#34;msg&amp;#34;); cout&amp;lt;&amp;lt;s.uniqueMorseRepresentations(words)&amp;lt;&amp;lt;endl; return 0; } </description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
+    </item>
+    <item>
+      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
+    </item>
+    <item>
+      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,88 +1,305 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>计算机/算法/算法题解 - 标签 - 实践出真知</title>
-        <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/</link>
-        <description>计算机/算法/算法题解 - 标签 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" rel="self" type="application/rss+xml" /><item>
-    <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
-    <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
-    <pubDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
-    <description><![CDATA[Leetcode 380: O(1)时间插入、删除和获取随机元素 22年4月13日每日一题 初始想法 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈]]></description>
-</item>
-<item>
-    <title>Leetcode 806: 写字符串需要的行数</title>
-    <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
-    <pubDate>Tue, 12 Apr 2022 09:15:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
-    <description><![CDATA[220412 每日一题，非常简单 class Solution { public: vector&lt;int&gt; numberOfLines(vector&lt;int&gt;&amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&lt;s.length();i++){ if(rest == 100 &amp;&amp; widths[s[i]-&#39;a&#39;]&gt;0){ rest = widths[s[i]-&#39;a&#39;]; linenum++; continue; } rest += widths[s[i]-&#39;a&#39;]; if(rest&gt;100){ rest = widths[s[i]-&#39;a&#39;]; linenum++; } } return vector&lt;int&gt;{linenum,rest}; } };]]></description>
-</item>
-<item>
-    <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
-    <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
-    <pubDate>Mon, 11 Apr 2022 10:01:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
-    <description><![CDATA[Leetcode 357: 统计各位数字都不同的数字个数 解法包括暴力解法和扩张方法。 暴力解法 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了]]></description>
-</item>
-<item>
-    <title>Leetcode 804: 唯一摩尔斯密码词</title>
-    <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
-    <pubDate>Sun, 10 Apr 2022 16:30:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
-    <description><![CDATA[Leetcode 804 唯一摩尔斯密码词 没什么难度，水题。如果不是每日一题不建议刷。 #include &lt;iostream&gt; #include &lt;string&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&lt;string&gt;&amp; words) { vector&lt;string&gt; password{&#34;.-&#34;,&#34;-...&#34;,&#34;-.-.&#34;,&#34;-..&#34;,&#34;.&#34;,&#34;..-.&#34;,&#34;--.&#34;,&#34;....&#34;,&#34;..&#34;,&#34;.---&#34;,&#34;-.-&#34;,&#34;.-..&#34;,&#34;--&#34;,&#34;-.&#34;,&#34;---&#34;,&#34;.--.&#34;,&#34;--.-&#34;,&#34;.-.&#34;,&#34;...&#34;,&#34;-&#34;,&#34;..-&#34;,&#34;...-&#34;,&#34;.--&#34;,&#34;-..-&#34;,&#34;-.--&#34;,&#34;--..&#34;}; map&lt;string,bool&gt; exist; for(int i=0;i&lt;words.size();i++){ string&amp; word = words[i]; string origin; for(int j=0;j&lt;word.length();j++){ origin = origin]]></description>
-</item>
-<item>
-    <title>Leetcode 780: 到达终点</title>
-    <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
-    <pubDate>Sat, 09 Apr 2022 19:27:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
-    <description><![CDATA[Leetcode 780 到达终点 22年4月9日每日一题 题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,]]></description>
-</item>
-<item>
-    <title>Leetcode数组专题</title>
-    <link>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</link>
-    <pubDate>Fri, 08 Apr 2022 18:52:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</guid>
-    <description><![CDATA[Leetcode中与数组相关的题目，包括704、35]]></description>
-</item>
-<item>
-    <title>Leetcode 4: 寻找两个正序数组的中位数</title>
-    <link>http://wtysos11.github.io/posts/20220408_leetcode_4/</link>
-    <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
-    <description><![CDATA[寻找两个正序数组的中位数 这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已]]></description>
-</item>
-<item>
-    <title>Leetcode 429: N叉树的层次遍历</title>
-    <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
-    <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
-    <description><![CDATA[22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点]]></description>
-</item>
-<item>
-    <title>Leetcode 762: 二进制表示中质数个计算置位</title>
-    <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
-    <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
-    <description><![CDATA[762 二进制表示中质数个计算置位 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。 比如说$(21){10}=(10101){2}$，]]></description>
-</item>
-<item>
-    <title>Leetcode 796: 旋转字符串</title>
-    <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
-    <pubDate>Thu, 07 Apr 2022 19:21:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
-    <description><![CDATA[Leetcode第796题：旋转字符串，简单题]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机/算法/算法题解 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/</link>
+    <description>Recent content in 计算机/算法/算法题解 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+      <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+      <pubDate>Wed, 13 Apr 2022 10:28:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+      <description>Leetcode 380: O(1)时间插入、删除和获取随机元素 Link to heading 22年4月13日每日一题&#xA;初始想法 Link to heading 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈希表的话，插入和删除是O(1)的，但是随机化并不是O(1)。&#xA;因此，只需要将数组和哈希表结合起来，使用哈希表进行插入和删除，并使用数组来进行随机化。问题在于数组中的元素删除代价不一定是O(1)，这个可以使用最后元素的置换来完成。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;ctime&amp;gt; using namespace std; class RandomizedSet { public: map&amp;lt;int,int&amp;gt; store; vector&amp;lt;int&amp;gt; q; RandomizedSet() { store.clear(); q.clear(); } bool insert(int val) { if(store.find(val)==store.end()){ q.emplace_back(val); store[val] = q.size()-1; return true; } return false; } bool remove(int val) { if(store.find(val)==store.end()){ return false; } int cur_pos = store[val]; int last_pos = q.size()-1; if(cur_pos !</description>
+    </item>
+    <item>
+      <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+      <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+      <pubDate>Wed, 13 Apr 2022 10:28:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+      <description>Leetcode 380: O(1)时间插入、删除和获取随机元素 Link to heading 22年4月13日每日一题&#xA;初始想法 Link to heading 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈希表的话，插入和删除是O(1)的，但是随机化并不是O(1)。&#xA;因此，只需要将数组和哈希表结合起来，使用哈希表进行插入和删除，并使用数组来进行随机化。问题在于数组中的元素删除代价不一定是O(1)，这个可以使用最后元素的置换来完成。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;ctime&amp;gt; using namespace std; class RandomizedSet { public: map&amp;lt;int,int&amp;gt; store; vector&amp;lt;int&amp;gt; q; RandomizedSet() { store.clear(); q.clear(); } bool insert(int val) { if(store.find(val)==store.end()){ q.emplace_back(val); store[val] = q.size()-1; return true; } return false; } bool remove(int val) { if(store.find(val)==store.end()){ return false; } int cur_pos = store[val]; int last_pos = q.size()-1; if(cur_pos !</description>
+    </item>
+    <item>
+      <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+      <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+      <pubDate>Wed, 13 Apr 2022 10:28:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+      <description>Leetcode 380: O(1)时间插入、删除和获取随机元素 Link to heading 22年4月13日每日一题&#xA;初始想法 Link to heading 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈希表的话，插入和删除是O(1)的，但是随机化并不是O(1)。&#xA;因此，只需要将数组和哈希表结合起来，使用哈希表进行插入和删除，并使用数组来进行随机化。问题在于数组中的元素删除代价不一定是O(1)，这个可以使用最后元素的置换来完成。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;ctime&amp;gt; using namespace std; class RandomizedSet { public: map&amp;lt;int,int&amp;gt; store; vector&amp;lt;int&amp;gt; q; RandomizedSet() { store.clear(); q.clear(); } bool insert(int val) { if(store.find(val)==store.end()){ q.emplace_back(val); store[val] = q.size()-1; return true; } return false; } bool remove(int val) { if(store.find(val)==store.end()){ return false; } int cur_pos = store[val]; int last_pos = q.size()-1; if(cur_pos !</description>
+    </item>
+    <item>
+      <title>Leetcode 806: 写字符串需要的行数</title>
+      <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+      <pubDate>Tue, 12 Apr 2022 09:15:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+      <description>220412 每日一题，非常简单&#xA;class Solution { public: vector&amp;lt;int&amp;gt; numberOfLines(vector&amp;lt;int&amp;gt;&amp;amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&amp;lt;s.length();i++){ if(rest == 100 &amp;amp;&amp;amp; widths[s[i]-&amp;#39;a&amp;#39;]&amp;gt;0){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; continue; } rest += widths[s[i]-&amp;#39;a&amp;#39;]; if(rest&amp;gt;100){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; } } return vector&amp;lt;int&amp;gt;{linenum,rest}; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 806: 写字符串需要的行数</title>
+      <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+      <pubDate>Tue, 12 Apr 2022 09:15:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+      <description>220412 每日一题，非常简单&#xA;class Solution { public: vector&amp;lt;int&amp;gt; numberOfLines(vector&amp;lt;int&amp;gt;&amp;amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&amp;lt;s.length();i++){ if(rest == 100 &amp;amp;&amp;amp; widths[s[i]-&amp;#39;a&amp;#39;]&amp;gt;0){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; continue; } rest += widths[s[i]-&amp;#39;a&amp;#39;]; if(rest&amp;gt;100){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; } } return vector&amp;lt;int&amp;gt;{linenum,rest}; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 806: 写字符串需要的行数</title>
+      <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+      <pubDate>Tue, 12 Apr 2022 09:15:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+      <description>220412 每日一题，非常简单&#xA;class Solution { public: vector&amp;lt;int&amp;gt; numberOfLines(vector&amp;lt;int&amp;gt;&amp;amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&amp;lt;s.length();i++){ if(rest == 100 &amp;amp;&amp;amp; widths[s[i]-&amp;#39;a&amp;#39;]&amp;gt;0){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; continue; } rest += widths[s[i]-&amp;#39;a&amp;#39;]; if(rest&amp;gt;100){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; } } return vector&amp;lt;int&amp;gt;{linenum,rest}; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+      <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+      <pubDate>Mon, 11 Apr 2022 10:01:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+      <description> Leetcode 357: 统计各位数字都不同的数字个数 Link to heading 解法包括暴力解法和扩张方法。&#xA;暴力解法 Link to heading 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了。&#xA;扩张方法 Link to heading 这个想法是错的……不应该从有重复的数字扩张，应该从没有重复的数字扩张。早上起来做这道题脑子有点懵。&#xA;该问题是具备最优子结构的。对于长度为n的问题，与其枚举没有重复的数字，不如枚举重复的数字。 重复源头可以来源于之前（n-1）与当前，因此可以从这个地方开始递推比较最新一位的数字与之前的数字之间的关系。&#xA;可以定义数字dp[n][m]为长度为n的数组中以m开头的数内重复的数字个数。 其中对0的处理比较麻烦，最高位不会出现0，但是0是有可能出现重复的，因此可能需要对之前的一位做专门的处理。 因此特殊的，定义dp[n-1][0]为第n位数为任意非0数时，n-1位为0时的重复数字个数&#xA;显而易见的是，dp[1][&amp;hellip;]=0，长度为一位的时候不会有重复的数据。&#xA;最新的一位数据的内容主要包括两个方面：&#xA;之前已经重复的0：$dp[n-1][0] = 10^{n-3} + \sum_{i\in Q_0}dp[n-2][i]$，包括最新的一个重复，加上之前的重复项目 更新完0之后，更新之前已经重复的1~9：$dp[n][m] = 10^{n-2} + \sum_{i\in Q_m}dp[n-1][i]$。其中$Q_m$表示个位数中除了m以外的集合，比如$Q_1={0,2,3,&amp;hellip;,9}$。 该项目的两个部分分别表示前一位为m或者非m的情况（非0），以1为例子 $10^{n-2}$表示形如&amp;quot;11XXX&amp;quot;的数据，其中之后的数据完全任意且不会重复，因此直接计总数即可。 $\sum_{i\in Q_m}dp[n-1][i]$，表示形如&amp;quot;1XaaXXX&amp;quot;的数据，即最新的数字加入时没有引入重复，但是之前已经发生了重复的情况。 该项也是0为什么要在之前计算的缘故，否则，会漏算因为0引起的重复情况。 在计算的时候是一起计算的，n位以0开头的数字可以视为n+1位存在任意数字使其非0。但是最终计算总重复数字时不会加入dp[n][0]，因为最高位为时非法的。&#xA;以n=3为例子:&#xA;n=1的时候，$dp[1][&amp;hellip;]=0$ n=2的时候，$dp[2][1] = dp[1][1] + 10^0=1$，也即11。类似的，有00、22、33、44、55、66、77、88、99。 n=3的时候，$dp[3][1] = 10^1 + \sum_{i\in{0,2,3,&amp;hellip;,9}}10^0$，即110、111、112、&amp;hellip;、119，以及100、122、133、&amp;hellip;、199。 在最终计入总数的时候，计算$\sum_{i=1}^9dp[n][i]$，不计算0。因为不存在以0开头的数字。 数学方法 Link to heading 官方给的解法：含有d位数($2\geq d\leq 10$)的各位数字都不同的数字x的个数可以由$9\times A_{9}^{d-1}$。（第一位选择范围为除0以外，第二位为10个数字除以第一位，以此类推）&#xA;class Solution { public: int countNumbersWithUniqueDigits(int n) { if (n == 0) { return 1; } if (n == 1) { return 10; } int ans = 10, cur = 9; for (int i = 0; i &amp;lt; n - 1; ++i) { cur *= 9 - i; ans += cur; } return ans; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+      <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+      <pubDate>Mon, 11 Apr 2022 10:01:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+      <description> Leetcode 357: 统计各位数字都不同的数字个数 Link to heading 解法包括暴力解法和扩张方法。&#xA;暴力解法 Link to heading 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了。&#xA;扩张方法 Link to heading 这个想法是错的……不应该从有重复的数字扩张，应该从没有重复的数字扩张。早上起来做这道题脑子有点懵。&#xA;该问题是具备最优子结构的。对于长度为n的问题，与其枚举没有重复的数字，不如枚举重复的数字。 重复源头可以来源于之前（n-1）与当前，因此可以从这个地方开始递推比较最新一位的数字与之前的数字之间的关系。&#xA;可以定义数字dp[n][m]为长度为n的数组中以m开头的数内重复的数字个数。 其中对0的处理比较麻烦，最高位不会出现0，但是0是有可能出现重复的，因此可能需要对之前的一位做专门的处理。 因此特殊的，定义dp[n-1][0]为第n位数为任意非0数时，n-1位为0时的重复数字个数&#xA;显而易见的是，dp[1][&amp;hellip;]=0，长度为一位的时候不会有重复的数据。&#xA;最新的一位数据的内容主要包括两个方面：&#xA;之前已经重复的0：$dp[n-1][0] = 10^{n-3} + \sum_{i\in Q_0}dp[n-2][i]$，包括最新的一个重复，加上之前的重复项目 更新完0之后，更新之前已经重复的1~9：$dp[n][m] = 10^{n-2} + \sum_{i\in Q_m}dp[n-1][i]$。其中$Q_m$表示个位数中除了m以外的集合，比如$Q_1={0,2,3,&amp;hellip;,9}$。 该项目的两个部分分别表示前一位为m或者非m的情况（非0），以1为例子 $10^{n-2}$表示形如&amp;quot;11XXX&amp;quot;的数据，其中之后的数据完全任意且不会重复，因此直接计总数即可。 $\sum_{i\in Q_m}dp[n-1][i]$，表示形如&amp;quot;1XaaXXX&amp;quot;的数据，即最新的数字加入时没有引入重复，但是之前已经发生了重复的情况。 该项也是0为什么要在之前计算的缘故，否则，会漏算因为0引起的重复情况。 在计算的时候是一起计算的，n位以0开头的数字可以视为n+1位存在任意数字使其非0。但是最终计算总重复数字时不会加入dp[n][0]，因为最高位为时非法的。&#xA;以n=3为例子:&#xA;n=1的时候，$dp[1][&amp;hellip;]=0$ n=2的时候，$dp[2][1] = dp[1][1] + 10^0=1$，也即11。类似的，有00、22、33、44、55、66、77、88、99。 n=3的时候，$dp[3][1] = 10^1 + \sum_{i\in{0,2,3,&amp;hellip;,9}}10^0$，即110、111、112、&amp;hellip;、119，以及100、122、133、&amp;hellip;、199。 在最终计入总数的时候，计算$\sum_{i=1}^9dp[n][i]$，不计算0。因为不存在以0开头的数字。 数学方法 Link to heading 官方给的解法：含有d位数($2\geq d\leq 10$)的各位数字都不同的数字x的个数可以由$9\times A_{9}^{d-1}$。（第一位选择范围为除0以外，第二位为10个数字除以第一位，以此类推）&#xA;class Solution { public: int countNumbersWithUniqueDigits(int n) { if (n == 0) { return 1; } if (n == 1) { return 10; } int ans = 10, cur = 9; for (int i = 0; i &amp;lt; n - 1; ++i) { cur *= 9 - i; ans += cur; } return ans; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+      <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+      <pubDate>Mon, 11 Apr 2022 10:01:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+      <description> Leetcode 357: 统计各位数字都不同的数字个数 Link to heading 解法包括暴力解法和扩张方法。&#xA;暴力解法 Link to heading 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了。&#xA;扩张方法 Link to heading 这个想法是错的……不应该从有重复的数字扩张，应该从没有重复的数字扩张。早上起来做这道题脑子有点懵。&#xA;该问题是具备最优子结构的。对于长度为n的问题，与其枚举没有重复的数字，不如枚举重复的数字。 重复源头可以来源于之前（n-1）与当前，因此可以从这个地方开始递推比较最新一位的数字与之前的数字之间的关系。&#xA;可以定义数字dp[n][m]为长度为n的数组中以m开头的数内重复的数字个数。 其中对0的处理比较麻烦，最高位不会出现0，但是0是有可能出现重复的，因此可能需要对之前的一位做专门的处理。 因此特殊的，定义dp[n-1][0]为第n位数为任意非0数时，n-1位为0时的重复数字个数&#xA;显而易见的是，dp[1][&amp;hellip;]=0，长度为一位的时候不会有重复的数据。&#xA;最新的一位数据的内容主要包括两个方面：&#xA;之前已经重复的0：$dp[n-1][0] = 10^{n-3} + \sum_{i\in Q_0}dp[n-2][i]$，包括最新的一个重复，加上之前的重复项目 更新完0之后，更新之前已经重复的1~9：$dp[n][m] = 10^{n-2} + \sum_{i\in Q_m}dp[n-1][i]$。其中$Q_m$表示个位数中除了m以外的集合，比如$Q_1={0,2,3,&amp;hellip;,9}$。 该项目的两个部分分别表示前一位为m或者非m的情况（非0），以1为例子 $10^{n-2}$表示形如&amp;quot;11XXX&amp;quot;的数据，其中之后的数据完全任意且不会重复，因此直接计总数即可。 $\sum_{i\in Q_m}dp[n-1][i]$，表示形如&amp;quot;1XaaXXX&amp;quot;的数据，即最新的数字加入时没有引入重复，但是之前已经发生了重复的情况。 该项也是0为什么要在之前计算的缘故，否则，会漏算因为0引起的重复情况。 在计算的时候是一起计算的，n位以0开头的数字可以视为n+1位存在任意数字使其非0。但是最终计算总重复数字时不会加入dp[n][0]，因为最高位为时非法的。&#xA;以n=3为例子:&#xA;n=1的时候，$dp[1][&amp;hellip;]=0$ n=2的时候，$dp[2][1] = dp[1][1] + 10^0=1$，也即11。类似的，有00、22、33、44、55、66、77、88、99。 n=3的时候，$dp[3][1] = 10^1 + \sum_{i\in{0,2,3,&amp;hellip;,9}}10^0$，即110、111、112、&amp;hellip;、119，以及100、122、133、&amp;hellip;、199。 在最终计入总数的时候，计算$\sum_{i=1}^9dp[n][i]$，不计算0。因为不存在以0开头的数字。 数学方法 Link to heading 官方给的解法：含有d位数($2\geq d\leq 10$)的各位数字都不同的数字x的个数可以由$9\times A_{9}^{d-1}$。（第一位选择范围为除0以外，第二位为10个数字除以第一位，以此类推）&#xA;class Solution { public: int countNumbersWithUniqueDigits(int n) { if (n == 0) { return 1; } if (n == 1) { return 10; } int ans = 10, cur = 9; for (int i = 0; i &amp;lt; n - 1; ++i) { cur *= 9 - i; ans += cur; } return ans; } }; </description>
+    </item>
+    <item>
+      <title>Leetcode 804: 唯一摩尔斯密码词</title>
+      <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
+      <pubDate>Sun, 10 Apr 2022 16:30:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
+      <description> Leetcode 804 唯一摩尔斯密码词 Link to heading 没什么难度，水题。如果不是每日一题不建议刷。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; #include &amp;lt;map&amp;gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&amp;lt;string&amp;gt;&amp;amp; words) { vector&amp;lt;string&amp;gt; password{&amp;#34;.-&amp;#34;,&amp;#34;-...&amp;#34;,&amp;#34;-.-.&amp;#34;,&amp;#34;-..&amp;#34;,&amp;#34;.&amp;#34;,&amp;#34;..-.&amp;#34;,&amp;#34;--.&amp;#34;,&amp;#34;....&amp;#34;,&amp;#34;..&amp;#34;,&amp;#34;.---&amp;#34;,&amp;#34;-.-&amp;#34;,&amp;#34;.-..&amp;#34;,&amp;#34;--&amp;#34;,&amp;#34;-.&amp;#34;,&amp;#34;---&amp;#34;,&amp;#34;.--.&amp;#34;,&amp;#34;--.-&amp;#34;,&amp;#34;.-.&amp;#34;,&amp;#34;...&amp;#34;,&amp;#34;-&amp;#34;,&amp;#34;..-&amp;#34;,&amp;#34;...-&amp;#34;,&amp;#34;.--&amp;#34;,&amp;#34;-..-&amp;#34;,&amp;#34;-.--&amp;#34;,&amp;#34;--..&amp;#34;}; map&amp;lt;string,bool&amp;gt; exist; for(int i=0;i&amp;lt;words.size();i++){ string&amp;amp; word = words[i]; string origin; for(int j=0;j&amp;lt;word.length();j++){ origin = origin + password[word[j]-&amp;#39;a&amp;#39;]; } exist[origin]=true; } return exist.size(); } }; int main(void){ Solution s; vector&amp;lt;string&amp;gt; words; words.emplace_back(&amp;#34;gin&amp;#34;); words.emplace_back(&amp;#34;zen&amp;#34;); words.emplace_back(&amp;#34;gig&amp;#34;); words.emplace_back(&amp;#34;msg&amp;#34;); cout&amp;lt;&amp;lt;s.uniqueMorseRepresentations(words)&amp;lt;&amp;lt;endl; return 0; } </description>
+    </item>
+    <item>
+      <title>Leetcode 804: 唯一摩尔斯密码词</title>
+      <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
+      <pubDate>Sun, 10 Apr 2022 16:30:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
+      <description> Leetcode 804 唯一摩尔斯密码词 Link to heading 没什么难度，水题。如果不是每日一题不建议刷。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; #include &amp;lt;map&amp;gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&amp;lt;string&amp;gt;&amp;amp; words) { vector&amp;lt;string&amp;gt; password{&amp;#34;.-&amp;#34;,&amp;#34;-...&amp;#34;,&amp;#34;-.-.&amp;#34;,&amp;#34;-..&amp;#34;,&amp;#34;.&amp;#34;,&amp;#34;..-.&amp;#34;,&amp;#34;--.&amp;#34;,&amp;#34;....&amp;#34;,&amp;#34;..&amp;#34;,&amp;#34;.---&amp;#34;,&amp;#34;-.-&amp;#34;,&amp;#34;.-..&amp;#34;,&amp;#34;--&amp;#34;,&amp;#34;-.&amp;#34;,&amp;#34;---&amp;#34;,&amp;#34;.--.&amp;#34;,&amp;#34;--.-&amp;#34;,&amp;#34;.-.&amp;#34;,&amp;#34;...&amp;#34;,&amp;#34;-&amp;#34;,&amp;#34;..-&amp;#34;,&amp;#34;...-&amp;#34;,&amp;#34;.--&amp;#34;,&amp;#34;-..-&amp;#34;,&amp;#34;-.--&amp;#34;,&amp;#34;--..&amp;#34;}; map&amp;lt;string,bool&amp;gt; exist; for(int i=0;i&amp;lt;words.size();i++){ string&amp;amp; word = words[i]; string origin; for(int j=0;j&amp;lt;word.length();j++){ origin = origin + password[word[j]-&amp;#39;a&amp;#39;]; } exist[origin]=true; } return exist.size(); } }; int main(void){ Solution s; vector&amp;lt;string&amp;gt; words; words.emplace_back(&amp;#34;gin&amp;#34;); words.emplace_back(&amp;#34;zen&amp;#34;); words.emplace_back(&amp;#34;gig&amp;#34;); words.emplace_back(&amp;#34;msg&amp;#34;); cout&amp;lt;&amp;lt;s.uniqueMorseRepresentations(words)&amp;lt;&amp;lt;endl; return 0; } </description>
+    </item>
+    <item>
+      <title>Leetcode 804: 唯一摩尔斯密码词</title>
+      <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
+      <pubDate>Sun, 10 Apr 2022 16:30:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
+      <description> Leetcode 804 唯一摩尔斯密码词 Link to heading 没什么难度，水题。如果不是每日一题不建议刷。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; #include &amp;lt;map&amp;gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&amp;lt;string&amp;gt;&amp;amp; words) { vector&amp;lt;string&amp;gt; password{&amp;#34;.-&amp;#34;,&amp;#34;-...&amp;#34;,&amp;#34;-.-.&amp;#34;,&amp;#34;-..&amp;#34;,&amp;#34;.&amp;#34;,&amp;#34;..-.&amp;#34;,&amp;#34;--.&amp;#34;,&amp;#34;....&amp;#34;,&amp;#34;..&amp;#34;,&amp;#34;.---&amp;#34;,&amp;#34;-.-&amp;#34;,&amp;#34;.-..&amp;#34;,&amp;#34;--&amp;#34;,&amp;#34;-.&amp;#34;,&amp;#34;---&amp;#34;,&amp;#34;.--.&amp;#34;,&amp;#34;--.-&amp;#34;,&amp;#34;.-.&amp;#34;,&amp;#34;...&amp;#34;,&amp;#34;-&amp;#34;,&amp;#34;..-&amp;#34;,&amp;#34;...-&amp;#34;,&amp;#34;.--&amp;#34;,&amp;#34;-..-&amp;#34;,&amp;#34;-.--&amp;#34;,&amp;#34;--..&amp;#34;}; map&amp;lt;string,bool&amp;gt; exist; for(int i=0;i&amp;lt;words.size();i++){ string&amp;amp; word = words[i]; string origin; for(int j=0;j&amp;lt;word.length();j++){ origin = origin + password[word[j]-&amp;#39;a&amp;#39;]; } exist[origin]=true; } return exist.size(); } }; int main(void){ Solution s; vector&amp;lt;string&amp;gt; words; words.emplace_back(&amp;#34;gin&amp;#34;); words.emplace_back(&amp;#34;zen&amp;#34;); words.emplace_back(&amp;#34;gig&amp;#34;); words.emplace_back(&amp;#34;msg&amp;#34;); cout&amp;lt;&amp;lt;s.uniqueMorseRepresentations(words)&amp;lt;&amp;lt;endl; return 0; } </description>
+    </item>
+    <item>
+      <title>Leetcode 780: 到达终点</title>
+      <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
+      <pubDate>Sat, 09 Apr 2022 19:27:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
+      <description>Leetcode 780 到达终点 Link to heading 22年4月9日每日一题&#xA;题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,y)可以转换到(x+y,y)或者(x,x+y)。&#xA;一个初步的想法是动态规划扫一遍，对于给定的范围$0&amp;lt;x,y&amp;lt;n$，这个方法的复杂度为O(n^2)。从结果来看n为10^9，很可能会超时。 另一个简单的想法是直接从源头开始广搜，代价相对来说会小很多，但是仍然是指数增长的，对于超大规模时很可能会超时。&#xA;简单BFS Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; struct Point{ int x,y; Point(int x, int y){ this-&amp;gt;x = x; this-&amp;gt;y = y; } }; class Solution { public: bool reachingPoints(int sx, int sy, int tx, int ty) { if(sx&amp;gt;tx || sy&amp;gt;ty){ return false; } queue&amp;lt;Point&amp;gt; q; q.push(Point(sx,sy)); while(!q.empty()){ Point cur_node(q.front()); q.pop(); // 判断是否是 if(cur_node.</description>
+    </item>
+    <item>
+      <title>Leetcode 780: 到达终点</title>
+      <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
+      <pubDate>Sat, 09 Apr 2022 19:27:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
+      <description>Leetcode 780 到达终点 Link to heading 22年4月9日每日一题&#xA;题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,y)可以转换到(x+y,y)或者(x,x+y)。&#xA;一个初步的想法是动态规划扫一遍，对于给定的范围$0&amp;lt;x,y&amp;lt;n$，这个方法的复杂度为O(n^2)。从结果来看n为10^9，很可能会超时。 另一个简单的想法是直接从源头开始广搜，代价相对来说会小很多，但是仍然是指数增长的，对于超大规模时很可能会超时。&#xA;简单BFS Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; struct Point{ int x,y; Point(int x, int y){ this-&amp;gt;x = x; this-&amp;gt;y = y; } }; class Solution { public: bool reachingPoints(int sx, int sy, int tx, int ty) { if(sx&amp;gt;tx || sy&amp;gt;ty){ return false; } queue&amp;lt;Point&amp;gt; q; q.push(Point(sx,sy)); while(!q.empty()){ Point cur_node(q.front()); q.pop(); // 判断是否是 if(cur_node.</description>
+    </item>
+    <item>
+      <title>Leetcode 780: 到达终点</title>
+      <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
+      <pubDate>Sat, 09 Apr 2022 19:27:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
+      <description>Leetcode 780 到达终点 Link to heading 22年4月9日每日一题&#xA;题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,y)可以转换到(x+y,y)或者(x,x+y)。&#xA;一个初步的想法是动态规划扫一遍，对于给定的范围$0&amp;lt;x,y&amp;lt;n$，这个方法的复杂度为O(n^2)。从结果来看n为10^9，很可能会超时。 另一个简单的想法是直接从源头开始广搜，代价相对来说会小很多，但是仍然是指数增长的，对于超大规模时很可能会超时。&#xA;简单BFS Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; struct Point{ int x,y; Point(int x, int y){ this-&amp;gt;x = x; this-&amp;gt;y = y; } }; class Solution { public: bool reachingPoints(int sx, int sy, int tx, int ty) { if(sx&amp;gt;tx || sy&amp;gt;ty){ return false; } queue&amp;lt;Point&amp;gt; q; q.push(Point(sx,sy)); while(!q.empty()){ Point cur_node(q.front()); q.pop(); // 判断是否是 if(cur_node.</description>
+    </item>
+    <item>
+      <title>Leetcode数组专题</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</link>
+      <pubDate>Fri, 08 Apr 2022 18:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</guid>
+      <description>Leetcode中与数组相关的题目，包括704、35</description>
+    </item>
+    <item>
+      <title>Leetcode数组专题</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</link>
+      <pubDate>Fri, 08 Apr 2022 18:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</guid>
+      <description>Leetcode中与数组相关的题目，包括704、35</description>
+    </item>
+    <item>
+      <title>Leetcode数组专题</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</link>
+      <pubDate>Fri, 08 Apr 2022 18:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</guid>
+      <description>Leetcode中与数组相关的题目，包括704、35</description>
+    </item>
+    <item>
+      <title>Leetcode 4: 寻找两个正序数组的中位数</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_4/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
+      <description>寻找两个正序数组的中位数 Link to heading 这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已经知道了，所以写了也没什么用。&#xA;反思 Link to heading 题目本身倒是不难，给定两个正序数组求其中位数。要求复杂度为O(log(m+n))。&#xA;我一开始的想法是搜索两者的中位数。很显而易见的事实是比较两个数组a和b的中位数，如果a的中位数比b的中位数要小，则中位数一定不会在a的左边和b的右边，从而进行排除。&#xA;但是在实践的时候对于边界条件的判断不好，主要是写的时候就没想好这个算法应该是怎么做的，导致写到最后的时候越写越乱。&#xA;题解 Link to heading 官方，没什么特别困难的地方，过段时间我自己再做一遍。</description>
+    </item>
+    <item>
+      <title>Leetcode 4: 寻找两个正序数组的中位数</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_4/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
+      <description>寻找两个正序数组的中位数 Link to heading 这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已经知道了，所以写了也没什么用。&#xA;反思 Link to heading 题目本身倒是不难，给定两个正序数组求其中位数。要求复杂度为O(log(m+n))。&#xA;我一开始的想法是搜索两者的中位数。很显而易见的事实是比较两个数组a和b的中位数，如果a的中位数比b的中位数要小，则中位数一定不会在a的左边和b的右边，从而进行排除。&#xA;但是在实践的时候对于边界条件的判断不好，主要是写的时候就没想好这个算法应该是怎么做的，导致写到最后的时候越写越乱。&#xA;题解 Link to heading 官方，没什么特别困难的地方，过段时间我自己再做一遍。</description>
+    </item>
+    <item>
+      <title>Leetcode 4: 寻找两个正序数组的中位数</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_4/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
+      <description>寻找两个正序数组的中位数 Link to heading 这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已经知道了，所以写了也没什么用。&#xA;反思 Link to heading 题目本身倒是不难，给定两个正序数组求其中位数。要求复杂度为O(log(m+n))。&#xA;我一开始的想法是搜索两者的中位数。很显而易见的事实是比较两个数组a和b的中位数，如果a的中位数比b的中位数要小，则中位数一定不会在a的左边和b的右边，从而进行排除。&#xA;但是在实践的时候对于边界条件的判断不好，主要是写的时候就没想好这个算法应该是怎么做的，导致写到最后的时候越写越乱。&#xA;题解 Link to heading 官方，没什么特别困难的地方，过段时间我自己再做一遍。</description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
+    </item>
+    <item>
+      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
+    </item>
+    <item>
+      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
+    </item>
+    <item>
+      <title>Leetcode 796: 旋转字符串</title>
+      <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Thu, 07 Apr 2022 19:21:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>Leetcode第796题：旋转字符串，简单题</description>
+    </item>
+    <item>
+      <title>Leetcode 796: 旋转字符串</title>
+      <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Thu, 07 Apr 2022 19:21:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>Leetcode第796题：旋转字符串，简单题</description>
+    </item>
+    <item>
+      <title>Leetcode 796: 旋转字符串</title>
+      <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Thu, 07 Apr 2022 19:21:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>Leetcode第796题：旋转字符串，简单题</description>
+    </item>
+    <item>
+      <title>Leetcode 310: 最小高度树</title>
+      <link>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</link>
+      <pubDate>Thu, 07 Apr 2022 12:09:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</guid>
+      <description>Leetcode第310题：最小高度树</description>
+    </item>
+    <item>
+      <title>Leetcode 310: 最小高度树</title>
+      <link>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</link>
+      <pubDate>Thu, 07 Apr 2022 12:09:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</guid>
+      <description>Leetcode第310题：最小高度树</description>
+    </item>
+    <item>
+      <title>Leetcode 310: 最小高度树</title>
+      <link>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</link>
+      <pubDate>Thu, 07 Apr 2022 12:09:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</guid>
+      <description>Leetcode第310题：最小高度树</description>
+    </item>
+    <item>
+      <title>Leetcode 5: 最长回文子串</title>
+      <link>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</link>
+      <pubDate>Tue, 05 Apr 2022 12:09:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</guid>
+      <description>Leetcode第五题：最长回文子串</description>
+    </item>
+    <item>
+      <title>Leetcode 5: 最长回文子串</title>
+      <link>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</link>
+      <pubDate>Tue, 05 Apr 2022 12:09:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</guid>
+      <description>Leetcode第五题：最长回文子串</description>
+    </item>
+    <item>
+      <title>Leetcode 5: 最长回文子串</title>
+      <link>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</link>
+      <pubDate>Tue, 05 Apr 2022 12:09:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</guid>
+      <description>Leetcode第五题：最长回文子串</description>
+    </item>
+    <item>
+      <title>【动态规划】最长公共子串问题</title>
+      <link>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 11 Mar 2021 16:40:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</guid>
+      <description>题目来源为：牛客网&#xA;题目有意思的地方在于，最长公共子串与最长连续公共子串都是比较经典的问题，但是这道题在其基础上加了限制。 首先这道题应该是最长连续公共子串问题，状态转移方程就不写了，挺简单的。就记录下最大的子串所在的位置的行坐标和列坐标，就能把子串拿到手。 但是对于O(nm)的动态规划所有点都会超时，这就很厉害了，目前通过的做法使用的是滑动窗口法，我还在研究。&#xA;代码大概长这样&#xA;/** * 滑动窗口算法 * * @param str1 string字符串 the string * @param str2 string字符串 the string * @return string字符串 */ public static String LCS1(String str1, String str2) { // write code here StringBuilder sb = new StringBuilder(); int start = 0, end = 1; while (end &amp;lt; str1.length() + 1) { if (str2.contains(str1.substring(start, end))) { if (sb.length() &amp;lt; end - start) { sb.delete(0, sb.length()); sb.append(str1, start, end); } } else { //这个算法我曾经疑惑，假如出现start&amp;gt;end，程序不是会crash么 //通过debug发现，当start==end时，substring获取的是&amp;#34;&amp;#34;，此时contains必然为true //所以当start == end时，必然会走end++分支 start++; } end++; } if (sb.</description>
+    </item>
+    <item>
+      <title>【动态规划】最长公共子串问题</title>
+      <link>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 11 Mar 2021 16:40:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</guid>
+      <description>题目来源为：牛客网&#xA;题目有意思的地方在于，最长公共子串与最长连续公共子串都是比较经典的问题，但是这道题在其基础上加了限制。 首先这道题应该是最长连续公共子串问题，状态转移方程就不写了，挺简单的。就记录下最大的子串所在的位置的行坐标和列坐标，就能把子串拿到手。 但是对于O(nm)的动态规划所有点都会超时，这就很厉害了，目前通过的做法使用的是滑动窗口法，我还在研究。&#xA;代码大概长这样&#xA;/** * 滑动窗口算法 * * @param str1 string字符串 the string * @param str2 string字符串 the string * @return string字符串 */ public static String LCS1(String str1, String str2) { // write code here StringBuilder sb = new StringBuilder(); int start = 0, end = 1; while (end &amp;lt; str1.length() + 1) { if (str2.contains(str1.substring(start, end))) { if (sb.length() &amp;lt; end - start) { sb.delete(0, sb.length()); sb.append(str1, start, end); } } else { //这个算法我曾经疑惑，假如出现start&amp;gt;end，程序不是会crash么 //通过debug发现，当start==end时，substring获取的是&amp;#34;&amp;#34;，此时contains必然为true //所以当start == end时，必然会走end++分支 start++; } end++; } if (sb.</description>
+    </item>
+    <item>
+      <title>【动态规划】最长公共子串问题</title>
+      <link>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Thu, 11 Mar 2021 16:40:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</guid>
+      <description>题目来源为：牛客网&#xA;题目有意思的地方在于，最长公共子串与最长连续公共子串都是比较经典的问题，但是这道题在其基础上加了限制。 首先这道题应该是最长连续公共子串问题，状态转移方程就不写了，挺简单的。就记录下最大的子串所在的位置的行坐标和列坐标，就能把子串拿到手。 但是对于O(nm)的动态规划所有点都会超时，这就很厉害了，目前通过的做法使用的是滑动窗口法，我还在研究。&#xA;代码大概长这样&#xA;/** * 滑动窗口算法 * * @param str1 string字符串 the string * @param str2 string字符串 the string * @return string字符串 */ public static String LCS1(String str1, String str2) { // write code here StringBuilder sb = new StringBuilder(); int start = 0, end = 1; while (end &amp;lt; str1.length() + 1) { if (str2.contains(str1.substring(start, end))) { if (sb.length() &amp;lt; end - start) { sb.delete(0, sb.length()); sb.append(str1, start, end); } } else { //这个算法我曾经疑惑，假如出现start&amp;gt;end，程序不是会crash么 //通过debug发现，当start==end时，substring获取的是&amp;#34;&amp;#34;，此时contains必然为true //所以当start == end时，必然会走end++分支 start++; } end++; } if (sb.</description>
+    </item>
+    <item>
+      <title>微信面试算法题-最长拼接子序列</title>
+      <link>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</link>
+      <pubDate>Wed, 10 Mar 2021 14:21:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</guid>
+      <description>面的微信部门，应用研发岗实习一面。我人都傻了，我填的不都是java研发之类的，怎么冒出个这么奇怪的岗位。&#xA;题目是这样子的：对于一个给定的子序列，比如说[1,2,3,10,4,2,5,6]，要求去除一段连续的数据，使得剩下的数据是非下降的。输出的结果是去除的最少数字的数量。（可以不唯一）&#xA;比如说对于上面这个序列，显然其去除的可以是10,4,2，也就是输出3。也可以选择去除3,10,4，结果也是相同的。&#xA;这道题是我面试腾讯微信部门的第二道面试题，感谢面试官给了我充足的时间，虽然我还是没有做出来QAQ。&#xA;当时的想法 Link to heading 提到这种上升或下降式的序列，第一个想到的就是最长连续上升子序列之类的题目，就想到用DP来做。然后发现一个很尴尬的问题：状态转移方程建不出来^_^。这个真的是从做DP到现在一直困扰我的梦靥了，那就没办法了。不排除能用DP做，只是我比较菜，有时间专门研究一下吧……&#xA;第二个想法就是观察原序列。显然，被去除掉的结构一定是存在逆序的，就是说索引顺序与值顺序不一致，比如10,4这样。那有一个想法，如果我用递归的思想，不断二分原序列，将其拆解到只剩下两个数字。然后对于小的逆序对，删除掉大的。再对其拼接的过程中不断去除逆序结构，最终应该会剩下多条顺序链。&#xA;但是在如何拼接顺序链以及确认该步骤是正确的地方上卡住了。&#xA;现在的想法 Link to heading 考完出来之后我就有了个新的想法。由于只能切一刀，显然只有三种情况：把前面部分切掉，只保留后面部分；把后面部分切掉，只保留前面部分；以及中间切一刀，保留两边部分。&#xA;无论怎么切，都可以用归纳法证明，剩下的一定是一条连续非下降子序列。所以问题转变为：求解以头开始或者以尾结束的最长连续子序列的长度，然后尝试把它们拼接起来。&#xA;算法正确性证明我忘了，好久没干了，不过感觉这个靠谱多了。</description>
+    </item>
+    <item>
+      <title>微信面试算法题-最长拼接子序列</title>
+      <link>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</link>
+      <pubDate>Wed, 10 Mar 2021 14:21:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</guid>
+      <description>面的微信部门，应用研发岗实习一面。我人都傻了，我填的不都是java研发之类的，怎么冒出个这么奇怪的岗位。&#xA;题目是这样子的：对于一个给定的子序列，比如说[1,2,3,10,4,2,5,6]，要求去除一段连续的数据，使得剩下的数据是非下降的。输出的结果是去除的最少数字的数量。（可以不唯一）&#xA;比如说对于上面这个序列，显然其去除的可以是10,4,2，也就是输出3。也可以选择去除3,10,4，结果也是相同的。&#xA;这道题是我面试腾讯微信部门的第二道面试题，感谢面试官给了我充足的时间，虽然我还是没有做出来QAQ。&#xA;当时的想法 Link to heading 提到这种上升或下降式的序列，第一个想到的就是最长连续上升子序列之类的题目，就想到用DP来做。然后发现一个很尴尬的问题：状态转移方程建不出来^_^。这个真的是从做DP到现在一直困扰我的梦靥了，那就没办法了。不排除能用DP做，只是我比较菜，有时间专门研究一下吧……&#xA;第二个想法就是观察原序列。显然，被去除掉的结构一定是存在逆序的，就是说索引顺序与值顺序不一致，比如10,4这样。那有一个想法，如果我用递归的思想，不断二分原序列，将其拆解到只剩下两个数字。然后对于小的逆序对，删除掉大的。再对其拼接的过程中不断去除逆序结构，最终应该会剩下多条顺序链。&#xA;但是在如何拼接顺序链以及确认该步骤是正确的地方上卡住了。&#xA;现在的想法 Link to heading 考完出来之后我就有了个新的想法。由于只能切一刀，显然只有三种情况：把前面部分切掉，只保留后面部分；把后面部分切掉，只保留前面部分；以及中间切一刀，保留两边部分。&#xA;无论怎么切，都可以用归纳法证明，剩下的一定是一条连续非下降子序列。所以问题转变为：求解以头开始或者以尾结束的最长连续子序列的长度，然后尝试把它们拼接起来。&#xA;算法正确性证明我忘了，好久没干了，不过感觉这个靠谱多了。</description>
+    </item>
+    <item>
+      <title>微信面试算法题-最长拼接子序列</title>
+      <link>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</link>
+      <pubDate>Wed, 10 Mar 2021 14:21:14 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</guid>
+      <description>面的微信部门，应用研发岗实习一面。我人都傻了，我填的不都是java研发之类的，怎么冒出个这么奇怪的岗位。&#xA;题目是这样子的：对于一个给定的子序列，比如说[1,2,3,10,4,2,5,6]，要求去除一段连续的数据，使得剩下的数据是非下降的。输出的结果是去除的最少数字的数量。（可以不唯一）&#xA;比如说对于上面这个序列，显然其去除的可以是10,4,2，也就是输出3。也可以选择去除3,10,4，结果也是相同的。&#xA;这道题是我面试腾讯微信部门的第二道面试题，感谢面试官给了我充足的时间，虽然我还是没有做出来QAQ。&#xA;当时的想法 Link to heading 提到这种上升或下降式的序列，第一个想到的就是最长连续上升子序列之类的题目，就想到用DP来做。然后发现一个很尴尬的问题：状态转移方程建不出来^_^。这个真的是从做DP到现在一直困扰我的梦靥了，那就没办法了。不排除能用DP做，只是我比较菜，有时间专门研究一下吧……&#xA;第二个想法就是观察原序列。显然，被去除掉的结构一定是存在逆序的，就是说索引顺序与值顺序不一致，比如10,4这样。那有一个想法，如果我用递归的思想，不断二分原序列，将其拆解到只剩下两个数字。然后对于小的逆序对，删除掉大的。再对其拼接的过程中不断去除逆序结构，最终应该会剩下多条顺序链。&#xA;但是在如何拼接顺序链以及确认该步骤是正确的地方上卡住了。&#xA;现在的想法 Link to heading 考完出来之后我就有了个新的想法。由于只能切一刀，显然只有三种情况：把前面部分切掉，只保留后面部分；把后面部分切掉，只保留前面部分；以及中间切一刀，保留两边部分。&#xA;无论怎么切，都可以用归纳法证明，剩下的一定是一条连续非下降子序列。所以问题转变为：求解以头开始或者以尾结束的最长连续子序列的长度，然后尝试把它们拼接起来。&#xA;算法正确性证明我忘了，好久没干了，不过感觉这个靠谱多了。</description>
+    </item>
+  </channel>
 </rss>

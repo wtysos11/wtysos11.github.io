@@ -1,16 +1,32 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>计算机/算法/树 - 标签 - 实践出真知</title>
-        <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%A0%91/</link>
-        <description>计算机/算法/树 - 标签 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%A0%91/" rel="self" type="application/rss+xml" /><item>
-    <title>Leetcode 429: N叉树的层次遍历</title>
-    <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
-    <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
-    <description><![CDATA[22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计算机/算法/树 on 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%A0%91/</link>
+    <description>Recent content in 计算机/算法/树 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%A0%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+    <item>
+      <title>Leetcode 429: N叉树的层次遍历</title>
+      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
+    </item>
+  </channel>
 </rss>

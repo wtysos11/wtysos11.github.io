@@ -1,216 +1,333 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>golang中的赋值:=的一次误用与shadow variable - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="golang中的赋值:=的一次误用与shadow variable" />
-<meta property="og:description" content="今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致" />
+<html lang="zh">
+
+<head>
+  <title>
+  golang中的赋值:=的一次误用与shadow variable · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致如下
+func getEle() (int,error){ return rand.Intn(100),nil } func exchangeGradually(fp int){ var fingerprint int = fp for i:=0;i&lt;5;i&#43;&#43;{ oldfingerprint := fingerprint fingerprint,err := getEle() if err != nil{ panic(err) } fmt.Println(fingerprint,oldfingerprint) } } func main() { exchangeGradually(10) } 可以试着执行一下，原本预期中oldfingerprint是随着fingerprint改变而改变的，但是实际上是不变的。原因是很简单的，因为:=重新分配了一个变量覆盖掉了原有的变量。
+但是我原本以为是不会覆盖的，因为之前写错误处理的时候往往也是直接val,err := ...这样写下来。现在看来，:=应该是会重新声明左侧的所有变量并覆盖作用域。
+从这里可以引出shadow error的问题，类似于shadow variable。shadow error是指很多时候需要在defer中处理error，但是被后面的错误给覆盖了，类似于
+func getErr1() (int,error){ return 1,fmt.Errorf(&#34;error 1&#34;) } func getErr2() (int,error){ return 2,fmt.Errorf(&#34;error 2&#34;) } func exchangeGradually(fp int){ a1,err := getErr1() fmt.Println(a1,err) defer func() { fmt.Println(err) }() a2,err := getErr2() fmt.">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="golang中的赋值:=的一次误用与shadow variable"/>
+<meta name="twitter:description" content="今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致如下
+func getEle() (int,error){ return rand.Intn(100),nil } func exchangeGradually(fp int){ var fingerprint int = fp for i:=0;i&lt;5;i&#43;&#43;{ oldfingerprint := fingerprint fingerprint,err := getEle() if err != nil{ panic(err) } fmt.Println(fingerprint,oldfingerprint) } } func main() { exchangeGradually(10) } 可以试着执行一下，原本预期中oldfingerprint是随着fingerprint改变而改变的，但是实际上是不变的。原因是很简单的，因为:=重新分配了一个变量覆盖掉了原有的变量。
+但是我原本以为是不会覆盖的，因为之前写错误处理的时候往往也是直接val,err := ...这样写下来。现在看来，:=应该是会重新声明左侧的所有变量并覆盖作用域。
+从这里可以引出shadow error的问题，类似于shadow variable。shadow error是指很多时候需要在defer中处理error，但是被后面的错误给覆盖了，类似于
+func getErr1() (int,error){ return 1,fmt.Errorf(&#34;error 1&#34;) } func getErr2() (int,error){ return 2,fmt.Errorf(&#34;error 2&#34;) } func exchangeGradually(fp int){ a1,err := getErr1() fmt.Println(a1,err) defer func() { fmt.Println(err) }() a2,err := getErr2() fmt."/>
+
+<meta property="og:title" content="golang中的赋值:=的一次误用与shadow variable" />
+<meta property="og:description" content="今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致如下
+func getEle() (int,error){ return rand.Intn(100),nil } func exchangeGradually(fp int){ var fingerprint int = fp for i:=0;i&lt;5;i&#43;&#43;{ oldfingerprint := fingerprint fingerprint,err := getEle() if err != nil{ panic(err) } fmt.Println(fingerprint,oldfingerprint) } } func main() { exchangeGradually(10) } 可以试着执行一下，原本预期中oldfingerprint是随着fingerprint改变而改变的，但是实际上是不变的。原因是很简单的，因为:=重新分配了一个变量覆盖掉了原有的变量。
+但是我原本以为是不会覆盖的，因为之前写错误处理的时候往往也是直接val,err := ...这样写下来。现在看来，:=应该是会重新声明左侧的所有变量并覆盖作用域。
+从这里可以引出shadow error的问题，类似于shadow variable。shadow error是指很多时候需要在defer中处理error，但是被后面的错误给覆盖了，类似于
+func getErr1() (int,error){ return 1,fmt.Errorf(&#34;error 1&#34;) } func getErr2() (int,error){ return 2,fmt.Errorf(&#34;error 2&#34;) } func exchangeGradually(fp int){ a1,err := getErr1() fmt.Println(a1,err) defer func() { fmt.Println(err) }() a2,err := getErr2() fmt." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-07-08T11:32:14+08:00" />
-<meta property="article:modified_time" content="2021-07-08T11:32:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-07-08T11:32:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="golang中的赋值:=的一次误用与shadow variable"/>
-<meta name="twitter:description" content="今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/" /><link rel="next" href="http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "golang中的赋值:=的一次误用与shadow variable",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/go, 分类\/实践记录","wordcount":  544 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable\/","datePublished": "2021-07-08T11:32:14+08:00","dateModified": "2021-07-08T11:32:14+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/">
+              golang中的赋值:=的一次误用与shadow variable
+            </a>
+          </h1>
         </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" selected>简体中文</option></select>
-                </a></div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-07-08T11:32:14&#43;08:00">
+                七月 8, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E4%BA%8B%E4%BB%B6%E8%AE%B0%E5%BD%95/">事件记录</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">计算机/go</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/">内容/实践记录</a>
+    </span></div>
+
         </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">golang中的赋值:=的一次误用与shadow variable</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E4%BA%8B%E4%BB%B6%E8%AE%B0%E5%BD%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>事件记录</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-07-08">2021-07-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 544 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><p>今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的<code>=</code>改为了<code>:=</code>。大致如下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">getEle</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">error</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">exchangeGradually</span><span class="p">(</span><span class="nx">fp</span> <span class="kt">int</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">fingerprint</span> <span class="kt">int</span> <span class="p">=</span> <span class="nx">fp</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="p">&lt;</span><span class="mi">5</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">oldfingerprint</span> <span class="o">:=</span> <span class="nx">fingerprint</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">fingerprint</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nf">getEle</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">fingerprint</span><span class="p">,</span><span class="nx">oldfingerprint</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nf">exchangeGradually</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+      </header>
+
+      <div class="post-content">
+        
+        <p>今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的<code>=</code>改为了<code>:=</code>。大致如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">getEle</span>() (<span style="color:#ff7b72">int</span>,<span style="color:#ff7b72">error</span>){
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> rand.<span style="color:#d2a8ff;font-weight:bold">Intn</span>(<span style="color:#a5d6ff">100</span>),<span style="color:#79c0ff">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">exchangeGradually</span>(fp <span style="color:#ff7b72">int</span>){
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> fingerprint <span style="color:#ff7b72">int</span> = fp
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i<span style="color:#ff7b72;font-weight:bold">:=</span><span style="color:#a5d6ff">0</span>;i&lt;<span style="color:#a5d6ff">5</span>;i<span style="color:#ff7b72;font-weight:bold">++</span>{
+</span></span><span style="display:flex;"><span>		oldfingerprint <span style="color:#ff7b72;font-weight:bold">:=</span> fingerprint
+</span></span><span style="display:flex;"><span>		fingerprint,err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getEle</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span>{
+</span></span><span style="display:flex;"><span>			panic(err)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(fingerprint,oldfingerprint)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#d2a8ff;font-weight:bold">exchangeGradually</span>(<span style="color:#a5d6ff">10</span>)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>可以试着执行一下，原本预期中oldfingerprint是随着fingerprint改变而改变的，但是实际上是不变的。原因是很简单的，因为<code>:=</code>重新分配了一个变量覆盖掉了原有的变量。</p>
 <p>但是我原本以为是不会覆盖的，因为之前写错误处理的时候往往也是直接<code>val,err := ...</code>这样写下来。现在看来，<code>:=</code>应该是会重新声明左侧的所有变量并覆盖作用域。</p>
-<p>从这里可以引出shadow error的问题，类似于<a href="https://magodo.github.io/golang-shadowing/" target="_blank" rel="noopener noreffer ">shadow variable</a>。shadow error是指很多时候需要在defer中处理error，但是被后面的错误给覆盖了，类似于</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">getErr1</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">error</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">1</span><span class="p">,</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;error 1&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">getErr2</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">error</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">2</span><span class="p">,</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;error 2&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">exchangeGradually</span><span class="p">(</span><span class="nx">fp</span> <span class="kt">int</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">a1</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nf">getErr1</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">a2</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nf">getErr2</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a2</span><span class="p">,</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nf">exchangeGradually</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<p>从这里可以引出shadow error的问题，类似于<a href="https://magodo.github.io/golang-shadowing/"  class="external-link" target="_blank" rel="noopener">shadow variable</a>。shadow error是指很多时候需要在defer中处理error，但是被后面的错误给覆盖了，类似于</p>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">getErr1</span>() (<span style="color:#ff7b72">int</span>,<span style="color:#ff7b72">error</span>){
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">1</span>,fmt.<span style="color:#d2a8ff;font-weight:bold">Errorf</span>(<span style="color:#a5d6ff">&#34;error 1&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">getErr2</span>() (<span style="color:#ff7b72">int</span>,<span style="color:#ff7b72">error</span>){
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">2</span>,fmt.<span style="color:#d2a8ff;font-weight:bold">Errorf</span>(<span style="color:#a5d6ff">&#34;error 2&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">exchangeGradually</span>(fp <span style="color:#ff7b72">int</span>){
+</span></span><span style="display:flex;"><span>	a1,err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr1</span>()
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(a1,err)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">defer</span> <span style="color:#ff7b72">func</span>() {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(err)
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>	a2,err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr2</span>()
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(a2,err)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#d2a8ff;font-weight:bold">exchangeGradually</span>(<span style="color:#a5d6ff">10</span>)
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>在下面这个例子中，原本预期要处理的是error1，但是实际输出的却是error2。因为defer针对的err是函数作用域的，该变量被后续的新声明给覆盖了（当然，实际上原理是不一样的，这个主要是defer中传值与传引用的问题，只要加上捕获列表即可）。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">exchangeGradually</span><span class="p">(</span><span class="nx">fp</span> <span class="kt">int</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">a1</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nf">getErr1</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="kd">func</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}(</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">a2</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="nf">getErr2</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a2</span><span class="p">,</span><span class="nx">err</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-07-08</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" data-title="golang中的赋值:=的一次误用与shadow variable" data-hashtags="分类/知识库/计算机/go,分类/实践记录"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" data-hashtag="分类/知识库/计算机/go"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" data-title="golang中的赋值:=的一次误用与shadow variable" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" data-title="golang中的赋值:=的一次误用与shadow variable"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" data-title="golang中的赋值:=的一次误用与shadow variable"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" data-title="golang中的赋值:=的一次误用与shadow variable" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/" data-title="golang中的赋值:=的一次误用与shadow variable"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">exchangeGradually</span>(fp <span style="color:#ff7b72">int</span>){
+</span></span><span style="display:flex;"><span>	a1,err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr1</span>()
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(a1,err)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">defer</span> <span style="color:#ff7b72">func</span>(err <span style="color:#ff7b72">error</span>) {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(err)
+</span></span><span style="display:flex;"><span>	}(err)
+</span></span><span style="display:flex;"><span>	a2,err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr2</span>()
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(a2,err)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">分类/知识库/计算机/go</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/">分类/实践记录</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/" class="prev" rel="prev" title="golang函数参数中接口指针的传递"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>golang函数参数中接口指针的传递</a>
-            <a href="/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/" class="next" rel="next" title="关于golang中指针赋值的问题">关于golang中指针赋值的问题<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>

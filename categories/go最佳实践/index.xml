@@ -1,24 +1,26 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Go最佳实践 - 分类 - 实践出真知</title>
-        <link>http://wtysos11.github.io/categories/go%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
-        <description>Go最佳实践 - 分类 - 实践出真知</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 15 Jun 2022 14:40:05 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/go%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="self" type="application/rss+xml" /><item>
-    <title>多协程写同一个slice的最佳实践</title>
-    <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
-    <pubDate>Wed, 15 Jun 2022 14:40:05 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
-    <description><![CDATA[问题描述 main.go func main() { fmt.Println(&#34;in waitgroup test&#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会]]></description>
-</item>
-<item>
-    <title>多协程错误处理与errgroup</title>
-    <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
-    <pubDate>Wed, 15 Jun 2022 14:17:05 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
-    <description><![CDATA[工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习]]></description>
-</item>
-</channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go最佳实践 on 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/go%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+    <description>Recent content in Go最佳实践 on 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://wtysos11.github.io/categories/go%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>多协程写同一个slice的最佳实践</title>
+      <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Wed, 15 Jun 2022 14:40:05 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+      <description>问题描述 Link to heading main.go&#xA;func main() { fmt.Println(&amp;#34;in waitgroup test&amp;#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &amp;lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &amp;lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会发生数据竞争。其中在append的时候会发生两种竞争，一个是slice的容量增加时会发生问题，另一个是单纯读写时也会发生问题。 这使得最终的长度总是小于预期。</description>
+    </item>
+    <item>
+      <title>多协程错误处理与errgroup</title>
+      <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
+      <pubDate>Wed, 15 Jun 2022 14:17:05 +0800</pubDate>
+      <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
+      <description>工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习</description>
+    </item>
+  </channel>
 </rss>

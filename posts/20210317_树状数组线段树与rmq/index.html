@@ -1,180 +1,249 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>树状数组、线段树与RMQ - 实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="树状数组、线段树与RMQ" />
-<meta property="og:description" content="区间修改问题常用的三种手段，我觉得还是有必要复习一下。 树状数组 binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数" />
+<html lang="zh">
+
+<head>
+  <title>
+  树状数组、线段树与RMQ · 实践出真知
+</title>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+
+
+
+
+<meta name="author" content="Timothy Wu">
+<meta name="description" content="区间修改问题常用的三种手段，我觉得还是有必要复习一下。
+树状数组 Link to heading binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数组的核心是lowbit：x&amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。 这样就可以算出非叶子节点对应的管辖范围
+单点修改，一路上山
+int tree[MAXN]; inline void update(int i, int x) { for (int pos = i; pos &lt; MAXN; pos &#43;= lowbit(pos)) tree[pos] &#43;= x; } 求前n项和，一路下山
+inline int query(int n) { int ans = 0; for (int pos = n; pos; pos -= lowbit(pos)) ans &#43;= tree[pos]; return ans; } 区间查询
+inline int query(int a, int b) { return query(b) - query(a - 1); } 举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]&#43;c[4]，这是比较自然的。 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。">
+<meta name="keywords" content="blog,developer,personal">
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="树状数组、线段树与RMQ"/>
+<meta name="twitter:description" content="区间修改问题常用的三种手段，我觉得还是有必要复习一下。
+树状数组 Link to heading binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数组的核心是lowbit：x&amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。 这样就可以算出非叶子节点对应的管辖范围
+单点修改，一路上山
+int tree[MAXN]; inline void update(int i, int x) { for (int pos = i; pos &lt; MAXN; pos &#43;= lowbit(pos)) tree[pos] &#43;= x; } 求前n项和，一路下山
+inline int query(int n) { int ans = 0; for (int pos = n; pos; pos -= lowbit(pos)) ans &#43;= tree[pos]; return ans; } 区间查询
+inline int query(int a, int b) { return query(b) - query(a - 1); } 举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]&#43;c[4]，这是比较自然的。 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。"/>
+
+<meta property="og:title" content="树状数组、线段树与RMQ" />
+<meta property="og:description" content="区间修改问题常用的三种手段，我觉得还是有必要复习一下。
+树状数组 Link to heading binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数组的核心是lowbit：x&amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。 这样就可以算出非叶子节点对应的管辖范围
+单点修改，一路上山
+int tree[MAXN]; inline void update(int i, int x) { for (int pos = i; pos &lt; MAXN; pos &#43;= lowbit(pos)) tree[pos] &#43;= x; } 求前n项和，一路下山
+inline int query(int n) { int ans = 0; for (int pos = n; pos; pos -= lowbit(pos)) ans &#43;= tree[pos]; return ans; } 区间查询
+inline int query(int a, int b) { return query(b) - query(a - 1); } 举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]&#43;c[4]，这是比较自然的。 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-17T19:57:14+08:00" />
-<meta property="article:modified_time" content="2021-03-17T19:57:14+08:00" /><meta property="og:site_name" content="实践出真知" />
+<meta property="article:modified_time" content="2021-03-17T19:57:14+08:00" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="树状数组、线段树与RMQ"/>
-<meta name="twitter:description" content="区间修改问题常用的三种手段，我觉得还是有必要复习一下。 树状数组 binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/" /><link rel="next" href="http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "BlogPosting",
-        "headline": "树状数组、线段树与RMQ",
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "http:\/\/wtysos11.github.io\/posts\/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq\/"
-        },"genre": "posts","keywords": "分类\/知识库\/计算机\/算法\/区间问题, 分类\/知识库\/计算机\/算法\/算法学习","wordcount":  2337 ,
-        "url": "http:\/\/wtysos11.github.io\/posts\/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq\/","datePublished": "2021-03-17T19:57:14+08:00","dateModified": "2021-03-17T19:57:14+08:00","publisher": {
-            "@type": "Organization",
-            "name": ""},"author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": ""
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="toc" id="toc-auto">
-            <h2 class="toc-title">目录</h2>
-            <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">树状数组、线段树与RMQ</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>算法</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2021-03-17">2021-03-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 2337 字&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
-        </div><div class="details toc" id="toc-static"  data-kept="">
-                <div class="details-summary toc-title">
-                    <span>目录</span>
-                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
-                </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
-  <ul>
-    <li><a href="#树状数组">树状数组</a></li>
-    <li><a href="#rmq">RMQ</a>
-      <ul>
-        <li><a href="#建立">建立</a></li>
-        <li><a href="#查询">查询</a></li>
+
+
+
+<link rel="canonical" href="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/">
+
+
+<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+
+
+  
+  
+  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
+
+
+
+
+
+
+  
+    
+    
+    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
+  
+
+
+
+ 
+
+
+
+
+<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+
+
+</head>
+
+
+
+
+
+
+<body class="preload-transitions colorscheme-auto">
+  
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+  <main class="wrapper">
+    <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      实践出真知
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/posts/">Blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/tags/">Tags</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/categories/">Categories</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link " href="/series/">series</a>
+            </li>
+          
+        
+        
       </ul>
-    </li>
-    <li><a href="#线段树">线段树</a>
-      <ul>
-        <li><a href="#树建立参考">树建立参考</a></li>
-        <li><a href="#区间查询">区间查询</a></li>
-        <li><a href="#区间维护">区间维护</a></li>
-        <li><a href="#实例代码1">实例代码1</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav></div>
-            </div><div class="content" id="content"><p>区间修改问题常用的三种手段，我觉得还是有必要复习一下。</p>
-<h2 id="树状数组">树状数组</h2>
+    
+  </section>
+</nav>
+
+
+    <div class="content">
+      
+  <section class="container post">
+    <article>
+      <header>
+        <div class="post-title">
+          <h1 class="title">
+            <a class="title-link" href="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/">
+              树状数组、线段树与RMQ
+            </a>
+          </h1>
+        </div>
+        <div class="post-meta">
+          <div class="date">
+            <span class="posted-on">
+              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
+              <time datetime="2021-03-17T19:57:14&#43;08:00">
+                三月 17, 2021
+              </time>
+            </span>
+            <span class="reading-time">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              
+            </span>
+          </div>
+          
+          <div class="categories">
+  <i class="fa-solid fa-folder" aria-hidden="true"></i>
+    <a href="/categories/%E7%AE%97%E6%B3%95/">算法</a></div>
+
+          <div class="tags">
+  <i class="fa-solid fa-tag" aria-hidden="true"></i>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%8C%BA%E9%97%B4%E9%97%AE%E9%A2%98/">计算机/算法/区间问题</a>
+    </span>
+      <span class="separator">•</span>
+    <span class="tag">
+      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">计算机/算法/算法学习</a>
+    </span></div>
+
+        </div>
+      </header>
+
+      <div class="post-content">
+        
+        <p>区间修改问题常用的三种手段，我觉得还是有必要复习一下。</p>
+<h2 id="树状数组">
+  树状数组
+  <a class="heading-link" href="#%e6%a0%91%e7%8a%b6%e6%95%b0%e7%bb%84">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>binary index tree
-来自<a href="https://oi-wiki.org/ds/fenwick/" target="_blank" rel="noopener noreffer ">OI-wiki</a>的图，我记得刘汝佳书里也有，不过那本书不在我手边
-<img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://user-images.githubusercontent.com/21279827/111463941-21933000-875b-11eb-8e05-cef5e9c1bbb0.png"
-        data-srcset="https://user-images.githubusercontent.com/21279827/111463941-21933000-875b-11eb-8e05-cef5e9c1bbb0.png, https://user-images.githubusercontent.com/21279827/111463941-21933000-875b-11eb-8e05-cef5e9c1bbb0.png 1.5x, https://user-images.githubusercontent.com/21279827/111463941-21933000-875b-11eb-8e05-cef5e9c1bbb0.png 2x"
-        data-sizes="auto"
-        alt="https://user-images.githubusercontent.com/21279827/111463941-21933000-875b-11eb-8e05-cef5e9c1bbb0.png"
-        title="fenwick1" /></p>
+来自<a href="https://oi-wiki.org/ds/fenwick/"  class="external-link" target="_blank" rel="noopener">OI-wiki</a>的图，我记得刘汝佳书里也有，不过那本书不在我手边
+<img src="https://user-images.githubusercontent.com/21279827/111463941-21933000-875b-11eb-8e05-cef5e9c1bbb0.png" alt="fenwick1"></p>
 <p>树状数组的核心是lowbit：x&amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。
 这样就可以算出非叶子节点对应的管辖范围</p>
 <p>单点修改，一路上山</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">tree</span><span class="p">[</span><span class="n">MAXN</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="n">MAXN</span><span class="p">;</span> <span class="n">pos</span> <span class="o">+=</span> <span class="n">lowbit</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">        <span class="n">tree</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> tree[MAXN];
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">inline</span> <span style="color:#ff7b72">void</span> <span style="color:#d2a8ff;font-weight:bold">update</span>(<span style="color:#ff7b72">int</span> i, <span style="color:#ff7b72">int</span> x)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">for</span> (<span style="color:#ff7b72">int</span> pos <span style="color:#ff7b72;font-weight:bold">=</span> i; pos <span style="color:#ff7b72;font-weight:bold">&lt;</span> MAXN; pos <span style="color:#ff7b72;font-weight:bold">+=</span> lowbit(pos))
+</span></span><span style="display:flex;"><span>        tree[pos] <span style="color:#ff7b72;font-weight:bold">+=</span> x;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>求前n项和，一路下山</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kr">inline</span> <span class="kt">int</span> <span class="nf">query</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span> <span class="n">pos</span><span class="p">;</span> <span class="n">pos</span> <span class="o">-=</span> <span class="n">lowbit</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">        <span class="n">ans</span> <span class="o">+=</span> <span class="n">tree</span><span class="p">[</span><span class="n">pos</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">ans</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">inline</span> <span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">query</span>(<span style="color:#ff7b72">int</span> n)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> ans <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">for</span> (<span style="color:#ff7b72">int</span> pos <span style="color:#ff7b72;font-weight:bold">=</span> n; pos; pos <span style="color:#ff7b72;font-weight:bold">-=</span> lowbit(pos))
+</span></span><span style="display:flex;"><span>        ans <span style="color:#ff7b72;font-weight:bold">+=</span> tree[pos];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> ans;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>区间查询</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kr">inline</span> <span class="kt">int</span> <span class="nf">query</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">query</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">query</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">inline</span> <span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">query</span>(<span style="color:#ff7b72">int</span> a, <span style="color:#ff7b72">int</span> b)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> query(b) <span style="color:#ff7b72;font-weight:bold">-</span> query(a <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>);
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]+c[4]，这是比较自然的。
 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。
 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。</p>
-<h2 id="rmq">RMQ</h2>
+<h2 id="rmq">
+  RMQ
+  <a class="heading-link" href="#rmq">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
 <p>Range Maximum query，区间查找算法。同样出现在刘汝佳的书里面。该算法的核心是二分法，就是将对一个区间的查找转变为对不断二分的子区间的查找，其中子区间长度均为2的倍数。</p>
-<p>因为找不到书了，参考网上的<a href="https://blog.csdn.net/qq_41311604/article/details/79900893" target="_blank" rel="noopener noreffer ">代码</a></p>
-<h3 id="建立">建立</h3>
+<p>因为找不到书了，参考网上的<a href="https://blog.csdn.net/qq_41311604/article/details/79900893"  class="external-link" target="_blank" rel="noopener">代码</a></p>
+<h3 id="建立">
+  建立
+  <a class="heading-link" href="#%e5%bb%ba%e7%ab%8b">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>假设有一个数组：1,2,6,8,4,3,7
 设二维数组dp[i][j]表示从第i位开始连续2^j个数中的最小值。例如dp[2][1]表示第二位数开始连续两个数的最小值，也就是第二位数和第三位数的最小值，即2.
 在求的时候可以将其分为两个部分，第一部分是$i$到$i+2^{j-1}-1$，第二部分是$i+2^{j-1}$到$i+2^{j}-1$。</p>
@@ -190,145 +259,225 @@
             dp[i][j]=min(dp[i][j-1],dp[i+(1&lt;&lt;j-1)][j-1]);
 }
 </code></pre><p>注意循环变量的顺序不可改变。这相当于就是不断增加区间的长度来更新所有的状态。另外第二部分是可以超过数组长度限制的，这不影响最终的结果。</p>
-<h3 id="查询">查询</h3>
+<h3 id="查询">
+  查询
+  <a class="heading-link" href="#%e6%9f%a5%e8%af%a2">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>假设需要查询区间[l,r]的最小值，令$k=log2(r-l+1)$，区间最小值RMQ[l,r] = min(dp[l][k], dp[r - (1 &laquo; k) + 1][k]);，即从左边和右边同时开始搜索的最小值。
 证明过程就略了，毕竟也不是搞算法的。这里刘汝佳算法竞赛训练指南那幅图比较直观，查询时其实就是从两端伸出了两个块，只要保证2^k大于等于区间的一半，则最小值一定是能算出来的。</p>
-<h2 id="线段树">线段树</h2>
-<p><a href="https://oi-wiki.org/ds/seg/" target="_blank" rel="noopener noreffer ">参考资料</a>
+<h2 id="线段树">
+  线段树
+  <a class="heading-link" href="#%e7%ba%bf%e6%ae%b5%e6%a0%91">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h2>
+<p><a href="https://oi-wiki.org/ds/seg/"  class="external-link" target="_blank" rel="noopener">参考资料</a>
 特点是能够在O(logN)的时间复杂度内实现单点修改、区间修改、区间查询（区间求和、求区间最大值、求区间最小值等）
 求区间最值用线段树，我的理解是在修改操作较多的时候这样会更好一些。毕竟RMQ每次修改后都要更新一遍dp数组，速度其实也不快。</p>
 <p>核心思想也是二分法，把大区间分成两个小区间管理，直到区间长度为1为止。区间索引按照完全二叉树，所以位置为x的节点其孩子分别为2x与2x+1</p>
-<h3 id="树建立参考">树建立参考</h3>
+<h3 id="树建立参考">
+  树建立参考
+  <a class="heading-link" href="#%e6%a0%91%e5%bb%ba%e7%ab%8b%e5%8f%82%e8%80%83">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>递归方法建立线段树，其中d数组保存着树节点，a数组保存着原始数据</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">build</span><span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// 对 [s,t] 区间建立线段树,当前根的编号为 p
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">s</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="n">build</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span> <span class="n">build</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// 递归对左右区间建树
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[(</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="区间查询">区间查询</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">void</span> <span style="color:#d2a8ff;font-weight:bold">build</span>(<span style="color:#ff7b72">int</span> s, <span style="color:#ff7b72">int</span> t, <span style="color:#ff7b72">int</span> p) {
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// 对 [s,t] 区间建立线段树,当前根的编号为 p
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">if</span> (s <span style="color:#ff7b72;font-weight:bold">==</span> t) {
+</span></span><span style="display:flex;"><span>    d[p] <span style="color:#ff7b72;font-weight:bold">=</span> a[s];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">int</span> m <span style="color:#ff7b72;font-weight:bold">=</span> (s <span style="color:#ff7b72;font-weight:bold">+</span> t) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>  build(s, m, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>), build(m <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, t, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// 递归对左右区间建树
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  d[p] <span style="color:#ff7b72;font-weight:bold">=</span> d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">+</span> d[(p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>) <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="区间查询">
+  区间查询
+  <a class="heading-link" href="#%e5%8c%ba%e9%97%b4%e6%9f%a5%e8%af%a2">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>以求和为例子，查询区间[3,5]的和，可以用【3,3】+【4,5】来得到最终结果。
 示例代码</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">getsum</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// [l,r] 为查询区间,[s,t] 为当前节点包含的区间,p 为当前节点的编号
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>  <span class="c1">// 当前区间为询问区间的子集时直接返回当前区间的和
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">getsum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// 如果左儿子代表的区间 [l,m] 与询问区间有交集,则递归查询左儿子
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">getsum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// 如果右儿子代表的区间 [m+1,r] 与询问区间有交集,则递归查询右儿子
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="区间维护">区间维护</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">getsum</span>(<span style="color:#ff7b72">int</span> l, <span style="color:#ff7b72">int</span> r, <span style="color:#ff7b72">int</span> s, <span style="color:#ff7b72">int</span> t, <span style="color:#ff7b72">int</span> p) {
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// [l,r] 为查询区间,[s,t] 为当前节点包含的区间,p 为当前节点的编号
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> s <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> t <span style="color:#ff7b72;font-weight:bold">&lt;=</span> r)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> d[p];  <span style="color:#8b949e;font-style:italic">// 当前区间为询问区间的子集时直接返回当前区间的和
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">int</span> m <span style="color:#ff7b72;font-weight:bold">=</span> (s <span style="color:#ff7b72;font-weight:bold">+</span> t) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>, sum <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> m) sum <span style="color:#ff7b72;font-weight:bold">+=</span> getsum(l, r, s, m, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// 如果左儿子代表的区间 [l,m] 与询问区间有交集,则递归查询左儿子
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">if</span> (r <span style="color:#ff7b72;font-weight:bold">&gt;</span> m) sum <span style="color:#ff7b72;font-weight:bold">+=</span> getsum(l, r, m <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, t, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// 如果右儿子代表的区间 [m+1,r] 与询问区间有交集,则递归查询右儿子
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">return</span> sum;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="区间维护">
+  区间维护
+  <a class="heading-link" href="#%e5%8c%ba%e9%97%b4%e7%bb%b4%e6%8a%a4">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>如果在修改的时候将所有区间内节点进行修改，代价将难以承受。线段树使用的是”懒惰标记“，即在父节点缓存下更改，这样在查询的时候可以直接累加上对应的修改值。</p>
-<h3 id="实例代码1">实例代码1</h3>
+<h3 id="实例代码1">
+  实例代码1
+  <a class="heading-link" href="#%e5%ae%9e%e4%be%8b%e4%bb%a3%e7%a0%811">
+    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
+    <span class="sr-only">Link to heading</span>
+  </a>
+</h3>
 <p>区间求和</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// [l,r] 为修改区间,c 为被修改的元素的变化量,[s,t] 为当前节点包含的区间,p
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 为当前节点的编号
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">+=</span> <span class="n">c</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>  <span class="c1">// 当前区间为修改区间的子集时直接修改当前节点的值,然后打标记,结束修改
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">s</span> <span class="o">!=</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 如果当前节点的懒标记非空,则更新当前节点两个子节点的值和懒标记值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">m</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>  <span class="c1">// 将标记下传给子节点
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                                <span class="c1">// 清空当前节点的标记
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">)</span> <span class="n">update</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">)</span> <span class="n">update</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">getsum</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// [l,r] 为查询区间,[s,t] 为当前节点包含的区间,p为当前节点的编号
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span> <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">// 当前区间为询问区间的子集时直接返回当前区间的和
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 如果当前节点的懒标记非空,则更新当前节点两个子节点的值和懒标记值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">m</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>  <span class="c1">// 将标记下传给子节点
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>                                    <span class="c1">// 清空当前节点的标记
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">)</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">getsum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">getsum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">void</span> <span style="color:#d2a8ff;font-weight:bold">update</span>(<span style="color:#ff7b72">int</span> l, <span style="color:#ff7b72">int</span> r, <span style="color:#ff7b72">int</span> c, <span style="color:#ff7b72">int</span> s, <span style="color:#ff7b72">int</span> t, <span style="color:#ff7b72">int</span> p) {
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// [l,r] 为修改区间,c 为被修改的元素的变化量,[s,t] 为当前节点包含的区间,p
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#8b949e;font-style:italic">// 为当前节点的编号
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> s <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> t <span style="color:#ff7b72;font-weight:bold">&lt;=</span> r) {
+</span></span><span style="display:flex;"><span>    d[p] <span style="color:#ff7b72;font-weight:bold">+=</span> (t <span style="color:#ff7b72;font-weight:bold">-</span> s <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>) <span style="color:#ff7b72;font-weight:bold">*</span> c, b[p] <span style="color:#ff7b72;font-weight:bold">+=</span> c;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span>;
+</span></span><span style="display:flex;"><span>  }  <span style="color:#8b949e;font-style:italic">// 当前区间为修改区间的子集时直接修改当前节点的值,然后打标记,结束修改
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">int</span> m <span style="color:#ff7b72;font-weight:bold">=</span> (s <span style="color:#ff7b72;font-weight:bold">+</span> t) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (b[p] <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> s <span style="color:#ff7b72;font-weight:bold">!=</span> t) {
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">// 如果当前节点的懒标记非空,则更新当前节点两个子节点的值和懒标记值
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (m <span style="color:#ff7b72;font-weight:bold">-</span> s <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>), d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (t <span style="color:#ff7b72;font-weight:bold">-</span> m);
+</span></span><span style="display:flex;"><span>    b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p], b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p];  <span style="color:#8b949e;font-style:italic">// 将标记下传给子节点
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    b[p] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;                                <span style="color:#8b949e;font-style:italic">// 清空当前节点的标记
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> m) update(l, r, c, s, m, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (r <span style="color:#ff7b72;font-weight:bold">&gt;</span> m) update(l, r, c, m <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, t, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>);
+</span></span><span style="display:flex;"><span>  d[p] <span style="color:#ff7b72;font-weight:bold">=</span> d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">+</span> d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">getsum</span>(<span style="color:#ff7b72">int</span> l, <span style="color:#ff7b72">int</span> r, <span style="color:#ff7b72">int</span> s, <span style="color:#ff7b72">int</span> t, <span style="color:#ff7b72">int</span> p) {
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// [l,r] 为查询区间,[s,t] 为当前节点包含的区间,p为当前节点的编号
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> s <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> t <span style="color:#ff7b72;font-weight:bold">&lt;=</span> r) <span style="color:#ff7b72">return</span> d[p];
+</span></span><span style="display:flex;"><span>  <span style="color:#8b949e;font-style:italic">// 当前区间为询问区间的子集时直接返回当前区间的和
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  <span style="color:#ff7b72">int</span> m <span style="color:#ff7b72;font-weight:bold">=</span> (s <span style="color:#ff7b72;font-weight:bold">+</span> t) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (b[p]) {
+</span></span><span style="display:flex;"><span>    <span style="color:#8b949e;font-style:italic">// 如果当前节点的懒标记非空,则更新当前节点两个子节点的值和懒标记值
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (m <span style="color:#ff7b72;font-weight:bold">-</span> s <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>), d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (t <span style="color:#ff7b72;font-weight:bold">-</span> m),
+</span></span><span style="display:flex;"><span>        b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p], b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">+=</span> b[p];  <span style="color:#8b949e;font-style:italic">// 将标记下传给子节点
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    b[p] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;                                    <span style="color:#8b949e;font-style:italic">// 清空当前节点的标记
+</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">int</span> sum <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> m) sum <span style="color:#ff7b72;font-weight:bold">=</span> getsum(l, r, s, m, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (r <span style="color:#ff7b72;font-weight:bold">&gt;</span> m) sum <span style="color:#ff7b72;font-weight:bold">+=</span> getsum(l, r, m <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, t, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">return</span> sum;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>区间直接修改为某个值而不是加上某个值</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">m</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">          <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">    <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">)</span> <span class="n">update</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">)</span> <span class="n">update</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">getsum</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">s</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="p">)</span> <span class="k">return</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">m</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">d</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">m</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">          <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">    <span class="n">b</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="p">)</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">getsum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="n">m</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">getsum</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
-    <div class="post-info">
-        <div class="post-info-line">
-            <div class="post-info-mod">
-                <span>更新于 2021-03-17</span>
-            </div></div>
-        <div class="post-info-line">
-            <div class="post-info-md"></div>
-            <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" data-title="树状数组、线段树与RMQ" data-hashtags="分类/知识库/计算机/算法/区间问题,分类/知识库/计算机/算法/算法学习"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" data-hashtag="分类/知识库/计算机/算法/区间问题"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" data-title="树状数组、线段树与RMQ" data-web><i class="fab fa-whatsapp fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" data-title="树状数组、线段树与RMQ"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" data-title="树状数组、线段树与RMQ"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" data-title="树状数组、线段树与RMQ" data-description=""><i class="fab fa-blogger fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/" data-title="树状数组、线段树与RMQ"><i class="fab fa-evernote fa-fw" aria-hidden="true"></i></a></span>
-            </div>
-        </div>
+<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">void</span> <span style="color:#d2a8ff;font-weight:bold">update</span>(<span style="color:#ff7b72">int</span> l, <span style="color:#ff7b72">int</span> r, <span style="color:#ff7b72">int</span> c, <span style="color:#ff7b72">int</span> s, <span style="color:#ff7b72">int</span> t, <span style="color:#ff7b72">int</span> p) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> s <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> t <span style="color:#ff7b72;font-weight:bold">&lt;=</span> r) {
+</span></span><span style="display:flex;"><span>    d[p] <span style="color:#ff7b72;font-weight:bold">=</span> (t <span style="color:#ff7b72;font-weight:bold">-</span> s <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>) <span style="color:#ff7b72;font-weight:bold">*</span> c, b[p] <span style="color:#ff7b72;font-weight:bold">=</span> c;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">int</span> m <span style="color:#ff7b72;font-weight:bold">=</span> (s <span style="color:#ff7b72;font-weight:bold">+</span> t) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (b[p]) {
+</span></span><span style="display:flex;"><span>    d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (m <span style="color:#ff7b72;font-weight:bold">-</span> s <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>), d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (t <span style="color:#ff7b72;font-weight:bold">-</span> m),
+</span></span><span style="display:flex;"><span>          b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p];
+</span></span><span style="display:flex;"><span>    b[p] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> m) update(l, r, c, s, m, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (r <span style="color:#ff7b72;font-weight:bold">&gt;</span> m) update(l, r, c, m <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, t, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>);
+</span></span><span style="display:flex;"><span>  d[p] <span style="color:#ff7b72;font-weight:bold">=</span> d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">+</span> d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">getsum</span>(<span style="color:#ff7b72">int</span> l, <span style="color:#ff7b72">int</span> r, <span style="color:#ff7b72">int</span> s, <span style="color:#ff7b72">int</span> t, <span style="color:#ff7b72">int</span> p) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> s <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> t <span style="color:#ff7b72;font-weight:bold">&lt;=</span> r) <span style="color:#ff7b72">return</span> d[p];
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">int</span> m <span style="color:#ff7b72;font-weight:bold">=</span> (s <span style="color:#ff7b72;font-weight:bold">+</span> t) <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (b[p]) {
+</span></span><span style="display:flex;"><span>    d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (m <span style="color:#ff7b72;font-weight:bold">-</span> s <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>), d[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p] <span style="color:#ff7b72;font-weight:bold">*</span> (t <span style="color:#ff7b72;font-weight:bold">-</span> m),
+</span></span><span style="display:flex;"><span>          b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>] <span style="color:#ff7b72;font-weight:bold">=</span> b[p];
+</span></span><span style="display:flex;"><span>    b[p] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">int</span> sum <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (l <span style="color:#ff7b72;font-weight:bold">&lt;=</span> m) sum <span style="color:#ff7b72;font-weight:bold">=</span> getsum(l, r, s, m, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">if</span> (r <span style="color:#ff7b72;font-weight:bold">&gt;</span> m) sum <span style="color:#ff7b72;font-weight:bold">+=</span> getsum(l, r, m <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, t, p <span style="color:#ff7b72;font-weight:bold">*</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff7b72">return</span> sum;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+      </div>
+
+
+      <footer>
+        
+
+
+        
+        
+        
+        
+        
+
+        
+      </footer>
+    </article>
+
+    
+  </section>
+
     </div>
 
-    <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%8C%BA%E9%97%B4%E9%97%AE%E9%A2%98/">分类/知识库/计算机/算法/区间问题</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">分类/知识库/计算机/算法/算法学习</a></section>
-        <section>
-            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
-        </section>
-    </div>
+    <footer class="footer">
+  <section class="container">
+    ©
+    
+      2020 -
+    
+    2024
+     Timothy Wu 
+    ·
+    
+     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
+    
+  </section>
+</footer>
 
-    <div class="post-nav"><a href="/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/" class="prev" rel="prev" title="全排列问题与康托编码"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>全排列问题与康托编码</a>
-            <a href="/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/" class="next" rel="next" title="统计序列中的逆序对">统计序列中的逆序对<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
-</div>
-<div id="comments"><div id="utterances" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">utterances</a>.
-            </noscript></div></article></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
+  </main>
 
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-            </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+  
+
+  
+  
+  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
+  
+
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+
 </html>
