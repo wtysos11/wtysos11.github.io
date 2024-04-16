@@ -3,11 +3,12 @@
     <title>Go基础学习 - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
     <description>Go基础学习 - 分类 | 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+      <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
   <title>腾讯云cos获取文件操作实践--Go SDK</title>
   <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
   <pubDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
   <description><![CDATA[使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证]]></description>
 </item>
@@ -15,7 +16,7 @@
   <title>由多个goroutine中获取第一个错误信息出发的CAS学习</title>
   <link>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</link>
   <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</guid>
   <description><![CDATA[主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用]]></description>
 </item>
@@ -23,7 +24,7 @@
   <title>Go基本库阅读：bufio库</title>
   <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</link>
   <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</guid>
   <description><![CDATA[bufio这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考]]></description>
 </item>
@@ -31,7 +32,7 @@
   <title>Go基本库阅读：io库</title>
   <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</link>
   <pubDate>Fri, 22 Apr 2022 12:50:02 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</guid>
   <description><![CDATA[io相关库阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。]]></description>
 </item>
@@ -39,7 +40,7 @@
   <title>关于golang中指针赋值的问题</title>
   <link>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
   <pubDate>Thu, 15 Jul 2021 18:08:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
   <description><![CDATA[最近在SO上找到了一个很有意思的问题：SO 这个问题是关于一个指针在外部函数的赋值，当然，解决方法也很简单。 type userIP net.IP func main() { var u *userIP u.defaultIP() fmt.Printf(&#34;%v\n&#34;, u) } func (u *userIP) defaultIP()]]></description>
 </item>
@@ -47,7 +48,7 @@
   <title>golang函数参数中接口指针的传递</title>
   <link>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</link>
   <pubDate>Thu, 01 Jul 2021 16:34:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</guid>
   <description><![CDATA[其实是一个很简单的问题，但是如果是之前一直写go的话可能没有意识到指针的本质，就走不出来了。 最近写代码的时候遇到了一个问题：有一个功能需要使]]></description>
 </item>
@@ -55,7 +56,7 @@
   <title>Go中nil意义的理解</title>
   <link>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</link>
   <pubDate>Mon, 21 Jun 2021 14:28:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
   <description><![CDATA[对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频htt]]></description>
 </item>
@@ -63,7 +64,7 @@
   <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
   <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
   <pubDate>Thu, 17 Jun 2021 14:22:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
   <description><![CDATA[今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是]]></description>
 </item>
@@ -71,7 +72,7 @@
   <title>golang中函数如何设置参数默认值</title>
   <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
   <pubDate>Sun, 13 Jun 2021 14:50:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
   <description><![CDATA[参考资料 Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认]]></description>
 </item>
@@ -79,7 +80,7 @@
   <title>golang单元测试整理归纳</title>
   <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
   <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
   <description><![CDATA[本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识 参考资料 Go by example，中文版]]></description>
 </item>

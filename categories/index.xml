@@ -3,11 +3,12 @@
     <title>Categories - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/</link>
     <description>Categories - 分类 | 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+      <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/" rel="self" type="application/rss+xml" /><item>
   <title>实践记录</title>
   <link>http://wtysos11.github.io/categories/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/</link>
   <pubDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -15,7 +16,7 @@
   <title>计算机视频学习笔记</title>
   <link>http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
   <pubDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -23,7 +24,7 @@
   <title>开源代码学习笔记</title>
   <link>http://wtysos11.github.io/categories/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
   <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/%E5%BC%80%E6%BA%90%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -31,7 +32,7 @@
   <title>计算机论文阅读</title>
   <link>http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
   <pubDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -39,7 +40,7 @@
   <title>Go基础学习</title>
   <link>http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
   <pubDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -47,7 +48,7 @@
   <title>Go最佳实践</title>
   <link>http://wtysos11.github.io/categories/go%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
   <pubDate>Wed, 15 Jun 2022 14:40:05 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/go%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -55,7 +56,7 @@
   <title>Git学习</title>
   <link>http://wtysos11.github.io/categories/git%E5%AD%A6%E4%B9%A0/</link>
   <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/git%E5%AD%A6%E4%B9%A0/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -63,7 +64,7 @@
   <title>学习笔记</title>
   <link>http://wtysos11.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
   <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -71,7 +72,7 @@
   <title>消息队列</title>
   <link>http://wtysos11.github.io/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</link>
   <pubDate>Wed, 08 Jun 2022 09:01:42 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</guid>
   <description><![CDATA[]]></description>
 </item>
@@ -79,7 +80,7 @@
   <title>Leetcode刷题记录</title>
   <link>http://wtysos11.github.io/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/</link>
   <pubDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/</guid>
   <description><![CDATA[]]></description>
 </item>

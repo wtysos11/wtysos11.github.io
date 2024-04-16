@@ -3,11 +3,12 @@
     <title>计算机/算法/分治法 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%88%86%E6%B2%BB%E6%B3%95/</link>
     <description>计算机/算法/分治法 - 标签 | 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%88%86%E6%B2%BB%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+      <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%88%86%E6%B2%BB%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
   <title>Leetcode 4: 寻找两个正序数组的中位数</title>
   <link>http://wtysos11.github.io/posts/20220408_leetcode_4/</link>
   <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
   <description><![CDATA[寻找两个正序数组的中位数这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已]]></description>
 </item>

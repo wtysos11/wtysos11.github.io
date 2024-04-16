@@ -3,11 +3,12 @@
     <title>快速复习 - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0/</link>
     <description>快速复习 - 分类 | 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 05 May 2020 09:08:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+      <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Tue, 05 May 2020 09:08:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
   <title>python日志模块logging学习与快速复习笔记</title>
   <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
   <pubDate>Tue, 05 May 2020 09:08:04 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
   <description><![CDATA[因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考： csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细]]></description>
 </item>

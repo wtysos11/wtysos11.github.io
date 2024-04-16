@@ -3,11 +3,12 @@
     <title>操作实践 - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
     <description>操作实践 - 分类 | 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+      <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" rel="self" type="application/rss+xml" /><item>
   <title>Wikipedia pageview数据获取(bigquery)</title>
   <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
   <pubDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</guid>
   <description><![CDATA[维基百科pageview数据集原始数据获取，可以从bigquery上获得2015年以来的小时级访问数据]]></description>
 </item>
@@ -15,7 +16,7 @@
   <title>istio应用对外访问极速入门</title>
   <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
   <pubDate>Sat, 30 Oct 2021 16:41:02 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
   <description><![CDATA[istio框架下如何暴露服务，其实挺简单的。]]></description>
 </item>
@@ -23,7 +24,7 @@
   <title>kubernetes服务：学习ingress与暴露服务简单实验</title>
   <link>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</link>
   <pubDate>Sun, 06 Jun 2021 16:30:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</guid>
   <description><![CDATA[参考资料： kubernetes ingress实战 Intro to Kube ingress: Set up nginx Ingress in Kubernetes Bare Metal ingress的nip.io相关资料 实验室集群中已经有一个ingress-contro]]></description>
 </item>
@@ -31,7 +32,7 @@
   <title>Vagrant如何手动下载官网镜像并导入</title>
   <link>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</link>
   <pubDate>Thu, 03 Jun 2021 09:36:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</guid>
   <description><![CDATA[参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu]]></description>
 </item>
@@ -39,7 +40,7 @@
   <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
   <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
   <pubDate>Tue, 13 Oct 2020 12:37:13 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
   <description><![CDATA[后续更新，不一定会记得更新 kubernetes虚拟机多级环境部署与Istio的安装标签：项目实践 kubernetes istio 计划在三台2C4G的机器上安装kuber]]></description>
 </item>
@@ -47,7 +48,7 @@
   <title>在k8s中上线gatling镜像并在内网发送流量</title>
   <link>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
   <pubDate>Mon, 12 Oct 2020 15:44:17 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
   <description><![CDATA[后续更新，我不一定会记得更新过来。 在k8s中上线gatling镜像并在内网发送流量很多时候我们会面临一个问题，即外网的带宽是有限的，虽然未来]]></description>
 </item>

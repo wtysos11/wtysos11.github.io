@@ -3,11 +3,12 @@
     <title>科研实验 - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/%E7%A7%91%E7%A0%94%E5%AE%9E%E9%AA%8C/</link>
     <description>科研实验 - 分类 | 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 09 Apr 2021 09:36:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E7%A7%91%E7%A0%94%E5%AE%9E%E9%AA%8C/" rel="self" type="application/rss+xml" /><item>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
+      <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Fri, 09 Apr 2021 09:36:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E7%A7%91%E7%A0%94%E5%AE%9E%E9%AA%8C/" rel="self" type="application/rss+xml" /><item>
   <title>记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考</title>
   <link>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</link>
   <pubDate>Fri, 09 Apr 2021 09:36:14 &#43;0800</pubDate>
-  <author>作者</author>
+  <author>Timothy Wu</author>
   <guid>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</guid>
   <description><![CDATA[http://ita.ee.lbl.gov 这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也]]></description>
 </item>
