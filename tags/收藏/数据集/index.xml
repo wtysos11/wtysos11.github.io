@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>收藏/数据集 on 实践出真知</title>
+    <title>收藏/数据集 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E6%94%B6%E8%97%8F/%E6%95%B0%E6%8D%AE%E9%9B%86/</link>
-    <description>Recent content in 收藏/数据集 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E6%94%B6%E8%97%8F/%E6%95%B0%E6%8D%AE%E9%9B%86/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Wikipedia pageview数据获取(bigquery)</title>
-      <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
-      <pubDate>Thu, 07 Apr 2022 16:41:07 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</guid>
-      <description>维基百科pageview数据集原始数据获取，可以从bigquery上获得2015年以来的小时级访问数据</description>
-    </item>
-  </channel>
+    <description>收藏/数据集 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E6%94%B6%E8%97%8F/%E6%95%B0%E6%8D%AE%E9%9B%86/" rel="self" type="application/rss+xml" /><item>
+  <title>Wikipedia pageview数据获取(bigquery)</title>
+  <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
+  <pubDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</guid>
+  <description><![CDATA[维基百科pageview数据集原始数据获取，可以从bigquery上获得2015年以来的小时级访问数据]]></description>
+</item>
+</channel>
 </rss>

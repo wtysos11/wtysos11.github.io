@@ -1,32 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/算法/困难 on 实践出真知</title>
+    <title>计算机/算法/困难 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%9B%B0%E9%9A%BE/</link>
-    <description>Recent content in 计算机/算法/困难 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%9B%B0%E9%9A%BE/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Leetcode 780: 到达终点</title>
-      <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
-      <pubDate>Sat, 09 Apr 2022 19:27:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
-      <description>Leetcode 780 到达终点 Link to heading 22年4月9日每日一题&#xA;题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,y)可以转换到(x+y,y)或者(x,x+y)。&#xA;一个初步的想法是动态规划扫一遍，对于给定的范围$0&amp;lt;x,y&amp;lt;n$，这个方法的复杂度为O(n^2)。从结果来看n为10^9，很可能会超时。 另一个简单的想法是直接从源头开始广搜，代价相对来说会小很多，但是仍然是指数增长的，对于超大规模时很可能会超时。&#xA;简单BFS Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; struct Point{ int x,y; Point(int x, int y){ this-&amp;gt;x = x; this-&amp;gt;y = y; } }; class Solution { public: bool reachingPoints(int sx, int sy, int tx, int ty) { if(sx&amp;gt;tx || sy&amp;gt;ty){ return false; } queue&amp;lt;Point&amp;gt; q; q.push(Point(sx,sy)); while(!q.empty()){ Point cur_node(q.front()); q.pop(); // 判断是否是 if(cur_node.</description>
-    </item>
-    <item>
-      <title>Leetcode 780: 到达终点</title>
-      <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
-      <pubDate>Sat, 09 Apr 2022 19:27:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
-      <description>Leetcode 780 到达终点 Link to heading 22年4月9日每日一题&#xA;题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,y)可以转换到(x+y,y)或者(x,x+y)。&#xA;一个初步的想法是动态规划扫一遍，对于给定的范围$0&amp;lt;x,y&amp;lt;n$，这个方法的复杂度为O(n^2)。从结果来看n为10^9，很可能会超时。 另一个简单的想法是直接从源头开始广搜，代价相对来说会小很多，但是仍然是指数增长的，对于超大规模时很可能会超时。&#xA;简单BFS Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; struct Point{ int x,y; Point(int x, int y){ this-&amp;gt;x = x; this-&amp;gt;y = y; } }; class Solution { public: bool reachingPoints(int sx, int sy, int tx, int ty) { if(sx&amp;gt;tx || sy&amp;gt;ty){ return false; } queue&amp;lt;Point&amp;gt; q; q.push(Point(sx,sy)); while(!q.empty()){ Point cur_node(q.front()); q.pop(); // 判断是否是 if(cur_node.</description>
-    </item>
-    <item>
-      <title>Leetcode 780: 到达终点</title>
-      <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
-      <pubDate>Sat, 09 Apr 2022 19:27:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
-      <description>Leetcode 780 到达终点 Link to heading 22年4月9日每日一题&#xA;题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,y)可以转换到(x+y,y)或者(x,x+y)。&#xA;一个初步的想法是动态规划扫一遍，对于给定的范围$0&amp;lt;x,y&amp;lt;n$，这个方法的复杂度为O(n^2)。从结果来看n为10^9，很可能会超时。 另一个简单的想法是直接从源头开始广搜，代价相对来说会小很多，但是仍然是指数增长的，对于超大规模时很可能会超时。&#xA;简单BFS Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; struct Point{ int x,y; Point(int x, int y){ this-&amp;gt;x = x; this-&amp;gt;y = y; } }; class Solution { public: bool reachingPoints(int sx, int sy, int tx, int ty) { if(sx&amp;gt;tx || sy&amp;gt;ty){ return false; } queue&amp;lt;Point&amp;gt; q; q.push(Point(sx,sy)); while(!q.empty()){ Point cur_node(q.front()); q.pop(); // 判断是否是 if(cur_node.</description>
-    </item>
-  </channel>
+    <description>计算机/算法/困难 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 09 Apr 2022 19:27:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%9B%B0%E9%9A%BE/" rel="self" type="application/rss+xml" /><item>
+  <title>Leetcode 780: 到达终点</title>
+  <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
+  <pubDate>Sat, 09 Apr 2022 19:27:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
+  <description><![CDATA[Leetcode 780 到达终点22年4月9日每日一题 题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,]]></description>
+</item>
+</channel>
 </rss>

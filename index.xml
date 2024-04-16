@@ -1,670 +1,89 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>实践出真知</title>
     <link>http://wtysos11.github.io/</link>
-    <description>Recent content on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <lastBuildDate>Tue, 06 Feb 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://wtysos11.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>置顶：博客文章组织，目录与标签</title>
-      <link>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</link>
-      <pubDate>Wed, 06 Apr 2022 12:34:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</guid>
-      <description>介绍本博客的文章是如何组织的，以及对应的标签和目录的意思介绍</description>
-    </item>
-    <item>
-      <title>hugo loveit构建github page博客</title>
-      <link>http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/</link>
-      <pubDate>Wed, 25 Aug 2021 16:34:18 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/</guid>
-      <description>博客的构建记录</description>
-    </item>
-    <item>
-      <title>基于大模型构建本地知识库</title>
-      <link>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</link>
-      <pubDate>Wed, 03 Jan 2024 11:32:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</guid>
-      <description>基于大模型构建本地知识库，尝试使用ChatGPT、chatglm和Langchain-chatchat</description>
-    </item>
-    <item>
-      <title>Gopherfest 2015：Go Proverbs with Rob Pike</title>
-      <link>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</link>
-      <pubDate>Mon, 27 Jun 2022 21:13:15 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-    <item>
-      <title>Vegeta压测工具学习与使用</title>
-      <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 24 Jun 2022 17:27:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-    <item>
-      <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
-      <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
-      <pubDate>Fri, 24 Jun 2022 17:15:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-    <item>
-      <title>腾讯云cos获取文件操作实践--Go SDK</title>
-      <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Thu, 23 Jun 2022 20:45:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
-      <description>使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证</description>
-    </item>
-    <item>
-      <title>多协程写同一个slice的最佳实践</title>
-      <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Wed, 15 Jun 2022 14:40:05 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
-      <description>问题描述 Link to heading main.go&#xA;func main() { fmt.Println(&amp;#34;in waitgroup test&amp;#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &amp;lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &amp;lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) } 测试命令为go run -race main.go，会发生数据竞争。其中在append的时候会发生两种竞争，一个是slice的容量增加时会发生问题，另一个是单纯读写时也会发生问题。 这使得最终的长度总是小于预期。</description>
-    </item>
-    <item>
-      <title>多协程错误处理与errgroup</title>
-      <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
-      <pubDate>Wed, 15 Jun 2022 14:17:05 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
-      <description>工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习</description>
-    </item>
-    <item>
-      <title>Git常见操作与QA</title>
-      <link>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</link>
-      <pubDate>Wed, 15 Jun 2022 08:43:05 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</guid>
-      <description>操作QA Link to heading 操作与对应的实践练习&#xA;git update-index Link to heading 比如对于本仓库的.env文件，就使用了git update-index --skip-worktree .env来避免</description>
-    </item>
-    <item>
-      <title>由多个goroutine中获取第一个错误信息出发的CAS学习</title>
-      <link>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</link>
-      <pubDate>Wed, 15 Jun 2022 08:43:05 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/</guid>
-      <description>主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用</description>
-    </item>
-    <item>
-      <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>
-      <link>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Mon, 13 Jun 2022 09:01:42 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
-      <description>前言 Link to heading 参考资料 Link to heading 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用go run -race main.go应该都可以检出数据竞争。 原论文 感觉自己很多地方翻译的不是很好，省略了很多的内容，还是推荐阅读原文 数据竞争检测 Link to heading data race的检测可以通过go build中加入-race来进行。详情见此文所举的例子&#xA;本文统一将data race译为数据竞争&#xA;摘要 Link to heading Go作为将并发置为首位的语言，在现代基于微服务的系统中变得越来越受欢迎。同样，data race（数据竞争）也因此变得愈发普遍。本文在Uber的工业应用场景中进行了相关的实验，说明Go中语言习语和编写方式的细微差别使得Go非常容易受到数据竞争的影响。&#xA;动态的race detector可以识别（内部），但是面临着可伸缩性和flakiness的挑战。作者将自制的数据竞争检测器应用于Uber2100个微服务共计四千六百万条Go代码上，并最终检测2000个数据竞争，修复了其中的1000个。&#xA;1 Introduction Link to heading 介绍了一些Go的优点，特别是其中适合于编写微服务的部分。 Go中不同goroutine之间的通信包括消息队列传输（channel）和共享内存。这里的共享内存应该指的是对同一个进程内数据的直接访问。&#xA;数据竞争的条件：&#xA;对于两个或者更多访问同一个数据对象(datum)的goroutine而言，至少有一个是写 这些goroutine之间没有顺序（比如channel或者lock所形成的偏序关系） 数据竞争的后果很严重，可能会导致最终的结果出现异常，并造成服务下线。 Go内置的数据竞争检测器采用了基于ThreadSanitizer的动态检测，包括lock-set和happens-before算法。其代价根据程序的大小变化，但是一般会造成内存占用增加5到10倍，执行时间增加2到10倍，并且编译时间会增加2倍。&#xA;本文介绍了使用Go的默认动态检测器来持续在uber的生产环境中检测数据竞争。尽管已经有了很多检测数据竞争的算法，但是这与在真实环境的设置中部署动态分析还有显著的差距。由于动态竞争检测的不确定性，将其作为连续检测的一部分进行集成是不切实际的；部署它作为事后检测过程又在不重复报告的同时确定正确的竞争拥有者这一点上引入了复杂性和挑战。我们根据实际情况精心设计了部署的选择。&#xA;我们使用了十万个Godanyuan测试来检验代码并检测数据竞争。在六个月内，连续监控系统检测了2000条以上的数据竞争，210个开发者使用790个补丁修复了其中多达1000个数据竞争，上下的正在被积极地解决。系统每天能从新引入的代码中检测到5个新的数据竞争。&#xA;分析结果显示除了常见的错误外，Go有着独特的方面来引入并发错误，包括&#xA;transparent capture-by-reference of free variables named return variables deferred functions ability to mix shared memory with message passing indistinguishable value vs pointer semantics extensive use of thread-unsafe built-in map flexible gropu synchronization confusing slice 并且与Go简单的使用goroutine来进行并发的特性结合，使得Go很容易出现数据竞争。 （因此本文主要讨论的是由Go的语法特点引起的数据竞争） 贡献：</description>
-    </item>
-    <item>
-      <title>腾讯云 cos Go SDK使用学习</title>
-      <link>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Mon, 13 Jun 2022 09:01:42 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/</guid>
-      <description>参考资料 Link to heading 官方文档 官方示例 基本概念 Link to heading COS（Cloud Object Storage，云对象存储）&#xA;Bucket（存储桶）&#xA;命名上，由存储桶名称（BucketName）和APPID两部分组成，中间以&amp;quot;-&amp;ldquo;相连，例如examplebucket-1250000000 存储桶具有着地域（region），对象存储允许用户在不同的地域上创建存储桶。 Object（对象）&#xA;存储桶上存储的内容称为对象，对象是对象存储（Cloud Object Storage, cos）的基本单元，包括对象键、对象值和对象元数据 对象键是对象在存储桶中的唯一标识，可以通俗理解为文件路径。 对象值是上传的对象本身，可以通俗的理解为文件内容 对象元数据是一组键值对，可以通俗的理解为文件的属性 对象存储的特点 Link to heading 文件特点：适合存储unstructure的对象，对象的操作与传统的文件不同，上传时只能选择直接上传和分块上传（类append），不能如传统文件一样根据偏移值实现随机存储。 异地容灾 腾讯云cos的特点：冷热分离 速度限制：cos在设计上并不是为了高并发和强一致性，因此基于事务的操作可能不应该选择使用cos。 速度上对于QPS为3W以下的GET/PUT等操作没有问题，3W以上需要采取优化。 示例代码 Link to heading 本身没什么难度，随便放一段示例代码&#xA;package main import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;github.com/tencentyun/cos-go-sdk-v5&amp;#34; &amp;#34;github.com/tencentyun/cos-go-sdk-v5/debug&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;net/url&amp;#34; ) func log_status(err error) { if err == nil { return } if cos.IsNotFoundError(err) { // WARN fmt.Println(&amp;#34;WARN: Resource is not existed&amp;#34;) } else if e, ok := cos.</description>
-    </item>
-    <item>
-      <title>消息队列基本概念与pulsar学习</title>
-      <link>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Wed, 08 Jun 2022 09:01:42 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</guid>
-      <description>消息队列学习 Link to heading 概念学习 Link to heading 参考资料：&#xA;IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念&#xA;消息（messages）：一组信息的集合 topic。 Topic和Queue应该指的是两种不同的模型，根据这篇JMS的文章、Kafka is it a topic or a queue、JMS Topic vs Queues。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。 而且在队列中接受者不用担心超时问题；在Topic中接受者必须continuously active并且按时接收，不然消息就会超时。 在pulsar中，topic甚至不用预先创建，会根据{persistent|non-persistent}://tenant/namespace/topic的名称自动生成。 元数据（metadata）：参考BookKeeper Ledger Metadata，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。 Pub/Sub：Pub-Sub Messaging 消息队列的优点：&#xA;分离消息的生产者和消费者，使其在代码层面解耦合 允许消费者对消息进行异步处理，加快处理速度。 访问控制中的峰值控制。 Pulsar Link to heading 参考资料：&#xA;下一代消息队列pulsar到底是什么 pulsar/concepts-messaging 架构上来说，Pulsar是Pub-sub架构&#xA;Broker：无状态服务层，负责接受和传递消息、集群负载均衡 Apache BookKeeper：有状态持久化层，由一组名为Bookie的存储节点组成 Producer：数据生产者，负责发布数据到Topic Consumer：数据消费者，负责从Topic订阅数据 使用ZooKeeper作为元数据存储&#xA;其他消息队列是分区存储，Pulsar是分片存储。&#xA;Pub-sub架构（发布/订阅），异步的服务间通信方式，适用于无服务器和微服务。发布到主题的任何消息都会立即被主题的所有订阅者接收。&#xA;多层架构：&#xA;租户，可以看作是第一个层级，比如大的部门 namespace：命名空间，可以看作是第二个层级。 Subscriptions Link to heading 有四种模式：&#xA;Consumerless subscriptions，这个是例外，没有consumer的时候subscription mode的undefined的。</description>
-    </item>
-    <item>
-      <title>Go基本库阅读：bufio库</title>
-      <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</link>
-      <pubDate>Fri, 22 Apr 2022 12:50:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/</guid>
-      <description>bufio Link to heading 这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。&#xA;本质上相当于io加上缓冲区。&#xA;参考：&#xA;1.4 bufio库 常见的表述，包括函数功能解释参考此文，本文不再赘述 源代码 代码 Reader Link to heading bufio的Reader本质上是io.Reader的wrap，只是多了一个缓冲区并进行了一些对应的实现&#xA;type Reader struct { buf []byte rd io.Reader // reader provided by the client r, w int // buf read and write positions 其中r代表着缓冲区的开头，w代表着缓冲区的末尾 err error lastByte int // last byte read for UnreadByte; -1 means invalid lastRuneSize int // size of last rune read for UnreadRune; -1 means invalid } 初始化函数，下列函数可以初始化并得到一个新的Reader</description>
-    </item>
-    <item>
-      <title>Go基本库阅读：io库</title>
-      <link>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</link>
-      <pubDate>Fri, 22 Apr 2022 12:50:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/</guid>
-      <description>io相关库 Link to heading 阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。&#xA;io相关的操作我一直没怎么弄明白，特别是后面看到HTTP框架里面使用ioutil读取的时候。虽然C++的底子告诉我这样可以，但是我还是觉得应该一探究竟。&#xA;Golang的IO库那么多，我该怎么选?这篇文章比较概要地介绍了go中涉及到io的库：io库、os库、ioutil库、bufio库、bytes库、string库，其实net部分也有涉及，我看看之后能不能写到这个地方&#xA;可以进一步阅读的地方或资料：&#xA;bytes的buffer，很基本的操作，常见但是涉及到很多inline相关的优化 1.1 io — 基本的 IO 接口 这一章对于io库的叙述比较详尽，可以参考 io的常见用途 Link to heading 我个人学习东西的习惯是比较习惯从应用出发，自己什么时候用到这个东西，这个东西会在哪里被用到，怎么被用到。&#xA;说起IO，一般就是以下几种情况&#xA;标准输入输出：fmt.Printf，fmt.Scanf 读取文件 package main import ( &amp;#34;bufio&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io&amp;#34; &amp;#34;os&amp;#34; ) func main() { inputFile, inputError := os.Open(&amp;#34;input.dat&amp;#34;) if inputError != nil { fmt.Printf(&amp;#34;An error occurred on opening the inputfile\n&amp;#34; + &amp;#34;Does the file exist?\n&amp;#34; + &amp;#34;Have you got acces to it?\n&amp;#34;) return // exit the function on error } defer inputFile.</description>
-    </item>
-    <item>
-      <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
-      <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
-      <pubDate>Wed, 13 Apr 2022 10:28:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
-      <description>Leetcode 380: O(1)时间插入、删除和获取随机元素 Link to heading 22年4月13日每日一题&#xA;初始想法 Link to heading 最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈希表的话，插入和删除是O(1)的，但是随机化并不是O(1)。&#xA;因此，只需要将数组和哈希表结合起来，使用哈希表进行插入和删除，并使用数组来进行随机化。问题在于数组中的元素删除代价不一定是O(1)，这个可以使用最后元素的置换来完成。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;ctime&amp;gt; using namespace std; class RandomizedSet { public: map&amp;lt;int,int&amp;gt; store; vector&amp;lt;int&amp;gt; q; RandomizedSet() { store.clear(); q.clear(); } bool insert(int val) { if(store.find(val)==store.end()){ q.emplace_back(val); store[val] = q.size()-1; return true; } return false; } bool remove(int val) { if(store.find(val)==store.end()){ return false; } int cur_pos = store[val]; int last_pos = q.size()-1; if(cur_pos !</description>
-    </item>
-    <item>
-      <title>Leetcode 806: 写字符串需要的行数</title>
-      <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
-      <pubDate>Tue, 12 Apr 2022 09:15:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
-      <description>220412 每日一题，非常简单&#xA;class Solution { public: vector&amp;lt;int&amp;gt; numberOfLines(vector&amp;lt;int&amp;gt;&amp;amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&amp;lt;s.length();i++){ if(rest == 100 &amp;amp;&amp;amp; widths[s[i]-&amp;#39;a&amp;#39;]&amp;gt;0){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; continue; } rest += widths[s[i]-&amp;#39;a&amp;#39;]; if(rest&amp;gt;100){ rest = widths[s[i]-&amp;#39;a&amp;#39;]; linenum++; } } return vector&amp;lt;int&amp;gt;{linenum,rest}; } }; </description>
-    </item>
-    <item>
-      <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
-      <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
-      <pubDate>Mon, 11 Apr 2022 10:01:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
-      <description> Leetcode 357: 统计各位数字都不同的数字个数 Link to heading 解法包括暴力解法和扩张方法。&#xA;暴力解法 Link to heading 直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了。&#xA;扩张方法 Link to heading 这个想法是错的……不应该从有重复的数字扩张，应该从没有重复的数字扩张。早上起来做这道题脑子有点懵。&#xA;该问题是具备最优子结构的。对于长度为n的问题，与其枚举没有重复的数字，不如枚举重复的数字。 重复源头可以来源于之前（n-1）与当前，因此可以从这个地方开始递推比较最新一位的数字与之前的数字之间的关系。&#xA;可以定义数字dp[n][m]为长度为n的数组中以m开头的数内重复的数字个数。 其中对0的处理比较麻烦，最高位不会出现0，但是0是有可能出现重复的，因此可能需要对之前的一位做专门的处理。 因此特殊的，定义dp[n-1][0]为第n位数为任意非0数时，n-1位为0时的重复数字个数&#xA;显而易见的是，dp[1][&amp;hellip;]=0，长度为一位的时候不会有重复的数据。&#xA;最新的一位数据的内容主要包括两个方面：&#xA;之前已经重复的0：$dp[n-1][0] = 10^{n-3} + \sum_{i\in Q_0}dp[n-2][i]$，包括最新的一个重复，加上之前的重复项目 更新完0之后，更新之前已经重复的1~9：$dp[n][m] = 10^{n-2} + \sum_{i\in Q_m}dp[n-1][i]$。其中$Q_m$表示个位数中除了m以外的集合，比如$Q_1={0,2,3,&amp;hellip;,9}$。 该项目的两个部分分别表示前一位为m或者非m的情况（非0），以1为例子 $10^{n-2}$表示形如&amp;quot;11XXX&amp;quot;的数据，其中之后的数据完全任意且不会重复，因此直接计总数即可。 $\sum_{i\in Q_m}dp[n-1][i]$，表示形如&amp;quot;1XaaXXX&amp;quot;的数据，即最新的数字加入时没有引入重复，但是之前已经发生了重复的情况。 该项也是0为什么要在之前计算的缘故，否则，会漏算因为0引起的重复情况。 在计算的时候是一起计算的，n位以0开头的数字可以视为n+1位存在任意数字使其非0。但是最终计算总重复数字时不会加入dp[n][0]，因为最高位为时非法的。&#xA;以n=3为例子:&#xA;n=1的时候，$dp[1][&amp;hellip;]=0$ n=2的时候，$dp[2][1] = dp[1][1] + 10^0=1$，也即11。类似的，有00、22、33、44、55、66、77、88、99。 n=3的时候，$dp[3][1] = 10^1 + \sum_{i\in{0,2,3,&amp;hellip;,9}}10^0$，即110、111、112、&amp;hellip;、119，以及100、122、133、&amp;hellip;、199。 在最终计入总数的时候，计算$\sum_{i=1}^9dp[n][i]$，不计算0。因为不存在以0开头的数字。 数学方法 Link to heading 官方给的解法：含有d位数($2\geq d\leq 10$)的各位数字都不同的数字x的个数可以由$9\times A_{9}^{d-1}$。（第一位选择范围为除0以外，第二位为10个数字除以第一位，以此类推）&#xA;class Solution { public: int countNumbersWithUniqueDigits(int n) { if (n == 0) { return 1; } if (n == 1) { return 10; } int ans = 10, cur = 9; for (int i = 0; i &amp;lt; n - 1; ++i) { cur *= 9 - i; ans += cur; } return ans; } }; </description>
-    </item>
-    <item>
-      <title>Leetcode 804: 唯一摩尔斯密码词</title>
-      <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
-      <pubDate>Sun, 10 Apr 2022 16:30:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
-      <description> Leetcode 804 唯一摩尔斯密码词 Link to heading 没什么难度，水题。如果不是每日一题不建议刷。&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; #include &amp;lt;map&amp;gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&amp;lt;string&amp;gt;&amp;amp; words) { vector&amp;lt;string&amp;gt; password{&amp;#34;.-&amp;#34;,&amp;#34;-...&amp;#34;,&amp;#34;-.-.&amp;#34;,&amp;#34;-..&amp;#34;,&amp;#34;.&amp;#34;,&amp;#34;..-.&amp;#34;,&amp;#34;--.&amp;#34;,&amp;#34;....&amp;#34;,&amp;#34;..&amp;#34;,&amp;#34;.---&amp;#34;,&amp;#34;-.-&amp;#34;,&amp;#34;.-..&amp;#34;,&amp;#34;--&amp;#34;,&amp;#34;-.&amp;#34;,&amp;#34;---&amp;#34;,&amp;#34;.--.&amp;#34;,&amp;#34;--.-&amp;#34;,&amp;#34;.-.&amp;#34;,&amp;#34;...&amp;#34;,&amp;#34;-&amp;#34;,&amp;#34;..-&amp;#34;,&amp;#34;...-&amp;#34;,&amp;#34;.--&amp;#34;,&amp;#34;-..-&amp;#34;,&amp;#34;-.--&amp;#34;,&amp;#34;--..&amp;#34;}; map&amp;lt;string,bool&amp;gt; exist; for(int i=0;i&amp;lt;words.size();i++){ string&amp;amp; word = words[i]; string origin; for(int j=0;j&amp;lt;word.length();j++){ origin = origin + password[word[j]-&amp;#39;a&amp;#39;]; } exist[origin]=true; } return exist.size(); } }; int main(void){ Solution s; vector&amp;lt;string&amp;gt; words; words.emplace_back(&amp;#34;gin&amp;#34;); words.emplace_back(&amp;#34;zen&amp;#34;); words.emplace_back(&amp;#34;gig&amp;#34;); words.emplace_back(&amp;#34;msg&amp;#34;); cout&amp;lt;&amp;lt;s.uniqueMorseRepresentations(words)&amp;lt;&amp;lt;endl; return 0; } </description>
-    </item>
-    <item>
-      <title>Leetcode 780: 到达终点</title>
-      <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
-      <pubDate>Sat, 09 Apr 2022 19:27:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
-      <description>Leetcode 780 到达终点 Link to heading 22年4月9日每日一题&#xA;题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,y)可以转换到(x+y,y)或者(x,x+y)。&#xA;一个初步的想法是动态规划扫一遍，对于给定的范围$0&amp;lt;x,y&amp;lt;n$，这个方法的复杂度为O(n^2)。从结果来看n为10^9，很可能会超时。 另一个简单的想法是直接从源头开始广搜，代价相对来说会小很多，但是仍然是指数增长的，对于超大规模时很可能会超时。&#xA;简单BFS Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;queue&amp;gt; using namespace std; struct Point{ int x,y; Point(int x, int y){ this-&amp;gt;x = x; this-&amp;gt;y = y; } }; class Solution { public: bool reachingPoints(int sx, int sy, int tx, int ty) { if(sx&amp;gt;tx || sy&amp;gt;ty){ return false; } queue&amp;lt;Point&amp;gt; q; q.push(Point(sx,sy)); while(!q.empty()){ Point cur_node(q.front()); q.pop(); // 判断是否是 if(cur_node.</description>
-    </item>
-    <item>
-      <title>Leetcode数组专题</title>
-      <link>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</link>
-      <pubDate>Fri, 08 Apr 2022 18:52:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</guid>
-      <description>Leetcode中与数组相关的题目，包括704、35</description>
-    </item>
-    <item>
-      <title>Leetcode 4: 寻找两个正序数组的中位数</title>
-      <link>http://wtysos11.github.io/posts/20220408_leetcode_4/</link>
-      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
-      <description>寻找两个正序数组的中位数 Link to heading 这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已经知道了，所以写了也没什么用。&#xA;反思 Link to heading 题目本身倒是不难，给定两个正序数组求其中位数。要求复杂度为O(log(m+n))。&#xA;我一开始的想法是搜索两者的中位数。很显而易见的事实是比较两个数组a和b的中位数，如果a的中位数比b的中位数要小，则中位数一定不会在a的左边和b的右边，从而进行排除。&#xA;但是在实践的时候对于边界条件的判断不好，主要是写的时候就没想好这个算法应该是怎么做的，导致写到最后的时候越写越乱。&#xA;题解 Link to heading 官方，没什么特别困难的地方，过段时间我自己再做一遍。</description>
-    </item>
-    <item>
-      <title>Leetcode 429: N叉树的层次遍历</title>
-      <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
-      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
-      <description>22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点的高度信息。 实际上完全不用在意这个高度信息，直接每次BFS完之后就一定是新的一层。&#xA;我的做法：&#xA;class Solution { public: vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; levelOrder(Node* root) { // 从根节点开始进行BFS // 对于每一个新的点，计算其层次并进行记录 // 对于每一个进入的节点，判断其层次。如果层次相同，则放在相同的数组内；如果层次不同，则另外申请一个数组 queue&amp;lt;Node*&amp;gt; bfs_queue; map&amp;lt;Node*,int&amp;gt; high; vector&amp;lt;vector&amp;lt;int&amp;gt;&amp;gt; result; int current_high = 0; // 0 层，同时也对应着索引0 if(root==nullptr){ return result; } high[root] = 0; result.emplace_back(vector&amp;lt;int&amp;gt;{}); bfs_queue.push(root); while(!bfs_queue.empty()){ Node* cur_node = bfs_queue.front(); bfs_queue.pop(); if(cur_node == nullptr){ continue; } // judge new if(high[cur_node] &amp;gt; current_high){ current_high += 1; result.emplace_back(vector&amp;lt;int&amp;gt;{}); } result[current_high].push_back(cur_node-&amp;gt;val); // bfs for(auto next_node : cur_node-&amp;gt;children){ high[next_node] = current_high + 1; bfs_queue.</description>
-    </item>
-    <item>
-      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
-      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
-      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
-      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
-    </item>
-    <item>
-      <title>Leetcode 796: 旋转字符串</title>
-      <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
-      <pubDate>Thu, 07 Apr 2022 19:21:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
-      <description>Leetcode第796题：旋转字符串，简单题</description>
-    </item>
-    <item>
-      <title>Wikipedia pageview数据获取(bigquery)</title>
-      <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
-      <pubDate>Thu, 07 Apr 2022 16:41:07 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</guid>
-      <description>维基百科pageview数据集原始数据获取，可以从bigquery上获得2015年以来的小时级访问数据</description>
-    </item>
-    <item>
-      <title>Leetcode 310: 最小高度树</title>
-      <link>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</link>
-      <pubDate>Thu, 07 Apr 2022 12:09:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/</guid>
-      <description>Leetcode第310题：最小高度树</description>
-    </item>
-    <item>
-      <title>Leetcode 5: 最长回文子串</title>
-      <link>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</link>
-      <pubDate>Tue, 05 Apr 2022 12:09:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/</guid>
-      <description>Leetcode第五题：最长回文子串</description>
-    </item>
-    <item>
-      <title>istio应用对外访问极速入门</title>
-      <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
-      <pubDate>Sat, 30 Oct 2021 16:41:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
-      <description>istio框架下如何暴露服务，其实挺简单的。</description>
-    </item>
-    <item>
-      <title>Conv1d原理解析</title>
-      <link>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 27 Sep 2021 09:49:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</guid>
-      <description>torch中的Conv1d解析</description>
-    </item>
-    <item>
-      <title>《心流：最优体验心理学》读书笔记与自我思考</title>
-      <link>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</link>
-      <pubDate>Fri, 24 Sep 2021 18:43:00 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</guid>
-      <description>对《心流：最优体验心理学》这本书的阅读感想，以及基于最近发生事情的一些体会。</description>
-    </item>
-    <item>
-      <title>torch.einsum函数学习</title>
-      <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Thu, 09 Sep 2021 15:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
-      <description>torch.einsum函数的使用例子与说明</description>
-    </item>
-    <item>
-      <title>torch.roll函数学习</title>
-      <link>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Thu, 09 Sep 2021 10:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
-      <description>torch.roll函数的使用例子与说明</description>
-    </item>
-    <item>
-      <title>python命令行库如何实现子命令共享参数？</title>
-      <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
-      <pubDate>Thu, 02 Sep 2021 15:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
-      <description>比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。</description>
-    </item>
-    <item>
-      <title>华为云服务器ubuntu18.04环境下构建k8s多机集群</title>
-      <link>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</link>
-      <pubDate>Wed, 25 Aug 2021 20:19:18 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</guid>
-      <description>在华为云买了两台x86的hecs服务器，于是顺便就在ubuntu18.04环境下装了次k8sv1.22.1。由于之前没有考虑可重复性的问题，这次特地重新做了几次确保了一下，方便以后继续重复操作。</description>
-    </item>
-    <item>
-      <title>关于golang中指针赋值的问题</title>
-      <link>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Thu, 15 Jul 2021 18:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210715_%E5%85%B3%E4%BA%8Egolang%E4%B8%AD%E6%8C%87%E9%92%88%E8%B5%8B%E5%80%BC%E7%9A%84%E9%97%AE%E9%A2%98/</guid>
-      <description>最近在SO上找到了一个很有意思的问题：SO&#xA;这个问题是关于一个指针在外部函数的赋值，当然，解决方法也很简单。&#xA;type userIP net.IP func main() { var u *userIP u.defaultIP() fmt.Printf(&amp;#34;%v\n&amp;#34;, u) } func (u *userIP) defaultIP() { defaultIP := userIP(&amp;#34;127.0.0.1&amp;#34;) u = &amp;amp;defaultIP } 但是为什么会这样？如果是学过C风格指针的话应该会发现这条语句是很奇怪的，从语法上讲u中存放的地址会被改变，但是实际上它并不会改变（PS：原来的这个代码需要修改一下，不然会有dereference nil的错误）&#xA;修改后的例子 Link to heading package main import ( &amp;#34;fmt&amp;#34; &amp;#34;net&amp;#34; ) type userIP net.IP func main() { s:= userIP(&amp;#34;123.2.2.1&amp;#34;) var u *userIP = &amp;amp;s fmt.Printf(&amp;#34;address of s %p\n&amp;#34;,&amp;amp;s) fmt.Printf(&amp;#34;what&amp;#39;s in u? u = %p, &amp;amp;u = %p\n&amp;#34;,u,&amp;amp;u) fmt.Println(&amp;#34;In main function&amp;#34;) fmt.Printf(&amp;#34;main(): address of pointer is %v, address inside pointer is %p\n&amp;#34;, &amp;amp;u,u) fmt.</description>
-    </item>
-    <item>
-      <title>golang中的赋值:=的一次误用与shadow variable</title>
-      <link>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</link>
-      <pubDate>Thu, 08 Jul 2021 11:32:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</guid>
-      <description>今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致如下&#xA;func getEle() (int,error){ return rand.Intn(100),nil } func exchangeGradually(fp int){ var fingerprint int = fp for i:=0;i&amp;lt;5;i++{ oldfingerprint := fingerprint fingerprint,err := getEle() if err != nil{ panic(err) } fmt.Println(fingerprint,oldfingerprint) } } func main() { exchangeGradually(10) } 可以试着执行一下，原本预期中oldfingerprint是随着fingerprint改变而改变的，但是实际上是不变的。原因是很简单的，因为:=重新分配了一个变量覆盖掉了原有的变量。&#xA;但是我原本以为是不会覆盖的，因为之前写错误处理的时候往往也是直接val,err := ...这样写下来。现在看来，:=应该是会重新声明左侧的所有变量并覆盖作用域。&#xA;从这里可以引出shadow error的问题，类似于shadow variable。shadow error是指很多时候需要在defer中处理error，但是被后面的错误给覆盖了，类似于&#xA;func getErr1() (int,error){ return 1,fmt.Errorf(&amp;#34;error 1&amp;#34;) } func getErr2() (int,error){ return 2,fmt.Errorf(&amp;#34;error 2&amp;#34;) } func exchangeGradually(fp int){ a1,err := getErr1() fmt.Println(a1,err) defer func() { fmt.Println(err) }() a2,err := getErr2() fmt.</description>
-    </item>
-    <item>
-      <title>golang函数参数中接口指针的传递</title>
-      <link>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</link>
-      <pubDate>Thu, 01 Jul 2021 16:34:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</guid>
-      <description>其实是一个很简单的问题，但是如果是之前一直写go的话可能没有意识到指针的本质，就走不出来了。&#xA;最近写代码的时候遇到了一个问题：有一个功能需要使用一个接口，有多个结构体实现了这个接口（经典OO场景）。这些方法中，有一些方法可以修改结构体中的指定属性，并且有一个对应的方法来返回这个属性。&#xA;出于业务需要，值被修改的地方和它被使用的地方是不同的。由于要和原有代码兼容，希望这个代码尽量表现的与原来的一样。&#xA;一个小demo，直接返回interface值来完成传递。看着很正常，但是因为是传值，所以与原有代码不太一致，也不够直观。&#xA;package main import &amp;#34;fmt&amp;#34; type tt interface { setName(string) getName() string } type testA struct{ name string } type testDouble struct{ name string } func (t *testA) setName(n string){ t.name = n } func (t *testA) getName() string{ return t.name } func (t *testDouble) setName(n string){ t.name = n + n } func (t *testDouble) getName() string{ return t.name } func setName(s tt,n string) tt{ t := testA{} t.</description>
-    </item>
-    <item>
-      <title>专利讲座笔记</title>
-      <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Sat, 26 Jun 2021 21:13:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</guid>
-      <description> 专利学习 Link to heading 内容：&#xA;专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座&#xA;专利基本知识 Link to heading 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念。专利具体来说是分为三个类型：发明、实用新型、外观设计。&#xA;发明也分为产品发明和方法发明，一般毕业所注册的专利都是方法发明这一类，包括制造方法和控制方法或使用方法。发明专利是对产品、方法或者改进所提出的技术方案。&#xA;实用新型，又称为产品发明，定义上为对产品的形状、构造以其结合提出的适用于使用的新的技术方案。一般被称为小发明，不包含方法。（算法这类虚拟的方法类内容是不包含在实用新型中的）&#xA;外观设计，又称为产品设计。对产品的形状、图案、色彩或者其结合所作出的富有美感并适于工作上应用的新设计。&#xA;毕业要求的1分为公开发明专利，成果必须署名中山的数学，且必须为国家发明专利的第一发明人。&#xA;不能获得专利的情况：&#xA;科学发现，比如发现一种自然现象 智力活动的规则和方法，比如一种游戏规则（三国杀）。具体来说是可以人为地随意篡改也不影响技术方面的体现。 疾病的诊断和治疗方法。出于人道主义的考虑和社会伦理的原因。 动物和植物新品种（产品的生产方法除外） 用原子核变换方法获得的物质 专利的性质：&#xA;独占性 专利权人具有对其发明创造的制造、使用、销售、许诺销售和进出口的权利，也是最重要的性质。 时间性 从申请日到授权日大概要2-3年，审查周期很长。 地域性 只能在某个国家单独申请 专利权授予条件：&#xA;新颖性 指申请日以前没有同样的发明创造 在国内外的出版物上公开发表过。这一点比较经常遇到，在期刊发表后是不能申请专利的 在国内外公开使用过或者以其他方式为公众所知。 创造性 比新颖性要高。 要求具有突出的实质性特点和显著的进步（实用新型只需要具有实质性特点和进步即可） 涉及计算机程序的专利：&#xA;通常是以发明专利申请的形式提出 涉及计算机程序的发明是指：为解决发明提出的问题，全部或部分以计算机程序处理流程为基础（算法流程图），通过计算机执行按上述流程编制的计算机程序，对计算机外部对象或者内部对象进行控制或处理的解决方案。 并不一定要包含对计算机硬件的改变。 五类可以申请专利的计算机软件：&#xA;将计算机程序输入到一个公知的计算机来控制该计算机的内部操作，从而实现计算机内部性能的改进 用计算机程序来控制某一工业过程 用计算机程序来控制某一测量或者测试过程 使用一个计算机程序来实现外部数据处理 文件 Link to heading 主要是说明书（范围限定）和说明书附图&#xA;专利挖掘途径：&#xA;找出完成任务的组成部分：比如网站的前端、后台、服务器 分析各组成部分的技术要素：比如前端界面的多个功能模块 找出各技术要素的创新点：比如具体的权限功能模块 根据创新点总结技术方案：比如实现该模块的算法 </description>
-    </item>
-    <item>
-      <title>Go中nil意义的理解</title>
-      <link>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</link>
-      <pubDate>Mon, 21 Jun 2021 14:28:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
-      <description>对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频https://www.youtube.com/watch?v=ynoY2xz-F8s，Slides：https://speakerdeck.com/campoy/understanding-nil&#xA;nil是什么 Link to heading 就结果来说，nil是绝大部分Go中类型的初始值，包括指针、slices、maps、channels、functions等。而这其中，应该大部分类型最核心的实现都是指针，比如map和slice的本质就是指向内置对象的指针。&#xA;而对于接口而言就更加复杂一些，这个其实涉及到了接口的底层实现，详情参考Go语言接口的原理-Go语言设计与实现。&#xA;接口包括了一个指向值的指针和一个指向类型的指针。对接口来说，接口为nil代表着(nil,nil)，因此如果声明了一个自珍并且把指针赋值给了接口，那类型就不为nil了（*Person,nil）&#xA;type Person struct{ a int } func (p Person) String() string{ return strconv.Itoa(p.a) } func main(){ var s fmt.Stringer//接口类型，要求实现String()函数 fmt.Println(s == nil)//true var p *Person s = p fmt.Println(s == nil)//false，尽管值依旧为nil，但是类型不为nil } 什么时候nil不是nil Link to heading nil可以是一个nil接口/切片或者指针，是有实际意义的&#xA;type doError struct{ errorMessage string } func (err doError) Error() string{ return err.errorMessage } func do() error{ //错误地方：返回了error接口类型。改正：应该返回具体类型 * doError var err *doError return err //类型*doError是空的，但是它实现了接口 } func main(){ err := do() fmt.</description>
-    </item>
-    <item>
-      <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
-      <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
-      <pubDate>Thu, 17 Jun 2021 14:22:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
-      <description>今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是一个结构体，另外一个自然是一个interface。代码的作者称这行代码要求后面的结构体必须实现前面的接口，不然会出现编译错误。&#xA;说实话，我第一眼真的没反应过来。直到我看到了这个问题 这一行实际上是变量赋值的变体var VariableName variableType = variableValue，其中的值是(*HelloServiceClient)类型，实际值为nil。&#xA;另外有类似的语句&#xA;//T is a struct var _ I = T{} // Verify that T implements I. var _ I = (*T)(nil) // Verify that *T implements I. 这个问题的本质其实是接口的定义：结构体只要实现了接口的定义，它就能被赋予该接口的变量。 对于指针来说就要更复杂一些，详见#180 。概要来说，就是对用指针实现的接口，该指针类型的普通结构体不能使用，具体原因也比较复杂（详见Go程序设计与实现-接口相关章节）</description>
-    </item>
-    <item>
-      <title>邓宁-克鲁格效应</title>
-      <link>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</link>
-      <pubDate>Thu, 17 Jun 2021 10:40:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</guid>
-      <description>每次都忘记这个效应叫什么名字，所以还是专门开个issue记录一下。 邓宁-克鲁格效应，按照百科的说法，是一种认知偏差，能力欠缺的人有一种虚幻的自我优越感，错误地认为自己比实际情况更加优秀 对于一般人来说也是会有类似的情况，只是可能峰值没有那么高。在知识和技能水平不断提高的过程中，势必会因为没有看到自身的缺点而导致自信程度增长速度远超想象。 其实这张图应该是没有画完的，愚昧之山不一定只有一座，开悟之坡爬得也不一定真的就是真理之山，我们所期望到达的终点也不过是一个新的起点。不过这个就是另外一个问题了。</description>
-    </item>
-    <item>
-      <title>golang中函数如何设置参数默认值</title>
-      <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
-      <pubDate>Sun, 13 Jun 2021 14:50:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
-      <description>参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。&#xA;设置参数值的好处：&#xA;可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：&#xA;强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &amp;#34;&amp;#34; { a = &amp;#34;default-a&amp;#34; } if b == 0 { b = 5 } return fmt.Sprintf(&amp;#34;%s%d&amp;#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。&#xA;使用可变参数语法糖 Link to heading // a is required, b is optional.</description>
-    </item>
-    <item>
-      <title>Git分支开发模式学习</title>
-      <link>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/</guid>
-      <description> 本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备&#xA;参考资料 Link to heading segmentationfault official-分支开发工作流 按照官方的分类就比较简单：&#xA;长期分支：分支将长期存在，不同分支之间的区别将是稳定性的区别。其中master最稳定，dev比较不稳定，topic次之。 短期分支：除了master外不存在长期分支，所有分支都将短期存在，目标为实现一种主题（单一的特性或工作）。实现完成之后就合并到master中 阿里的分支模式分类就更接近生产，除了强调开发外也强调发布。&#xA;TBD（主干开发模式），有点类似长期分支，但是比长期分支简单很多。最简单的版本就是所有团队成员共有一个开发分支，这样的问题在于如果团队变大的话，每天各个成员光是在合并提交上就会花费很多时间。因此要求每次变更提交都要足够小，且能快速完成验证。 特性分支开发模式(Git-Flow)：这个是真的有点类似Git官方中长期分支与短期分支的结合。就每一个特性来说，所有关于该特性的开发工作都会集中在一个分支上，当完成该特性的工作之后，再把特性分支合并回代码主路径上并准备发布 长期存在着多个分支，比如feature分支（功能开发）、develop（功能集成）、release（版本发布）、hotfix（线上修改）、master（最新已发布版本基线） 每个特性都在对应的feature分支上开发。特性开发完毕并验证通过后会merge到develop分支（大部分时间都与master接近）进行集中验证。然后验证完毕之后单独拉到release分支进行发布。中间的任何错误都会从release分支往回传，其中master分支永远是最新的可运行分支。 缺点：分支特别多，而且非常复杂。develop分支等的意义比较冗余（与master等相比） Github-Flow，任务导向型，更贴近短期分支。实际上也是大部分开源项目所采用的方法。 master分支的所有代码都应该是最新的可部署、可工作版本 新的工作从master拉取分支，并以工作任务进行命名 完成任务后提交pull-request合并到master分支并提起代码评审，评审通过后进行合并。 Gitlab-Flow，将pull-request改为了merge-request，与Github-Flow非常相似 最大的区别是发布侧，引入了对应生产环境的production分支和预发环境的pre-production分支。 </description>
-    </item>
-    <item>
-      <title>golang单元测试整理归纳</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
-      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
-      <description>本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识&#xA;参考资料 Link to heading Go by example，中文版，例子确实是最快的学习方式。 基础知识 Link to heading 一般测试文件应该与被测试文件放在同一个目录下，比如被测试代码为intutils.go时，被测试代码应该写为intutils_test.go。&#xA;通常会编写一个名称以Test开头的函数来创建测试（这个我记得是必须的，不然识别不出来）。例如GoLand自动生成的测试文件(Alt+Insert，之前写Java的时候经常用这个来生成DAO)&#xA;func TestTest(t *testing.T) { type args struct { a int } tests := []struct { name string args args want int }{ // TODO: Add test cases. //{name,args{},want},... } for _, tt := range tests { t.Run(tt.name, func(t *testing.T) { if got := Test(tt.args.a); got != tt.want { t.Errorf(&amp;#34;Test() = %v, want %v&amp;#34;, got, tt.</description>
-    </item>
-    <item>
-      <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
-      <pubDate>Sat, 12 Jun 2021 10:38:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
-      <description>遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码&#xA;package main import &amp;#34;fmt&amp;#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&amp;#34;%s, code=%d&amp;#34;, e.Message, e.Code) } func main() { fmt.Println(&amp;#34;In main function&amp;#34;) var rpcErr error = NewRPCError(400, &amp;#34;unknown err&amp;#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</description>
-    </item>
-    <item>
-      <title>kubernetes服务：学习ingress与暴露服务简单实验</title>
-      <link>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</link>
-      <pubDate>Sun, 06 Jun 2021 16:30:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</guid>
-      <description>参考资料：&#xA;kubernetes ingress实战 Intro to Kube ingress: Set up nginx Ingress in Kubernetes Bare Metal ingress的nip.io相关资料 实验室集群中已经有一个ingress-controller，ingress.class为nginx。 本次实验的目标是将服务通过ingress暴露到外部服务，最好能够直接通过外网IP访问。&#xA;实验所需镜像 Link to heading 原本用的是google的镜像，但是因为在国内，弄起来太麻烦了。所以还是从dockerhub上选了一个类似的镜像。&#xA;apiVersion: v1 kind: Namespace metadata: name: echoserver --- apiVersion: apps/v1 kind: Deployment metadata: name: echoserver namespace: echoserver spec: replicas: 2 selector: matchLabels: app: echoserver template: metadata: labels: app: echoserver spec: containers: - image: ealen/echo-server:latest imagePullPolicy: IfNotPresent name: echoserver ports: - containerPort: 80 env: - name: PORT value: &amp;#34;80&amp;#34; --- apiVersion: v1 kind: Service metadata: name: echoserver namespace: echoserver spec: ports: - port: 80 targetPort: 80 protocol: TCP type: ClusterIP selector: app: echoserver --- apiVersion: networking.</description>
-    </item>
-    <item>
-      <title>kubernetes内部访问服务的方式</title>
-      <link>http://wtysos11.github.io/posts/20210606_kubernetes%E5%86%85%E9%83%A8%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
-      <pubDate>Sun, 06 Jun 2021 16:23:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E5%86%85%E9%83%A8%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
-      <description>最近因为实验室集群整体爆炸，需要修改旧服务器的网络配置。为此，需要进行一系列的网络测试。同时，这也是一个新的label系列。总是有一些代码，非常常用，但是用的时候就是找不到，想也想不起来，就非得去查。很难受。&#xA;之前做网络测试的手段太原始了（指新建ubuntu容器后登陆进去），不够灵活方便，而且也找不到代码和镜像了。为此，我总结了几个比较好的快速访问方式&#xA;方式1 Link to heading 最直接的方式肯定是登陆进服务内部，比如istio中提到的&#xA;在执行命令后：kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml，如果此时所有的svc和pods都跑起来了，可以通过运行kubectl exec -it $(kubectl get pod -l app=ratings -o jsonpath=&#39;{.items[0].metadata.name}&#39;) -c ratings -- curl productpage:9080/productpage | grep -o &amp;quot;&amp;lt;title&amp;gt;.*&amp;lt;/title&amp;gt;&amp;quot;来检测到结果。&#xA;其中的kubectl exec -it可以登陆容器并打开控制台，而服务的名称由$(kubectl get pod -l app=ratings -o jsonpath=&#39;{.items[0].metadata.name}&#39;)，-c参数保证了在存在注入的情况下能正常运行。&#xA;--连接两条不同的命令，后面就不需要过多的解释了。&#xA;甚至不一定是同一个镜像，比如使用sleep镜像进行（足够小）&#xA;export SLEEP_POD=$(kubectl get pod -l app=sleep -o jsonpath={.items..metadata.name})#这里要自行加上-n=test kubectl exec -it $SLEEP_POD -c sleep curl http://ratings.default.svc.cluster.local:9080/ratings/1 {&amp;#34;id&amp;#34;:1,&amp;#34;ratings&amp;#34;:{&amp;#34;Reviewer1&amp;#34;:5,&amp;#34;Reviewer2&amp;#34;:4}} 方式2 Link to heading 临时开一个curl镜像进行网络检查&#xA;官方在httpbin里也展示了如何通过curl镜像来进行内网测试(同样，注意命名空间)&#xA;kubectl run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent httpbin:8000/html kubectl run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent --head httpbin:8000/status/500 time kubectl run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent httpbin:8000/delay/5 网络测试的对象 Link to heading 我一开始想用hello来做，但是其实挺不好的，没什么代表性。 echo-server这个就很不错，像是一个回音壁一样，将所有的请求全部打回。 docker pull ealen/echo-server</description>
-    </item>
-    <item>
-      <title>go语言函数传值与指针的相关问题</title>
-      <link>http://wtysos11.github.io/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Fri, 04 Jun 2021 16:23:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-      <description>最近在快速阅读《go语言高级编程》，里面提到Go语言的栈会自动调整大小，所以go程序员是难以关心栈的运行机制。比如说，程序员很难知道局部变量到底是保存在栈中还是保存在堆中&#xA;可以使用下面的代码来作为例子：&#xA;package main import &amp;#34;fmt&amp;#34; func f(x int) *int{ return &amp;amp;x } func main(){ s := 5 t := f(s) s += 1 fmt.Println(s,*t) } 上述代码的输出结果是6,5。这个结果说明t所指向的局部变量确实是函数内部的（如果是指向参数的地址，则参数变化时它也应该跟着变化）。也就是说，这个函数的局部变量的地址在函数结束之后仍然存在。&#xA;PS：如果想要让该指针指向参数&#xA;package main import &amp;#34;fmt&amp;#34; func f(x *int) *int{ return x } func main(){ s := 5 t := f(&amp;amp;s) s += 1 fmt.Println(s,*t) } 书中的这一部分提到了两个观点：&#xA;不用关心Go语言中栈和堆的问题，编译器和运行时会帮我们搞定 不要假设变量在内存中的位置是固定不变的，指针随时可能会变化。 原因：Go语言使用的连续动态栈，在栈增加的时候会需要将数据移动到新的内存空间，导致栈中的内存地址全部变化。 可能出问题的地方：把Go语言的指针保存到数组中；把Go的地址保存到垃圾回收控制器之外，比如CGO） </description>
-    </item>
-    <item>
-      <title>Vagrant如何手动下载官网镜像并导入</title>
-      <link>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</link>
-      <pubDate>Thu, 03 Jun 2021 09:36:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</guid>
-      <description>参考：&#xA;手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且curl到了vagrantcloud，但是就是拉不下来镜像……无奈之下只能自力更生，直接搜索然后下载，比如这个RancherOS。我所进行的实验是Vagrant快速部署k8s，因为实验室服务器不够了，没有抵挡地住诱惑。&#xA;或者也可以查看使用vagrant up获得的信息（如下），其中URL即为下载地址。&#xA;Bringing machine &amp;#39;server-01&amp;#39; up with &amp;#39;virtualbox&amp;#39; provider... Bringing machine &amp;#39;node-01&amp;#39; up with &amp;#39;virtualbox&amp;#39; provider... Bringing machine &amp;#39;node-02&amp;#39; up with &amp;#39;virtualbox&amp;#39; provider... ==&amp;gt; server-01: Box &amp;#39;chrisurwin/RancherOS&amp;#39; could not be found. Attempting to find and install... server-01: Box Provider: virtualbox server-01: Box Version: 1.5.1 ==&amp;gt; server-01: Loading metadata for box &amp;#39;chrisurwin/RancherOS&amp;#39; server-01: URL: https://vagrantcloud.com/chrisurwin/RancherOS ==&amp;gt; server-01: Adding box &amp;#39;chrisurwin/RancherOS&amp;#39; (v1.</description>
-    </item>
-    <item>
-      <title>记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考</title>
-      <link>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</link>
-      <pubDate>Fri, 09 Apr 2021 09:36:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</guid>
-      <description>http://ita.ee.lbl.gov 这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也没有办法连上。 然后我又通过google搜索了一下，发现可以找得到，但是网址是ftp版本的。虽然打不开，但是快照是连的上的，说明服务器是正常的。 我又试了一下winscp连接，然后不行……&#xA;这时我注意到了该组织维护的另外一个网站，我当时就想着说发个邮件问一下。不过发邮件前，我问了一下师兄。师兄想了一下，让我试着用Filezilla直接开。 我试了一下，在host里输入ita.ee.lbl.gov快速连接，然后就开了…… 开了…… QAQ我忙活了一上午！！！ 所以winscp和filezilla以及windows自带的FTP有什么区别吗，为什么其他两个连不上，但是就filezilla可以呢，是默认参数的区别吗？</description>
-    </item>
-    <item>
-      <title>统计序列中的逆序对</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</link>
-      <pubDate>Wed, 17 Mar 2021 20:07:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E7%BB%9F%E8%AE%A1%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9/</guid>
-      <description>因为好像做过这个题目，所以稍微提一下。最简单的方式就是归并排序 题解 方法分别是归并排序和树状数组。&#xA;归并排序 Link to heading 代码来源：https://blog.csdn.net/afei__/article/details/82951905 我觉得这个写的好一些。并且官方题解里面是写反的，我一开始还看了半天。&#xA;public class Main { public static void main(String[] args) { int[] arr = new int[] { 2, 3, 8, 6, 1 }; int inversionCount = mergeSort(arr, 0, arr.length); printArray(arr); System.out.println(&amp;#34;inversionCount: &amp;#34; + inversionCount); } public static int mergeSort(int[] arr, int start, int end) { int inversionCount = 0; int length = end - start; if (length &amp;gt; 1) { // 长度大于1才需要排序 int mid = (start + end) / 2; inversionCount += mergeSort(arr, start, mid); // sort left inversionCount += mergeSort(arr, mid, end); // sort right inversionCount += merge(arr, start, mid, end); } return inversionCount; } public static int merge(int[] arr, int start, int mid, int end) { // check input if (arr == null || start &amp;lt; 0 || end &amp;gt; arr.</description>
-    </item>
-    <item>
-      <title>树状数组、线段树与RMQ</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
-      <pubDate>Wed, 17 Mar 2021 19:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
-      <description>区间修改问题常用的三种手段，我觉得还是有必要复习一下。&#xA;树状数组 Link to heading binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数组的核心是lowbit：x&amp;amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。 这样就可以算出非叶子节点对应的管辖范围&#xA;单点修改，一路上山&#xA;int tree[MAXN]; inline void update(int i, int x) { for (int pos = i; pos &amp;lt; MAXN; pos += lowbit(pos)) tree[pos] += x; } 求前n项和，一路下山&#xA;inline int query(int n) { int ans = 0; for (int pos = n; pos; pos -= lowbit(pos)) ans += tree[pos]; return ans; } 区间查询&#xA;inline int query(int a, int b) { return query(b) - query(a - 1); } 举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]+c[4]，这是比较自然的。 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。</description>
-    </item>
-    <item>
-      <title>全排列问题与康托编码</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
-      <pubDate>Mon, 15 Mar 2021 08:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
-      <description>leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。&#xA;题目采用康托编码的思路。其实就是康托展开的逆过程。康托展开用来求某个全排列数是第几小的数，也就是当这些数按顺序排时第几个数。&#xA;康托展开 Link to heading 过程如下：比如求321 是 第几小的，可以这样来想：小于3的数有1和2 两个，首位确定之后后面两位有2！中情况，所以共有2*2！=4种。&#xA;小于2的数只有一个1，所以有11！=1种情况，最后一位是1，没有比一小的数，所以是00！=0&#xA;综上：小于321的数有4+1=5个，所以321是第六小的数。&#xA;反例与进一步思考 Link to heading 但是康托展开没有这么简单，其实是挺复杂的。以n=4的情况为例子，我们已经知道3412是第17个，也就是说有16个比它小的数字。 首位确定后，有23！=12种，这个是符合的 但是第二位的话是4，此时是先考虑小于4的情况，有1、2、3，然后再排除掉3，所以是22!=4； 第三位的话是1，此时不存在比它小的数字，所以直接排除 最后一位是2，但是枚举发现1已经计算过了，所以也排除。 最终结果是12+4=16，结果正确。虽然思路大体上是一样的，但是原文是没有筛查这个过程的，其实还是有点麻烦的，可能需要开一个集合或者专门的数据结构来进行判断。&#xA;康托编码 Link to heading 康托展开的逆过程就是已知这个数是第k个数，求这个数是多少，当然是知道n的值的。&#xA;第k个数就是有k-1个数比这个数小。&#xA;所以就是 k-1=an*(n-1)!+an-1*(n-2)!+&amp;hellip;.+a1*0!;&#xA;再举一个例子：&#xA;如何找出第16个（按字典序的）{1,2,3,4,5}的全排列？&#xA;首先用16-1得到15&#xA;用15去除4! 得到0余15&#xA;用15去除3! 得到2余3&#xA;用3去除2! 得到1余1&#xA;用1去除1! 得到1余0&#xA;有0个数比它小的数是1，所以第一位是1&#xA;有2个数比它小的数是3，但1已经在之前出现过了所以是4&#xA;有1个数比它小的数是2，但1已经在之前出现过了所以是3&#xA;有1个数比它小的数是2，但1,3,4都出现过了所以是5&#xA;最后一个数只能是2&#xA;代码如下。写的真的挺好，我第一眼还没想明白&#xA;class Solution { public: //全排列元素数量为n，返回第k个排列 string getPermutation(int n, int k) { string s(n,&amp;#39;0&amp;#39;);//初始是n个零 string result; for(int i=0;i&amp;lt;n;i++) { s[i]+=i+1;//生成默认序列,1-&amp;gt;n } return kth_permutation(s,k); } private: int factorial(int n)//返回阶乘。其实我觉得这个阶乘可以带个缓存，不过不带也可以了 { int result=1; for(int i=1;i&amp;lt;=n;i++) { result*=i; } return result; } string kth_permutation(string &amp;amp;s,int k) { const int n=s.</description>
-    </item>
-    <item>
-      <title>图的存储方式之前向星与邻接表</title>
-      <link>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</link>
-      <pubDate>Mon, 15 Mar 2021 08:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210315_%E5%9B%BE%E7%9A%84%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F%E4%B9%8B%E5%89%8D%E5%90%91%E6%98%9F%E4%B8%8E%E9%82%BB%E6%8E%A5%E8%A1%A8/</guid>
-      <description>常用的邻接矩阵和邻接表都挺简单的，就不提了。 这个是ACM版本的前向星，本质就是用数组替换了链表，效果就是更方便一些。 虽然不如十字链表删除方便，但是也能比较方便地写出边删除的操作。&#xA;//前向星 struct graph{ typedef vector&amp;lt;int&amp;gt; VI; VI info,next,to; //假设现在有n个点，m条边,info长度为n，next和to长度为m。 //其中，info保存着所有节点的第一个边 //next保存着所有边信息的下一个边 //to保存着边的下一个节点信息。如果是带权边，可以增加一个weights数组，与to类似。（所有边增加主要加的是to） graph(int n=0,int m=0):to(0),next(0){ info.resize(n); next.reserve(m); to.reserve(m); } int edge_size(){ return to.size();//显然，to即保存了所有边的信息 } int vertex_size(){ return info.size();//info保存了所有节点的信息 } void expand(int i){ if(info.size()&amp;lt;i+1) info.resize(i+1); } void add(int i,int j){//添加一条从i到j的边，有向 expand(i),expand(j); to.push_back(j);//压入新边的信息 next.push_back(info[i]);//新头的下一个指向原来的指针 info[i] = to.size()-1;//链表头指针指向新加项目 } void del_back(){ for(int i=0;i&amp;lt;info.size();i++){ if(info[i] == to.size()-1){ info[i] = next.back(); break; } } to.pop_back(); next.pop_back(); } void clear(){ info.clear(); next.resize(0); to.resize(0); } }; 想了一下还是提一下邻接表吧</description>
-    </item>
-    <item>
-      <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
-      <description>今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一下有两个点…… 我印象中这个算法挺简单的，就搜了一下，果然找到了。不是，现在校招算法题都这么丧病了吗。 由于保密协议，不能放代码。后面放Tarjan算法学习笔记。&#xA;LCA问题参考资料， Tarjan的时间复杂度为O((n+q)× 并查集的复杂度 )，而使用路径压缩和按秩合并的并查集复杂度为O(Alpha(n))。所以作为离线算法，Tarjan比倍增算法快很多。 但作为在线算法，倍增算法能实时得到解法。 RMQ&#xA;复杂度介绍：&#xA;Tarjan的复杂度为O(n+q) RMQ预处理为O(nlogn)，查询O(1) 倍增算法复杂度为O((n+q)logn) 参考资料：&#xA;Tarjan求解LCA，非常好的教学，很详细地列举了LCA的步骤。关键是有图，有逐步分解的图，非常好。 伪代码 Link to heading Tarjan(u)//marge和find为并查集合并函数和查找函数 { for each(u,v) //访问所有u子节点v { Tarjan(v); //继续往下遍历 marge(u,v); //合并v到u上 标记v被访问过; } for each(u,e) //访问所有和u有询问关系的e { 如果e被访问过; u,e的最近公共祖先为find(e); } } 具体实现代码 Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;utility&amp;gt; using namespace std; int N = 5; vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; lib;//假设lib为二维动态数组，lib[i]表示节点i的所有孩子vector vector&amp;lt;int&amp;gt; parent(N,0);//并查集数组 vector&amp;lt;bool&amp;gt; isVisited(N,false); vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; query;//query关系，双向的 int find(int e){ if(parent[e] !</description>
-    </item>
-    <item>
-      <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-      <description>字节笔试题，原题忘记了，但是稍微有些区别&#xA;题目 大致意思就是反转。 实现核心就是利用亮点：&#xA;开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution { public: int minFlips(string target) { //时序无关性，因此所有的1都是反转得到的 //从头开始枚举1。字符串不翻转，反转自身 int number = 0; bool flag = true;//true，看1则翻转；false，看0则翻转 for(int i =0;i&amp;lt;target.length();i++){ if(flag &amp;amp;&amp;amp; target[i]==&amp;#39;1&amp;#39;){ flag = !flag; number++; }else if(!flag &amp;amp;&amp;amp; target[i]==&amp;#39;0&amp;#39;){ flag = !flag; number++; } } return number; } }; 扩展问题是今天碰到的字节笔试的第三题，给定一个长度为n的环状数组，按动一次开关可以改变自己和左右的状态（0-&amp;gt;1/1-&amp;gt;0）。初始全部为0，问如何得到1。 这个问题比较类似POJ1830，相当于自动加上了开关变化的限制。&#xA;题目类型说明： 这道题目居然是道异或方程组的高斯消元问题。 核心原理倒是不难，现在有原状态b0和目标状态b1，就可以得到状态改变量b 例如对于原始例子而言，b_0=[0,0,0,0]，b_1=[1,1,1,1]，则b = b_0^b_1=[1,1,1,1]，其中b[i]表示第i个灯的状态&#xA;整个问题可以建模成A*x=b，其中A矩阵为开关i与j之间的影响，A[i][j]=1表示开关j会对开关i产生影响。x向量表示开关i的操作，1表示开，0表示关。 显然，x[i]对应在A矩阵中为第j列，x[i]=1时第j列被激活，以字节拿到题目为例，相当于A[j][j]=A[j-1][j]=A[j+1][j]=1，一旦j列被激活就会对周围和自己产生影响。 将A转化为分块矩阵A=[a1,a2,...,an]，则变为一个异或方程组的消元问题，使用高斯消元法即可求解。&#xA;POJ1830代码 高斯消元部分原理&#xA;线性方程组写成增广矩阵形式 找主元，对增广矩阵进行行行变换；对元素，在第i列中及以下选取绝对值最大的元素，将所有元素中最大的所在的行与第i行进行交换. 消元，采用高斯消元法使得新得到的第i行以下的元素均为零 重复上述过程，直到得到下三角阵 对上三角阵回代求解。 具体描述普通高斯消元伪代码 Link to heading 给定N行N+1列的增广矩阵aug 第一步、循环，i从0-&amp;gt;N-1，枚举主元 1.</description>
-    </item>
-    <item>
-      <title>C&#43;&#43;复现基础排序算法</title>
-      <link>http://wtysos11.github.io/posts/20210312_c&#43;&#43;%E5%A4%8D%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
-      <pubDate>Fri, 12 Mar 2021 09:56:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210312_c&#43;&#43;%E5%A4%8D%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</guid>
-      <description>复习一下基本的排序算法&#xA;快速排序 Link to heading 时间复杂度O(nlogn)，不稳定 这个写法是我刻在DNA里的，应该没什么大问题，除了比较抽象之外都还好。&#xA;#include &amp;lt;string&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;iostream&amp;gt; using namespace std; void quickSort(vector&amp;lt;int&amp;gt;&amp;amp; arr,int low,int high){ if(low==high) return cout&amp;lt;&amp;lt;low&amp;lt;&amp;lt;&amp;#34; &amp;#34;&amp;lt;&amp;lt;high&amp;lt;&amp;lt;endl; int i = low; int j = high; int mid = (i+j)/2; int v = arr[mid]; do{ while(arr[i]&amp;lt;v) i++; while(arr[j]&amp;gt;v) j--; if(i&amp;lt;=j){ int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp; i++,j--; } cout&amp;lt;&amp;lt;&amp;#34;inside&amp;#34;&amp;lt;&amp;lt;i&amp;lt;&amp;lt;&amp;#34; &amp;#34;&amp;lt;&amp;lt;j&amp;lt;&amp;lt;endl; }while(i&amp;lt;=j); if(i&amp;lt;high){ quickSort(arr,i+1,high); } if(j&amp;gt;low){ quickSort(arr,low,j-1); } } int main(void){ vector&amp;lt;int&amp;gt; arr{2,5,3,4,1,9,7}; quickSort(arr,0,arr.</description>
-    </item>
-    <item>
-      <title>【动态规划】最长公共子串问题</title>
-      <link>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Thu, 11 Mar 2021 16:40:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210311_%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2%E9%97%AE%E9%A2%98/</guid>
-      <description>题目来源为：牛客网&#xA;题目有意思的地方在于，最长公共子串与最长连续公共子串都是比较经典的问题，但是这道题在其基础上加了限制。 首先这道题应该是最长连续公共子串问题，状态转移方程就不写了，挺简单的。就记录下最大的子串所在的位置的行坐标和列坐标，就能把子串拿到手。 但是对于O(nm)的动态规划所有点都会超时，这就很厉害了，目前通过的做法使用的是滑动窗口法，我还在研究。&#xA;代码大概长这样&#xA;/** * 滑动窗口算法 * * @param str1 string字符串 the string * @param str2 string字符串 the string * @return string字符串 */ public static String LCS1(String str1, String str2) { // write code here StringBuilder sb = new StringBuilder(); int start = 0, end = 1; while (end &amp;lt; str1.length() + 1) { if (str2.contains(str1.substring(start, end))) { if (sb.length() &amp;lt; end - start) { sb.delete(0, sb.length()); sb.append(str1, start, end); } } else { //这个算法我曾经疑惑，假如出现start&amp;gt;end，程序不是会crash么 //通过debug发现，当start==end时，substring获取的是&amp;#34;&amp;#34;，此时contains必然为true //所以当start == end时，必然会走end++分支 start++; } end++; } if (sb.</description>
-    </item>
-    <item>
-      <title>KMP算法复习</title>
-      <link>http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
-      <pubDate>Thu, 11 Mar 2021 15:09:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210311_kmp%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</guid>
-      <description>太久没打了，刚好有道题用上了，就复习一下。 我觉得复到KMP应该就够用了，如果要AC自动机我直接死在那里。&#xA;参考资料 如何更好地理解和掌握 KMP 算法? - 阮行止的回答 - 知乎 https://www.zhihu.com/question/21923021/answer/1032665486&#xA;核心思想 Link to heading KMP算法要解决的问题是字符串匹配问题。给定原串S和模版串P，求解原串中是否存在子字符串与模版串相匹配。&#xA;最简单的想法就是暴力搜索，设原串S长度为n，模板串P长度为m，显然暴力的时间复杂度为O(nm)，非常慢。&#xA;KMP的想法是充分利用适配信息，其next数组的定义如下：next[i]表示在P[0:i]子串中，使前k个字符恰好等于后k个字符的最大的k，且k不能等于i+1（否则就等于它自己了） 这个数组的定义挺绕的，第一眼基本都不会反应过来，我就不插图了，只用文本表述一下（建议看图）。KMP的失配匹配，本质上就是把模版串向前伸，直到伸到前缀与后缀匹配为止，这实际上就是自己与自己匹配。因此这个k就是前缀与后缀相同的最大长度k。&#xA;因此next数组可以用如下方法求得&#xA;def getNxt(x): for i in range(x,0,-1): if p[0:i] == p[x-i+1:x+1]: return i return 0 nxt = [getNxt(x) for x in range(len(p))] 构建next数组的复杂度显然是O(m^2)的 使用next数组加速匹配&#xA;def search(p,s): tar = 0 # 主串中将要匹配的位置 pos = 0 # 子串中将要匹配的位置 while tar &amp;lt; len(s): if s[tar] == p[pos]: # 若两个字符相同，匹配成功，tar和pos各进一步 tar += 1 pos += 1 elif pos&amp;gt;0: # 失配，且pos&amp;gt;0，则next数组移动 pos = nxt[pos-1] else: # pos[0]也失配了，则主串前进 tar += 1 if pos == len(p): # pos走到了len(p)，匹配成功 print(tar-pos) # 输出起始地点 pos = nxt[pos-1] # 当作失配，继续下一次匹配 时间复杂度为O(n+m)，会比暴力方法小很多。</description>
-    </item>
-    <item>
-      <title>分布式系统-CAP理论十二年回顾：规则变了</title>
-      <link>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</link>
-      <pubDate>Wed, 10 Mar 2021 14:21:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</guid>
-      <description>该文的阅读感想&#xA;CAP理论断言，最多只能满足数据一致性、可用性、分区容忍性这三要素中的两个。&#xA;REF: What is CAP&#xA;数据一致性（consistency）：所有节点访问同一份最新的数据副本。就是说所有副本之间互相同步，在任何时候保持着同一个状态 高可用性（availability）：每一个请求最终都会成功。对节点的任何读写请求都不会被拒绝。 网络容忍性(Network Partition Tolerance)：当网络断开连接的时候，系统能够继续运行。即使某些或者所有的节点都不能够互相通信。一般指的是跨区域的数据库，此时很难保证两个数据库之间相互连接。 通过显式处理分区情景，系统设计师可以做到优化数据一致性和可用性，进而取得三者的平衡。我自己对这句话的理解是这样的，假设现在存在两个节点N1和N2，所有更新操作都会互相通知，显然可以满足数据一致性C。当两者不能互相连接的时候，有三种情况：1. 两者继续服务，更新数据，此时数据必定不一致，就是放弃了C来换去A，同时维护P；2.N1和N2都不服务，放弃可用性来取得C和P。3. 只有N1服务，此时数据一致性得到部分保留，可用性得到部分保留，同时维护了P。我觉得第三种就是这种所谓的权衡。&#xA;作者指出，三选二这样的语句本身是不严谨的。实际上，只有在分区存在的前提下呈现完美的数据一致性和可用性这种很少见的情况是CAP理论所不允许出现的。因此在实际设计中有着很多的变通方案和灵活度。&#xA;三选二公式的误导性 Link to heading 分区很少发生，那么在系统不存在分区的情况下没理由去牺牲C和A。 C和A之间的取舍可以在同一系统中以非常细小的粒度反复发生，每一次的决策可能因为具体的操作，或者牵涉到特定的数据或用户而有所不同。 这三种性质都可以在程度上衡量，并不是非黑即白的有或者无，可用性是一个百分比，一致性也分很多级别，分区也有不同的定义。 CAP在大多数时候允许完美的C和A，那在P出现的时候，准备一些策略去处理其影响即可，包括：&#xA;探知分区发生 进入显式的分区模式以限制某些操作 启动恢复过程以恢复数据一致性并补偿分区期间发生的错误 ACID、BASE和CAP Link to heading ACID和BASE分处一致性-可用性分布图谱的两极&#xA;ACID Link to heading 数据库的传统设计思路，注重一致性，写入数据库教材的经典原则。这也是事务transaction的基本性质&#xA;原子性atom：操作要么全部成功，要么全部失败。所有的系统都受惠于原子性，这是没有理由改变的，可以极大简化分区恢复 一致性consistency：事务不能破坏任何数据库规则，如键的唯一性。（CAP的C仅指单一副本上的一致性，因此是其子集）ACID一致性不能在恢复过程中保持，因此分区恢复的时候要考虑重建一致性。 隔离性Isolation:数据库允许多个并发事务对其数据进行同时读写和修改的能力。隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。这也是CAP理论的核心，如果系统要求ACID隔离性，那在分区P期间，最多可以在分区的一侧维持操作。事务的可串行性要求全局的通信，因此在分区的情况下不能成立。只有在分区恢复时进行补偿，在分区前后保持一个较弱的正确性定义是可行的。 持久性Durability：事务处理结束后，对数据的修改就是永久的。牺牲持久性也没有意义。 CAP和延迟的联系 Link to heading CAP理论的经典解释是忽略网络延迟的，但实际中延迟和分区密切相关。在操作的间隙，系统需要作出决策：&#xA;取消操作，降低系统可用性。或是 继续操作，以冒险损失系统一致性为代价 依靠多次尝试通信来达成一致性，比如Paxos算法或者两阶段事务提交，仅仅是推迟了决策时间。无限期地尝试下去，本身就是选择一致性牺牲可用性的表现。&#xA;从延迟的角度抓住了设计的核心问题：分区两侧是否在无通信的情况下继续操作？&#xA;从这个实用的观察角度导出两条推论：&#xA;分区并不是全体节点的一致见解，因为有的节点检测到分区，有的节点没有 检测到分区的节点会进入到分区模式，这是优化C和A的核心环节。 CAP之惑 Link to heading 对于可用性和一致性的作用范围的误解比较严重。&#xA;离线模式正在变得越来越重要，比如HTML5的客户端持久化存储特性。这些离线系统在C和A中会更倾向于A，此时就不得不在长时间处于分区状态后进行恢复。&#xA;“一致性的作用范围”其实反映了这样一种观念，即在一定的边界内状态是一直的，但超出了边界就无从谈起。比如在一个主分区内可以保证完备的一致性和可用性，而在分区外服务是不可用的。&#xA;管理分区 Link to heading 由于基本操作是原子的，因此分区检测一定发生在两个事务之间，然后在分区结束后执行分区恢复来恢复一致性。&#xA;当系统进入分区模式，有两种可行的策略。其一是限制部分操作，因此会削弱可用性；其二是额外记录一些有利于后面分区恢复的操作信息。系统可以通过持续尝试恢复通信来察觉分区何时结束。&#xA;哪些操作可以执行？ Link to heading 决定限制哪些操作，主要取决于系统需要维持哪几项不变性约束。</description>
-    </item>
-    <item>
-      <title>微信面试算法题-最长拼接子序列</title>
-      <link>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</link>
-      <pubDate>Wed, 10 Mar 2021 14:21:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210310_%E6%9C%80%E9%95%BF%E6%8B%BC%E6%8E%A5%E5%AD%90%E5%BA%8F%E5%88%97/</guid>
-      <description>面的微信部门，应用研发岗实习一面。我人都傻了，我填的不都是java研发之类的，怎么冒出个这么奇怪的岗位。&#xA;题目是这样子的：对于一个给定的子序列，比如说[1,2,3,10,4,2,5,6]，要求去除一段连续的数据，使得剩下的数据是非下降的。输出的结果是去除的最少数字的数量。（可以不唯一）&#xA;比如说对于上面这个序列，显然其去除的可以是10,4,2，也就是输出3。也可以选择去除3,10,4，结果也是相同的。&#xA;这道题是我面试腾讯微信部门的第二道面试题，感谢面试官给了我充足的时间，虽然我还是没有做出来QAQ。&#xA;当时的想法 Link to heading 提到这种上升或下降式的序列，第一个想到的就是最长连续上升子序列之类的题目，就想到用DP来做。然后发现一个很尴尬的问题：状态转移方程建不出来^_^。这个真的是从做DP到现在一直困扰我的梦靥了，那就没办法了。不排除能用DP做，只是我比较菜，有时间专门研究一下吧……&#xA;第二个想法就是观察原序列。显然，被去除掉的结构一定是存在逆序的，就是说索引顺序与值顺序不一致，比如10,4这样。那有一个想法，如果我用递归的思想，不断二分原序列，将其拆解到只剩下两个数字。然后对于小的逆序对，删除掉大的。再对其拼接的过程中不断去除逆序结构，最终应该会剩下多条顺序链。&#xA;但是在如何拼接顺序链以及确认该步骤是正确的地方上卡住了。&#xA;现在的想法 Link to heading 考完出来之后我就有了个新的想法。由于只能切一刀，显然只有三种情况：把前面部分切掉，只保留后面部分；把后面部分切掉，只保留前面部分；以及中间切一刀，保留两边部分。&#xA;无论怎么切，都可以用归纳法证明，剩下的一定是一条连续非下降子序列。所以问题转变为：求解以头开始或者以尾结束的最长连续子序列的长度，然后尝试把它们拼接起来。&#xA;算法正确性证明我忘了，好久没干了，不过感觉这个靠谱多了。</description>
-    </item>
-    <item>
-      <title>计算机网络-概述</title>
-      <link>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/</link>
-      <pubDate>Tue, 09 Mar 2021 14:28:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/</guid>
-      <description>第一章 计算机网络体系结构 Link to heading 1.1 计算机网络概述 Link to heading 分类&#xA;按分布范围可以分为广域网、城域网和局域网 按拓扑结构分类可以分为星形网络、总线形网络、环形网络和网状形网络。 按交换技术可以分为电路交换网络（传统电话网络）、报文交换网络、分组交换网络（也成为包交换网络） 1.1.6 计算机网络的性能指标 Link to heading 带宽bandwidth，表示网络的通信线路所能传输数据的能力，单位是比特每秒。&#xA;时延delay，指数据从网络的一端传送到另一端所需要的总时间，由四个部分构成：发送时延、传播时延、处理时延和排队时延。&#xA;发送时延：又称传输时延，结点将分组的所有比特推向传输链路所需要的时间，即从发送分组的第一个比特算起，到该分组最后一个比特发送完毕所需的时间。发送时延=分组长度/信道宽度 传播时延：电磁波在信道中传播一定的距离需要花费的时间，即一个比特从链路的一端到另一端传播所需的时间，传播时延=信道长度/电磁波在信道上的传播速率。 处理时延：数据在交换节点为存储转发而进行的一些必要的处理所花费的时间。 排队时延：分组在进入路由器中先在输入队列进行排队等待处理，以及确定转发端口后在输出队列等待转发。 时延带宽积：若发送端连续发送数据，在发送的第一个比特即将到达终点时，表示发送端已经发出的比特数，时延带宽积=传播时延*信道带宽&#xA;往返时延：Round-trip time,RTT。表示从发送端发送数据开始，到发送端收到来自接收端的确认总共经历的时延。&#xA;吞吐量throughput：表示在单位时间内通过某个网络的数据量，受网络的带宽或网络的额定速率限制。&#xA;速率：网络中的速率指链接在计算机网络上的主机在数字信道上传输数据的速率，也称为数据率或比特率，单位是b/s，或bps。通常把最高的数据率称为带宽。&#xA;错题 Link to heading 计算机网络从逻辑功能上可以分为通信子网和资源子网。 通信子网指网络中实现网络通信功能的设备及其软件的集合，包括通信设备、网络通信协议、通信控制软件，是网络的内层，负责信息的船速。包括中继器、集线器、网桥、路由器、网关等硬件设备。 资源子网负责全网的数据处理业务，负责向网络用户提供各种网络资源与网络服务，资源子网主要由计算机系统、终端、联网外部设备、各种软件资源和信息资源等组成。 广域网和局域网之间的差异不仅在于它们所覆盖范围的不同，还在于它们所采用的协议和网络技术的不同。广域网使用点对点等技术，局域网使用广播技术。 网络设备，中继器和桥接器通常是用于局域网的物理层和数据链路层的连网设备。局域网接入广域网主要通过路由器来实现。 网络的拓扑结构主要指通信子网的拓扑结构。通信子网包括物理层、数据链路层、网络层。集线器、交换机和路由器分别工作在物理层、链路层和网络层。 广播式网络共享广播信道，通常是局域网的一种通信方式，局域网工作在数据链路层，故不需要网络层，因而也没有路由选择的问题。但是数据链路层使用物理层的服务必须通过服务访问点来实习。 1.2 计算机网络体系结构与参考模型 Link to heading 分层的基本原则：&#xA;每一层实现一种相对独立的功能，降低大系统的复杂度。 各层之间界面自然清晰，易于理解，相互交流尽可能少。 各层功能的精确定义独立于具体的实现方法，可以采用最合适的技术来实现。 保持下层对上层的独立性，上层单向使用下层提供的服务。 整个分层结构应能促进标准化工作。 一个报文(PDU) = 数据部分(SDU)+控制信息部分(PCI)&#xA;服务数据单元SDU：为完成用户所要求的功能而应传送的数据。第n层的服务数据单元记为n-SDU。 协议控制信息PCI：控制协议操作的信息。 协议数据单元PDU：物理层的PDU叫比特，链路层的PDU叫帧，网络层的PDU叫分组，传输层的PDU叫报文。 各层间传输数据的时候，把第n+1层收到的PDU作为第n层的SDU，加上PCI后进行发送。&#xA;层次结构的定义：&#xA;第n层的实体不仅要使用第n-1层的服务，实现自身定义的功能，还要向第n+1层提供本层的服务。 最底层只提供服务，中间即是服务使用者、又是服务提供者，最上层面向用户提供服务。 1.2.2 计算机网络协议、接口、服务的概念 Link to heading 协议是规则的集合，由语法、语义、同步三部分组成。&#xA;语法：规定了传输数据的格式 语义：规定了所要完成的功能，即需要发出何种控制信息、完成何种动作以及做出何种应答。 同步：规定了执行各种操作的条件、时序关系等，即事件实现顺序的详细说明。 接口：接口是同一结点内相邻两层间交换信息的连接点，是一个系统的内部规定。在典型的接口上，同一结点相邻两层的实体通过服务访问点(Service access point,SAP)进行交互。服务是通过服务访问点提供给上层使用的。</description>
-    </item>
-    <item>
-      <title>计算机组成-概述</title>
-      <link>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E6%A6%82%E8%BF%B0/</link>
-      <pubDate>Tue, 09 Mar 2021 14:26:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210309_%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E6%A6%82%E8%BF%B0/</guid>
-      <description>第1章 计算机系统概述 Link to heading 冯诺依曼结构：运算器、控制器、存储器、输入设备和输出设备五大部件组成。现代计算机一般把控制器和运算器集成在一个芯片上，合称为中央处理器。 现代计算机一般以存储器为中心，使I/O操作尽可能绕过CPU，直接在I/O设备与存储器间完成，从而提高系统的整体运行效率。&#xA;重要设备：&#xA;地址寄存器MAR：存放访存地址，经过地址译码后可以找到所选的存储单元。 数据寄存器MDR：是主存和其他部件的中介机构，用于暂存要从存储器中读或写的信息，失序控制逻辑用于产生存储器操作所需的各种时序信号。位数和存储字长相等。 MAR和MDR虽然是存储器的一部分，但是确实在现代CPU内的。&#xA;运算器：核心是ALUM，包含若干通用寄存器用于暂存操作数和中间结果。另外还有程序状态寄存器PSW，用来保留各类运算指令或测试指令的结果的各类状态信息，以表征系统运行状态。 控制器：由程序计数器PC、指令寄存器IR、控制单元CU组成。PC存放当前欲执行指令的地址。IR用来存放当前的指令，内容来自于主存的MDR。 CPU和主存储器构成主机，计算机中除去主机的其他硬件设备统称为外部设备。&#xA;系统软件：保证计算机系统高效、正确运行的基础软件，包括操作系统、数据库管理系统、语言处理程序、分布式软件系统、网络软件系统、标准库程序、服务性程序。 应用软件：用户为解决某个应用领域中的各类问题而编制的程序。 PS：DBMS和DBS是有区别的。DBMS是系统软件，而DBS是引入DBMS后的系统。&#xA;信息流程：&#xA;取指令：PC-&amp;gt;MAR-&amp;gt;M-&amp;gt;MDR-&amp;gt;IR 分析指令：OP(IR)-&amp;gt;CU 执行指令：Ad(IR)-&amp;gt;MAR-&amp;gt;M-&amp;gt;MDR-&amp;gt;ACC 1.2.5 计算机系统的多级层次结果 Link to heading 微程序机器层。硬件层，由机器硬件直接执行微指令。 传统机器语言层。机器层，由微程序解释机器指令系统。 操作系统层。由操作系统定义和解释软件指令，作为广义指令。以及机器指令组成。 汇编语言层。 高级语言层。 应用层。 层次之间，下层是上层的基础，上层是下层的扩展。&#xA;1.3 计算机的性能指标 Link to heading 机器字长：计算机进行一次整数运算所能处理的二进制数据的位数。 数据通路带宽：数据总线一次能并行传送信息的位数 贮存容量：主存储器所能存储信息的最大容量。MAR的位数反应了存储单元的个数，MDR的位数反应了可寻址范围的最大值。 吞吐量：系统在单位时间内处理请求的数目。 CPU时钟周期：CPU中最小的时间单位，每个动作至少需要一个时钟周期。 CPU时钟主频：CPU时钟周期的倒数。主频越高，完成指令的一个执行步骤所需要的时间越短。 CPI：指执行一条指令所需的时钟周期数 CPU执行时间= CPU周期数/主频=（指令条数*CPI）/主频 MIPS(million instructions per second)：每秒执行多少百万条指令。有MIPS=指令条数/(执行时间*10^6)=主频/CPI&#xA;MFLOPS，每秒执行多少百万次浮点运算，重要的性能判断标志。&#xA;平均指令周期 = 1/MIPS 平均每条指令的时钟周期数(CPI)=平均指令周期/CPU时钟周期=1/(MIPS*主频) 题目 17.C 解析：基准程序的CPI=2*0.5+3*0.2+4*0.1+5*0.2=3。计算机的主频为1.2GHz，即1200MHz，故该机器的MIPS=1200/3=400 18.D 解析：程序A的运行时间为100秒，除去CPU时间90秒，剩下10秒为I/O时间。CPU提速后运行基准程序A所耗费的时间T=90/1.5+10秒 19.D 解析：假设原来指令条数为x，那么原CPI就为20*f/x（注：f为CPU的时钟频率），经过编译优化后，指令条数减少到原来的70%，即指令条数为0.7x，而CPI增加到原来的1.2倍，即24*f/x，那么现在P在M上的执行时间就为：（指令条数*CPI）/f=(0.7x*24*f/x)/f=16.8秒 20.C 运行时间=指令数*CPI/主频。M1的时间=指令数*21.5，M2的时间=指令数*1/1.2，两者之比为(2/1.5):(1/1.2)=1.6&#xA;透明性：在计算机领域中，站在某一类用户的角度，如果感觉不到某个事物或属性的存在，则称“对该用户而言，某个事物或属性是透明的”。这与日常生活中透明的概念刚好相反。&#xA;例如，对于高级语言程序员而言，浮点数格式、乘法指令等这些语言的格式、数据如何在运算器中运算都是透明的；而对于机器语言或汇编语言程序员来说，指令的格式、机器结构、数据格式等则不是透明的。&#xA;码距：任意两个合法码字之间最少变化的二进制位数，称为数据校验码的码距。&#xA;奇偶校验，最高位为校验位，剩下的是信息位</description>
-    </item>
-    <item>
-      <title>操作系统-概述</title>
-      <link>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</link>
-      <pubDate>Tue, 09 Mar 2021 14:24:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</guid>
-      <description>整理磁盘时发现的408笔记&#xA;第一章 操作系统概述 Link to heading 1.1 操作系统的基本概念 Link to heading 操作系统是控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的工作和资源的分配，以提供给用户和其他软件方便的接口和环境的程序集合。&#xA;1.1.2 操作系统的特征 Link to heading 并发、共享、虚拟和异步，其中现代操作系统最基本的特征是并发和共享。&#xA;并发：两个或多个事件在同一时间间隔内发生。（并行是同一时刻内发生）单处理机环境的并发在微观上表现为程序分时交替执行，操作系统的并发性是通过分时得以实现的。 共享：系统中的资源可供多个并发执行的进程共同使用。 虚拟：将物理的实体变为若干逻辑上的对应物 异步：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行是以不可预知的速度向前推进。 操作系统的接口：&#xA;命令接口：用户利用这些操作命令来组织和控制作业的执行。 程序接口：程序员用其来请求操作系统服务（系统调用） 命令接口分为联机命令接口和脱机命令接口。联机命令接口用于分时系统，脱机命令接口用于批处理系统。&#xA;程序接口由一组系统调用命令（广义指令）组成，包括图形接口等。 PS：系统调用是操作系统提供给应用程序使用内核功能的接口。库函数是高级语言中提供的与系统调用对应的函数（部分与系统调用无关），目的是隐藏访管指令的细节，更加抽象、透明。&#xA;1.2 操作系统的发展与分类 Link to heading 1.2.1 手工操作阶段（此阶段无操作系统） Link to heading 略过&#xA;1.2.2 批处理阶段 Link to heading 单道批处理系统：内存中始终保持一道作业 多道批处理系统：可以允许多个程序同时进入内存进行作业。&#xA;多道程序设计特点：&#xA;多道：计算机内存中同时存放多道相互独立的程序 宏观上并行：同时进入系统的多道程序都处于运行状态，即它们先后开始了各自的运行，但都未完成。 微观上串行：内存中的多道程序轮流占有CPU。 在分时系统中，时间片一定的时候，用户数量越多，每个用户分到的时间片就越少，响应时间自然就变长。&#xA;实时系统为了保证高响应时间，一般内存调度使用抢占式的优先级高者优先算法。&#xA;1.2.3 分时操作系统 Link to heading 分配时间片给进程。 实现分时系统最关键的问题是如何使用户能与自己的作业进行交互。&#xA;多道程序设计的基本特征： 引入多道程序设计后，程序的执行就失去了封闭性和顺序性&#xA;多道程序系统通过组织作业使CPU总有一个作业可以执行，从而提高了CPU的利用率、系统吞吐量和IO设备利用率，但是系统要付出额外的开销来组织作业和切换作业，所以开销会比单道程序系统更大。&#xA;1.3 操作系统的运行环境 Link to heading 用户态与核心态，使用访管指令进行切换，切换时会引起一次中断。 中断处理功能需要在核心态下进行。</description>
-    </item>
-    <item>
-      <title>数据结构-概述</title>
-      <link>http://wtysos11.github.io/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/</link>
-      <pubDate>Tue, 09 Mar 2021 14:21:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/</guid>
-      <description>整理磁盘时发现考研408时自己的笔记&#xA;第一章 绪论 Link to heading 1.1 数据结构的基本概念 Link to heading 数据：信息的载体 数据元素：数据的基本单位。一个数据元素可由若干个数据项组成 数据对象：具有相同性质的数据元素的集合 数据类型：是一个值的集合和定义在此集合上一组操作的总称。原子类型：值不可再分的数据类型；结构类型：值可以再分解的若干类型；抽象数据类型：抽象数据组织和与之相关的操作。 抽象数据类型：ADT，指一个数学模型以及定义在该模型上的一组操作。 数据结构=逻辑结构+存储结构+数据的运算 1.1.2 数据结构的三要素 Link to heading 逻辑结构：指数据元素之间的逻辑关系，如集合、线性结构、树形结构、图状结构或网状结构 数据的存储结构：指数据结构在计算机中的表示，也称物理结构。包括顺序存储、链式存储、索引存储和散列存储。 数据的运算：施加在数据上的运算包括运算的定义和实现。 第2章 线性表 Link to heading 2.1 线性表的定义和基本操作 Link to heading 线性表是具有相同数据类型的n个数据元素的有限序列。 逻辑上，每个元素有且只有一个直接前驱，有且只有一个直接后继（表头表尾元素例外）&#xA;使用顺序存储的时候即为顺序表。 使用链式存储即为链表。&#xA;2.2 线性表的顺序表示 Link to heading 线性表的顺序存储又称为顺序表，是一组地址连续的存储单元。特点是表中元素的逻辑顺序与物理顺序相同。 PS：动态分配并不是链式存储，同样属于顺序存储结构，只是分配的空间大小可以在运行时决定。 最主要的特点是随机访问，而且逻辑上相邻的元素物理上也相邻，所以插入和删除操作需要移动大量的元素。&#xA;插入，平均时间复杂度O(n) 删除，平均时间复杂度O(n) 按值顺序查找O(n)，二分可以到O(logn) 错题：线性表的顺序存储结构是一种顺序存取的存储结构。 这个是错误的，是随机存取的存储结构。顺序存取是一种读写方式，不是存储方式，有别于顺序存储。 PPS：表的元素从1开始计数，C中的数组从0开始计算。&#xA;题目： [2010真题]1. 设将n(n&amp;gt;1)个整数存放到1维数组R中。试设计一个在时间和空间两方面都尽可能高效的算法。将R中保存的序列循环左移p(0&amp;lt;p&amp;lt;n)个位置，即将R中的数据由(X0,X1,&amp;hellip;,Xn-1)变换为(Xp,Xp+1,&amp;hellip;,Xn-1,X0,X1,&amp;hellip;,Xp-1)。要求： (1)给出算法的基本设计思想 (2)根据设计思想，采用C或C++或java语言描述算法，关键之处给出注释 (3)说明你所设计算法的时间复杂度和空间复杂度 [2011年真题]2.一个长度为L（L&amp;gt;=1）的升序序列S，处在L/2个位置的数被称为中位数。例如，若序列S1=（11,13,15,17,19），则S1的中位数是15，两个序列的中位数是含它们所有元素的升序序列的中位数。例如，若S2=(2,4,6,8,20)，则S1和S2的中位数是11。现在由两个等长升序序列A和B，试设计一个在时间和空间两方面都尽可能高效的算法，找出两个序列A和B的中位数。要求： (1)给出算法的基本思想 (2)根据设计思想，采用C或C++或java语言描述算法，关键之处给出注释 (3)说明你所设计算法的时间复杂度和空间复杂度&#xA;[2013年真题]3.已知一个整数序列A=(a0,a1,&amp;hellip;,an-1),其中0&amp;lt;=ai&amp;lt;n(0&amp;lt;i&amp;lt;n)。若存在ap1=ap2=&amp;hellip;=apm=x且m&amp;gt;n/2(0&amp;lt;=pk&amp;lt;n,1&amp;lt;=k&amp;lt;=m)，则称x为A的主元素。例如A=(0,5,5,3,5,7,5,5)，则5为主元素；又如A=(0,5,5,3,5,1,5,7)，则A中没有主元素。假设A中的n个元素保存在一个一维数组中，请设计一个尽可能高效的算法，找出A的主元素。若存在主元素，则输出该元素；否则输出-1。要求： (1)给出算法的基本设计思想 (2)根据设计思想，采用C或C++或java语言描述算法，关键之处给出注释 (3)说明你所设计算法的时间复杂度和空间复杂度&#xA;注释有感： 读注释的效果应当同读伪代码的效果一样 如果代码的内容无法直观表述，就需要写注释。 题目答案： 1.</description>
-    </item>
-    <item>
-      <title>Dynamic Cloud Resource Allocation Considering Demand Uncertainty</title>
-      <link>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</link>
-      <pubDate>Fri, 05 Mar 2021 10:46:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</guid>
-      <description>Dynamic Cloud Resource Allocation Considering Demand Uncertainty Link to heading 2019 TCC,CCF C类&#xA;看到C类效果这样心里还是有点底，这个用来PK应该是没问题的&#xA;1 Link to heading 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。&#xA;贡献可以分为以下部分：&#xA;部署了动态云资源分配方法，解决了在资源预分配和动态分配两阶段的资源调度问题。开发了随机优化方法来将用户需求建模为随机变量，并实现了10%的部署代价提升。 2 Related work Link to heading 动态资源分配分为两个阶段：&#xA;第一阶段，资源在不考虑用户需求的情况下被分配。 第二阶段，为了保证QoS，采用on-demand的方式分配资源。 由于是离散的，因此不能使用凸优化方法，不能保证有全局最优解。&#xA;Robust Cloud Resouce Provisioning，考虑了三个不确定性：demand、price和cloud resource availability&#xA;在第一阶段，预付费资源完成，将特定数量的资源分配给了应用。 在第二阶段，判定资源是否够用，开始采购on-demand资源 总体来说该作者列的引文都是关于stochastic programming的&#xA;3 System model and assumptions Link to heading 3.1 Problem Definition Link to heading 为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。&#xA;算法主要将数据库应用与一般网络应用进行区分。(database instnace and computing instance)&#xA;然后进行了一系列的数学符号定义&#xA;4 Dynamic Cloud Resource Allocation Algorithm Link to heading 本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。 第二阶段，将non-deterministic user demand建模成随机变量，来动态分配on-demand的资源。</description>
-    </item>
-    <item>
-      <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
-      <link>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</link>
-      <pubDate>Thu, 04 Mar 2021 11:03:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</guid>
-      <description>Profit Maximization for Cloud Brokers in Cloud Computing Link to heading CCF A类&#xA;IEEE Transactions on Parallel and Distributed Systems，2019&#xA;摘要 Link to heading 为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务提供商处以reserved instance的形式租用VM，并把它们以比on-demand更低的价格与相同的付费模式租给用户。&#xA;本文关注于如何设置中间商的价格模型，为它的VM定价使得其利润最大化，在其能为用户节省成本的前提下。将最优化的多服务器配置问题和VM的定价问题建模为利润最优化问题，并使用启发式的方法来求解。近-最优解可以被用来指导配置和虚拟机的定价。&#xA;3 The Models Link to heading 模型主要使用的是多服务器排队论模型、收入模型和花费模型&#xA;reserved instance和on demand instance的价格使用$\beta_{re}$和$\beta_{od}$来指代，单位为dollar per unit time，一般unit time指的是小时。&#xA;3.2 Multiserver queue system Link to heading 本文所研究的中间商broker只从单一的云服务提供商处租用资源，并把它们提供给用户。因此，中间商提供的VM是同构的(homogeneous)。资源在CPU、内存、带宽等方面是一致的。本文假设用户使用了M/M/n/n的排队系统，来对其流量等进行建模。&#xA;在M/M/n/n排队系统中，VM的到达流量被认为是一个速率$\lambda$的泊松流，到达时间独立同分布且呈指数分布。考虑到中间商使用价格来吸引用户，因此实际速率$lambda$会受到两个因素的影响，即实际用户需求$\lambda_{max}$与资源价格。&#xA;通过租用VM并搭建私有云的方式，中间商可以向用户提供on-demand的产品。现假设中间商所拥有的虚拟机数量为n，则多队列系统的队列长度不超过n，此时可以根据排队论公式计算出平均服务时间与资源占用率。&#xA;得到等式1，描述$\pi_k$的式子，这个变量为在排队论系统中有k个服务请求的概率。&#xA;显然，如果请求得不到满足，用户就会流失。因此流失概率等于系统中有n个请求的概率，即$P_L = \pi_n$&#xA;3.3 Cost Modeling Link to heading 即购买服务器的钱，显然是$C=n\beta_{re}$&#xA;3.4 Revenue modeling Link to heading 3.</description>
-    </item>
-    <item>
-      <title>《Java核心技术 卷I：基础知识》读书笔记</title>
-      <link>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Wed, 03 Mar 2021 18:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
-      <description>第一章 Java程序设计概述 Link to heading 太简单了，直接略过。&#xA;1.2 Java“白皮书”的关键术语 Link to heading 简单性：指相对于C++简单（指针、多重继承等），但设计者也并没有试图清楚C++中所有不适当的特性 面向对象：java与C++主要不同在于多重集成，以及接口概念 网络技能 健壮性 安全性 体系结构中立 可移植性 解释性：过去Java解释器可以在任何移植了解释器的机器上执行java字节码，现在使用即使编译器将字节码再翻译成机器码 高性能 多线程 动态性 第二章 Java程序设计环境 Link to heading 我选择使用了JetBrainde IDEA社区版，直接忽略&#xA;第三章 Java的基本程序设计结构 Link to heading 3.3 数据类型 Link to heading 主要关心的是boolean类型，包含false和true，与C++是同一个类型的&#xA;3.4 变量 Link to heading 合法特殊字符为任何代表字母的Unicode字符，但是不能出现+(操作符)和copyright（除字母外的其他Unicode字符）。其中$尽量不要在自己的代码中使用，一般出现在Java编译器或者其他工具生成的名字中。&#xA;需要显示初始化变量，与C++一致。&#xA;在java中，使用final指示常量，如final double CM_PER_INC=2.54。final表示该变量只能赋值一次，一旦赋值就不能修改，习惯上常量名使用大写。&#xA;类常量可以使用static final进行设定，在某个类内部定义&#xA;public class test{ public static final double CM_PER_INC=2.54; } 3.5 运算符 Link to heading 求余符号为%&#xA;3.5.6 强制类型转换 Link to heading double x = 9,997; int nx = (int) x; 3.</description>
-    </item>
-    <item>
-      <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
-      <link>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</link>
-      <pubDate>Mon, 01 Mar 2021 19:49:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</guid>
-      <description>A two-phase cloud resource provisioning algorithm for cost optimization Link to heading 1 Introduction Link to heading 主要的三种付费方式：&#xA;On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-demand和reserved的收费方式。但是它们的目标都只是使用reserved收费的资源来满足最低服务需求，并用on-demand的资源来满足剩余需求。&#xA;本文的目标是找到最佳的实例数，即resource provisioning problem。为了降低资源的租用成本，本文使用了on-demand和reserved instance两种方式来进行一个两阶段的资源分配，并决定最佳的reserved instance的实例数来最小化花费。为此，需要基于预测的流量信息来满足SLA的要求。&#xA;主要贡献：&#xA;使用on-demand和reserved instance的两阶段资源部署算法来减少资源租用花费 在第一阶段，将资源配置问题建模为two-stage stochastic programming problem，并用sample average approximation的方式和dual decomposition method的方式来求解 在第二阶段，使用ARIMA-Kalman model来预测流量，并决定on-demand的实例数量。 使用现实世界的流量和Amazon EC2购买模型来验证结果。 2 related work Link to heading 主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。</description>
-    </item>
-    <item>
-      <title>Business-Driven Long-Term Capacity Planning for SaaS Applications</title>
-      <link>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</link>
-      <pubDate>Mon, 01 Mar 2021 16:57:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</guid>
-      <description>未完成&#xA;本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？&#xA;Business-Driven Long-Term Capacity Planning for SaaS Applications Link to heading 2015 TCC ，没记错应该是C类&#xA;摘要 Link to heading 本文关注的是capacity planning，从定义上，该技术的目标是估计提供计算资源所需的资源数量，从而实现高的QoS级别，为公司带来更高的经济效益。&#xA;在现实中，可以有这样的场景，SaaS出于经济效益的考虑去购买IaaS服务商的实例。这样，SaaS可以减少在操作上的花费与复杂度，但是需要对自身的长期资源使用情况进行一定程度的估算。&#xA;本文采用了模拟实验，使用同步的电子商务数据流。分析显示，使用启发式方法来优化能够每年提升9.65%的利润。&#xA;重点在于启发式搜索的方式&#xA;3 Utility model Link to heading Utility是微观经济学上的概念，用来描述客户的偏好。一般而言，更大的值代表了更高的偏好性。因此，客户的行为也会受到Utility的影响，即他们会倾向选择最喜欢的输出。&#xA;Utility function将outcome映射到utility value上。&#xA;本文提出的Utility model将SaaS的利润（作为提供一个应用的结果）映射到utility value上。这样，一个capacity planning的agent就可以使用本模型来制作capacity plan来最大化utility value。此时，就可以达到SaaS provider的最大利润。&#xA;3.1 Revenue model Link to heading utility model认为SaaS provider可以提供一个或多个计划给他们的顾客，每一个顾客根据自身的需要选择一个计划并与SaaS provider签订合同。&#xA;revenue model包括：&#xA;SaaS consumer周期性地收取费用（每月或每年） 每一个application有着使用限制，由provider提供 合同包括赔偿条款，即SLA违约的情况 SaaS将提供应用A给一个SaaS顾客的集合$U={u_1,&amp;hellip;,u_{|U|}}$。同时，SaaS provider会构建一个计划的集合$P={p_1,&amp;hellip;,p_{|P|}}$，每一个计划$p_j$会满足一类顾客的需求，因此期望上$|P|&amp;lt;|U|$，每一个顾客会选择一个计划来使用应用A。&#xA;在签订计划后，顾客$u_k$可以在时间$[n_k^b,n_k^e]$区间内使用应用A，比如如果$p_j$是半年计划，这两个时间点的差值就是六个月。简单期间，SaaS提供的所有计划都以一个月作为最小单位。并且，新的顾客只能在每一个周期$n$到达之后才能加入，n随着时间推移单调递增。&#xA;顾客$u_k$签订合同之后，SaaS provider就必须配置并部署应用A来服务。之后，顾客$u_k$需要支付配置费用configuration fee$I_j^b$，该费用由计划$p_j$决定。&#xA;后续太罗嗦了就省了。本文的核心模型是utility model，就是一个收益模型，利润=总收入-总支出，基本没用。&#xA;核心算法有两个&#xA;一个是utilization model，这个utilization指的是reserved instance的利用率，比如说一个reserved instance买一年，需要有效使用50%才能比单纯买on-demand便宜，这个50%就是utilization。</description>
-    </item>
-    <item>
-      <title>阿里春招简历小课堂笔记</title>
-      <link>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Wed, 24 Feb 2021 19:12:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</guid>
-      <description> 简历的内容 Link to heading 简历，总结而言是经历的总结。&#xA;简历自答：&#xA;用一句话或者三个词描述自己是一个怎么样的人 我热爱/喜欢做的事情是什么 我擅长做的事情是什么/特长/核心竞争力 我的目标是什么（短期/长期） 我的近两个i有哪些(自我总结) 由五个小问题引出两个总结性的问题：定位思考与职业匹配&#xA;一个例子：&#xA;教育背景（记得加学期、可以写GPA） 专业技能 项目经历（文字要凝练，做了什么，什么身份 科研成果（亮点突出，一句话能让第一眼能让面试官判断，论文几篇、什么量级） 实习经历（量化描述，用数据支撑自己在实习期间做的事情。用一句话，因为你给这个项目、给公司带来了哪些不同。如果没有实习经历，尽量还是要找一个实习经历） 竞赛成绩（标注量级） 获奖情况（奖学金情况，标注量级） 校园活动 其他经历 注意事项 Link to heading 简历中的文字颜色不应该超过两种，最好只使用一种，不要加粗，且格式最好保持前后一致。&#xA;总结 Link to heading 七颗龙珠：&#xA;真实诚信。而且大公司简历会在系统中留档 自我总结 亮点突出 量化描述 文字凝练（一眼看懂，不用思考，简单明了，重点突出） 格式整洁（全文上下保持同一格式，不要加过多的颜色，由其是文字颜色） 一页为佳 春招信息 Link to heading 开启时间：3月份 信源：钉钉校招群，阿里官网 申请机会：春招秋招各两次，分别是网申和内退。春招通过之后，秋招可以有直通面试。 春招没有过，秋招不受影响 实习一般多久？最少一个月，可以两个月到三个月。疫情期间开放远程实习，但是建议现场实习。 无法来实习，仍然建议参与春招，来积累经验，体验过程。 内推过程：集团内部的同学将我的简历放到系统里面，然后会发一个链接，我再进行完善。 春招有日常实习。 </description>
-    </item>
-    <item>
-      <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
-      <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
-      <pubDate>Mon, 15 Feb 2021 11:00:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
-      <description>Temporal fusion transformers for interpretable multi-horizon time series forecasting Link to heading 摘要 Link to heading 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。&#xA;作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。&#xA;为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。&#xA;TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。&#xA;通过一系列真实世界的数据库，我们证明了其卓越的性能。&#xA;1 Introduction Link to heading 与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）&#xA;传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。&#xA;DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。&#xA;现有的这些模型大多都是黑盒模型，其中的参数之间包含了复杂的非线性关系。这使得实现模型难以解释它们的预测结果，使得用户难以去相信模型的输出并让模型建设者去进行修改与调试。&#xA;可惜的是，通用的可解释性方法并不适用于时间序列。在它们过去的工作中（LIME和SHAP）并咩有考虑输入特征的时间顺序问题。&#xA;核心的贡献包括：&#xA;static covariate encoder，对一些静态的数据进行编码并送入到神经网络中。 贯穿全局的门机制与基于样本的变量选择，来最小化不相关输入的贡献。 Seq2Seq的架构来进行本地处理已知输入 temporal self-attention decoder层，来学习长期关系 2 Related work Link to heading multi-horizon预测可以分为两种：&#xA;Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。 另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。 3 Multi-horizon forecasting Link to heading 时间序列预测的定义</description>
-    </item>
-    <item>
-      <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
-      <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
-      <pubDate>Wed, 03 Feb 2021 14:24:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
-      <description>Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020.&#xA;一篇关于时间序列增强的论文，很有意思。&#xA;Time Series Data Augmentation for Deep Learning: A Survey Link to heading 摘要 Link to heading 时间序列相关的问题中，时间序列数据可能并不充足。因此，数据增强方式（CV中所使用的）就变得十分重要了。&#xA;同时从经验上比较不同的时间序列数据增强方式，比如时域与频域、增强组合，以及对不平衡类的加权。&#xA;1 Introduction Link to heading 基于时间序列的各种工作都取得了比较好的成绩，但是这些成功都严重依赖于大量的训练数据来避免过拟合。很不幸的是，并不是所有的时间序列工作都有这么充足的训练数据，因此数据增强方法对于一个成功的深度学习模型来说是非常重要的。&#xA;数据增强的基本想法是产生合成的数据集来覆盖没有探索到的输入空间，并维护正确的分类标签。数据增强方法在AlexNet于图像分类任务中得到了验证。&#xA;尽管如此，很少有工作注重于通过增强方法找到更好的时间序列数据。&#xA;时间序列数据的本质属性并没有被现在的数据增强方法所使用。时间序列数据的一个重要属性是所谓的temporal dependency。时间序列数据可以被转换为时域和频域，因此可以基于这个来设计数据增强方法，并被用于转换的领域。特别是作用于多变量时间序列预测中。因此，简单的将图像或者语言处理领域的增强方法使用过来可能并不会产生比较好的效果。 此外，数据增强方法是基于任务的。比如，对于时间序列分类任务有效的增强方法并不一定对异常检测有效。 此外，时间序列分类问题中可能会遇到类别不均匀的情况，如果产生比较平衡的类别数据也是一个问题。 结构：首先从时域的简单转换开始。 讨论更多时间序列中的高级转换，在时域与频域变换方面 引入高级方法，比如基于分解的方法、基于模型的方法、基于学习的方法等。最后还介绍了GAN在时间序列领域的应用。&#xA;基于分解的方法：就是普通的时间序列分解方法，把时间序列分解为趋势项+周期项+残差 基于模型的方法，使用统计学方法学习数据，并用这个模型产生更多的数据 数据压缩方法：GAN方法 评价方法在时间序列预测、时间序列分类与时间序列异常检测中进行。&#xA;2 Basic Data Augmentation Methods Link to heading 2.1 Time Domain Link to heading 时域上的变化是最直接的，比如注入高斯噪声或更复杂的噪声（spike、step-like trend、slope-like trend）此外还有在异常检测领域中使用的标签扩展方法</description>
-    </item>
-    <item>
-      <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
-      <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
-      <pubDate>Tue, 19 Jan 2021 19:50:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
-      <description>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions Link to heading 2021 International Journal of Forecasting&#xA;文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向于预测本身，而不是模型。 文章结构：第二部分是背景知识，包括传统univariate forecasting technique和不同的NN预测；第三部分包括RNN的实现细节和相关的数据预处理方法；第四部分解释了本文评测时所用的方法与数据集；第五部分进行了批判性的分析；第六部分进行总结；第七部分给出对未来的表述。&#xA;第二部分 Link to heading 2.1 Univariate Forecasting Link to heading 传统的单变量方法即为时间序列基于其过去的值来完成对未来值的预测，即给定序列X={x1,x2,&amp;hellip;,xT}，需要完成{X_{T+1},&amp;hellip;,X_{T+H}} = F(x1,x2,&amp;hellip;,xT) + \epislon，这里的F是一个函数，经过序列X的训练产生得到，H是预测的跨度（horizon）\&#xA;传统的时间序列预测方法在NN3、NN5和M3竞赛上都取得了最佳成绩，它们在数据量很小时表现非常好。但是由于数据量的限制，它们面对大量数据时的表现就不如机器学习算法了。&#xA;2.2 ANN Link to heading 之前一直使用的是传统的FCNN，但是目前更多用的是RNN。RNN的cell比较常用的有Elman RNN cell, LSTM和GRUB，此外还有一些其他的架构。这些架构都同时在时间序列预测领域和自然语言处理中得到了使用。 一些架构介绍：&#xA;Smyl所用的简单复合LSTM，他后来将其与ES算法结合并取得了M4竞赛的冠军 Seq2Seq，被Sutskever引入。传统的S2S架构中Encoder与Decoder都是RNN，这方面比较出色的工作是Amazon的DeepAR。在后续的一些工作中，S2S架构不再作为直接的预测手段，而是作为一种特征提取方式被整合进时间序列预测框架中。 Seq2Seq的一种变体是引入注意力机制。S2S机制的一个问题是将所有的输入数据编码成向量会造成信息损失，而注意力机制通过对更重要的信息加权，可以尽量减少这种信息损失。比如对于以年为周期的月度数据，显然上一年的相同月份的权重应该会更大 使用RNN的组合(ensemble RNN)，比如Smyl将这个问题分成两部分，即产生一组专门的RNN，并将其组合起来进行预测。也可以使用其他的组合方式，比如将meta-learner的输出作为RNN的输入继续进行预测，也有boosting的方法。 global方法，即权重全局计算（跨越不同的时间序列），但是状态保留在各自的时间序列中。 第三部分 Methodology Link to heading 都是很简单的介绍，没什么细节&#xA;第四部分 测试框架 Link to heading 数据集：用的挺全的&#xA;在这部分中我比较关心的是时间序列预处理的方式。时间序列预处理是非常麻烦的，最优的肯定是全局预处理，但是这只对于波动不大的时间序列管用，而且对于极端情况处理的很糟糕。Smyl还是NBEATS提出了局部时间序列处理方式，即每次使用滑动窗口的最后一个值进行时间序列预处理。</description>
-    </item>
-    <item>
-      <title>现代人工智能课程复习</title>
-      <link>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</link>
-      <pubDate>Sat, 09 Jan 2021 14:14:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</guid>
-      <description>中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展&#xA;距离度量，重点记忆Mahalanobis距离和Minkowski距离 过拟合 Link to heading 训练集误差减小的时候，测试集误差增大。 解决方案：正则化，给误差函数增加一个惩罚项（L1/L2）&#xA;概率论 Link to heading 全概率公式，P(A) = P(A|Bi)P(Bi) 贝叶斯公式，P(Bi|A) = P(ABi)/P(A)&#xA;贝叶斯概率 Link to heading 后验概率= 先验概率*似然函数&#xA;bootstrap，自助法，频率学派使用。假设原始数据集有N个数据，可以采取随机抽取N个点的做法来生成新的数据集（可重复，可缺失）。这样可以在多个产生的数据集中评估参数估计的结果。&#xA;高斯分布 Link to heading 一元与多元的表示&#xA;交叉验证 Link to heading 信息准则：AIC与BIC&#xA;决策论 Link to heading 或者说贝叶斯决策/贝叶斯推断&#xA;最小化错误分类率。对于二分类问题，降低错误发生的概率，即把类1分给类2与类2分给类1两个事件。 最小化期望损失。使用损失函数来量化错误分类的代价。 拒绝选项 判别器 Link to heading 概率分布 Link to heading 二项分布（伯努利分布） Link to heading E = p, V = p(1-p)&#xA;高斯分布 Link to heading 对于多元实值向量，使熵取最大值的是高斯分布&#xA;中心极限定理：&#xA;独立同分布的中心极限定理。当n个随机变量独立同分布且n足够大的时候，可以将独立同分布的随机变量之和当作正态变量。 对于要定义的高斯分布，其协方差的酥油特征值要严格大于零，不然不能被正确的归一化。如果一个或多个特征值为零，则该高斯分布将是奇异的，被限制在一个低维的子空间上。 高斯分布的局限性在于它是单峰的，因此难以逼近多峰分布。解决方法是使用混合高斯分布，使用足够多的高斯分布，并调整它们的均值和方差以及线性组合的系数，几乎可以以任意精度近似所有的连续概率密度。</description>
-    </item>
-    <item>
-      <title>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</title>
-      <link>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
-      <pubDate>Tue, 22 Dec 2020 19:20:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
-      <description>所有的论文都放在这边&#xA;Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018. Do Bitcoin Users Really Care About Anonymity? Link to heading Do Bitcoin Users Really Care about Anonymity?</description>
-    </item>
-    <item>
-      <title>如何让pandas根据指定列的指进行partition</title>
-      <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
-      <pubDate>Sun, 22 Nov 2020 19:20:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
-      <description>问题描述 Link to heading 我拿到了一个维基百科的列表，其数据如下：&#xA;datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce_Mar铆a 18 2015-08-30 12:00:00 UTC Portal:Current_events 116 UTF-8的问题暂且不谈，现在需要将其作为csv文件读入内存中，并且按照title分成不同的datehour-&amp;gt;views表，并按照datehour排序。将2015~2020的数据按照同样的操作进行处理，并将它们拼接成一张大表，最后将每一个title对应的表导出到csv，title写入到index.txt中。&#xA;##解决方案&#xA;朴素想法 Link to heading 最朴素的想法就是遍历一遍原表的所有行，构建一个字典，字典的每个key是title，value是两个list。不断将原有数据放入其中，然后到时候直接遍历keys，根据两个list构建pd，排序后导出。&#xA;更python的做法 Link to heading 朴素想法应该是够用的，但是不美观，不够pythonic，看着很别扭。于是我搜索了How to partition DataFrame by column value in pandas?&#xA;boolean index Link to heading stackoverflow里有人提问如何将离散数据进行二分类，把小于和大于某个值的数据分到两个DataFrame中。直接用df1 = df[df[&amp;quot;Sales&amp;quot;]&amp;gt;=s]这样的语句就可以完成。 但是这在我们的场景上并不太适用。当然，可以提前遍历一遍把title做成集合再循环遍历，不过这也不是很pythonic。&#xA;groupby Link to heading 同样是上面那个问题，有人提到可以使用groupby方法。groupby听着就很满足我的需求，它让我想起了SQL里面的同名功能。&#xA;df.groupby(&#39;ColumnName&#39;).groups可以显示所有的列中的元素。 df.groupby(&#39;ColumnName&#39;)可以进行遍历，结果是一个(name,subDF)的二元组，name为分组的元素名称，subDF为分组后的DataFrame 对df.</description>
-    </item>
-    <item>
-      <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
-      <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
-      <pubDate>Tue, 13 Oct 2020 12:37:13 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
-      <description>后续更新，不一定会记得更新&#xA;kubernetes虚拟机多级环境部署与Istio的安装 Link to heading 标签：项目实践 kubernetes istio&#xA;计划在三台2C4G的机器上安装kubernetes。其中master和slave的系统均为Ubuntu18.04桌面版。（原本想用CentOS的，下载的时候就是这样了，费事改了）&#xA;目前需要在实验室的服务器上进行部署，得了，最终结果也是一样的。&#xA;分为以下几个步骤：&#xA;安装基本软件 访问谷歌镜像仓库gcr.io 完成三台机器关于安装kubeadm的相关工作 安装Istio 部署相关应用（prometheus、grafana） 参考文献：&#xA;掘金 cnblog，这一篇是我后来看到的，写的更好一些。 安装基本软件 Link to heading 如果使用包管理软件，请务必检查自身的包管理软件为最新。&#xA;以Ubuntu的apt为例，首先请务必使用最新的镜像仓库（最好手动弄一下），然后再执行一遍sudo apt-get update来更新。&#xA;配置docker Link to heading 略&#xA;配置kubectl、kubeadm、kubelet Link to heading 在执行命令之前，请首先使用检查是否能够访问到指定的包。以apt为例，使用apt-cache policy &amp;lt;package&amp;gt;可以检查远程仓库中包的版本。&#xA;apt-get install kubectl kubeadm kubelet 系统配置 Link to heading 关闭防火墙 关闭SELinux 关闭swap 下载kubeadm所需镜像 Link to heading 从阿里云下载 Link to heading 首先使用kubeadm config images list列出kubeadm所需要的所有镜像&#xA;k8s.gcr.io/kube-apiserver:v1.19.2 k8s.gcr.io/kube-controller-manager:v1.19.2 k8s.gcr.io/kube-scheduler:v1.19.2 k8s.gcr.io/kube-proxy:v1.19.2 k8s.gcr.io/pause:3.2 k8s.gcr.io/etcd:3.4.13-0 k8s.gcr.io/coredns:1.7.0 即所有的系统镜像为v1.</description>
-    </item>
-    <item>
-      <title>在k8s中上线gatling镜像并在内网发送流量</title>
-      <link>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
-      <pubDate>Mon, 12 Oct 2020 15:44:17 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
-      <description>后续更新，我不一定会记得更新过来。&#xA;在k8s中上线gatling镜像并在内网发送流量 Link to heading 很多时候我们会面临一个问题，即外网的带宽是有限的，虽然未来有扩容的可能，但是短时间内也不能直接扩容，而测试本身是无限的。因此，如果不能够在内网下直接发包进行测试，那由于带宽限制打不到较大的压力，对于一些容器的测试很可能就达不到效果。&#xA;因此我们需要在内网有一个能够配置的压力测试容器，目前选定了gatling，因为其功能比较强大，而且安装很方便。&#xA;镜像构造 Link to heading 初始镜像构造 Link to heading 虽然之前已经做了ubuntu的镜像，并且可以使用apt-get install来安装gatling，但是这种方式安装后有些不太会用，似乎更多是作为一个插件存在而不是独立存在的软件。&#xA;我还是选择了自己最熟悉的方式，直接从官网上下载了开源版本的standalone gatling.zip，解压后将目录重命名为gatling，Dockerfile如下:&#xA;FROM ubuntu:18.04 MAINTAINER wtysos11 &amp;#34;wtysos11@gmail.com&amp;#34; COPY sources.list ./ ADD gatling ./gatling RUN rm /etc/apt/sources.list\ &amp;amp;&amp;amp; mv sources.list /etc/apt/sources.list\ &amp;amp;&amp;amp; apt-get update \ &amp;amp;&amp;amp; apt-get install -y openjdk-8-jdk scala #&amp;amp;&amp;amp; apt-get install -y gatling CMD [&amp;#34;/bin/bash&amp;#34;] sources.list为清华的apt镜像，为了加速；gatling可以在java8下运行，必须要安装scala（其实我个人觉得只安装scala就够了，保险起见）&#xA;操作完之后执行docker build . -t ubuntu-wtynettest:0.0.2构造镜像，然后执行docker run --name test -d ubuntu-wtynettest:0.0.2 sleep infinity。再使用docker exec -it test bash</description>
-    </item>
-    <item>
-      <title>Keras中的Embedding层是如何工作的</title>
-      <link>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</link>
-      <pubDate>Tue, 08 Sep 2020 20:57:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200908_keras%E4%B8%AD%E7%9A%84embedding%E5%B1%82%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84/</guid>
-      <description>在学习的过程中遇到了这个问题，同时也看到了SO中有相同的问题。而keras-github中这个问题也挺有意思的，记录一下。&#xA;这个解释很不错，假如现在有这么两句话&#xA;Hope to see you soon Nice to see you again 在神经网络中，我们将这个作为输入，一般就会将每个单词用一个正整数代替，这样，上面的两句话在输入中是这样的&#xA;[0, 1, 2, 3, 4] [5, 1, 2, 3, 6] 在神经网络中，第一层是&#xA;Embedding(7, 2, input_length=5) 其中，第一个参数是input_dim，上面的值是7，代表的是单词表的长度；第二个参数是output_dim，上面的值是2，代表输出后向量长度为2；第三个参数是input_length，上面的值是5，代表输入序列的长度。&#xA;一旦神经网络被训练了，Embedding层就会被赋予一个权重，计算出来的结果如下：&#xA;+------------+------------+ | index | Embedding | +------------+------------+ | 0 | [1.2, 3.1] | | 1 | [0.1, 4.2] | | 2 | [1.0, 3.1] | | 3 | [0.3, 2.1] | | 4 | [2.2, 1.4] | | 5 | [0.7, 1.</description>
-    </item>
-    <item>
-      <title>知乎分享：vscode从入门到进阶</title>
-      <link>http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/</link>
-      <pubDate>Sun, 24 May 2020 09:08:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/</guid>
-      <description>地址：知乎 内容大纲&#xA;VS Code 的优势&#xA;VS 和 VS Code 到底有什么关系？&#xA;微软从 VS 组里面抽了一拨人做 VS Code，是真的吗？ VS 支持 Java ？背后的真相到底是怎样的？ 你真的会用 VS Code 了吗？&#xA;VS Code Insiders 版本 常用的配置项 命令面板 面包屑导航/大纲/缩略图 主题 快捷键 集成终端 如何更好地学习 VS Code ？&#xA;学会提问 学会搜索 学会学习 一起改进 VS Code，你也能成为 VS Code 的 Contributor&#xA;VS Code 的核心组件&#xA;Electron Monaco Editor Language Server Protocol Debug Adapter Protocol VS Code 怎么做开源的？&#xA;进阶&#xA;命令行 玩转 Git 打造自己的主题 快速创建属于你的 Code Snippet 玩转 Tasks，把重复的工作自动化 调试 远程开发 插件</description>
-    </item>
-    <item>
-      <title>python日志模块logging学习与快速复习笔记</title>
-      <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Tue, 05 May 2020 09:08:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考：&#xA;csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细，比较规范 基础知识 Link to heading 日志级别 Link to heading CRITICAL &amp;gt; ERROR &amp;gt; WARNING &amp;gt; INFO &amp;gt; DEBUG &amp;gt; NOTSET，如果将日志级别设置为INFO，则INFO以下的日志将不会输出。默认设置级别为WARNING。&#xA;常用函数 Link to heading logging.basicConfig() # 使用一系列key-value值规定日志的基本配置信息，level规定输出的log级别，format定义输出log的格式，datafmt为输出的时间格式，filename为log文件名，filemode为打开log文件的模式。 logging.debug/info/warning/error/critical(str) #输出错误信息 logging.log(logging.DEBUG/..., str) #另外一种输出错误信息的方式 #可以使用如下代码将log信息同时输出到console上 console = logging.StreamHandler() # 定义console handler console.setLevel(logging.INFO) # 定义该handler级别 formatter = logging.Formatter(&amp;#39;%(asctime)s %(filename)s : %(levelname)s %(message)s&amp;#39;) #定义该handler格式 console.setFormatter(formatter) # Create an instance logging.getLogger().addHandler(console) 例子 Link to heading 例1：控制台与文件输出 Link to heading 设置输出格式，同时输出到控制台与文件</description>
-    </item>
-    <item>
-      <title>基于网站流量的时间序列预测资源整理</title>
-      <link>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</link>
-      <pubDate>Mon, 04 May 2020 10:20:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</guid>
-      <description>原文地址&#xA;去年到现在一些关于时间序列预测的资料的整理。 kaggle文章：&#xA;everything you can do with time series kaggle - web-traffic-time-series-forecasting - 1st solution。谷歌的这个比赛是针对流量预测作的，其中第一名的一些思路是很有意思的，比如引入seq2seq模型等。 微信公众号：&#xA;代码实践|LSTM预测股票数据该公众号的其他文章都挺有意思的。 知乎：&#xA;时间序列预测方法总结 关于时间序列预测的一些总结 LSTM与prophet预测实验 时间序列的七种方法，七种经典算法 使用ARIMA和趋势分解法预测 论文：&#xA;杜爽,徐展琦,马涛,杨帆.基于神经网络模型的网络流量预测综述[J].无线电通信技术,2020,46(02):216-222.从名字上就可以知道内容了。 王海宁,袁祥枫,杨明川.基于LSTM与传统神经网络的网络流量预测及应用[J].移动通信,2019,43(08):37-44.。提出了一个比较可行的LSTM架构。 TCN - An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling，据说很强大，没有使用过。 电子书：&#xA;澳大利亚莫纳什大学 - 在线预测教材 成品：&#xA;TCN-github facebook -prophet kaggle资料整理 Link to heading tag: time series tag: time series analysis 比赛：&#xA;10大时间序列竞赛比赛 房价预测 数据库：&#xA;UCI - time series UCR数据库 斯坦福网络数据，似乎更多是网络结点的数据 CompEngine，时间序列，但是似乎不权威 google集群数据 维基百科pagecount数据 google比赛数据，维基百科两年的数据 wikipediatrend，包括了维基百科pageview数据，从07年到现在的日级别页面访问量数据。 </description>
-    </item>
-    <item>
-      <title>Response Time Characterization of Microservice-Based Systems</title>
-      <link>http://wtysos11.github.io/posts/20200422_response-time-characterization-of-microservice-based-systems/</link>
-      <pubDate>Thu, 23 Apr 2020 17:21:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200422_response-time-characterization-of-microservice-based-systems/</guid>
-      <description>原文地址&#xA;看到的挺好的一篇文章 November 2018 DOI: 10.1109/NCA.2018.8548062 Conference: 2018 IEEE 17th International Symposium on Network Computing and Applications (NCA) ConferenceIEEE International Symposium on Network Computing and Applications&#xA;以排队论分析响应时间的一篇论文。 说实话，我一没看懂排队论的过程，二没看懂他的实验。 师兄的说法是排队论依据的假设太多了，比如要求请求以泊松分布到来之类的，现实世界根本做不到，以此建模误差太大了，就到此为止吧。&#xA;Response Time Characterization of Microservice-Based Systems Link to heading 涉及到的词语与翻译：&#xA;bottleneck，翻译为瓶颈、瓶颈层、瓶颈点 multi-server，我认为这里指的是多层服务，和multi-tier应该是同义的。 摘要 Link to heading 背景：微服务架构较之传统的单体应用有着很多的优势，但是它也阻碍了系统的可视化(hinders system observability)。特别地，对于服务性能的监控和分析变得更加有挑战，特别是对于那些重要的生产系统，必须要迭代增长、连续操作且不能够进行线上的基准测试(benchmark)。这些系统一般非常的巨大且昂贵，因此成为了完全调度的较差选择。 为这样的服务和系统来创建一个模型来进行特征分析可以很好地缓解上述的问题。性能，特别是响应时间，是本工作关注的重点，我们注重于瓶颈点检测(bottleneck detection)和资源最优化调度（optimal rsource scheduling）。我们采用了一个方法来对生产应用建模，使用请求数据的排队系统。除此之外，我们提供了对响应时间进行分析和资源最优化调度的分析工具。我们的结果显示一个有着单个队列和数个同构(homogeneous)的服务器的简单的排队系统有着一个较小的参数空间，可以在生产中被估算出来。这个结果的模型可以被用来预测响应时间的分布和必要的实例数来维护期望的服务级别，在给定的流量下。&#xA;1 introduction Link to heading 对于生产环境来说，黑盒监控是非常轻量且高效的，然而这样的监控是无法去分辨和预测服务质量。除了已经收集到的指标、警示和配置项目之外，分析任务主要依赖于管理员。为此，我们设计了一个建模组件，比如同构多层服务队列，这使得可以从统计学上去分析一些性能指标，比如延迟或流量。而且由于队列可以组成网络，该方法可以用于微服务架构中的建模。为了更加准确地对独立的服务进行建模，我们需要对它们的性能进行更细致地分析。 在得到了额外的记录信息之后，我们就能够去为微服务系统来创建和更新一个动态的依赖模型。这允许我们去提取服务端点之间的依存关系，且更重要的是，可以对每一个微服务的表现进行建模。目标是简单但重要的：取得使每一个服务表现最佳的动作。这会导向不同的分支，比如明白什么时候应该进行调度、减少基础设施的消耗，以及保证SLA。额外地，可以在瓶颈出现前去解决它(the possibility of pinpointing bottlenecks in the system without stressing it)，这也是一个主要的优点。 在本文中，我们开发并部署了一个基于微服务架构的系统，对它的记录结果进行排序，来对multi-server queues进行建模(M/M/c)。该方法可以预测响应时间的分布范围以及服务的最佳动作区域，同时决定需要多少个实例数来维护指定流量下服务的理想服务质量。更重要的是，建立一个模型使得方法可以建立一个最大容量的定义，这是全系统性能最优化和瓶颈检测的第一步。我们的结果证明了尽管十分简单，我们的模型能够准确地预测微服务的动作，更精确地来说，预测响应时间分布，同时不需要更加复杂的模型或参数。从结果上来说，这样的模型对于线上的分析是足够的。 剩下的部分如此组成：S2描述了我们用来对微服务建模的基于队列的模型；S3描述了实验设置；S4展示了我们的实验结果；S5评价了实验结果；S6列出了相关工作；S7对该论文进行了总结。</description>
-    </item>
-    <item>
-      <title>bottleneck detection</title>
-      <link>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</link>
-      <pubDate>Wed, 22 Apr 2020 17:36:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</guid>
-      <description>原文地址&#xA;主要还是针对微服务调度中bottleneck的定义入手&#xA;瓶颈点定义 Link to heading 从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。 在多层应用(multi-tier applications)中，其中的bottleneck指的是资源层面的，即在某一层增加资源能够最大化的优化服务的性能。&#xA;多层服务中的bottleneck Link to heading Agile Dynamic Provisioning of Multi-Tier Internet Applications Link to heading Chapter 1 Link to heading 师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。 定义：每一层的处理能力是固定的 x req/s，如果说中间有一层处理能力最低，显然整个服务的处理速度都将受到影响。 需要注意的是，对瓶颈层的增加并不代表对整个服务的服务质量都会增加，可能需要在消除所有的瓶颈层之后整个服务的服务性能才能得到提升。&#xA;因为现在已经有很多的单层调度机制被使用了，要给很简单的想法就是给每一层都配置一个单层调度器。因此，我们的第一步就是在每一层的流量超过容纳上限的时候增加实例数量，这个可以通过监控队列长度、层间响应时间、或者丢包率来实现，这个方法称为independent per-tier provisioning.&#xA;想法1：多层模型，逐个找到bottleneck并增加。问题在于增加的速度可能很慢，最多可能需要遍历所有层才能完成实例扩缩，这对于变化较快的网络流量显然是不行的。 想法2：直接将多层模型作为一个黑箱进行考虑。问题在于需要增加多少个实例，以及在哪里增加。因为多层模型是一个黑箱，显然调度器无法获取内部的信息，即不知道究竟是哪一层出了问题。对于单层服务模型，可以建立一个应用模型来决定在响应时间范围内对于给定的流量需要多少个服务，从而进行对应的扩缩。但是将这个模型用于多层模型中并不一定可行，因为每一层的服务与应用性质都是不同的。以简单的电子商务应用为例，这意味着将HTTP服务器、Java服务器和数据库系统一起建模，这将是一个困难的工作。第三，不是所有的层都可以增加实例，比如数据库系统就很难实时增加实例。 综上，不能将多层应用作为黑箱进行调度。 特色：&#xA;predictive and reactive provisioning:使用预测式调度来进行小时或天级别、使用响应式调度来进行更细致的调度。 使用了基于排队论的分析模型来同时对多层网络应用进行分析 快速的服务器切换，允许虚拟机来处理更快发生的网络波动。 能够处理基于session的流量。 这个调度方法可以被归类为自适应adaptive或半自动的semi-autonomous，它们是能够快速适应环境同时只需要人类有限的接触。&#xA;Chapter2 System Overview Link to heading 2.1 Multi-tier Internet Applications 多层网络架构：整个网络架构由顺序连接的多个应用层组成，如同管道一样，中间的一层会收到前面预处理的数据，并将自己处理好的数据传输给下一层。 本文定义的SLA，使用平均响应时间(average response time)或一个合适的响应时间分位点（a suitable high percentile of the response time distribution）</description>
-    </item>
-    <item>
-      <title>使用ADEPT方法学习困难概念</title>
-      <link>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</link>
-      <pubDate>Tue, 14 Apr 2020 09:51:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</guid>
-      <description>原文地址&#xA;参考资料：&#xA;Learning Difficult Concepts with the ADEPT Method 缘起-强化学习 困难的概念往往让人疯狂，仅仅看一遍几乎没有任何效果，实际操作又过于繁琐。使用5个步骤来科学学习：&#xA;Analogy：tell me what it&amp;rsquo;s like. Diagram：help me visualize it Example：allow me to experience it Plain English：Describe it with everyday works. Technical Definition：Discuss the formal details（这里最好能够自行推导一下公式、算法正确性之类的，会比较深刻） Analogy：What Else is it like Link to heading 许多新的概念本身就是已有概念的改进、扩展和延伸，所以可以通过根据旧概念来学习新的概念。 以虚数为例，简单的介绍可以是负数的平方根。以下为一些更好的解释：&#xA;负数在1700之前都没有被认可，为什么会有比没有还小的东西。 数字是在数轴上，沿着数轴向0前进和后退 为什么不能向上或向下移动，数轴不一定是一维的。二维的轴就是虚数轴。 这样通过曲折的绕行，使用现实/过往例子来进行双向印证，能够帮助人更好地理解、记忆一些概念。&#xA;Diagram：Engage that half of your brain Link to heading 画个图总是好的，无论是思维导图、概念图还是干脆就是随手涂鸦。画图能够在最短时间内将心中所想具现出来，而且往往很容易让人理解。&#xA;Example：Let Me Experience The Idea Link to heading 很多时候，讲再久不如上手做一下，动作的信息量要高于语言。 不一定非要付诸于实际，可以选择去看别人的视频，看别人如何做实验。即使是数学这样抽象的学科，也有3Blue1Brown这样用动画来表现数学概念的人。 例子：Khan Academy或一些经典问题（最好带上答案甚至解析）</description>
-    </item>
-    <item>
-      <title>【总结性】微服务调度相关论文</title>
-      <link>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</link>
-      <pubDate>Sat, 11 Apr 2020 10:20:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</guid>
-      <description>原始地址&#xA;阅读和微服务相关的论文&#xA;【论文名称】 调度类型，调度方法，调度对象，索引 综述文献：&#xA;A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014年的综述文献。 Elasticity in Cloud Computing : State of the Art and Research Challenges，弹性调度的综述文献，对调度的不同方法、使用虚拟机还是docker进行调度等方向进行了分类。 Auto-Scaling Web Applications in Clouds: A Taxonomy and Survey，另外一篇综述文献 A Survey and Taxonomy of Self-Aware and Self-Adaptive Cloud Autoscaling Systems 高价值文献：&#xA;A reliable and cost-efficient auto-scaling system for web applications using heterogeneous spot instances&#xA;Renewable-aware geographical load balancing of web applications for sustainable data centers</description>
-    </item>
-    <item>
-      <title>数据结构与算法复习</title>
-      <link>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</link>
-      <pubDate>Tue, 07 Apr 2020 16:11:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/</guid>
-      <description>原文地址&#xA;内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来&#xA;数据结构与算法复习 Link to heading 不包括全部内容 基础部分包括大O记号和小o记号的意义，P问题和NP问题和NP hard问题 B树和B+树 AVL平衡树和红黑树 KMP&#xA;资料：&#xA;B站-内功心法，红黑树、平衡树、B树和B+树 清华大学邓俊辉-数据结构与算法，我计划把这篇与它的计算几何做两个观后笔记。 B树和B+树 Link to heading 资料来源：&#xA;MIT6.046 博客 M阶B树的特征：&#xA;非叶子结点最多只有M个分支 除根节点以外的非叶子结点分支数为上取整(M/2)到M。 关键字个数=分支数-1 所有叶子结点位于同一层 区别：&#xA;B树的关键字集合分布在整棵树中，而B+树的实际数据只在叶子节点中。因此B树的搜索有可能在非叶子结点结束。 因为B+树的所有数据都在叶子节点中，所以B+树的叶子节点会依据关键字的大小自小而大的顺序链接，可以进行顺序遍历。非叶子结点可以看作是索引，结点中仅含有子树中的最大或最小关键字。同一个数字会在不同结点中重复出现。 B+树的查询优势：&#xA;B+树的中间结点不保存数据，所以磁盘也能够容纳更多结点元素 B+树的查询必须查找到叶子节点，B树不必，因此B+树查找更加稳定，但并不慢 对于范围查找来说，B+树只需要遍历叶子节点链表（因为是顺序链接的），而B树需要重复进行中序遍历。 红黑树 Link to heading 参考资料2：简书-30张图了解红黑树 参考资料3：清华大学邓俊辉-红黑树演示 参考资料4：使用2-4树看待红黑树&#xA;AVL树：平衡二叉树，每个节点平衡因子的绝对值不超过1，即左右子树高度差不超过1。 最大的作用是使得二叉查找树更平衡，本质上是特殊的二叉查找树。 红黑树的性质：&#xA;每个结点不是红色就是黑色 不可能有连在一起的红色节点。 根节点一定是黑色root 每个红色节点的两个子节点都是黑色。叶子节点都是黑色。 为了满足性质，有三种变化：&#xA;红变黑，黑变红，保证根节点是黑色 左旋 右旋 所有插入的点默认为红色。（PS：叶子节点为黑色）为什么这么规定：因为红黑树中所有的点都是黑色，也是满足要求的，这样可能会造成问题。&#xA;变颜色的情况：当前结点的父亲是红色，且它的祖父结点的另一个子节点也是红色（叔叔结点）。 把父结点设为黑色 把叔叔也设为黑色 把祖父结点，也就是父节点的父节点设为红色 把指针定义到祖父结点设为当前要操作的分析的点变换的规则 左旋：当前父结点是红色，叔叔结点是黑色，且当前结点是右子树。左旋以父节点为左旋。 右旋：当前父结点是红色，叔叔结点是黑色，且当前的结点是左子树。右旋 把父节点变为黑色 把祖父节点变为红色 以租父节点旋转 重要例子： 红黑树 Link to heading 根据邓俊辉老师的思路来，之前那个人很多没有讲 3+4重构，AVL保持平衡的方式，因为涉及到3个结点和4个子树，被称为3+4重构。</description>
-    </item>
-    <item>
-      <title>软件测试复习</title>
-      <link>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</link>
-      <pubDate>Mon, 06 Apr 2020 20:15:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/</guid>
-      <description>原文地址&#xA;软件测试复习 Link to heading 对大三下学期的软件测试课程进行复习&#xA;第一章 Link to heading 计算机软件体系结构 Link to heading 软件体系结构是软件系统的结构、行为和属性的高级抽象，给出系统的组织结构和拓扑结构，规定系统需求和构成系统的元素之间的对应关系。&#xA;Layered Architecture：n层模型，比如TCP\IP使用的那种。例子：Presentation Layer-&amp;gt;Business Layer-&amp;gt; Persistent Layer-&amp;gt; Database Layer。核心思想是组件间的分离与功能上的聚合。 Event-Driven Architecture：常用于异步通信架构，由高度解耦合且单一目的的事件处理组件所构成。 MicroKernal Architecture：用于实现基于产品的应用的自然表示，即将大量第三方库插入进核心代码中。Core system提供了核心功能，plug-in module则可以是第三方库等能够轻松调换的代码。通过分离可以实现应用特性和具体实现的分离。 Microservices Architecture：微服务架构，面向服务的架构。按照单元分解，采用分布式架构，一般具有统一的用户交互层。 Space-Based Architecture：特定于解决扩展与并发问题。应用数据统一存储于内存中，同时通过扩展处理单元的方式实现应用处理能力的增加。 软件=程序+数据+文档+服务、 是能够完成预定性能和功能的、可执行的计算机指令。 软件需要有描述程序的操作和使用的文档。 1976: Algorithm+Data Structure = Programs&#xA;生产软件产品的基本步骤：软件规格说明、设计与实现、确认、演进。&#xA;软件开发方法：&#xA;面向数据流的结构化程序开发方法。指导思想是自顶向下，逐步求精；基本原则是功能的分解与抽象。很适合数据处理领域的问题。 面向数据结构的开发方法(Jackson方法)：描述问题的输入、输出数据结构，分析其对应性，设计相应的程序结构，从而给出问题的软件过程描述。以数据结构为驱动。 基于模型的方法，支持程序开发的形式化方法，把软件系统当作模型来给予描述，把软件的输入、输出看作模型对象，把这些对象在计算机内的状态看作该模型在对象上的操作。 面向对象的开发方法：指导思想是尽量按照人类认识世界的方法和思维方式来分析和解决问题。 第一章 1.2 软件工程生命周期 Link to heading 软件生命周期的6个阶段：&#xA;可行性分析与计划阶段：确认软件开发的总体目标、估计可利用的开发资源，最后提交可行性分析报告。 需求分析阶段：分析用户提出的要求 设计阶段：概要设计/逻辑设计（把各项软件需求转换成软件的体系结构）、详细设计/物理设计（按照概要设计分解的每个模块所要完成的工作进行具体的描述）、提交概要结构设计说明书等文档 实现阶段：完成源程序的编码、编译和运行调试、编写进度日报周报、测试计划、提交用户手册等 测试阶段：全面测试目标软件系统，并检查审阅已编制的文档。 运行与维护阶段：软件提交给用户后，在运行使用中得到持续的维护；改正性维护、适应性维护和完善性维护。 前五个阶段合称开发阶段。&#xA;软件生命周期模型 Link to heading 包括瀑布模型、VW模型、快速应用开发模型、原型模型、迭代模型、螺旋模型、喷泉模型、基于构建的开发模型、Rational统一过程模型、敏捷开发模型与极限编程。&#xA;瀑布模型 Link to heading 特征：</description>
-    </item>
-    <item>
-      <title>中山大学考研复试内容复习</title>
-      <link>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</link>
-      <pubDate>Sat, 04 Apr 2020 20:15:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200404_%E5%A4%8D%E8%AF%95%E5%86%85%E5%AE%B9%E5%A4%8D%E4%B9%A0/</guid>
-      <description>中山大学考研复试内容复习 Link to heading 原文地址&#xA;复试复习以基本概念为主，重点概念为主，偏题怪题一律不考虑。&#xA;计算机网络 Link to heading 网络基础 Link to heading OSI七层模型&#xA;OSI七层模型 Link to heading OSI七层模型，从下到上依次为物理层、数据链路层、网络层、运输层、会话层、表示层、应用层。&#xA;其中底下三层称为通信子网，是为了联网而附加上去的通信设备，完成数据传输功能。顶三层称为资源子网，相当于计算机系统，完成数据的处理等功能。&#xA;物理层：传输单位比特，功能是在物理媒体上为数据端设备透明的传输原始比特流。主要定义数据终端设备DTE和数据通信设备DCE的物理和逻辑连接方法。 物理层主要研究以下内容：&#xA;通信链路与通信结点之间的连接需要的电路接口的参数（机械形状、尺寸、交换电路的数量与排列） 通信链路上传输的信号的意义和电气特征，比如高低电平的规定，信号的规定等。 PS：传输信息所利用的一些物理媒体，比如双绞线、光缆、无线信道等，并不在物理层协议之内。&#xA;数据链路层：传输单位是帧，任务是将网络层传下来的IP数据组装成帧。功能为：成帧、差错控制、流量控制和传输管理。 差错控制：检测物理层发生的差错，并丢弃收到的错误信息。 流量控制：协调相邻物理结点之间的速度。 数据链路层协议：SDLC、HDLC、PPP、STP和帧中继&#xA;网络层：传输单位是数据报（分组、包），主要任务是把网络层协议数据单元（分组）从源端传到目的端，为分组交换网上的不同主机提供通信服务。关键问题是路由选择，并实现流量控制、拥塞控制、差错控制和网际互联等功能。 差错控制：同上 拥塞控制：如果拥塞状态使得网络层中的两个结点无法正常通信，则采用一些措施缓解拥塞。 网络层协议：IP、IPX、ICMP、IGMP、ARP、RARP、OSPF&#xA;传输层：传输单位是报文段TCP或用户数据包UDP(报文)，任务是负责主机中两个进程之间的通信，功能为端到端提供可靠的传输服务；为端到端连接提供流量控制、差错控制、服务质量、数据传输管理等服务。 传输层协议：TCP、UDP&#xA;会话层：允许不同主机上各进程之间的绘画，利用传输层提供的端到端服务，管理主机之间的会话进程，包括建立、管理以及终止进程间的绘画。 表示层：主要用于处理在两个通信系统中交换信息的表示方式。比如不同机器会采用不同的编码和表示方式，以及数据结构。 应用层：最高层，包括FTP、SMTP、HTTP等协议。 TCP模型 Link to heading 网络接口层：对应于OSI的物理层和数据链路层，表示与物理网络的接口 网际层：（主机-主机），即OSI的网络层，将分组发往任何网络并独立选择合适的路由。 传输层：与OSI的传输层类似，使发送端和目的端的主机上的对等实体可以进行会话，主要使用TCP和UDP。 应用层：用户-用户，包含所有高层协议，对应于OSI的应用层呢个、表示层和会话层。 介质访问控制相关 Link to heading CSMA相关模型&#xA;3.5.1 信道划分介质访问控制 Link to heading 使用介质的每个设备与来自同一通信信道上的其他设备的通信隔离开，把时域和频域资源合理地分配给网络上的设备。&#xA;多路复用技术：传输介质的带宽超过了传输单个信号所需的带宽时，在一条介质上同时携带多个传输信号的方法来提高传输系统的利用率。即将多个输入通道的信息整合到一个复用通道，然后在接收端把收到的信息分离出来传送到对应的输出通道中。&#xA;信道划分的实质是通过分时、分频、分码等方法，把原来的一条广播信道，逻辑上分为几条用于两个结点之间通信的互不干扰的子信道。&#xA;频分多路复用FDM：将多路基带信号调制到不同频率载波上再进行叠加形成一个复合信号的多路复用技术。即将物理信道的总带宽分割成若干格传输单个信号带宽相同（略宽）的子信道 时分多路复用TDM：将一条物理信道按时间分成若干个时间片，轮流地分配给多个信号使用。每一个时间片复用的一个信号占用。利用每个信号在时间上的交叉，在一条物理信道上传输多个信号。改进：STDM，统计时分多路复用，可以动态地分配时隙，提高线路的利用率。 波分多路复用WDM：光的频分多路复用，在一根光纤中传输多种不同波长的光信号，最后用波长分解复用器将各路波长分解出来。 码分多路复用CDM：靠不同的编码来区分各路原始信号，既共享信道的频率、又共享时间。码分多址CDMA是码分复用的一种方式。（要求各个站点的芯片序列是相互正交的）优点：抗干扰能力强、保密性强、语音质量好，主要用于无线通信特别是移动通信领域。 3.5.2 随机访问介质访问控制 Link to heading 随机访问协议中，如果有两个或多个用户同时发送信息，就会造成冲突，产生帧的碰撞，导致所有冲突用户的发送均以失败告终。</description>
-    </item>
-    <item>
-      <title>复试英语翻译练习</title>
-      <link>http://wtysos11.github.io/posts/20200403_%E5%A4%8D%E8%AF%95%E8%8B%B1%E8%AF%AD%E7%BF%BB%E8%AF%91%E7%BB%83%E4%B9%A0/</link>
-      <pubDate>Fri, 03 Apr 2020 20:15:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200403_%E5%A4%8D%E8%AF%95%E8%8B%B1%E8%AF%AD%E7%BF%BB%E8%AF%91%E7%BB%83%E4%B9%A0/</guid>
-      <description>原文地址&#xA;复试英语翻译练习 Link to heading 计划 Link to heading 计划对A类会议的部分论文的概述进行实时翻译（录音），并再写一份答案作为巩固。&#xA;会议参考：https://blog.csdn.net/qq_36556893/article/details/94431877&#xA;计算机系统与高性能计算 Link to heading ASPLOS 2019 Link to heading Buffets: An Efficient and Composable Storage Idiom for Explicit Decoupled Data Orchestration Link to heading 英文： Accelerators spend significant area and effort on custom on-chip buffering. Unfortunately, these solutions are strongly tied to particular designs, hampering re-usability across other accelerators or domains. We present buffets, an efficient and composable storage idiom for the needs of accelerators that is independent of any particular design.</description>
-    </item>
-    <item>
-      <title>安卓环境下笔记软件总结</title>
-      <link>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Tue, 31 Mar 2020 09:51:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</guid>
-      <description>在综合了价格等因素后，我选择了华为MatepadPro，这样在不用电脑模拟器的情况下我还可以使用平板进行阅读和书写记录，从综合价格上来说是最划算的，使用寿命预期是5-7年，预期是工作三年之后再换最新的手机。（虽然今年年初亏的一波已经够买一台新手机了，mmp） 在实际使用的时候，我发现安卓平板下的笔记应用并没有苹果下那么丰富，苹果最著名的notability和goodnote组合似乎无法替代。因此我需要花费一些时间寻找比较适合的应用，同时记录下它们的应用场景来供自己进行选择。&#xA;会使用如下表格来进行分析：&#xA;总体： 背景是否可变 外部是否有标签 手写： 是否支持手写： 是否有框选 存储是矢量还是像素 延迟 快捷操作是否便捷 手写页面是下拉还是无限 手写笔迹、颜色 插入图片： 调节位置 调节大小 是否支持pdf 插入语音： 时间： 条数，是否重叠： 是否会自动翻译，允许保存原音 导出： 是否支持pdf 是否同步 备忘录 Link to heading 页面 Link to heading 简介 Link to heading 备忘录是华为官方应用，可以同时支持文本编辑、图片插入、语音输入（不超过5分钟，会自动识别，不能同时存储多条语音）、手写输入。 我比较喜欢的一点是它的背景是黑色的，缺点是手写时没有框选（虚线框，可以移动和删除内容），而且没有快捷手势来删除，极为不便。手写部分存入的是矢量图，删除的时候一删就是一条线，写的时候需要注意一下。&#xA;总结 Link to heading 总体： 背景是否可变：不可变，如上图一样，是黑色。 外部是否有标签：有标签，可以在左上角详情栏中点标签进行分类，可以根据标题进行搜索。 手写： 是否支持手写：支持手写，可以选择只使用主动笔 是否有框选：没有框选，不能移动 存储是矢量还是像素：矢量 延迟：极低，且字不会变形 快捷操作是否便捷：没有手势快捷操作，且删除很不便，必须要点一下橡皮擦进入擦除模式，而且很容易点错。 手写页面是下拉还是无限：下拉，而且不能放大缩小 手写笔迹、颜色：支持铅笔、钢笔、中性笔、划线笔，颜色只能使用预设的七种颜色。 插入图片： 调节位置：长按图片可以移动位置，文字内容不能与图片重复，但手写内容可以覆盖（且只能覆盖） 调节大小：单击可以进行图片编辑，可以修图（亮度、饱和度、裁剪、旋转），但是不能缩放。 是否支持pdf：不能导入pdf文件，哪怕只有一张（可以考虑截图） 插入语音： 时间：5分钟 条数，是否重叠：只能一条，自动接上。 是否会自动翻译，允许保存原音：会自动翻译，同时会保留一条原音。 导出： 是否支持pdf：可以选择打印界面保存为pdf. 是否同步：单机软件，不能同步。 场景 Link to heading 紧急情况记录绝对够用，日常书写也还行，但是如果经常需要删改的话会很不舒服，已经提了建议，也不知道会不会改。 总体而言，对手写的支持非常好，书写基本没有延迟，偶尔可能手写笔有问题，会出现过于敏感导致有墨点的情况。</description>
-    </item>
-  </channel>
+    <description>后端技术博客</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</lastBuildDate>
+      <atom:link href="http://wtysos11.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+  <title>置顶：博客文章组织，目录与标签</title>
+  <link>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</link>
+  <pubDate>Wed, 06 Apr 2022 12:34:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/%E7%BD%AE%E9%A1%B6/</guid>
+  <description><![CDATA[介绍本博客的文章是如何组织的，以及对应的标签和目录的意思介绍]]></description>
+</item>
+<item>
+  <title>hugo loveit构建github page博客</title>
+  <link>http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/</link>
+  <pubDate>Wed, 25 Aug 2021 16:34:18 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210825_%E5%8D%9A%E5%AE%A2%E6%9E%84%E5%BB%BA%E8%AE%B0%E5%BD%95/</guid>
+  <description><![CDATA[博客的构建记录]]></description>
+</item>
+<item>
+  <title>基于大模型构建本地知识库</title>
+  <link>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</link>
+  <pubDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</guid>
+  <description><![CDATA[基于大模型构建本地知识库，尝试使用ChatGPT、chatglm和Langchain-chatchat]]></description>
+</item>
+<item>
+  <title>Gopherfest 2015：Go Proverbs with Rob Pike</title>
+  <link>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</link>
+  <pubDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</guid>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item>
+<item>
+  <title>Vegeta压测工具学习与使用</title>
+  <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+  <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item>
+<item>
+  <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
+  <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
+  <pubDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item>
+<item>
+  <title>腾讯云cos获取文件操作实践--Go SDK</title>
+  <link>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</link>
+  <pubDate>Thu, 23 Jun 2022 20:45:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/</guid>
+  <description><![CDATA[使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证]]></description>
+</item>
+<item>
+  <title>多协程写同一个slice的最佳实践</title>
+  <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</link>
+  <pubDate>Wed, 15 Jun 2022 14:40:05 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/</guid>
+  <description><![CDATA[问题描述main.go func main() { fmt.Println(&#34;in waitgroup test&#34;) result := make([]int, 0) var wg sync.WaitGroup for i := 0; i &lt; 1000; i++ { wg.Add(1) go func() { defer wg.Done() for j := 0; j &lt; 100000; j++ { result = append(result, j) } }() } wg.Wait() fmt.Println(len(result)) }测试命令为go run -race mai]]></description>
+</item>
+<item>
+  <title>多协程错误处理与errgroup</title>
+  <link>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</link>
+  <pubDate>Wed, 15 Jun 2022 14:17:05 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%8Eerrgroup/</guid>
+  <description><![CDATA[工作中碰上的对多个goroutine中错误处理的需要，以及之后发现的对于errgroup的学习]]></description>
+</item>
+<item>
+  <title>Git常见操作与QA</title>
+  <link>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</link>
+  <pubDate>Wed, 15 Jun 2022 08:43:05 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/</guid>
+  <description><![CDATA[操作QA操作与对应的实践练习 git update-index比如对于本仓库的.env文件，就使用了git update-index --skip-worktree .env来避免]]></description>
+</item>
+</channel>
 </rss>

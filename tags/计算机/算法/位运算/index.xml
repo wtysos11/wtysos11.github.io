@@ -1,32 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/算法/位运算 on 实践出真知</title>
+    <title>计算机/算法/位运算 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/</link>
-    <description>Recent content in 计算机/算法/位运算 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
-      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
-      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
-      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
-    </item>
-    <item>
-      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
-      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
-      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
-      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
-    </item>
-    <item>
-      <title>Leetcode 762: 二进制表示中质数个计算置位</title>
-      <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
-      <pubDate>Fri, 08 Apr 2022 17:52:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
-      <description>762 二进制表示中质数个计算置位 Link to heading 题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。&#xA;比如说$(21){10}=(10101){2}$，则该数字的计算置位为3。问题要求一段区间[left,right]中有质数个计算置位的数量。&#xA;换句话来说，该问题可以相当于快速计算出一个区间内每个数的计算置位，之后只需要判断这些置位是否为素数即可。&#xA;考虑以下情况&#xA;十进制 二进制 0 000 1 001 2 010 3 011 4 100 5 101 6 110 7 111 从这个表可以看到，二进制表示中从右往左数的第一位0和1的间隔为1个数字，第二位为2个数字，第三位为4个数字……这也是二进制的本质。&#xA;换句话来说，可以分别计算出一段区间内第一位为1的数字，第二位为1的数字……然后对其进行求和。&#xA;最终还是用了简单的解法&#xA;https://leetcode-cn.com/problems/prime-number-of-set-bits-in-binary-representation/solution/wei-rao-li-lun-by-wfnuser-lc94/&#xA;#include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; class Prime{ map&amp;lt;int,bool&amp;gt; store; public: Prime(){ store[2]=true; store[3]=true; } bool judge(int v){ if(v&amp;lt;2){ return false; } if(store.find(v)!=store.end()){ return true; } for(int i=2;i&amp;lt;=sqrt(v);i++){ if(v%i==0){ return false; } } store[v] = true; return true; } }; class Solution { public: int calculate_one(int v){ int max_2 = log2(v); int val = pow(2,max_2); int count = 0; for(int i=max_2;i&amp;gt;=0;i--){ if(v&amp;gt;=val){ v-=val; count++; } val/=2; } return count; } int countPrimeSetBits(int left, int right) { int count = 0; Prime prime; for(int i=left;i&amp;lt;=right;i++){ int val = this-&amp;gt;calculate_one(i); if(prime.</description>
-    </item>
-  </channel>
+    <description>计算机/算法/位运算 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="self" type="application/rss+xml" /><item>
+  <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+  <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+  <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+  <description><![CDATA[762 二进制表示中质数个计算置位题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。 比如说$(21){10}=(10101){2}$，]]></description>
+</item>
+</channel>
 </rss>

@@ -1,294 +1,262 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  istio应用对外访问极速入门 · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="istio框架下如何暴露服务，其实挺简单的。">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="istio应用对外访问极速入门"/>
-<meta name="twitter:description" content="istio框架下如何暴露服务，其实挺简单的。"/>
-
-<meta property="og:title" content="istio应用对外访问极速入门" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>istio应用对外访问极速入门 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="istio框架下如何暴露服务，其实挺简单的。" /><meta name="keywords" content='计算机/kubernetes/istio, 内容/实践记录' /><meta itemprop="name" content="istio应用对外访问极速入门">
+<meta itemprop="description" content="istio框架下如何暴露服务，其实挺简单的。"><meta itemprop="datePublished" content="2021-10-30T16:41:02+08:00" />
+<meta itemprop="dateModified" content="2021-10-30T16:41:02+08:00" />
+<meta itemprop="wordCount" content="1504">
+<meta itemprop="keywords" content="计算机/kubernetes/istio,内容/实践记录," /><meta property="og:title" content="istio应用对外访问极速入门" />
 <meta property="og:description" content="istio框架下如何暴露服务，其实挺简单的。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-10-30T16:41:02+08:00" />
 <meta property="article:modified_time" content="2021-10-30T16:41:02+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/">
-              istio应用对外访问极速入门
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="istio应用对外访问极速入门"/>
+<meta name="twitter:description" content="istio框架下如何暴露服务，其实挺简单的。"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" /><link rel="next" href="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "istio应用对外访问极速入门",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8\/"
+    },"genre": "posts","keywords": "计算机\/kubernetes\/istio, 内容\/实践记录","wordcount":  1504 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8\/","datePublished": "2021-10-30T16:41:02+08:00","dateModified": "2021-10-30T16:41:02+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2021-10-30T16:41:02&#43;08:00">
-                十月 30, 2021
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/">操作实践</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/kubernetes/istio/">计算机/kubernetes/istio</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/">内容/实践记录</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>istio应用对外访问极速入门</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" class="post-category" title="分类 - 操作实践"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 操作实践</a></span></div><div class="post-meta-line"><span title="发布于 2021-10-30 16:41:02"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-10-30">2021-10-30</time></span>&nbsp;<span title="1504 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1600 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <p>可能用到的链接与参考资料：</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#ingressgateway">ingressgateway</a></li>
+    <li><a href="#应用部署">应用部署</a></li>
+    <li><a href="#后记">后记</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>可能用到的链接与参考资料：</p>
 <ul>
-<li><a href="https://github.com/wtysos11/simple_istio_go_demo"  class="external-link" target="_blank" rel="noopener">source</a>，应用的代码</li>
-<li><a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/"  class="external-link" target="_blank" rel="noopener">istio ingress gateway</a>，本文其实就是这篇文章的特化版本</li>
+<li><a href="https://github.com/wtysos11/simple_istio_go_demo"target="_blank" rel="external nofollow noopener noreferrer">source</a>，应用的代码</li>
+<li><a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/"target="_blank" rel="external nofollow noopener noreferrer">istio ingress gateway</a>，本文其实就是这篇文章的特化版本</li>
 </ul>
-<h2 id="引言">
-  引言
-  <a class="heading-link" href="#%e5%bc%95%e8%a8%80">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>istio所提供的可观测性对于微服务来说是非常重要的。但是在搭建istio下的服务的时候，总是会出现各种各样的问题。笔者在构建简单服务的时候也是碰到了无数奇怪的情况，而且每次构建环境的时候都差不多是一样的体验。</p>
+<h2 id="引言" class="heading-element">
+  <a href="#%e5%bc%95%e8%a8%80" class="heading-mark"></a>引言</h2><p>istio所提供的可观测性对于微服务来说是非常重要的。但是在搭建istio下的服务的时候，总是会出现各种各样的问题。笔者在构建简单服务的时候也是碰到了无数奇怪的情况，而且每次构建环境的时候都差不多是一样的体验。</p>
 <p>为此我还是将本次构建环境的过程写下来。所使用的应用是基于go iris的FFT代码，用于模拟CPU敏感的微服务组件。代码均已上传到github仓库上，希望能对后来者，特别是初学者有所助益。</p>
 <p>本文的目标：</p>
 <ul>
 <li>帮助读者了解ingress gateway的工作内容</li>
 <li>扩展原有httpbin为自定义服务</li>
 </ul>
-<h2 id="ingressgateway">
-  ingressgateway
-  <a class="heading-link" href="#ingressgateway">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>ingressgateway应该是istio的入口服务，可以进行负载均衡与进一步的流量控制。其在k8s中主要通过service表现其功能，使用<code>kubectl get svc/istio-ingressgateway -n=istio-system -o=yaml</code>可以导出其配置信息。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">apiVersion</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">v1</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">kind</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Service</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">metadata</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">annotations</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">kubectl.kubernetes.io/last-applied-configuration</span>:<span style="color:#6e7681"> </span>|<span style="color:#a5d6ff">
-</span></span></span><span style="display:flex;"><span><span style="color:#a5d6ff">      {&#34;apiVersion&#34;:&#34;v1&#34;,&#34;kind&#34;:&#34;Service&#34;,&#34;metadata&#34;:{&#34;annotations&#34;:{},&#34;labels&#34;:{&#34;a</span><span style="color:#6e7681">      
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#a5d6ff">pp&#34;:&#34;istio-ingressgateway&#34;,&#34;install.operator.istio.io/owning-resource&#34;:&#34;unknown&#34;,&#34;i</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#a5d6ff">nstall.operator.istio.io/owning-resource-namespace&#34;:&#34;istio-system&#34;,&#34;istio&#34;:&#34;ingress</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#a5d6ff">gateway&#34;,&#34;istio.io/rev&#34;:&#34;default&#34;,&#34;operator.istio.io/component&#34;:&#34;IngressGateways&#34;,&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#a5d6ff">operator.istio.io/managed&#34;:&#34;Reconcile&#34;,&#34;operator.istio.io/version&#34;:&#34;1.11.2&#34;,&#34;releas</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#a5d6ff">e&#34;:&#34;istio&#34;},&#34;name&#34;:&#34;istio-ingressgateway&#34;,&#34;namespace&#34;:&#34;istio-system&#34;},&#34;spec&#34;:{&#34;port</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#a5d6ff">s&#34;:[{&#34;name&#34;:&#34;status-port&#34;,&#34;port&#34;:15021,&#34;protocol&#34;:&#34;TCP&#34;,&#34;targetPort&#34;:15021},{&#34;name&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span>:<span style="color:#a5d6ff">&#34;http2&#34;</span>,<span style="color:#a5d6ff">&#34;port&#34;</span>:<span style="color:#a5d6ff">80</span>,<span style="color:#a5d6ff">&#34;protocol&#34;</span>:<span style="color:#a5d6ff">&#34;TCP&#34;</span>,<span style="color:#a5d6ff">&#34;targetPort&#34;</span>:<span style="color:#a5d6ff">8080</span>},{<span style="color:#a5d6ff">&#34;name&#34;</span>:<span style="color:#a5d6ff">&#34;https&#34;</span>,<span style="color:#a5d6ff">&#34;port&#34;</span>:<span style="color:#a5d6ff">443</span>,<span style="color:#a5d6ff">&#34;
-</span></span></span><span style="display:flex;"><span><span style="color:#a5d6ff">protocol&#34;</span>:<span style="color:#a5d6ff">&#34;TCP&#34;</span>,<span style="color:#a5d6ff">&#34;targetPort&#34;</span>:<span style="color:#a5d6ff">8443</span>},{<span style="color:#a5d6ff">&#34;name&#34;</span>:<span style="color:#a5d6ff">&#34;tcp&#34;</span>,<span style="color:#a5d6ff">&#34;port&#34;</span>:<span style="color:#a5d6ff">31400</span>,<span style="color:#a5d6ff">&#34;protocol&#34;</span>:<span style="color:#a5d6ff">&#34;TCP&#34;</span>,<span style="color:#a5d6ff">&#34;tar
-</span></span></span><span style="display:flex;"><span><span style="color:#a5d6ff">getPort&#34;</span>:<span style="color:#a5d6ff">31400</span>},{<span style="color:#a5d6ff">&#34;name&#34;</span>:<span style="color:#a5d6ff">&#34;tls&#34;</span>,<span style="color:#a5d6ff">&#34;port&#34;</span>:<span style="color:#a5d6ff">15443</span>,<span style="color:#a5d6ff">&#34;protocol&#34;</span>:<span style="color:#a5d6ff">&#34;TCP&#34;</span>,<span style="color:#a5d6ff">&#34;targetPort&#34;</span>:<span style="color:#a5d6ff">15443</span>}],<span style="color:#a5d6ff">&#34;s
-</span></span></span><span style="display:flex;"><span><span style="color:#a5d6ff">elector&#34;</span>:{<span style="color:#a5d6ff">&#34;app&#34;</span>:<span style="color:#a5d6ff">&#34;istio-ingressgateway&#34;</span>,<span style="color:#a5d6ff">&#34;istio&#34;</span>:<span style="color:#a5d6ff">&#34;ingressgateway&#34;</span>},<span style="color:#a5d6ff">&#34;type&#34;</span>:<span style="color:#a5d6ff">&#34;LoadBalanc
-</span></span></span><span style="display:flex;"><span><span style="color:#a5d6ff">er&#34;</span>}}<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">creationTimestamp</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;2021-09-07T09:59:49Z&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">labels</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">app</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">istio-ingressgateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">install.operator.istio.io/owning-resource</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">unknown</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">install.operator.istio.io/owning-resource-namespace</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">istio-system</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">istio</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">ingressgateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">istio.io/rev</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">default</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">operator.istio.io/component</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">IngressGateways</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">operator.istio.io/managed</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Reconcile</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">operator.istio.io/version</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">1.11.2</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">release</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">istio</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">istio-ingressgateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">namespace</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">istio-system</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">resourceVersion</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;8269056&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">uid</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">914b2deb-1018-4dfd-81ff-3f2d94db2f72</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">spec</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">allocateLoadBalancerNodePorts</span>:<span style="color:#6e7681"> </span><span style="color:#79c0ff">true</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">clusterIP</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">10.110.100.72</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">clusterIPs</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#a5d6ff">10.110.100.72</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">externalTrafficPolicy</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Cluster</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">internalTrafficPolicy</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Cluster</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">ipFamilies</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#a5d6ff">IPv4</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">ipFamilyPolicy</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">SingleStack</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">ports</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">status-port</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">nodePort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">30479</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">port</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">15021</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">protocol</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">TCP</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">targetPort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">15021</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">http2</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">nodePort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">30001</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">port</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">80</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">protocol</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">TCP</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">targetPort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">8080</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">https</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">nodePort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">30477</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">port</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">443</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">protocol</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">TCP</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">targetPort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">8443</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">tcp</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">nodePort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">30465</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">port</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">31400</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">protocol</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">TCP</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">targetPort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">31400</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">tls</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">nodePort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">31772</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">port</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">15443</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">protocol</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">TCP</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">targetPort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">15443</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">selector</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">app</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">istio-ingressgateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">istio</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">ingressgateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">sessionAffinity</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">None</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">type</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">LoadBalancer</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">status</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">loadBalancer</span>:<span style="color:#6e7681"> </span>{}<span style="color:#6e7681">
-</span></span></span></code></pre></div><p>虽然是LoadBalancer类型，但是因为实验室是本地环境，也没有额外去配置Nginx，所以并没有external IP。此时ingressgateway的IP可以由<code>export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')</code>语句获取。</p>
+<h2 id="ingressgateway" class="heading-element">
+  <a href="#ingressgateway" class="heading-mark"></a>ingressgateway</h2><p>ingressgateway应该是istio的入口服务，可以进行负载均衡与进一步的流量控制。其在k8s中主要通过service表现其功能，使用<code>kubectl get svc/istio-ingressgateway -n=istio-system -o=yaml</code>可以导出其配置信息。</p>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kubectl.kubernetes.io/last-applied-configuration</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">      {&#34;apiVersion&#34;:&#34;v1&#34;,&#34;kind&#34;:&#34;Service&#34;,&#34;metadata&#34;:{&#34;annotations&#34;:{},&#34;labels&#34;:{&#34;a</span><span class="w">      
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">pp&#34;:&#34;istio-ingressgateway&#34;,&#34;install.operator.istio.io/owning-resource&#34;:&#34;unknown&#34;,&#34;i</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">nstall.operator.istio.io/owning-resource-namespace&#34;:&#34;istio-system&#34;,&#34;istio&#34;:&#34;ingress</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">gateway&#34;,&#34;istio.io/rev&#34;:&#34;default&#34;,&#34;operator.istio.io/component&#34;:&#34;IngressGateways&#34;,&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">operator.istio.io/managed&#34;:&#34;Reconcile&#34;,&#34;operator.istio.io/version&#34;:&#34;1.11.2&#34;,&#34;releas</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">e&#34;:&#34;istio&#34;},&#34;name&#34;:&#34;istio-ingressgateway&#34;,&#34;namespace&#34;:&#34;istio-system&#34;},&#34;spec&#34;:{&#34;port</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">s&#34;:[{&#34;name&#34;:&#34;status-port&#34;,&#34;port&#34;:15021,&#34;protocol&#34;:&#34;TCP&#34;,&#34;targetPort&#34;:15021},{&#34;name&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">:</span><span class="s2">&#34;http2&#34;</span><span class="p">,</span><span class="s2">&#34;port&#34;</span><span class="p">:</span><span class="m">80</span><span class="p">,</span><span class="s2">&#34;protocol&#34;</span><span class="p">:</span><span class="s2">&#34;TCP&#34;</span><span class="p">,</span><span class="s2">&#34;targetPort&#34;</span><span class="p">:</span><span class="m">8080</span>}<span class="p">,</span>{<span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;https&#34;</span><span class="p">,</span><span class="s2">&#34;port&#34;</span><span class="p">:</span><span class="m">443</span><span class="p">,</span><span class="s2">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">protocol&#34;</span><span class="p">:</span><span class="s2">&#34;TCP&#34;</span><span class="p">,</span><span class="s2">&#34;targetPort&#34;</span><span class="p">:</span><span class="m">8443</span>}<span class="p">,</span>{<span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;tcp&#34;</span><span class="p">,</span><span class="s2">&#34;port&#34;</span><span class="p">:</span><span class="m">31400</span><span class="p">,</span><span class="s2">&#34;protocol&#34;</span><span class="p">:</span><span class="s2">&#34;TCP&#34;</span><span class="p">,</span><span class="s2">&#34;tar
+</span></span></span><span class="line"><span class="cl"><span class="s2">getPort&#34;</span><span class="p">:</span><span class="m">31400</span>}<span class="p">,</span>{<span class="s2">&#34;name&#34;</span><span class="p">:</span><span class="s2">&#34;tls&#34;</span><span class="p">,</span><span class="s2">&#34;port&#34;</span><span class="p">:</span><span class="m">15443</span><span class="p">,</span><span class="s2">&#34;protocol&#34;</span><span class="p">:</span><span class="s2">&#34;TCP&#34;</span><span class="p">,</span><span class="s2">&#34;targetPort&#34;</span><span class="p">:</span><span class="m">15443</span>}<span class="p">],</span><span class="s2">&#34;s
+</span></span></span><span class="line"><span class="cl"><span class="s2">elector&#34;</span><span class="p">:</span>{<span class="s2">&#34;app&#34;</span><span class="p">:</span><span class="s2">&#34;istio-ingressgateway&#34;</span><span class="p">,</span><span class="s2">&#34;istio&#34;</span><span class="p">:</span><span class="s2">&#34;ingressgateway&#34;</span>}<span class="p">,</span><span class="s2">&#34;type&#34;</span><span class="p">:</span><span class="s2">&#34;LoadBalanc
+</span></span></span><span class="line"><span class="cl"><span class="s2">er&#34;</span>}}<span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">creationTimestamp</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;2021-09-07T09:59:49Z&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">istio-ingressgateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">install.operator.istio.io/owning-resource</span><span class="p">:</span><span class="w"> </span><span class="l">unknown</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">install.operator.istio.io/owning-resource-namespace</span><span class="p">:</span><span class="w"> </span><span class="l">istio-system</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">istio</span><span class="p">:</span><span class="w"> </span><span class="l">ingressgateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">istio.io/rev</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">operator.istio.io/component</span><span class="p">:</span><span class="w"> </span><span class="l">IngressGateways</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">operator.istio.io/managed</span><span class="p">:</span><span class="w"> </span><span class="l">Reconcile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">operator.istio.io/version</span><span class="p">:</span><span class="w"> </span><span class="m">1.11.2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">release</span><span class="p">:</span><span class="w"> </span><span class="l">istio</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">istio-ingressgateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">istio-system</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">resourceVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;8269056&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">uid</span><span class="p">:</span><span class="w"> </span><span class="l">914b2deb-1018-4dfd-81ff-3f2d94db2f72</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">allocateLoadBalancerNodePorts</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clusterIP</span><span class="p">:</span><span class="w"> </span><span class="m">10.110.100.72</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clusterIPs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="m">10.110.100.72</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">externalTrafficPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">Cluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">internalTrafficPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">Cluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ipFamilies</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">IPv4</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ipFamilyPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">SingleStack</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">status-port</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">30479</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">15021</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">15021</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">http2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">30001</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">30477</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">8443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">tcp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">30465</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">31400</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">31400</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">tls</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">nodePort</span><span class="p">:</span><span class="w"> </span><span class="m">31772</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">15443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">15443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">istio-ingressgateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">istio</span><span class="p">:</span><span class="w"> </span><span class="l">ingressgateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">sessionAffinity</span><span class="p">:</span><span class="w"> </span><span class="l">None</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">LoadBalancer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">status</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">loadBalancer</span><span class="p">:</span><span class="w"> </span>{}</span></span></code></pre></div><p>虽然是LoadBalancer类型，但是因为实验室是本地环境，也没有额外去配置Nginx，所以并没有external IP。此时ingressgateway的IP可以由<code>export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')</code>语句获取。</p>
 <p>主要的工作端口是http2，80-&gt;8080，这里使用NodePort将其导出进行使用：<code>export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name==&quot;http2&quot;)].nodePort}')</code></p>
-<h2 id="应用部署">
-  应用部署
-  <a class="heading-link" href="#%e5%ba%94%e7%94%a8%e9%83%a8%e7%bd%b2">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>应用构建比较简单，<a href="https://github.com/wtysos11/simple_istio_go_demo"  class="external-link" target="_blank" rel="noopener">源代码</a>本身也不复杂。在打包完成镜像后，就需要开始写yaml文件将应用部署上k8s。</p>
+<h2 id="应用部署" class="heading-element">
+  <a href="#%e5%ba%94%e7%94%a8%e9%83%a8%e7%bd%b2" class="heading-mark"></a>应用部署</h2><p>应用构建比较简单，<a href="https://github.com/wtysos11/simple_istio_go_demo"target="_blank" rel="external nofollow noopener noreferrer">源代码</a>本身也不复杂。在打包完成镜像后，就需要开始写yaml文件将应用部署上k8s。</p>
 <p>需要注意的是：</p>
 <ul>
 <li>必须确保所有的资源都在同一个namespace中。主要是复制的时候容易漏掉</li>
@@ -301,187 +269,145 @@
 </ul>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#7ee787">apiVersion</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">v1</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">kind</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Namespace</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">metadata</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wty-istio</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">labels</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">istio-injection</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">enabled </span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#ff7b72">---</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">apiVersion</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">v1</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">kind</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Service</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">metadata</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-svc</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">namespace</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wty-istio</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">spec</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">selector</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">app</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-app</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">ports</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>- <span style="color:#7ee787">protocol</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">TCP</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">port</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">8000</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">targetPort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">8080</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#ff7b72">---</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">apiVersion</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">apps/v1</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">kind</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Deployment</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">metadata</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-deploy</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">labels</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">app</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-deploy-label</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">namespace</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wty-istio</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">spec</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">replicas</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">3</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">selector</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">matchLabels</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">app</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-app</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">template</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">metadata</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">annotations</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">prometheus.io/port</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;8080&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">prometheus.io/scrape</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;true&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">prometheus.io/path</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;/metrics&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">labels</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">app</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-app</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">spec</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">containers</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span>- <span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-container-name</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">image</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">registry.cn-hangzhou.aliyuncs.com/wtysos11/wty-fft:0.0.1</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">imagePullPolicy</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">IfNotPresent</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">ports</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span>- <span style="color:#7ee787">containerPort</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">8080</span><span style="color:#6e7681">   
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">resources</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">          </span><span style="color:#7ee787">requests</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">            </span><span style="color:#7ee787">memory</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;128Mi&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">            </span><span style="color:#7ee787">cpu</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;100m&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">          </span><span style="color:#7ee787">limits</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">            </span><span style="color:#7ee787">memory</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;256Mi&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">            </span><span style="color:#7ee787">cpu</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;200m&#34;</span><span style="color:#6e7681">   
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#ff7b72">---</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">apiVersion</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">networking.istio.io/v1alpha3</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">kind</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">Gateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">metadata</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-gateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">namespace</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wty-istio</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">spec</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">selector</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">istio</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">ingressgateway</span><span style="color:#6e7681"> </span><span style="color:#8b949e;font-style:italic"># use Istio default gateway implementation</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">servers</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#7ee787">port</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">number</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">80</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">http</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">      </span><span style="color:#7ee787">protocol</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">HTTP</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">hosts</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>- <span style="color:#a5d6ff">&#34;*&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#ff7b72">---</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">apiVersion</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">networking.istio.io/v1alpha3</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">kind</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">VirtualService</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">metadata</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">name</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-vs</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">namespace</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wty-istio</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681"></span><span style="color:#7ee787">spec</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">hosts</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#a5d6ff">&#34;*&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">gateways</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#a5d6ff">wtyfft-gateway</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span><span style="color:#7ee787">http</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">  </span>- <span style="color:#7ee787">match</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>- <span style="color:#7ee787">uri</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">prefix</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">/fft</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>- <span style="color:#7ee787">uri</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">exact</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">&#34;/metrics&#34;</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span><span style="color:#7ee787">route</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">    </span>- <span style="color:#7ee787">destination</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">host</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">wtyfft-svc</span><span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">        </span><span style="color:#7ee787">port</span>:<span style="color:#6e7681">
-</span></span></span><span style="display:flex;"><span><span style="color:#6e7681">          </span><span style="color:#7ee787">number</span>:<span style="color:#6e7681"> </span><span style="color:#a5d6ff">8000</span><span style="color:#6e7681">
-</span></span></span></code></pre></div><h2 id="后记">
-  后记
-  <a class="heading-link" href="#%e5%90%8e%e8%ae%b0">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>其实看例子的话就没什么困难的地方了。原来的httpbin比bookinfo的例子要好不少，我在httpbin的基础上再改了一点。希望之后的实验顺利吧。</p>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Namespace</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wty-istio</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">istio-injection</span><span class="p">:</span><span class="w"> </span><span class="l">enabled </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-svc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">wty-istio</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">TCP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">8000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">apps/v1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Deployment</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-deploy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-deploy-label</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">wty-istio</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">replicas</span><span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">template</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">prometheus.io/port</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;8080&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">prometheus.io/scrape</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;true&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">prometheus.io/path</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/metrics&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-container-name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">registry.cn-hangzhou.aliyuncs.com/wtysos11/wty-fft:0.0.1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l">IfNotPresent</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="m">8080</span><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">requests</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;128Mi&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;100m&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">limits</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;256Mi&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;200m&#34;</span><span class="w">   
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Gateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-gateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">wty-istio</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">istio</span><span class="p">:</span><span class="w"> </span><span class="l">ingressgateway</span><span class="w"> </span><span class="c"># use Istio default gateway implementation</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">servers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">port</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l">HTTP</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="s2">&#34;*&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.istio.io/v1alpha3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">VirtualService</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-vs</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">wty-istio</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;*&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">gateways</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">wtyfft-gateway</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">http</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">match</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">uri</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l">/fft</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">uri</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">exact</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;/metrics&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">route</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">destination</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">wtyfft-svc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="m">8000</span></span></span></code></pre></div><h2 id="后记" class="heading-element">
+  <a href="#%e5%90%8e%e8%ae%b0" class="heading-mark"></a>后记</h2><p>其实看例子的话就没什么困难的地方了。原来的httpbin比bookinfo的例子要好不少，我在httpbin的基础上再改了一点。希望之后的实验顺利吧。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-10-30 16:41:02">更新于 2021-10-30&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-title="istio应用对外访问极速入门" data-hashtags="计算机/kubernetes/istio,内容/实践记录"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-hashtag="计算机/kubernetes/istio"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-title="istio应用对外访问极速入门" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-title="istio应用对外访问极速入门"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-title="istio应用对外访问极速入门"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-title="istio应用对外访问极速入门" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-title="istio应用对外访问极速入门" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" data-title="istio应用对外访问极速入门"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/kubernetes/istio/" class="post-tag" title="标签 - 计算机/Kubernetes/Istio">计算机/Kubernetes/Istio</a><a href="/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/" class="post-tag" title="标签 - 内容/实践记录">内容/实践记录</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="post-nav-item" rel="prev" title="Conv1d原理解析"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Conv1d原理解析</a>
+      <a href="/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" class="post-nav-item" rel="next" title="Leetcode 5: 最长回文子串">Leetcode 5: 最长回文子串<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

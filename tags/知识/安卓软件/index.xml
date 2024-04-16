@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>知识/安卓软件 on 实践出真知</title>
+    <title>知识/安卓软件 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E7%9F%A5%E8%AF%86/%E5%AE%89%E5%8D%93%E8%BD%AF%E4%BB%B6/</link>
-    <description>Recent content in 知识/安卓软件 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E7%9F%A5%E8%AF%86/%E5%AE%89%E5%8D%93%E8%BD%AF%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>安卓环境下笔记软件总结</title>
-      <link>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Tue, 31 Mar 2020 09:51:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</guid>
-      <description>在综合了价格等因素后，我选择了华为MatepadPro，这样在不用电脑模拟器的情况下我还可以使用平板进行阅读和书写记录，从综合价格上来说是最划算的，使用寿命预期是5-7年，预期是工作三年之后再换最新的手机。（虽然今年年初亏的一波已经够买一台新手机了，mmp） 在实际使用的时候，我发现安卓平板下的笔记应用并没有苹果下那么丰富，苹果最著名的notability和goodnote组合似乎无法替代。因此我需要花费一些时间寻找比较适合的应用，同时记录下它们的应用场景来供自己进行选择。&#xA;会使用如下表格来进行分析：&#xA;总体： 背景是否可变 外部是否有标签 手写： 是否支持手写： 是否有框选 存储是矢量还是像素 延迟 快捷操作是否便捷 手写页面是下拉还是无限 手写笔迹、颜色 插入图片： 调节位置 调节大小 是否支持pdf 插入语音： 时间： 条数，是否重叠： 是否会自动翻译，允许保存原音 导出： 是否支持pdf 是否同步 备忘录 Link to heading 页面 Link to heading 简介 Link to heading 备忘录是华为官方应用，可以同时支持文本编辑、图片插入、语音输入（不超过5分钟，会自动识别，不能同时存储多条语音）、手写输入。 我比较喜欢的一点是它的背景是黑色的，缺点是手写时没有框选（虚线框，可以移动和删除内容），而且没有快捷手势来删除，极为不便。手写部分存入的是矢量图，删除的时候一删就是一条线，写的时候需要注意一下。&#xA;总结 Link to heading 总体： 背景是否可变：不可变，如上图一样，是黑色。 外部是否有标签：有标签，可以在左上角详情栏中点标签进行分类，可以根据标题进行搜索。 手写： 是否支持手写：支持手写，可以选择只使用主动笔 是否有框选：没有框选，不能移动 存储是矢量还是像素：矢量 延迟：极低，且字不会变形 快捷操作是否便捷：没有手势快捷操作，且删除很不便，必须要点一下橡皮擦进入擦除模式，而且很容易点错。 手写页面是下拉还是无限：下拉，而且不能放大缩小 手写笔迹、颜色：支持铅笔、钢笔、中性笔、划线笔，颜色只能使用预设的七种颜色。 插入图片： 调节位置：长按图片可以移动位置，文字内容不能与图片重复，但手写内容可以覆盖（且只能覆盖） 调节大小：单击可以进行图片编辑，可以修图（亮度、饱和度、裁剪、旋转），但是不能缩放。 是否支持pdf：不能导入pdf文件，哪怕只有一张（可以考虑截图） 插入语音： 时间：5分钟 条数，是否重叠：只能一条，自动接上。 是否会自动翻译，允许保存原音：会自动翻译，同时会保留一条原音。 导出： 是否支持pdf：可以选择打印界面保存为pdf. 是否同步：单机软件，不能同步。 场景 Link to heading 紧急情况记录绝对够用，日常书写也还行，但是如果经常需要删改的话会很不舒服，已经提了建议，也不知道会不会改。 总体而言，对手写的支持非常好，书写基本没有延迟，偶尔可能手写笔有问题，会出现过于敏感导致有墨点的情况。</description>
-    </item>
-  </channel>
+    <description>知识/安卓软件 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 31 Mar 2020 09:51:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E7%9F%A5%E8%AF%86/%E5%AE%89%E5%8D%93%E8%BD%AF%E4%BB%B6/" rel="self" type="application/rss+xml" /><item>
+  <title>安卓环境下笔记软件总结</title>
+  <link>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</link>
+  <pubDate>Tue, 31 Mar 2020 09:51:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</guid>
+  <description><![CDATA[在综合了价格等因素后，我选择了华为MatepadPro，这样在不用电脑模拟器的情况下我还可以使用平板进行阅读和书写记录，从综合价格上来说是最]]></description>
+</item>
+</channel>
 </rss>

@@ -1,39 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/科研/时间序列预测 on 实践出真知</title>
+    <title>计算机/科研/时间序列预测 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/</link>
-    <description>Recent content in 计算机/科研/时间序列预测 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Wikipedia pageview数据获取(bigquery)</title>
-      <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
-      <pubDate>Thu, 07 Apr 2022 16:41:07 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</guid>
-      <description>维基百科pageview数据集原始数据获取，可以从bigquery上获得2015年以来的小时级访问数据</description>
-    </item>
-    <item>
-      <title>Wikipedia pageview数据获取(bigquery)</title>
-      <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
-      <pubDate>Thu, 07 Apr 2022 16:41:07 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</guid>
-      <description>维基百科pageview数据集原始数据获取，可以从bigquery上获得2015年以来的小时级访问数据</description>
-    </item>
-    <item>
-      <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
-      <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
-      <pubDate>Mon, 15 Feb 2021 11:00:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
-      <description>Temporal fusion transformers for interpretable multi-horizon time series forecasting Link to heading 摘要 Link to heading 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。&#xA;作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。&#xA;为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。&#xA;TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。&#xA;通过一系列真实世界的数据库，我们证明了其卓越的性能。&#xA;1 Introduction Link to heading 与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）&#xA;传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。&#xA;DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。&#xA;现有的这些模型大多都是黑盒模型，其中的参数之间包含了复杂的非线性关系。这使得实现模型难以解释它们的预测结果，使得用户难以去相信模型的输出并让模型建设者去进行修改与调试。&#xA;可惜的是，通用的可解释性方法并不适用于时间序列。在它们过去的工作中（LIME和SHAP）并咩有考虑输入特征的时间顺序问题。&#xA;核心的贡献包括：&#xA;static covariate encoder，对一些静态的数据进行编码并送入到神经网络中。 贯穿全局的门机制与基于样本的变量选择，来最小化不相关输入的贡献。 Seq2Seq的架构来进行本地处理已知输入 temporal self-attention decoder层，来学习长期关系 2 Related work Link to heading multi-horizon预测可以分为两种：&#xA;Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。 另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。 3 Multi-horizon forecasting Link to heading 时间序列预测的定义</description>
-    </item>
-    <item>
-      <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
-      <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
-      <pubDate>Mon, 15 Feb 2021 11:00:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
-      <description>Temporal fusion transformers for interpretable multi-horizon time series forecasting Link to heading 摘要 Link to heading 文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covariate，known future input，以及其他只在过去被观察到的外源时间序列（即没有它们如何与目标值交互的信息）。&#xA;作者指出现有的这些模型都是黑盒模型，并没有展示出它们如何使用当前场景的所有输入。在本文中，我们介绍了Temporal Fusion Transformer，一个新的基于attention的架构，包含高性能的多领域预测与时域上可解释的功能。&#xA;为了学习不同尺度上时域的关系，TFT使用了循环层来进行本地的处理与可解释的自注意力层，用作长期依赖。&#xA;TFT使用特殊的组件来选择相关的特征，以及使用一系列的门机制来抑制不必要的组件，允许在大范围内都具有较强的性能。&#xA;通过一系列真实世界的数据库，我们证明了其卓越的性能。&#xA;1 Introduction Link to heading 与one-step-ahead prediction相比，multi-horizon forecast显得更为常用。（不太清楚static covariate到底是什么，听起来有点像是多变量时间序列预测）&#xA;传统的multi-horizon forecasting应用可以访问大量的数据源，包括未来已经知道的数据（比如假期的时间）、其他外源的时间序列数据（比如游客的流量）以及静态的元数据（商店的位置），但是我们不知道它们是如何与最终的目标数据进行交互的。&#xA;DNN使用注意力机制与循环神经网络来加强对过去相关的时间步的选择，包括Transformer-based model。&#xA;现有的这些模型大多都是黑盒模型，其中的参数之间包含了复杂的非线性关系。这使得实现模型难以解释它们的预测结果，使得用户难以去相信模型的输出并让模型建设者去进行修改与调试。&#xA;可惜的是，通用的可解释性方法并不适用于时间序列。在它们过去的工作中（LIME和SHAP）并咩有考虑输入特征的时间顺序问题。&#xA;核心的贡献包括：&#xA;static covariate encoder，对一些静态的数据进行编码并送入到神经网络中。 贯穿全局的门机制与基于样本的变量选择，来最小化不相关输入的贡献。 Seq2Seq的架构来进行本地处理已知输入 temporal self-attention decoder层，来学习长期关系 2 Related work Link to heading multi-horizon预测可以分为两种：&#xA;Iterated approaches，使用One-step-ahead prediction model，并重复调用多次。 另一方面，直接方法被训练来直接预测多个预定义的horizon，它们的架构一般是基于Seq2Seq模型。 3 Multi-horizon forecasting Link to heading 时间序列预测的定义</description>
-    </item>
-  </channel>
+    <description>计算机/科研/时间序列预测 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/" rel="self" type="application/rss+xml" /><item>
+  <title>Wikipedia pageview数据获取(bigquery)</title>
+  <link>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</link>
+  <pubDate>Thu, 07 Apr 2022 16:41:07 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/</guid>
+  <description><![CDATA[维基百科pageview数据集原始数据获取，可以从bigquery上获得2015年以来的小时级访问数据]]></description>
+</item>
+<item>
+  <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
+  <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
+  <pubDate>Mon, 15 Feb 2021 11:00:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
+  <description><![CDATA[Temporal fusion transformers for interpretable multi-horizon time series forecasting 摘要文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covari]]></description>
+</item>
+</channel>
 </rss>

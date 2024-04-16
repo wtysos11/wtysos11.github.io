@@ -1,341 +1,299 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  由多个goroutine中获取第一个错误信息出发的CAS学习 · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="由多个goroutine中获取第一个错误信息出发的CAS学习"/>
-<meta name="twitter:description" content="主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用"/>
-
-<meta property="og:title" content="由多个goroutine中获取第一个错误信息出发的CAS学习" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>由多个goroutine中获取第一个错误信息出发的CAS学习 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用" /><meta name="keywords" content='计算机/go' /><meta itemprop="name" content="由多个goroutine中获取第一个错误信息出发的CAS学习">
+<meta itemprop="description" content="主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用"><meta itemprop="datePublished" content="2022-06-15T08:43:05+08:00" />
+<meta itemprop="dateModified" content="2022-06-15T08:43:05+08:00" />
+<meta itemprop="wordCount" content="2216">
+<meta itemprop="keywords" content="计算机/go," /><meta property="og:title" content="由多个goroutine中获取第一个错误信息出发的CAS学习" />
 <meta property="og:description" content="主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-06-15T08:43:05+08:00" />
 <meta property="article:modified_time" content="2022-06-15T08:43:05+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/">
-              由多个goroutine中获取第一个错误信息出发的CAS学习
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="由多个goroutine中获取第一个错误信息出发的CAS学习"/>
+<meta name="twitter:description" content="主要关注Go atomic包中所实现的CAS操作，如何实现以及何时使用"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" /><link rel="next" href="http://wtysos11.github.io/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "由多个goroutine中获取第一个错误信息出发的CAS学习",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas\/"
+    },"genre": "posts","keywords": "计算机\/go","wordcount":  2216 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas\/","datePublished": "2022-06-15T08:43:05+08:00","dateModified": "2022-06-15T08:43:05+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2022-06-15T08:43:05&#43;08:00">
-                六月 15, 2022
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">Go基础学习</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">计算机/go</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>由多个goroutine中获取第一个错误信息出发的CAS学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - Go基础学习"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Go基础学习</a></span></div><div class="post-meta-line"><span title="发布于 2022-06-15 08:43:05"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-06-15">2022-06-15</time></span>&nbsp;<span title="2216 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2300 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <h1 id="由多个goroutine中获取第一个错误信息出发的cas学习">
-  由多个goroutine中获取第一个错误信息出发的CAS学习
-  <a class="heading-link" href="#%e7%94%b1%e5%a4%9a%e4%b8%aagoroutine%e4%b8%ad%e8%8e%b7%e5%8f%96%e7%ac%ac%e4%b8%80%e4%b8%aa%e9%94%99%e8%af%af%e4%bf%a1%e6%81%af%e5%87%ba%e5%8f%91%e7%9a%84cas%e5%ad%a6%e4%b9%a0">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>此前我对于原子操作用的不是很多。按照之前看来的经验总结，Go中写高并发程序一般还是从逻辑上来避免加锁，毕竟原子操作写起来难度很大，而且不实际测试一下很容易写错。
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#从问题开始的cas">从问题开始的CAS</a>
+      <ul>
+        <li><a href="#其他做法">其他做法</a></li>
+      </ul>
+    </li>
+    <li><a href="#cas操作的原理">CAS操作的原理</a></li>
+    <li><a href="#cas的问题">CAS的问题</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="由多个goroutine中获取第一个错误信息出发的cas学习" class="heading-element">
+  <a href="#%e7%94%b1%e5%a4%9a%e4%b8%aagoroutine%e4%b8%ad%e8%8e%b7%e5%8f%96%e7%ac%ac%e4%b8%80%e4%b8%aa%e9%94%99%e8%af%af%e4%bf%a1%e6%81%af%e5%87%ba%e5%8f%91%e7%9a%84cas%e5%ad%a6%e4%b9%a0" class="heading-mark"></a>由多个goroutine中获取第一个错误信息出发的CAS学习</h1><p>此前我对于原子操作用的不是很多。按照之前看来的经验总结，Go中写高并发程序一般还是从逻辑上来避免加锁，毕竟原子操作写起来难度很大，而且不实际测试一下很容易写错。
 不过如果能用上原子操作肯定是最好的。昨天工作的时候正好碰上了一个能用到CAS的使用场景，以此为契机学习并使用Go中的CAS。</p>
-<h2 id="从问题开始的cas">
-  从问题开始的CAS
-  <a class="heading-link" href="#%e4%bb%8e%e9%97%ae%e9%a2%98%e5%bc%80%e5%a7%8b%e7%9a%84cas">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>CAS(Compare And Swap)是最基础的原子操作之一，当年上操作系统就有提过。
+<h2 id="从问题开始的cas" class="heading-element">
+  <a href="#%e4%bb%8e%e9%97%ae%e9%a2%98%e5%bc%80%e5%a7%8b%e7%9a%84cas" class="heading-mark"></a>从问题开始的CAS</h2><p>CAS(Compare And Swap)是最基础的原子操作之一，当年上操作系统就有提过。
 遇到的这个问题其实本来是不用CAS的。
 具体来说，有多个goroutine会在循环中被逐个启动，每个goroutine都可能会返回一个error。如果这些goroutine中的error至少有一个非空，则需要退出返回这个error并重新执行。
 该代码原来的写法存在bug，在昨天写新代码的时候想到了这篇文章。</p>
 <p>如下的写法是最容易想到的。其实这么写也是符合业务规范的（也被用了进去），只是这样的写法会造成数据竞争，最终的error值会为所有通过if判定条件中最后一个修改err的goroutine所对应的值。
 问题在于，如果我希望获取到第一个产生的非空的error的值，应该怎么做？显然，此时程序不能发生数据竞争。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">test1</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">// 存在数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">const</span> num = <span style="color:#a5d6ff">10</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> err <span style="color:#ff7b72">error</span> = <span style="color:#79c0ff">nil</span>
-</span></span><span style="display:flex;"><span>	wg <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>sync.WaitGroup{}
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>; i &lt; num; i<span style="color:#ff7b72;font-weight:bold">++</span> {
-</span></span><span style="display:flex;"><span>		wg.<span style="color:#d2a8ff;font-weight:bold">Add</span>(<span style="color:#a5d6ff">1</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">go</span> <span style="color:#ff7b72">func</span>() { <span style="color:#8b949e;font-style:italic">// 该goroutine存在数据竞争，读写冲突（读前写）
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			<span style="color:#ff7b72">defer</span> wg.<span style="color:#d2a8ff;font-weight:bold">Done</span>()
-</span></span><span style="display:flex;"><span>			innerErr <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr</span>()
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> innerErr <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> err <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#79c0ff">nil</span> { <span style="color:#8b949e;font-style:italic">// 读的位置
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>				fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;err:&#34;</span>, innerErr)
-</span></span><span style="display:flex;"><span>				err = innerErr <span style="color:#8b949e;font-style:italic">// 竞争位置，之前写的地方
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			}
-</span></span><span style="display:flex;"><span>		}()
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	wg.<span style="color:#d2a8ff;font-weight:bold">Wait</span>()
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(err)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>如果error为基本类型的话，这就是一个经典的CAS场景。Go中提供了unsafe.Pointer的CAS，因此可以用以下代码。
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">test1</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 存在数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kd">const</span> <span class="nx">num</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span> <span class="p">=</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">num</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 该goroutine存在数据竞争，读写冲突（读前写）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">innerErr</span> <span class="o">:=</span> <span class="nf">getErr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">innerErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span> <span class="c1">// 读的位置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err:&#34;</span><span class="p">,</span> <span class="nx">innerErr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">err</span> <span class="p">=</span> <span class="nx">innerErr</span> <span class="c1">// 竞争位置，之前写的地方
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>如果error为基本类型的话，这就是一个经典的CAS场景。Go中提供了unsafe.Pointer的CAS，因此可以用以下代码。
 不过这么写的问题在于unsafe.Pointer的转换是存在一定的代价的，而且这么写感觉很奇怪。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">test2</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">// 直接CAS
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">const</span> num = <span style="color:#a5d6ff">10</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> err <span style="color:#ff7b72">error</span> = <span style="color:#79c0ff">nil</span>
-</span></span><span style="display:flex;"><span>	errPointer <span style="color:#ff7b72;font-weight:bold">:=</span> unsafe.<span style="color:#d2a8ff;font-weight:bold">Pointer</span>(<span style="color:#ff7b72;font-weight:bold">&amp;</span>err)
-</span></span><span style="display:flex;"><span>	wg <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>sync.WaitGroup{}
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>; i &lt; num; i<span style="color:#ff7b72;font-weight:bold">++</span> {
-</span></span><span style="display:flex;"><span>		wg.<span style="color:#d2a8ff;font-weight:bold">Add</span>(<span style="color:#a5d6ff">1</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">go</span> <span style="color:#ff7b72">func</span>() { <span style="color:#8b949e;font-style:italic">// 没有数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			<span style="color:#ff7b72">defer</span> wg.<span style="color:#d2a8ff;font-weight:bold">Done</span>()
-</span></span><span style="display:flex;"><span>			innerErr <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr</span>()
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> innerErr <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
-</span></span><span style="display:flex;"><span>				fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;err:&#34;</span>, innerErr)
-</span></span><span style="display:flex;"><span>				innerErrPointer <span style="color:#ff7b72;font-weight:bold">:=</span> unsafe.<span style="color:#d2a8ff;font-weight:bold">Pointer</span>(<span style="color:#ff7b72;font-weight:bold">&amp;</span>innerErr)
-</span></span><span style="display:flex;"><span>				atomic.<span style="color:#d2a8ff;font-weight:bold">CompareAndSwapPointer</span>(<span style="color:#ff7b72;font-weight:bold">&amp;</span>errPointer, unsafe.<span style="color:#d2a8ff;font-weight:bold">Pointer</span>(<span style="color:#ff7b72;font-weight:bold">&amp;</span>err), innerErrPointer)
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>		}()
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	wg.<span style="color:#d2a8ff;font-weight:bold">Wait</span>()
-</span></span><span style="display:flex;"><span>	errResult <span style="color:#ff7b72;font-weight:bold">:=</span> (<span style="color:#ff7b72;font-weight:bold">*</span><span style="color:#ff7b72">error</span>)(errPointer)
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#ff7b72;font-weight:bold">*</span>errResult)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Go的CAS操作函数是有返回值的，如<a href="https://pkg.go.dev/sync/atomic"  class="external-link" target="_blank" rel="noopener">atomic pkg</a>所示，CAS操作原子等价于</p>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">test2</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 直接CAS
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kd">const</span> <span class="nx">num</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span> <span class="p">=</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">errPointer</span> <span class="o">:=</span> <span class="nx">unsafe</span><span class="p">.</span><span class="nf">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">num</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 没有数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">innerErr</span> <span class="o">:=</span> <span class="nf">getErr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">innerErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err:&#34;</span><span class="p">,</span> <span class="nx">innerErr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">innerErrPointer</span> <span class="o">:=</span> <span class="nx">unsafe</span><span class="p">.</span><span class="nf">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">innerErr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">atomic</span><span class="p">.</span><span class="nf">CompareAndSwapPointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">errPointer</span><span class="p">,</span> <span class="nx">unsafe</span><span class="p">.</span><span class="nf">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">err</span><span class="p">),</span> <span class="nx">innerErrPointer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">errResult</span> <span class="o">:=</span> <span class="p">(</span><span class="o">*</span><span class="kt">error</span><span class="p">)(</span><span class="nx">errPointer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="o">*</span><span class="nx">errResult</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>Go的CAS操作函数是有返回值的，如<a href="https://pkg.go.dev/sync/atomic"target="_blank" rel="external nofollow noopener noreferrer">atomic pkg</a>所示，CAS操作原子等价于</p>
 <pre tabindex="0"><code>if *addr == old {
 	*addr = new
 	return true
 }
-return false
-</code></pre><p>这也是函数声明中的swapped返回值<code>func CompareAndSwapUintptr(addr *uintptr, old, new uintptr) (swapped bool)</code>。</p>
+return false</code></pre><p>这也是函数声明中的swapped返回值<code>func CompareAndSwapUintptr(addr *uintptr, old, new uintptr) (swapped bool)</code>。</p>
 <p>因此，可以借助返回值来实现类似的逻辑。该逻辑使用一个标记位来实现对err访问的原子并发控制。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">test3</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">// 不存在数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">const</span> num = <span style="color:#a5d6ff">10</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> isErrSet <span style="color:#ff7b72">uint32</span> = <span style="color:#a5d6ff">0</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> err <span style="color:#ff7b72">error</span> = <span style="color:#79c0ff">nil</span>
-</span></span><span style="display:flex;"><span>	wg <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>sync.WaitGroup{}
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>; i &lt; num; i<span style="color:#ff7b72;font-weight:bold">++</span> {
-</span></span><span style="display:flex;"><span>		wg.<span style="color:#d2a8ff;font-weight:bold">Add</span>(<span style="color:#a5d6ff">1</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">go</span> <span style="color:#ff7b72">func</span>() { <span style="color:#8b949e;font-style:italic">// 没有数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			<span style="color:#ff7b72">defer</span> wg.<span style="color:#d2a8ff;font-weight:bold">Done</span>()
-</span></span><span style="display:flex;"><span>			innerErr <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr</span>()
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> innerErr <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> { <span style="color:#8b949e;font-style:italic">// 看上去像是可以写上 isErrSet == 0，但如果加上的话就会发生数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>				fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;err:&#34;</span>, innerErr)
-</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">if</span> atomic.<span style="color:#d2a8ff;font-weight:bold">CompareAndSwapUint32</span>(<span style="color:#ff7b72;font-weight:bold">&amp;</span>isErrSet, <span style="color:#a5d6ff">0</span>, <span style="color:#a5d6ff">1</span>) {
-</span></span><span style="display:flex;"><span>					err = innerErr <span style="color:#8b949e;font-style:italic">// 可能得竞争位置，previous write的地方
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>				}
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>		}()
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	wg.<span style="color:#d2a8ff;font-weight:bold">Wait</span>()
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(err)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="其他做法">
-  其他做法
-  <a class="heading-link" href="#%e5%85%b6%e4%bb%96%e5%81%9a%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>这个地方CAS倒也并不是最佳的使用范例，只是可以用而已。毕竟CAS真的挺容易写错的……</p>
+<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">test3</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 不存在数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kd">const</span> <span class="nx">num</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">isErrSet</span> <span class="kt">uint32</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span> <span class="p">=</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">num</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 没有数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">innerErr</span> <span class="o">:=</span> <span class="nf">getErr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">innerErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span> <span class="c1">// 看上去像是可以写上 isErrSet == 0，但如果加上的话就会发生数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err:&#34;</span><span class="p">,</span> <span class="nx">innerErr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="nx">atomic</span><span class="p">.</span><span class="nf">CompareAndSwapUint32</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">isErrSet</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">err</span> <span class="p">=</span> <span class="nx">innerErr</span> <span class="c1">// 可能得竞争位置，previous write的地方
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="其他做法" class="heading-element">
+  <a href="#%e5%85%b6%e4%bb%96%e5%81%9a%e6%b3%95" class="heading-mark"></a>其他做法</h3><p>这个地方CAS倒也并不是最佳的使用范例，只是可以用而已。毕竟CAS真的挺容易写错的……</p>
 <p>一个是可以选择使用<code>sync.Once</code>，这个函数可以保证once.Do中的函数只执行一次。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">test4</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">// 不存在数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">const</span> num = <span style="color:#a5d6ff">10</span>
-</span></span><span style="display:flex;"><span>	once <span style="color:#ff7b72;font-weight:bold">:=</span> new(sync.Once)
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> err <span style="color:#ff7b72">error</span> = <span style="color:#79c0ff">nil</span>
-</span></span><span style="display:flex;"><span>	wg <span style="color:#ff7b72;font-weight:bold">:=</span> new(sync.WaitGroup)
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>; i &lt; num; i<span style="color:#ff7b72;font-weight:bold">++</span> {
-</span></span><span style="display:flex;"><span>		wg.<span style="color:#d2a8ff;font-weight:bold">Add</span>(<span style="color:#a5d6ff">1</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">go</span> <span style="color:#ff7b72">func</span>() { <span style="color:#8b949e;font-style:italic">// 没有数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			<span style="color:#ff7b72">defer</span> wg.<span style="color:#d2a8ff;font-weight:bold">Done</span>()
-</span></span><span style="display:flex;"><span>			innerErr <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr</span>()
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> innerErr <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> { <span style="color:#8b949e;font-style:italic">// 尽管看上去很像是要写 isErrSet == 0，但实际上不应该写。如果加上的话就会发生数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>				fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;err:&#34;</span>, innerErr)
-</span></span><span style="display:flex;"><span>				once.<span style="color:#d2a8ff;font-weight:bold">Do</span>(<span style="color:#ff7b72">func</span>() {
-</span></span><span style="display:flex;"><span>					err = innerErr
-</span></span><span style="display:flex;"><span>				})
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>		}()
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	wg.<span style="color:#d2a8ff;font-weight:bold">Wait</span>()
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(err)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>另一个可选择的方法是使用errgroup。该方法的问题是操作性会比较低，对于EOF等非nil但是又可能是正常的错误可能会造成非预期的结果，把真正需要的err给漏掉。届时可能还是需要自行实现。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">test5</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">// 不存在数据竞争
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#ff7b72">const</span> num = <span style="color:#a5d6ff">10</span>
-</span></span><span style="display:flex;"><span>	g, _ <span style="color:#ff7b72;font-weight:bold">:=</span> errgroup.<span style="color:#d2a8ff;font-weight:bold">WithContext</span>(context.<span style="color:#d2a8ff;font-weight:bold">Background</span>())
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> err <span style="color:#ff7b72">error</span> = <span style="color:#79c0ff">nil</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>; i &lt; num; i<span style="color:#ff7b72;font-weight:bold">++</span> {
-</span></span><span style="display:flex;"><span>		g.<span style="color:#d2a8ff;font-weight:bold">Go</span>(<span style="color:#ff7b72">func</span>() <span style="color:#ff7b72">error</span> {
-</span></span><span style="display:flex;"><span>			innerErr <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">getErr</span>()
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> innerErr <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
-</span></span><span style="display:flex;"><span>				fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;err:&#34;</span>, innerErr)
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">return</span> innerErr
-</span></span><span style="display:flex;"><span>		})
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	err = g.<span style="color:#d2a8ff;font-weight:bold">Wait</span>()
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(err)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="cas操作的原理">
-  CAS操作的原理
-  <a class="heading-link" href="#cas%e6%93%8d%e4%bd%9c%e7%9a%84%e5%8e%9f%e7%90%86">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>参考<a href="https://zhuanlan.zhihu.com/p/159334753"  class="external-link" target="_blank" rel="noopener">此文</a>的解析，CAS操作是Go汇编中两个命令通过加锁实现的。
+<div class="highlight" id="id-5"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">test4</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 不存在数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kd">const</span> <span class="nx">num</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">once</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Once</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span> <span class="p">=</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">num</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 没有数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">innerErr</span> <span class="o">:=</span> <span class="nf">getErr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">innerErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span> <span class="c1">// 尽管看上去很像是要写 isErrSet == 0，但实际上不应该写。如果加上的话就会发生数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err:&#34;</span><span class="p">,</span> <span class="nx">innerErr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">once</span><span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">err</span> <span class="p">=</span> <span class="nx">innerErr</span>
+</span></span><span class="line"><span class="cl">				<span class="p">})</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>另一个可选择的方法是使用errgroup。该方法的问题是操作性会比较低，对于EOF等非nil但是又可能是正常的错误可能会造成非预期的结果，把真正需要的err给漏掉。届时可能还是需要自行实现。</p>
+<div class="highlight" id="id-6"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">test5</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 不存在数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="kd">const</span> <span class="nx">num</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">g</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">errgroup</span><span class="p">.</span><span class="nf">WithContext</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">err</span> <span class="kt">error</span> <span class="p">=</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">num</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">g</span><span class="p">.</span><span class="nf">Go</span><span class="p">(</span><span class="kd">func</span><span class="p">()</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">innerErr</span> <span class="o">:=</span> <span class="nf">getErr</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">innerErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err:&#34;</span><span class="p">,</span> <span class="nx">innerErr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">innerErr</span>
+</span></span><span class="line"><span class="cl">		<span class="p">})</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="p">=</span> <span class="nx">g</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h2 id="cas操作的原理" class="heading-element">
+  <a href="#cas%e6%93%8d%e4%bd%9c%e7%9a%84%e5%8e%9f%e7%90%86" class="heading-mark"></a>CAS操作的原理</h2><p>参考<a href="https://zhuanlan.zhihu.com/p/159334753"target="_blank" rel="external nofollow noopener noreferrer">此文</a>的解析，CAS操作是Go汇编中两个命令通过加锁实现的。
 CPU有对应的CAS指令，不过看Go内使用了<code>Lock</code>的汇编命令。后续需要进一步学习。</p>
 <p>当多个线程同时使用CAS操作一个变量时，只会有一个胜出。如果是互斥锁，则失败线程会休眠。而CAS操作下线程仅会被告知失败，并会不断自旋（忙等待）。</p>
-<p>CAS底层原理的演进见<a href="https://blog.nowcoder.net/n/3f413b4af088415baafc159591a1a411#3.1%20%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%AE%97%E6%B3%95%20%EF%BC%88nonblocking%20algorithms%EF%BC%89"  class="external-link" target="_blank" rel="noopener">此文</a>，此处不再赘述。</p>
-<h2 id="cas的问题">
-  CAS的问题
-  <a class="heading-link" href="#cas%e7%9a%84%e9%97%ae%e9%a2%98">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<ol>
+<p>CAS底层原理的演进见<a href="https://blog.nowcoder.net/n/3f413b4af088415baafc159591a1a411#3.1%20%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%AE%97%E6%B3%95%20%EF%BC%88nonblocking%20algorithms%EF%BC%89"target="_blank" rel="external nofollow noopener noreferrer">此文</a>，此处不再赘述。</p>
+<h2 id="cas的问题" class="heading-element">
+  <a href="#cas%e7%9a%84%e9%97%ae%e9%a2%98" class="heading-mark"></a>CAS的问题</h2><ol>
 <li>循环时间太长：共享资源竞争比较激烈的时候，每个goroutine会容易陷入自旋状态，难以修改对应的值。竞争比较激烈的时候用互斥锁效果好一些。
 <ol>
 <li>虽然也有说法是，互斥锁的耗时比较久，如果锁的代码较短的话加锁的耗时可能比代码执行的耗时还高。</li>
@@ -354,7 +312,7 @@ CPU有对应的CAS指令，不过看Go内使用了<code>Lock</code>的汇编命�
 <li>P1被唤醒，比较后发现数值A没有变化，程序继续执行。</li>
 </ol>
 </li>
-<li>CAS造成Cache一致性流量过大。详见<a href="https://blog.nowcoder.net/n/3f413b4af088415baafc159591a1a411#3.1%20%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%AE%97%E6%B3%95%20%EF%BC%88nonblocking%20algorithms%EF%BC%89"  class="external-link" target="_blank" rel="noopener">此文</a>
+<li>CAS造成Cache一致性流量过大。详见<a href="https://blog.nowcoder.net/n/3f413b4af088415baafc159591a1a411#3.1%20%E9%9D%9E%E9%98%BB%E5%A1%9E%E7%AE%97%E6%B3%95%20%EF%BC%88nonblocking%20algorithms%EF%BC%89"target="_blank" rel="external nofollow noopener noreferrer">此文</a>
 <ol>
 <li>Cache一致性流量：对称多处理器需要保证Cache一致，CAS操作会经常导致其中某个CPU中缓存的值发生变化，使得其他CPU缓存中对应位置的值失效，从而需要通过总线从内存中加载该地址最新的值。这个通过总线来回通信称为”Cache一致性流量“</li>
 <li>如果有很多线程共享同一个对象，CAS操作成功时会引起总线风暴，对L1缓存的同步需求增加</li>
@@ -363,87 +321,52 @@ CPU有对应的CAS指令，不过看Go内使用了<code>Lock</code>的汇编命�
 </li>
 </ol>
 <p>我的博客即将同步至腾讯云+社区，邀请大家一同入驻：https://cloud.tencent.com/developer/support-plan?invite_code=31u7nlc3nvuo0</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-06-15 08:43:05">更新于 2022-06-15&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-title="由多个goroutine中获取第一个错误信息出发的CAS学习" data-hashtags="计算机/go"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-hashtag="计算机/go"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-title="由多个goroutine中获取第一个错误信息出发的CAS学习" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-title="由多个goroutine中获取第一个错误信息出发的CAS学习"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-title="由多个goroutine中获取第一个错误信息出发的CAS学习"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-title="由多个goroutine中获取第一个错误信息出发的CAS学习" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-title="由多个goroutine中获取第一个错误信息出发的CAS学习" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" data-title="由多个goroutine中获取第一个错误信息出发的CAS学习"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/" class="post-tag" title="标签 - 计算机/Go">计算机/Go</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" class="post-nav-item" rel="prev" title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</a>
+      <a href="/posts/20220615_git%E6%93%8D%E4%BD%9Cqa/" class="post-nav-item" rel="next" title="Git常见操作与QA">Git常见操作与QA<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

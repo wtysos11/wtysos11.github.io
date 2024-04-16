@@ -1,214 +1,219 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons"/>
-<meta name="twitter:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能"/>
-
-<meta property="og:title" content="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能" /><meta name="keywords" content='内容/停止更新/文献综述, 计算机/布隆过滤器' /><meta itemprop="name" content="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons">
+<meta itemprop="description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能"><meta itemprop="datePublished" content="2022-06-24T17:15:23+08:00" />
+<meta itemprop="dateModified" content="2022-06-24T17:15:23+08:00" />
+<meta itemprop="wordCount" content="9626">
+<meta itemprop="keywords" content="内容/停止更新/文献综述,计算机/布隆过滤器," /><meta property="og:title" content="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons" />
 <meta property="og:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-06-24T17:15:23+08:00" />
 <meta property="article:modified_time" content="2022-06-24T17:15:23+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/">
-              布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons"/>
+<meta name="twitter:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" /><link rel="next" href="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB\/"
+    },"genre": "posts","keywords": "内容\/停止更新\/文献综述, 计算机\/布隆过滤器","wordcount":  9626 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB\/","datePublished": "2022-06-24T17:15:23+08:00","dateModified": "2022-06-24T17:15:23+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2022-06-24T17:15:23&#43;08:00">
-                六月 24, 2022
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/">内容/停止更新/文献综述</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/">计算机/布隆过滤器</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="post-meta-line"><span title="发布于 2022-06-24 17:15:23"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-06-24">2022-06-24</time></span>&nbsp;<span title="9626 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 9700 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 20 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <h1 id="optimizing-bloom-filter-challenges-solutions-and-comparisons">
-  Optimizing Bloom Filter: Challenges, Solutions, and Comparisons
-  <a class="heading-link" href="#optimizing-bloom-filter-challenges-solutions-and-comparisons">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>2018 综述类文章 IEEE Communications Surveys and Tutorials</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#section2-bloom-filters">Section2 Bloom Filters</a></li>
+    <li><a href="#section3-application-of-bf">Section3 Application of BF</a></li>
+    <li><a href="#section4-reduce-of-false-positive">Section4 Reduce of False Positive</a>
+      <ul>
+        <li><a href="#41-reducing-fp-with-prior-knowledge">4.1 Reducing FP with prior knowledge</a></li>
+        <li><a href="#42-reducing-fp-with-the-one-sided-error">4.2 Reducing FP With the One-sided Error</a></li>
+        <li><a href="#43-reducing-fp-via-bit-resetting">4.3 Reducing FP via Bit Resetting</a></li>
+        <li><a href="#44-reducing-fp-with-selected-hash-functions">4.4 Reducing FP with selected hash functions</a></li>
+        <li><a href="#45-reducing-fp-by-differentiated-representation">4.5 Reducing FP by Differentiated Representation</a></li>
+      </ul>
+    </li>
+    <li><a href="#section-5-optimization-of-implementation-measurements">Section 5 Optimization of implementation measurements</a>
+      <ul>
+        <li><a href="#51-computation-optimization">5.1 Computation optimization</a></li>
+        <li><a href="#52-memory-access">5.2 Memory access</a></li>
+        <li><a href="#53-space-efficiency">5.3 Space Efficiency</a></li>
+        <li><a href="#54-energy-saving">5.4 Energy Saving</a></li>
+      </ul>
+    </li>
+    <li><a href="#section-6-representation-of-diverse-sets">Section 6 Representation of diverse sets</a>
+      <ul>
+        <li><a href="#61-multisets">6.1 Multisets</a></li>
+        <li><a href="#62-dynamic-sets">6.2 Dynamic Sets</a></li>
+        <li><a href="#63-weighted-sets">6.3 Weighted Sets</a></li>
+        <li><a href="#64-key-value">6.4 Key-value</a></li>
+        <li><a href="#65-sequence-sets-and-spatial-sets">6.5 Sequence Sets and Spatial Sets</a></li>
+      </ul>
+    </li>
+    <li><a href="#section-7-functionality-enrichment">Section 7 Functionality Enrichment</a>
+      <ul>
+        <li><a href="#71-element-deletion">7.1 Element Deletion</a></li>
+        <li><a href="#72-element-decay">7.2 Element Decay</a></li>
+        <li><a href="#73-approximate-membership-query">7.3 Approximate membership query</a></li>
+        <li><a href="#74-enrichment-of-bf-semantics">7.4 Enrichment of BF Semantics</a></li>
+      </ul>
+    </li>
+    <li><a href="#section-8-classification-and-comparison">Section 8 Classification and comparison</a></li>
+    <li><a href="#section-9-summary-and-open-issues">Section 9 Summary and open issues</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="optimizing-bloom-filter-challenges-solutions-and-comparisons" class="heading-element">
+  <a href="#optimizing-bloom-filter-challenges-solutions-and-comparisons" class="heading-mark"></a>Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</h1><p>2018 综述类文章 IEEE Communications Surveys and Tutorials</p>
 <p>对该文章的阅读是出于实现需求的，因此进行了大量的节选并加入了个人主观判断。主要记录的内容为各种不同过滤器的原理与实现，以及特点。如有其他需求还是阅读原文为好。</p>
 <p>其他论文：Cache-, hash- and space- efficient bloom filter</p>
-<h2 id="摘要">
-  摘要
-  <a class="heading-link" href="#%e6%91%98%e8%a6%81">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>对该问题给出了比较精确的定义：membership query，判断给定元素x是否为给定集合S的一员。</p>
+<h2 id="摘要" class="heading-element">
+  <a href="#%e6%91%98%e8%a6%81" class="heading-mark"></a>摘要</h2><p>对该问题给出了比较精确的定义：membership query，判断给定元素x是否为给定集合S的一员。</p>
 <p>BF的特性：空间利用高效+常数时间查找</p>
 <p>从两个方面对BF(bloom filter)的变体进行总结：performance和generalization</p>
 <ul>
 <li>Performance：降低false positive和实现代价</li>
 <li>Generalization：使其更加泛用（diversifying the input sets and enriching the output functionalities）</li>
 </ul>
-<h2 id="intro">
-  Intro
-  <a class="heading-link" href="#intro">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>BF的challenge: false positive, implementation, elasticity, functionality to some content</p>
+<h2 id="intro" class="heading-element">
+  <a href="#intro" class="heading-mark"></a>Intro</h2><p>BF的challenge: false positive, implementation, elasticity, functionality to some content</p>
 <p>会从下面四个角度：</p>
 <ul>
 <li>techniques to reduce the false positive</li>
@@ -228,14 +233,8 @@
 <li>Section9，Summary+open issue</li>
 <li>Section10，Conclude</li>
 </ul>
-<h2 id="section2-bloom-filters">
-  Section2 Bloom Filters
-  <a class="heading-link" href="#section2-bloom-filters">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>特性：</p>
+<h2 id="section2-bloom-filters" class="heading-element">
+  <a href="#section2-bloom-filters" class="heading-mark"></a>Section2 Bloom Filters</h2><p>特性：</p>
 <ul>
 <li>space-efficient：BF的主要功能由m-bit的向量提供，其中m与元素数量n成正比且与元素的大小无关。（Equation2计算）</li>
 <li>Constant time query：O(k)级别，比数或者列表还要快。</li>
@@ -248,22 +247,10 @@
 <li>Elasticity：参数m,n,k和所选择的哈希函数都是预定义的，bit设置之后也不能修改（经典结构）</li>
 <li>functinoality：经典BF只支持插入和查询</li>
 </ul>
-<h2 id="section3-application-of-bf">
-  Section3 Application of BF
-  <a class="heading-link" href="#section3-application-of-bf">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>跳过，没什么意思。</p>
-<h2 id="section4-reduce-of-false-positive">
-  Section4 Reduce of False Positive
-  <a class="heading-link" href="#section4-reduce-of-false-positive">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<blockquote>
+<h2 id="section3-application-of-bf" class="heading-element">
+  <a href="#section3-application-of-bf" class="heading-mark"></a>Section3 Application of BF</h2><p>跳过，没什么意思。</p>
+<h2 id="section4-reduce-of-false-positive" class="heading-element">
+  <a href="#section4-reduce-of-false-positive" class="heading-mark"></a>Section4 Reduce of False Positive</h2><blockquote>
 <p>因为false positive这一部分实在是比较重要，所以优先看了一下。</p>
 </blockquote>
 <p>定义：false positive proportion(FPP)与false positive rate(FPR)</p>
@@ -272,14 +259,8 @@
 <li>FPR是理论概念，即任意query可能出现false positive error的概率。</li>
 </ul>
 <p>一般来说FPP基于对FPR的估计得到，FPR是一个常数，由BF架构自身决定（m、n与k）</p>
-<h3 id="41-reducing-fp-with-prior-knowledge">
-  4.1 Reducing FP with prior knowledge
-  <a class="heading-link" href="#41-reducing-fp-with-prior-knowledge">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>引入先验知识。对于query的元素集合Q，一个经典的场景是multicast routing（路由问题）</p>
+<h3 id="41-reducing-fp-with-prior-knowledge" class="heading-element">
+  <a href="#41-reducing-fp-with-prior-knowledge" class="heading-mark"></a>4.1 Reducing FP with prior knowledge</h3><p>引入先验知识。对于query的元素集合Q，一个经典的场景是multicast routing（路由问题）</p>
 <p>根据先验知识选择哈希函数，来达到最少的FPP。</p>
 <ul>
 <li>multi-class BF：作者观察到对于不同的元素来说false positive的代价不同。具体来说更高出现概率的元素其false positive的代价会更小。对于每个元素采用不同数量的哈希函数来最小化falsely matched elements的期望数量。（场景应该是in-switch routing problem）</li>
@@ -292,14 +273,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="42-reducing-fp-with-the-one-sided-error">
-  4.2 Reducing FP With the One-sided Error
-  <a class="heading-link" href="#42-reducing-fp-with-the-one-sided-error">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>利用BF没有false negative error的特性，即判定x不在集合S中的准确率为100%。</p>
+<h3 id="42-reducing-fp-with-the-one-sided-error" class="heading-element">
+  <a href="#42-reducing-fp-with-the-one-sided-error" class="heading-mark"></a>4.2 Reducing FP With the One-sided Error</h3><p>利用BF没有false negative error的特性，即判定x不在集合S中的准确率为100%。</p>
 <blockquote>
 <p>下列方法对于动态增加与删除的支持可能都存在问题，因此需要再做扩展。</p>
 </blockquote>
@@ -314,7 +289,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/assets/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/bloom_filter_paper_Fig5.png" alt="图5"></p>
+<p><img loading="lazy" src="/assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig5.png" alt="图5" srcset="/assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig5.png?size=small, /assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig5.png?size=medium 1.5x, /assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig5.png?size=large 2x" data-title="图5" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <ul>
 <li>Complement BF：该方法提出是为了减少哈希表的访问频率（存在一个大的哈希表）。与Cross-checking BF不同，该方法只有两个互不相交的集合S和S^C（需要知晓全部元素）。如果一个元素不在S中，它一定在S^C中。有四种情况。 1. main BF为真且Complement BF为假，则x在S中 2. main BF为假且Complement BF为真，则x不在S中 3. 如果都为真，则访问哈希表，付出代价 4. 都为假的情况是不存在的，因为是one-side error。 5. 总结：这个方法的假设是比较强的，只有在知晓所有元素的情况下才能够使用。</li>
 <li>Yes-no BF：BF不只是保留需要的元素S，还保留那些会导致false positive的元素。
@@ -342,14 +317,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="43-reducing-fp-via-bit-resetting">
-  4.3 Reducing FP via Bit Resetting
-  <a class="heading-link" href="#43-reducing-fp-via-bit-resetting">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>从根本上来说，false positive出现的原因在于BF检查每个1的时候是没有去区分被放入到不同位置的元素，因此当一个元素所需要的位置全部被置为1时其可能被视为false positive</p>
+<h3 id="43-reducing-fp-via-bit-resetting" class="heading-element">
+  <a href="#43-reducing-fp-via-bit-resetting" class="heading-mark"></a>4.3 Reducing FP via Bit Resetting</h3><p>从根本上来说，false positive出现的原因在于BF检查每个1的时候是没有去区分被放入到不同位置的元素，因此当一个元素所需要的位置全部被置为1时其可能被视为false positive</p>
 <blockquote>
 <p>引入false negative？</p>
 </blockquote>
@@ -362,14 +331,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="44-reducing-fp-with-selected-hash-functions">
-  4.4 Reducing FP with selected hash functions
-  <a class="heading-link" href="#44-reducing-fp-with-selected-hash-functions">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>False positive的不可避免性是源于潜在的哈希碰撞。一般来说，false positive rate与bit vector中被设置为1的bit数量是成正比的。</p>
+<h3 id="44-reducing-fp-with-selected-hash-functions" class="heading-element">
+  <a href="#44-reducing-fp-with-selected-hash-functions" class="heading-mark"></a>4.4 Reducing FP with selected hash functions</h3><p>False positive的不可避免性是源于潜在的哈希碰撞。一般来说，false positive rate与bit vector中被设置为1的bit数量是成正比的。</p>
 <p>不太看好这个方向。</p>
 <ul>
 <li>引入 the power of two choices，即直接引入两组或更多的哈希函数，插入时会选择增加最少1的那组。在membership query中只要通过任意一组即成功。
@@ -385,14 +348,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="45-reducing-fp-by-differentiated-representation">
-  4.5 Reducing FP by Differentiated Representation
-  <a class="heading-link" href="#45-reducing-fp-by-differentiated-representation">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>CBF也会有false positive，因为它无法区分每个coutner的记录是来源于哪些元素的。</p>
+<h3 id="45-reducing-fp-by-differentiated-representation" class="heading-element">
+  <a href="#45-reducing-fp-by-differentiated-representation" class="heading-mark"></a>4.5 Reducing FP by Differentiated Representation</h3><p>CBF也会有false positive，因为它无法区分每个coutner的记录是来源于哪些元素的。</p>
 <blockquote>
 <p>通过添加额外的空间与结构，以期望对不同key所产生的结果进行区分。</p>
 </blockquote>
@@ -422,7 +379,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/assets/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/bloom_filter_paper_Fig7.png" alt="图7"></p>
+<p><img loading="lazy" src="/assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig7.png" alt="图7" srcset="/assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig7.png?size=small, /assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig7.png?size=medium 1.5x, /assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Fig7.png?size=large 2x" data-title="图7" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
 <ul>
 <li>Fingerprint counter BF(FP-CBF)：使用唯一的Fingerprint对元素进行标记。每一个cell包含两个Field：fingerprint field和counter field。
 <ul>
@@ -452,22 +409,10 @@
 </ul>
 </li>
 </ul>
-<h2 id="section-5-optimization-of-implementation-measurements">
-  Section 5 Optimization of implementation measurements
-  <a class="heading-link" href="#section-5-optimization-of-implementation-measurements">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>提升BF的性能：计算复杂度、访存次数、空间占用（或者有效占比）、能量消耗（平均代价？）</p>
-<h3 id="51-computation-optimization">
-  5.1 Computation optimization
-  <a class="heading-link" href="#51-computation-optimization">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>BF的计算代价主要来源于两个方面：哈希函数的计算代价与处理请求的判断过程。哈希函数（MD5、SHA-1）的计算代价是较大的，具有特殊性质的哈希函数计算代价尤其大。现有的最新方法希望通过一个或两个哈希函数来产生多个独立的哈希值。</p>
+<h2 id="section-5-optimization-of-implementation-measurements" class="heading-element">
+  <a href="#section-5-optimization-of-implementation-measurements" class="heading-mark"></a>Section 5 Optimization of implementation measurements</h2><p>提升BF的性能：计算复杂度、访存次数、空间占用（或者有效占比）、能量消耗（平均代价？）</p>
+<h3 id="51-computation-optimization" class="heading-element">
+  <a href="#51-computation-optimization" class="heading-mark"></a>5.1 Computation optimization</h3><p>BF的计算代价主要来源于两个方面：哈希函数的计算代价与处理请求的判断过程。哈希函数（MD5、SHA-1）的计算代价是较大的，具有特殊性质的哈希函数计算代价尤其大。现有的最新方法希望通过一个或两个哈希函数来产生多个独立的哈希值。</p>
 <ul>
 <li>Less hash, same performance：使用两个伪随机的哈希函数来产生额外的哈希函数。</li>
 <li>One Hash BF（OHBF）：可以使用一个哈希函数产生k个哈希值。将哈希过程看作是两个步骤，第一步将输入元素映射到机械码（32bits, 64bits&hellip;），第二步使用求模的方式将机械码映射到指定空间。
@@ -490,14 +435,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="52-memory-access">
-  5.2 Memory access
-  <a class="heading-link" href="#52-memory-access">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>为了完成membership query，每次查询的时候都需要读k个bits。在一些特殊的结构下还需要反复访存（比如索引结构）。因此一些方法被用来减少访存的次数。</p>
+<h3 id="52-memory-access" class="heading-element">
+  <a href="#52-memory-access" class="heading-mark"></a>5.2 Memory access</h3><p>为了完成membership query，每次查询的时候都需要读k个bits。在一些特殊的结构下还需要反复访存（比如索引结构）。因此一些方法被用来减少访存的次数。</p>
 <ul>
 <li>Bloom-l：方法由l个word组成，每个可以通过一次memory access拉到处理器中（应该是小于CPU缓存大小）。在插入元素x前，可以通过hash函数产生一系列的哈希值，其中log_2(l)个hash bits用来选择x所需要的word，k*log_2(w)个hash bits将x映射到指定word的k个位置中，并将这k个位置的0置1。
 <ul>
@@ -512,14 +451,8 @@
 </ul>
 </li>
 </ul>
-<h3 id="53-space-efficiency">
-  5.3 Space Efficiency
-  <a class="heading-link" href="#53-space-efficiency">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>空间有效性问题，因为可能需要在本地存放BF或者需要在分布式系统中散步BF，因此需要尽量降低BF的内存占用。</p>
+<h3 id="53-space-efficiency" class="heading-element">
+  <a href="#53-space-efficiency" class="heading-mark"></a>5.3 Space Efficiency</h3><p>空间有效性问题，因为可能需要在本地存放BF或者需要在分布式系统中散步BF，因此需要尽量降低BF的内存占用。</p>
 <p>PS：为了达到最小的false positive rate，标准BF的bit utilization只有50%。</p>
 <p>这个问题比较关键</p>
 <ul>
@@ -546,22 +479,10 @@
 <li>Matrix BF：用于检测文档中的复制粘贴内容，比较复杂，没看明白。</li>
 <li>Forest-structed BF：可以存放在SSD中的BF。更加复杂。</li>
 </ul>
-<h3 id="54-energy-saving">
-  5.4 Energy Saving
-  <a class="heading-link" href="#54-energy-saving">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>略过，这方面应该与需求非常不符合。</p>
-<h2 id="section-6-representation-of-diverse-sets">
-  Section 6 Representation of diverse sets
-  <a class="heading-link" href="#section-6-representation-of-diverse-sets">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>输入的特征可能具有特殊的性质，因此在不同的场景中，会有不同的特殊处理方式。</p>
+<h3 id="54-energy-saving" class="heading-element">
+  <a href="#54-energy-saving" class="heading-mark"></a>5.4 Energy Saving</h3><p>略过，这方面应该与需求非常不符合。</p>
+<h2 id="section-6-representation-of-diverse-sets" class="heading-element">
+  <a href="#section-6-representation-of-diverse-sets" class="heading-mark"></a>Section 6 Representation of diverse sets</h2><p>输入的特征可能具有特殊的性质，因此在不同的场景中，会有不同的特殊处理方式。</p>
 <p>例如：</p>
 <ul>
 <li>如果数据集是一个multiset（允许重复元素），则需要记录元素重复的次数</li>
@@ -571,21 +492,9 @@
 </ul>
 <p>这一章可能需要对需求进行进一步解析才能有进一步阅读的机会，至少现在我觉得没什么必要。</p>
 <p>除了第二部分</p>
-<h3 id="61-multisets">
-  6.1 Multisets
-  <a class="heading-link" href="#61-multisets">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<h3 id="62-dynamic-sets">
-  6.2 Dynamic Sets
-  <a class="heading-link" href="#62-dynamic-sets">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>BF是为静态数据集设计的，但是动态数据集</p>
+<h3 id="61-multisets" class="heading-element">
+  <a href="#61-multisets" class="heading-mark"></a>6.1 Multisets</h3><h3 id="62-dynamic-sets" class="heading-element">
+  <a href="#62-dynamic-sets" class="heading-mark"></a>6.2 Dynamic Sets</h3><p>BF是为静态数据集设计的，但是动态数据集</p>
 <ul>
 <li>Variable length signatures</li>
 <li>Dynamic BF：由多个同构的BF组成
@@ -616,88 +525,28 @@
 </ul>
 </li>
 </ul>
-<h3 id="63-weighted-sets">
-  6.3 Weighted Sets
-  <a class="heading-link" href="#63-weighted-sets">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<h3 id="64-key-value">
-  6.4 Key-value
-  <a class="heading-link" href="#64-key-value">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<h3 id="65-sequence-sets-and-spatial-sets">
-  6.5 Sequence Sets and Spatial Sets
-  <a class="heading-link" href="#65-sequence-sets-and-spatial-sets">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<h2 id="section-7-functionality-enrichment">
-  Section 7 Functionality Enrichment
-  <a class="heading-link" href="#section-7-functionality-enrichment">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>标准的BF只支持membership query，因为bit vector只能够保存每个元素的所属信息。与输入集合相同，输出集合也可以在不同的场景下得到强化。</p>
-<h3 id="71-element-deletion">
-  7.1 Element Deletion
-  <a class="heading-link" href="#71-element-deletion">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>顾名思义，需要允许系统从BF中删除元素，并允许添加其他新的元素。</p>
+<h3 id="63-weighted-sets" class="heading-element">
+  <a href="#63-weighted-sets" class="heading-mark"></a>6.3 Weighted Sets</h3><h3 id="64-key-value" class="heading-element">
+  <a href="#64-key-value" class="heading-mark"></a>6.4 Key-value</h3><h3 id="65-sequence-sets-and-spatial-sets" class="heading-element">
+  <a href="#65-sequence-sets-and-spatial-sets" class="heading-mark"></a>6.5 Sequence Sets and Spatial Sets</h3><h2 id="section-7-functionality-enrichment" class="heading-element">
+  <a href="#section-7-functionality-enrichment" class="heading-mark"></a>Section 7 Functionality Enrichment</h2><p>标准的BF只支持membership query，因为bit vector只能够保存每个元素的所属信息。与输入集合相同，输出集合也可以在不同的场景下得到强化。</p>
+<h3 id="71-element-deletion" class="heading-element">
+  <a href="#71-element-deletion" class="heading-mark"></a>7.1 Element Deletion</h3><p>顾名思义，需要允许系统从BF中删除元素，并允许添加其他新的元素。</p>
 <p>如果我对需求没有理解错的话，其实是可以不用删除操作的。</p>
-<h3 id="72-element-decay">
-  7.2 Element Decay
-  <a class="heading-link" href="#72-element-decay">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>对于在线的系统来说，新的数据应该具有更高的权值，为此需要逐渐将旧有的数据退化。（当然，这方面可能微信文章阅读数统计方案中采用的方法会更合适，即每隔指定时间采用一个新的BF，过期淘汰或者过时降权）</p>
+<h3 id="72-element-decay" class="heading-element">
+  <a href="#72-element-decay" class="heading-mark"></a>7.2 Element Decay</h3><p>对于在线的系统来说，新的数据应该具有更高的权值，为此需要逐渐将旧有的数据退化。（当然，这方面可能微信文章阅读数统计方案中采用的方法会更合适，即每隔指定时间采用一个新的BF，过期淘汰或者过时降权）</p>
 <p>没有需求，但是后续可能有</p>
-<h3 id="73-approximate-membership-query">
-  7.3 Approximate membership query
-  <a class="heading-link" href="#73-approximate-membership-query">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>与准确的所属查询不同，近似所属查询需要回答x是否足够接近S中的元素(Is x close to an element in S)</p>
+<h3 id="73-approximate-membership-query" class="heading-element">
+  <a href="#73-approximate-membership-query" class="heading-mark"></a>7.3 Approximate membership query</h3><p>与准确的所属查询不同，近似所属查询需要回答x是否足够接近S中的元素(Is x close to an element in S)</p>
 <p>没有需求</p>
-<h3 id="74-enrichment-of-bf-semantics">
-  7.4 Enrichment of BF Semantics
-  <a class="heading-link" href="#74-enrichment-of-bf-semantics">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>BF的一个天生缺陷在于，其只存储了所属信息，而无法包含元素的其他信息。</p>
+<h3 id="74-enrichment-of-bf-semantics" class="heading-element">
+  <a href="#74-enrichment-of-bf-semantics" class="heading-mark"></a>7.4 Enrichment of BF Semantics</h3><p>BF的一个天生缺陷在于，其只存储了所属信息，而无法包含元素的其他信息。</p>
 <p>应该没有这方面需求</p>
-<h2 id="section-8-classification-and-comparison">
-  Section 8 Classification and comparison
-  <a class="heading-link" href="#section-8-classification-and-comparison">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>（一般对于综述文章而言这一部分是最重要的，除非主做该领域的，基本没有人能够读完所有论文，所以只能指望综述作者有一套成熟的评价方案了）</p>
-<p><img src="/assets/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/bloom_filter_paper_Table5.png" alt="表5"></p>
-<h2 id="section-9-summary-and-open-issues">
-  Section 9 Summary and open issues
-  <a class="heading-link" href="#section-9-summary-and-open-issues">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>open issue</p>
+<h2 id="section-8-classification-and-comparison" class="heading-element">
+  <a href="#section-8-classification-and-comparison" class="heading-mark"></a>Section 8 Classification and comparison</h2><p>（一般对于综述文章而言这一部分是最重要的，除非主做该领域的，基本没有人能够读完所有论文，所以只能指望综述作者有一套成熟的评价方案了）</p>
+<p><img loading="lazy" src="/assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Table5.png" alt="表5" srcset="/assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Table5.png?size=small, /assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Table5.png?size=medium 1.5x, /assets/20220624_%e5%b8%83%e9%9a%86%e8%bf%87%e6%bb%a4%e5%99%a8%e7%bb%bc%e8%bf%b0%e6%96%87%e7%ab%a0%e9%98%85%e8%af%bb/bloom_filter_paper_Table5.png?size=large 2x" data-title="表5" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="section-9-summary-and-open-issues" class="heading-element">
+  <a href="#section-9-summary-and-open-issues" class="heading-mark"></a>Section 9 Summary and open issues</h2><p>open issue</p>
 <ul>
 <li>Extension or downsizing at arbitrary scale：对于现有的支持扩展或缩小的结构（DBF、DBA、Matrix BF、Scalable BF）都是对整个结构进行的，即只能对sub-BF结构进行增加或者删除。那如果只是一个元素增加就要对整个结构进行修改， 肯定是不经济的。</li>
 <li>Representation of inter-element relationship：现有的BF结构对于元素的存储表示都是独立的，这方面的例外是一些使用locality sensitive hash function的例子。因此现在需要有BF的变体，不只是能够记录元素的membership，也能够表示内部联系。这样的话就能彻底解决false positive的问题。</li>
@@ -708,87 +557,52 @@
 </li>
 <li>Extensive applications of BFs: 更多领域的应用。</li>
 </ul>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-06-24 17:15:23">更新于 2022-06-24&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons" data-hashtags="内容/停止更新/文献综述,计算机/布隆过滤器"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-hashtag="内容/停止更新/文献综述"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" data-title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" class="post-tag" title="标签 - 内容/停止更新/文献综述">内容/停止更新/文献综述</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8/" class="post-tag" title="标签 - 计算机/布隆过滤器">计算机/布隆过滤器</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" class="post-nav-item" rel="prev" title="腾讯云cos获取文件操作实践--Go SDK"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>腾讯云cos获取文件操作实践--Go SDK</a>
+      <a href="/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="post-nav-item" rel="next" title="Vegeta压测工具学习与使用">Vegeta压测工具学习与使用<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

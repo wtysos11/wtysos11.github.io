@@ -1,437 +1,374 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  Leetcode 310: 最小高度树 · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="Leetcode第310题：最小高度树">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Leetcode 310: 最小高度树"/>
-<meta name="twitter:description" content="Leetcode第310题：最小高度树"/>
-
-<meta property="og:title" content="Leetcode 310: 最小高度树" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Leetcode 310: 最小高度树 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="Leetcode第310题：最小高度树" /><meta name="keywords" content='计算机/算法/算法题解, 计算机/算法/广度优先搜索, 计算机/算法/深度优先搜索' /><meta itemprop="name" content="Leetcode 310: 最小高度树">
+<meta itemprop="description" content="Leetcode第310题：最小高度树"><meta itemprop="datePublished" content="2022-04-07T12:09:02+08:00" />
+<meta itemprop="dateModified" content="2022-04-07T12:09:02+08:00" />
+<meta itemprop="wordCount" content="758">
+<meta itemprop="keywords" content="计算机/算法/算法题解,计算机/算法/广度优先搜索,计算机/算法/深度优先搜索," /><meta property="og:title" content="Leetcode 310: 最小高度树" />
 <meta property="og:description" content="Leetcode第310题：最小高度树" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-04-07T12:09:02+08:00" />
 <meta property="article:modified_time" content="2022-04-07T12:09:02+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/">
-              Leetcode 310: 最小高度树
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Leetcode 310: 最小高度树"/>
+<meta name="twitter:description" content="Leetcode第310题：最小高度树"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" /><link rel="next" href="http://wtysos11.github.io/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Leetcode 310: 最小高度树",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91\/"
+    },"genre": "posts","keywords": "计算机\/算法\/算法题解, 计算机\/算法\/广度优先搜索, 计算机\/算法\/深度优先搜索","wordcount":  758 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91\/","datePublished": "2022-04-07T12:09:02+08:00","dateModified": "2022-04-07T12:09:02+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2022-04-07T12:09:02&#43;08:00">
-                四月 7, 2022
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">Leetcode刷题记录</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">计算机/算法/算法题解</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/">计算机/算法/广度优先搜索</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/">计算机/算法/深度优先搜索</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Leetcode 310: 最小高度树</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category" title="分类 - Leetcode刷题记录"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Leetcode刷题记录</a></span></div><div class="post-meta-line"><span title="发布于 2022-04-07 12:09:02"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-04-07">2022-04-07</time></span>&nbsp;<span title="758 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 800 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <h2 id="310-最小高度树">
-  310 最小高度树
-  <a class="heading-link" href="#310-%e6%9c%80%e5%b0%8f%e9%ab%98%e5%ba%a6%e6%a0%91">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>每日一题 4月6日</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#310-最小高度树">310 最小高度树</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="310-最小高度树" class="heading-element">
+  <a href="#310-%e6%9c%80%e5%b0%8f%e9%ab%98%e5%ba%a6%e6%a0%91" class="heading-mark"></a>310 最小高度树</h2><p>每日一题 4月6日</p>
 <p>给定一个树的各个边，要求选择根节点，使得树的高度最小</p>
 <p>初步的想法是使用广度优先搜索，对于每一个根节点进行尝试，找到最小的那个。因为广度优先搜索的复杂度为O(n)，因此整体复杂度为O(n^2)</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;string&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;algorithm&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;queue&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">struct</span> <span style="color:#f0883e;font-weight:bold">Graph</span>{
-</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;</span> arr;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> node_num;
-</span></span><span style="display:flex;"><span>    Graph(<span style="color:#ff7b72">int</span> n, vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;</span> edges){
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">this</span><span style="color:#ff7b72;font-weight:bold">-&gt;</span>node_num <span style="color:#ff7b72;font-weight:bold">=</span> n;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">this</span><span style="color:#ff7b72;font-weight:bold">-&gt;</span>arr <span style="color:#ff7b72;font-weight:bold">=</span> vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;</span>(n,vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>());
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>edges.size();i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> s,t;
-</span></span><span style="display:flex;"><span>            s <span style="color:#ff7b72;font-weight:bold">=</span> edges[i][<span style="color:#a5d6ff">0</span>];
-</span></span><span style="display:flex;"><span>            t <span style="color:#ff7b72;font-weight:bold">=</span> edges[i][<span style="color:#a5d6ff">1</span>];
-</span></span><span style="display:flex;"><span>            arr[s].push_back(t);
-</span></span><span style="display:flex;"><span>            arr[t].push_back(s);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">bfs_maxlength</span>(<span style="color:#ff7b72">int</span> node){
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">// bfs distance from node
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        queue<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> q;
-</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> distance(<span style="color:#ff7b72">this</span><span style="color:#ff7b72;font-weight:bold">-&gt;</span>node_num,<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>);
-</span></span><span style="display:flex;"><span>        distance[node] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        q.push(node);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> max_distance <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">while</span>(<span style="color:#ff7b72;font-weight:bold">!</span>q.empty()){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> cur_node <span style="color:#ff7b72;font-weight:bold">=</span> q.front(); q.pop();
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">this</span><span style="color:#ff7b72;font-weight:bold">-&gt;</span>arr[cur_node].size();i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">int</span> dest_node <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72">this</span><span style="color:#ff7b72;font-weight:bold">-&gt;</span>arr[cur_node][i];
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">if</span>(distance[dest_node] <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>){
-</span></span><span style="display:flex;"><span>                    q.push(dest_node);
-</span></span><span style="display:flex;"><span>                    distance[dest_node] <span style="color:#ff7b72;font-weight:bold">=</span> distance[cur_node] <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">if</span>(distance[dest_node] <span style="color:#ff7b72;font-weight:bold">&gt;</span> max_distance){
-</span></span><span style="display:flex;"><span>                        max_distance <span style="color:#ff7b72;font-weight:bold">=</span> distance[dest_node];
-</span></span><span style="display:flex;"><span>                    }
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> max_distance;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> findMinHeightTrees(<span style="color:#ff7b72">int</span> n, vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;&amp;</span> edges) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(n<span style="color:#ff7b72;font-weight:bold">==</span><span style="color:#a5d6ff">1</span>){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{<span style="color:#a5d6ff">0</span>};
-</span></span><span style="display:flex;"><span>        }<span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>(n<span style="color:#ff7b72;font-weight:bold">==</span><span style="color:#a5d6ff">2</span>){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> edges[<span style="color:#a5d6ff">0</span>];
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        Graph <span style="color:#d2a8ff;font-weight:bold">graph</span>(n,edges);
-</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> result;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> min_dist <span style="color:#ff7b72;font-weight:bold">=</span> n;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>n;i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> dist <span style="color:#ff7b72;font-weight:bold">=</span> graph.bfs_maxlength(i);
-</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//            cout&lt;&lt;&#34;node &#34;&lt;&lt;i&lt;&lt;&#34; has dist &#34;&lt;&lt;dist&lt;&lt;endl;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>            <span style="color:#ff7b72">if</span>(dist <span style="color:#ff7b72;font-weight:bold">&lt;</span> min_dist){
-</span></span><span style="display:flex;"><span>                min_dist <span style="color:#ff7b72;font-weight:bold">=</span> dist;
-</span></span><span style="display:flex;"><span>                result <span style="color:#ff7b72;font-weight:bold">=</span> vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{i};
-</span></span><span style="display:flex;"><span>            }<span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>(dist <span style="color:#ff7b72;font-weight:bold">==</span> min_dist){
-</span></span><span style="display:flex;"><span>                result.push_back(i);
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> result;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
-</span></span><span style="display:flex;"><span>    Solution s;
-</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;</span> edges;
-</span></span><span style="display:flex;"><span>    edges.push_back(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{<span style="color:#a5d6ff">0</span>,<span style="color:#a5d6ff">1</span>});
-</span></span><span style="display:flex;"><span>    edges.push_back(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{<span style="color:#a5d6ff">0</span>,<span style="color:#a5d6ff">2</span>});
-</span></span><span style="display:flex;"><span>    edges.push_back(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{<span style="color:#a5d6ff">0</span>,<span style="color:#a5d6ff">3</span>});
-</span></span><span style="display:flex;"><span>    edges.push_back(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{<span style="color:#a5d6ff">3</span>,<span style="color:#a5d6ff">4</span>});
-</span></span><span style="display:flex;"><span>    edges.push_back(vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>{<span style="color:#a5d6ff">4</span>,<span style="color:#a5d6ff">5</span>});
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//    edges.push_back(vector&lt;int&gt;{1,2});
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//    edges.push_back(vector&lt;int&gt;{1,3});
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//    for(int i=0;i&lt;edges.size();i++){
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//        for(int j=0;j&lt;edges[i].size();j++){
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//            cout&lt;&lt;edges[i][j]&lt;&lt;&#34; &#34;;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//        }
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//        cout&lt;&lt;endl;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//    }
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> result(s.findMinHeightTrees(edges.size()<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>,edges));
-</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//    cout&lt;&lt;result.size()&lt;&lt;endl;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>result.size();i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>        cout<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>result[i]<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>不出意外，直接超时。</p>
-<p>看了一下<a href="https://leetcode-cn.com/problems/minimum-height-trees/solution/zui-xiao-gao-du-shu-by-leetcode-solution-6v6f/"  class="external-link" target="_blank" rel="noopener">题解</a>，感觉自己有很多地方没有想到。</p>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;queue&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">Graph</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">arr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">node_num</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Graph</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">edges</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">node_num</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">arr</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">edges</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">s</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">            <span class="n">arr</span><span class="p">[</span><span class="n">s</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">arr</span><span class="p">[</span><span class="n">t</span><span class="p">].</span><span class="n">push_back</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">bfs_maxlength</span><span class="p">(</span><span class="kt">int</span> <span class="n">node</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// bfs distance from node
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">q</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">distance</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">node_num</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">distance</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">max_distance</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">q</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">cur_node</span> <span class="o">=</span> <span class="n">q</span><span class="p">.</span><span class="n">front</span><span class="p">();</span> <span class="n">q</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">arr</span><span class="p">[</span><span class="n">cur_node</span><span class="p">].</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="kt">int</span> <span class="n">dest_node</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">arr</span><span class="p">[</span><span class="n">cur_node</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">distance</span><span class="p">[</span><span class="n">dest_node</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">q</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">dest_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">distance</span><span class="p">[</span><span class="n">dest_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span><span class="p">[</span><span class="n">cur_node</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span><span class="p">(</span><span class="n">distance</span><span class="p">[</span><span class="n">dest_node</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_distance</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">max_distance</span> <span class="o">=</span> <span class="n">distance</span><span class="p">[</span><span class="n">dest_node</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">max_distance</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">findMinHeightTrees</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="mi">1</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span><span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">n</span><span class="o">==</span><span class="mi">2</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">edges</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Graph</span> <span class="nf">graph</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">edges</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">min_dist</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">graph</span><span class="p">.</span><span class="n">bfs_maxlength</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//            cout&lt;&lt;&#34;node &#34;&lt;&lt;i&lt;&lt;&#34; has dist &#34;&lt;&lt;dist&lt;&lt;endl;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span><span class="p">(</span><span class="n">dist</span> <span class="o">&lt;</span> <span class="n">min_dist</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="n">min_dist</span> <span class="o">=</span> <span class="n">dist</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="n">i</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span><span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">dist</span> <span class="o">==</span> <span class="n">min_dist</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="n">result</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">edges</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">edges</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="n">edges</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="n">edges</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="n">edges</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="n">edges</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//    edges.push_back(vector&lt;int&gt;{1,2});
+</span></span></span><span class="line"><span class="cl"><span class="c1">//    edges.push_back(vector&lt;int&gt;{1,3});
+</span></span></span><span class="line"><span class="cl"><span class="c1">//    for(int i=0;i&lt;edges.size();i++){
+</span></span></span><span class="line"><span class="cl"><span class="c1">//        for(int j=0;j&lt;edges[i].size();j++){
+</span></span></span><span class="line"><span class="cl"><span class="c1">//            cout&lt;&lt;edges[i][j]&lt;&lt;&#34; &#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1">//        }
+</span></span></span><span class="line"><span class="cl"><span class="c1">//        cout&lt;&lt;endl;
+</span></span></span><span class="line"><span class="cl"><span class="c1">//    }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">result</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">findMinHeightTrees</span><span class="p">(</span><span class="n">edges</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">edges</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//    cout&lt;&lt;result.size()&lt;&lt;endl;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">result</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>不出意外，直接超时。</p>
+<p>看了一下<a href="https://leetcode-cn.com/problems/minimum-height-trees/solution/zui-xiao-gao-du-shu-by-leetcode-solution-6v6f/"target="_blank" rel="external nofollow noopener noreferrer">题解</a>，感觉自己有很多地方没有想到。</p>
 <p>有两个应该想到的定理，一个是最大树的高度一定为最长距离的一半，另外一个是根节点一定在这个最大距离上。因此问题转换为如何求出这个最大距离。</p>
-<p>最大距离的求解很简单，但是证明起来很麻烦，这里就不放了。原证明为<a href="http://courses.csail.mit.edu/6.046/fall01/handouts/ps9sol.pdf"  class="external-link" target="_blank" rel="noopener">算法导论9-1的解答</a>，求解过程大致为：</p>
+<p>最大距离的求解很简单，但是证明起来很麻烦，这里就不放了。原证明为<a href="http://courses.csail.mit.edu/6.046/fall01/handouts/ps9sol.pdf"target="_blank" rel="external nofollow noopener noreferrer">算法导论9-1的解答</a>，求解过程大致为：</p>
 <ol>
 <li>从任意点出发，找到距离其最大的节点x</li>
 <li>从节点x出发，找到距离其最大的节点y</li>
 <li>x-y即为树的直径，其路径最大。</li>
 </ol>
 <p>这个是leetcode官方给的题解，如果有证明的话后面其实可以不用写了……这道题还可以用树形DP，不过我实在没弄明白。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> findLongestNode(<span style="color:#ff7b72">int</span> u, vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span> parent, vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;&amp;</span> adj) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> n <span style="color:#ff7b72;font-weight:bold">=</span> adj.size();
-</span></span><span style="display:flex;"><span>        queue<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> qu;
-</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">bool</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> visit(n);
-</span></span><span style="display:flex;"><span>        qu.emplace(u);
-</span></span><span style="display:flex;"><span>        visit[u] <span style="color:#ff7b72;font-weight:bold">=</span> true;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> node <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">while</span> (<span style="color:#ff7b72;font-weight:bold">!</span>qu.empty()) {
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">int</span> curr <span style="color:#ff7b72;font-weight:bold">=</span> qu.front();
-</span></span><span style="display:flex;"><span>            qu.pop();
-</span></span><span style="display:flex;"><span>            node <span style="color:#ff7b72;font-weight:bold">=</span> curr;
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">for</span> (<span style="color:#ff7b72">auto</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span> <span style="color:#79c0ff;font-weight:bold">v</span> : adj[curr]) {
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">if</span> (<span style="color:#ff7b72;font-weight:bold">!</span>visit[v]) {
-</span></span><span style="display:flex;"><span>                    visit[v] <span style="color:#ff7b72;font-weight:bold">=</span> true;
-</span></span><span style="display:flex;"><span>                    parent[v] <span style="color:#ff7b72;font-weight:bold">=</span> curr;
-</span></span><span style="display:flex;"><span>                    qu.emplace(v);
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> node;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> findMinHeightTrees(<span style="color:#ff7b72">int</span> n, vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;&amp;</span> edges) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> (n <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">1</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> {<span style="color:#a5d6ff">0</span>};
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;</span> adj(n);
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span> (<span style="color:#ff7b72">auto</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span> <span style="color:#79c0ff;font-weight:bold">edge</span> : edges) {
-</span></span><span style="display:flex;"><span>            adj[edge[<span style="color:#a5d6ff">0</span>]].emplace_back(edge[<span style="color:#a5d6ff">1</span>]);
-</span></span><span style="display:flex;"><span>            adj[edge[<span style="color:#a5d6ff">1</span>]].emplace_back(edge[<span style="color:#a5d6ff">0</span>]);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> parent(n, <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">/* 找到与节点 0 最远的节点 x */</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> x <span style="color:#ff7b72;font-weight:bold">=</span> findLongestNode(<span style="color:#a5d6ff">0</span>, parent, adj);
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">/* 找到与节点 x 最远的节点 y */</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> y <span style="color:#ff7b72;font-weight:bold">=</span> findLongestNode(x, parent, adj);
-</span></span><span style="display:flex;"><span>        <span style="color:#8b949e;font-style:italic">/* 求出节点 x 到节点 y 的路径 */</span>
-</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> path;
-</span></span><span style="display:flex;"><span>        parent[x] <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">while</span> (y <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>) {
-</span></span><span style="display:flex;"><span>            path.emplace_back(y);
-</span></span><span style="display:flex;"><span>            y <span style="color:#ff7b72;font-weight:bold">=</span> parent[y];
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> m <span style="color:#ff7b72;font-weight:bold">=</span> path.size();
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span> (m <span style="color:#ff7b72;font-weight:bold">%</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">==</span> <span style="color:#a5d6ff">0</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> {path[m <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span> <span style="color:#ff7b72;font-weight:bold">-</span> <span style="color:#a5d6ff">1</span>], path[m <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>]};
-</span></span><span style="display:flex;"><span>        } <span style="color:#ff7b72">else</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> {path[m <span style="color:#ff7b72;font-weight:bold">/</span> <span style="color:#a5d6ff">2</span>]};
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div>
-      </div>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">findLongestNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">u</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">parent</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">adj</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">adj</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">queue</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">qu</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">visit</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">qu</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">visit</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">node</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">qu</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">curr</span> <span class="o">=</span> <span class="n">qu</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">qu</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="n">node</span> <span class="o">=</span> <span class="n">curr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">adj</span><span class="p">[</span><span class="n">curr</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">visit</span><span class="p">[</span><span class="n">v</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">visit</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">parent</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">curr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">qu</span><span class="p">.</span><span class="n">emplace</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">findMinHeightTrees</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">adj</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="o">&amp;</span> <span class="nl">edge</span> <span class="p">:</span> <span class="n">edges</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">adj</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">adj</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]].</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">parent</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="cm">/* 找到与节点 0 最远的节点 x */</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">findLongestNode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">adj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="cm">/* 找到与节点 x 最远的节点 y */</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">findLongestNode</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">adj</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="cm">/* 求出节点 x 到节点 y 的路径 */</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">path</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">parent</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">path</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">y</span> <span class="o">=</span> <span class="n">parent</span><span class="p">[</span><span class="n">y</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">path</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">{</span><span class="n">path</span><span class="p">[</span><span class="n">m</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">path</span><span class="p">[</span><span class="n">m</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]};</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="p">{</span><span class="n">path</span><span class="p">[</span><span class="n">m</span> <span class="o">/</span> <span class="mi">2</span><span class="p">]};</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-04-07 12:09:02">更新于 2022-04-07&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-title="Leetcode 310: 最小高度树" data-hashtags="计算机/算法/算法题解,计算机/算法/广度优先搜索,计算机/算法/深度优先搜索"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-hashtag="计算机/算法/算法题解"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-title="Leetcode 310: 最小高度树" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-title="Leetcode 310: 最小高度树"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-title="Leetcode 310: 最小高度树"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-title="Leetcode 310: 最小高度树" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-title="Leetcode 310: 最小高度树" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" data-title="Leetcode 310: 最小高度树"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" class="post-tag" title="标签 - 计算机/算法/算法题解">计算机/算法/算法题解</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" class="post-tag" title="标签 - 计算机/算法/广度优先搜索">计算机/算法/广度优先搜索</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" class="post-tag" title="标签 - 计算机/算法/深度优先搜索">计算机/算法/深度优先搜索</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
-      <footer>
-        
+  <div class="post-nav"><a href="/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" class="post-nav-item" rel="prev" title="Leetcode 5: 最长回文子串"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Leetcode 5: 最长回文子串</a>
+      <a href="/posts/20220407_wikipedia_pageview%E6%95%B0%E6%8D%AE/" class="post-nav-item" rel="next" title="Wikipedia pageview数据获取(bigquery)">Wikipedia pageview数据获取(bigquery)<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

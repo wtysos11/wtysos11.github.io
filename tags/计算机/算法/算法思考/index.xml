@@ -1,74 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/算法/算法思考 on 实践出真知</title>
+    <title>计算机/算法/算法思考 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/</link>
-    <description>Recent content in 计算机/算法/算法思考 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>全排列问题与康托编码</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
-      <pubDate>Mon, 15 Mar 2021 08:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
-      <description>leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。&#xA;题目采用康托编码的思路。其实就是康托展开的逆过程。康托展开用来求某个全排列数是第几小的数，也就是当这些数按顺序排时第几个数。&#xA;康托展开 Link to heading 过程如下：比如求321 是 第几小的，可以这样来想：小于3的数有1和2 两个，首位确定之后后面两位有2！中情况，所以共有2*2！=4种。&#xA;小于2的数只有一个1，所以有11！=1种情况，最后一位是1，没有比一小的数，所以是00！=0&#xA;综上：小于321的数有4+1=5个，所以321是第六小的数。&#xA;反例与进一步思考 Link to heading 但是康托展开没有这么简单，其实是挺复杂的。以n=4的情况为例子，我们已经知道3412是第17个，也就是说有16个比它小的数字。 首位确定后，有23！=12种，这个是符合的 但是第二位的话是4，此时是先考虑小于4的情况，有1、2、3，然后再排除掉3，所以是22!=4； 第三位的话是1，此时不存在比它小的数字，所以直接排除 最后一位是2，但是枚举发现1已经计算过了，所以也排除。 最终结果是12+4=16，结果正确。虽然思路大体上是一样的，但是原文是没有筛查这个过程的，其实还是有点麻烦的，可能需要开一个集合或者专门的数据结构来进行判断。&#xA;康托编码 Link to heading 康托展开的逆过程就是已知这个数是第k个数，求这个数是多少，当然是知道n的值的。&#xA;第k个数就是有k-1个数比这个数小。&#xA;所以就是 k-1=an*(n-1)!+an-1*(n-2)!+&amp;hellip;.+a1*0!;&#xA;再举一个例子：&#xA;如何找出第16个（按字典序的）{1,2,3,4,5}的全排列？&#xA;首先用16-1得到15&#xA;用15去除4! 得到0余15&#xA;用15去除3! 得到2余3&#xA;用3去除2! 得到1余1&#xA;用1去除1! 得到1余0&#xA;有0个数比它小的数是1，所以第一位是1&#xA;有2个数比它小的数是3，但1已经在之前出现过了所以是4&#xA;有1个数比它小的数是2，但1已经在之前出现过了所以是3&#xA;有1个数比它小的数是2，但1,3,4都出现过了所以是5&#xA;最后一个数只能是2&#xA;代码如下。写的真的挺好，我第一眼还没想明白&#xA;class Solution { public: //全排列元素数量为n，返回第k个排列 string getPermutation(int n, int k) { string s(n,&amp;#39;0&amp;#39;);//初始是n个零 string result; for(int i=0;i&amp;lt;n;i++) { s[i]+=i+1;//生成默认序列,1-&amp;gt;n } return kth_permutation(s,k); } private: int factorial(int n)//返回阶乘。其实我觉得这个阶乘可以带个缓存，不过不带也可以了 { int result=1; for(int i=1;i&amp;lt;=n;i++) { result*=i; } return result; } string kth_permutation(string &amp;amp;s,int k) { const int n=s.</description>
-    </item>
-    <item>
-      <title>全排列问题与康托编码</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
-      <pubDate>Mon, 15 Mar 2021 08:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
-      <description>leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。&#xA;题目采用康托编码的思路。其实就是康托展开的逆过程。康托展开用来求某个全排列数是第几小的数，也就是当这些数按顺序排时第几个数。&#xA;康托展开 Link to heading 过程如下：比如求321 是 第几小的，可以这样来想：小于3的数有1和2 两个，首位确定之后后面两位有2！中情况，所以共有2*2！=4种。&#xA;小于2的数只有一个1，所以有11！=1种情况，最后一位是1，没有比一小的数，所以是00！=0&#xA;综上：小于321的数有4+1=5个，所以321是第六小的数。&#xA;反例与进一步思考 Link to heading 但是康托展开没有这么简单，其实是挺复杂的。以n=4的情况为例子，我们已经知道3412是第17个，也就是说有16个比它小的数字。 首位确定后，有23！=12种，这个是符合的 但是第二位的话是4，此时是先考虑小于4的情况，有1、2、3，然后再排除掉3，所以是22!=4； 第三位的话是1，此时不存在比它小的数字，所以直接排除 最后一位是2，但是枚举发现1已经计算过了，所以也排除。 最终结果是12+4=16，结果正确。虽然思路大体上是一样的，但是原文是没有筛查这个过程的，其实还是有点麻烦的，可能需要开一个集合或者专门的数据结构来进行判断。&#xA;康托编码 Link to heading 康托展开的逆过程就是已知这个数是第k个数，求这个数是多少，当然是知道n的值的。&#xA;第k个数就是有k-1个数比这个数小。&#xA;所以就是 k-1=an*(n-1)!+an-1*(n-2)!+&amp;hellip;.+a1*0!;&#xA;再举一个例子：&#xA;如何找出第16个（按字典序的）{1,2,3,4,5}的全排列？&#xA;首先用16-1得到15&#xA;用15去除4! 得到0余15&#xA;用15去除3! 得到2余3&#xA;用3去除2! 得到1余1&#xA;用1去除1! 得到1余0&#xA;有0个数比它小的数是1，所以第一位是1&#xA;有2个数比它小的数是3，但1已经在之前出现过了所以是4&#xA;有1个数比它小的数是2，但1已经在之前出现过了所以是3&#xA;有1个数比它小的数是2，但1,3,4都出现过了所以是5&#xA;最后一个数只能是2&#xA;代码如下。写的真的挺好，我第一眼还没想明白&#xA;class Solution { public: //全排列元素数量为n，返回第k个排列 string getPermutation(int n, int k) { string s(n,&amp;#39;0&amp;#39;);//初始是n个零 string result; for(int i=0;i&amp;lt;n;i++) { s[i]+=i+1;//生成默认序列,1-&amp;gt;n } return kth_permutation(s,k); } private: int factorial(int n)//返回阶乘。其实我觉得这个阶乘可以带个缓存，不过不带也可以了 { int result=1; for(int i=1;i&amp;lt;=n;i++) { result*=i; } return result; } string kth_permutation(string &amp;amp;s,int k) { const int n=s.</description>
-    </item>
-    <item>
-      <title>全排列问题与康托编码</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
-      <pubDate>Mon, 15 Mar 2021 08:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
-      <description>leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。&#xA;题目采用康托编码的思路。其实就是康托展开的逆过程。康托展开用来求某个全排列数是第几小的数，也就是当这些数按顺序排时第几个数。&#xA;康托展开 Link to heading 过程如下：比如求321 是 第几小的，可以这样来想：小于3的数有1和2 两个，首位确定之后后面两位有2！中情况，所以共有2*2！=4种。&#xA;小于2的数只有一个1，所以有11！=1种情况，最后一位是1，没有比一小的数，所以是00！=0&#xA;综上：小于321的数有4+1=5个，所以321是第六小的数。&#xA;反例与进一步思考 Link to heading 但是康托展开没有这么简单，其实是挺复杂的。以n=4的情况为例子，我们已经知道3412是第17个，也就是说有16个比它小的数字。 首位确定后，有23！=12种，这个是符合的 但是第二位的话是4，此时是先考虑小于4的情况，有1、2、3，然后再排除掉3，所以是22!=4； 第三位的话是1，此时不存在比它小的数字，所以直接排除 最后一位是2，但是枚举发现1已经计算过了，所以也排除。 最终结果是12+4=16，结果正确。虽然思路大体上是一样的，但是原文是没有筛查这个过程的，其实还是有点麻烦的，可能需要开一个集合或者专门的数据结构来进行判断。&#xA;康托编码 Link to heading 康托展开的逆过程就是已知这个数是第k个数，求这个数是多少，当然是知道n的值的。&#xA;第k个数就是有k-1个数比这个数小。&#xA;所以就是 k-1=an*(n-1)!+an-1*(n-2)!+&amp;hellip;.+a1*0!;&#xA;再举一个例子：&#xA;如何找出第16个（按字典序的）{1,2,3,4,5}的全排列？&#xA;首先用16-1得到15&#xA;用15去除4! 得到0余15&#xA;用15去除3! 得到2余3&#xA;用3去除2! 得到1余1&#xA;用1去除1! 得到1余0&#xA;有0个数比它小的数是1，所以第一位是1&#xA;有2个数比它小的数是3，但1已经在之前出现过了所以是4&#xA;有1个数比它小的数是2，但1已经在之前出现过了所以是3&#xA;有1个数比它小的数是2，但1,3,4都出现过了所以是5&#xA;最后一个数只能是2&#xA;代码如下。写的真的挺好，我第一眼还没想明白&#xA;class Solution { public: //全排列元素数量为n，返回第k个排列 string getPermutation(int n, int k) { string s(n,&amp;#39;0&amp;#39;);//初始是n个零 string result; for(int i=0;i&amp;lt;n;i++) { s[i]+=i+1;//生成默认序列,1-&amp;gt;n } return kth_permutation(s,k); } private: int factorial(int n)//返回阶乘。其实我觉得这个阶乘可以带个缓存，不过不带也可以了 { int result=1; for(int i=1;i&amp;lt;=n;i++) { result*=i; } return result; } string kth_permutation(string &amp;amp;s,int k) { const int n=s.</description>
-    </item>
-    <item>
-      <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
-      <description>今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一下有两个点…… 我印象中这个算法挺简单的，就搜了一下，果然找到了。不是，现在校招算法题都这么丧病了吗。 由于保密协议，不能放代码。后面放Tarjan算法学习笔记。&#xA;LCA问题参考资料， Tarjan的时间复杂度为O((n+q)× 并查集的复杂度 )，而使用路径压缩和按秩合并的并查集复杂度为O(Alpha(n))。所以作为离线算法，Tarjan比倍增算法快很多。 但作为在线算法，倍增算法能实时得到解法。 RMQ&#xA;复杂度介绍：&#xA;Tarjan的复杂度为O(n+q) RMQ预处理为O(nlogn)，查询O(1) 倍增算法复杂度为O((n+q)logn) 参考资料：&#xA;Tarjan求解LCA，非常好的教学，很详细地列举了LCA的步骤。关键是有图，有逐步分解的图，非常好。 伪代码 Link to heading Tarjan(u)//marge和find为并查集合并函数和查找函数 { for each(u,v) //访问所有u子节点v { Tarjan(v); //继续往下遍历 marge(u,v); //合并v到u上 标记v被访问过; } for each(u,e) //访问所有和u有询问关系的e { 如果e被访问过; u,e的最近公共祖先为find(e); } } 具体实现代码 Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;utility&amp;gt; using namespace std; int N = 5; vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; lib;//假设lib为二维动态数组，lib[i]表示节点i的所有孩子vector vector&amp;lt;int&amp;gt; parent(N,0);//并查集数组 vector&amp;lt;bool&amp;gt; isVisited(N,false); vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; query;//query关系，双向的 int find(int e){ if(parent[e] !</description>
-    </item>
-    <item>
-      <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
-      <description>今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一下有两个点…… 我印象中这个算法挺简单的，就搜了一下，果然找到了。不是，现在校招算法题都这么丧病了吗。 由于保密协议，不能放代码。后面放Tarjan算法学习笔记。&#xA;LCA问题参考资料， Tarjan的时间复杂度为O((n+q)× 并查集的复杂度 )，而使用路径压缩和按秩合并的并查集复杂度为O(Alpha(n))。所以作为离线算法，Tarjan比倍增算法快很多。 但作为在线算法，倍增算法能实时得到解法。 RMQ&#xA;复杂度介绍：&#xA;Tarjan的复杂度为O(n+q) RMQ预处理为O(nlogn)，查询O(1) 倍增算法复杂度为O((n+q)logn) 参考资料：&#xA;Tarjan求解LCA，非常好的教学，很详细地列举了LCA的步骤。关键是有图，有逐步分解的图，非常好。 伪代码 Link to heading Tarjan(u)//marge和find为并查集合并函数和查找函数 { for each(u,v) //访问所有u子节点v { Tarjan(v); //继续往下遍历 marge(u,v); //合并v到u上 标记v被访问过; } for each(u,e) //访问所有和u有询问关系的e { 如果e被访问过; u,e的最近公共祖先为find(e); } } 具体实现代码 Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;utility&amp;gt; using namespace std; int N = 5; vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; lib;//假设lib为二维动态数组，lib[i]表示节点i的所有孩子vector vector&amp;lt;int&amp;gt; parent(N,0);//并查集数组 vector&amp;lt;bool&amp;gt; isVisited(N,false); vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; query;//query关系，双向的 int find(int e){ if(parent[e] !</description>
-    </item>
-    <item>
-      <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
-      <description>今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一下有两个点…… 我印象中这个算法挺简单的，就搜了一下，果然找到了。不是，现在校招算法题都这么丧病了吗。 由于保密协议，不能放代码。后面放Tarjan算法学习笔记。&#xA;LCA问题参考资料， Tarjan的时间复杂度为O((n+q)× 并查集的复杂度 )，而使用路径压缩和按秩合并的并查集复杂度为O(Alpha(n))。所以作为离线算法，Tarjan比倍增算法快很多。 但作为在线算法，倍增算法能实时得到解法。 RMQ&#xA;复杂度介绍：&#xA;Tarjan的复杂度为O(n+q) RMQ预处理为O(nlogn)，查询O(1) 倍增算法复杂度为O((n+q)logn) 参考资料：&#xA;Tarjan求解LCA，非常好的教学，很详细地列举了LCA的步骤。关键是有图，有逐步分解的图，非常好。 伪代码 Link to heading Tarjan(u)//marge和find为并查集合并函数和查找函数 { for each(u,v) //访问所有u子节点v { Tarjan(v); //继续往下遍历 marge(u,v); //合并v到u上 标记v被访问过; } for each(u,e) //访问所有和u有询问关系的e { 如果e被访问过; u,e的最近公共祖先为find(e); } } 具体实现代码 Link to heading #include &amp;lt;iostream&amp;gt; #include &amp;lt;vector&amp;gt; #include &amp;lt;utility&amp;gt; using namespace std; int N = 5; vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; lib;//假设lib为二维动态数组，lib[i]表示节点i的所有孩子vector vector&amp;lt;int&amp;gt; parent(N,0);//并查集数组 vector&amp;lt;bool&amp;gt; isVisited(N,false); vector&amp;lt;vector&amp;lt;int&amp;gt; &amp;gt; query;//query关系，双向的 int find(int e){ if(parent[e] !</description>
-    </item>
-    <item>
-      <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-      <description>字节笔试题，原题忘记了，但是稍微有些区别&#xA;题目 大致意思就是反转。 实现核心就是利用亮点：&#xA;开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution { public: int minFlips(string target) { //时序无关性，因此所有的1都是反转得到的 //从头开始枚举1。字符串不翻转，反转自身 int number = 0; bool flag = true;//true，看1则翻转；false，看0则翻转 for(int i =0;i&amp;lt;target.length();i++){ if(flag &amp;amp;&amp;amp; target[i]==&amp;#39;1&amp;#39;){ flag = !flag; number++; }else if(!flag &amp;amp;&amp;amp; target[i]==&amp;#39;0&amp;#39;){ flag = !flag; number++; } } return number; } }; 扩展问题是今天碰到的字节笔试的第三题，给定一个长度为n的环状数组，按动一次开关可以改变自己和左右的状态（0-&amp;gt;1/1-&amp;gt;0）。初始全部为0，问如何得到1。 这个问题比较类似POJ1830，相当于自动加上了开关变化的限制。&#xA;题目类型说明： 这道题目居然是道异或方程组的高斯消元问题。 核心原理倒是不难，现在有原状态b0和目标状态b1，就可以得到状态改变量b 例如对于原始例子而言，b_0=[0,0,0,0]，b_1=[1,1,1,1]，则b = b_0^b_1=[1,1,1,1]，其中b[i]表示第i个灯的状态&#xA;整个问题可以建模成A*x=b，其中A矩阵为开关i与j之间的影响，A[i][j]=1表示开关j会对开关i产生影响。x向量表示开关i的操作，1表示开，0表示关。 显然，x[i]对应在A矩阵中为第j列，x[i]=1时第j列被激活，以字节拿到题目为例，相当于A[j][j]=A[j-1][j]=A[j+1][j]=1，一旦j列被激活就会对周围和自己产生影响。 将A转化为分块矩阵A=[a1,a2,...,an]，则变为一个异或方程组的消元问题，使用高斯消元法即可求解。&#xA;POJ1830代码 高斯消元部分原理&#xA;线性方程组写成增广矩阵形式 找主元，对增广矩阵进行行行变换；对元素，在第i列中及以下选取绝对值最大的元素，将所有元素中最大的所在的行与第i行进行交换. 消元，采用高斯消元法使得新得到的第i行以下的元素均为零 重复上述过程，直到得到下三角阵 对上三角阵回代求解。 具体描述普通高斯消元伪代码 Link to heading 给定N行N+1列的增广矩阵aug 第一步、循环，i从0-&amp;gt;N-1，枚举主元 1.</description>
-    </item>
-    <item>
-      <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-      <description>字节笔试题，原题忘记了，但是稍微有些区别&#xA;题目 大致意思就是反转。 实现核心就是利用亮点：&#xA;开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution { public: int minFlips(string target) { //时序无关性，因此所有的1都是反转得到的 //从头开始枚举1。字符串不翻转，反转自身 int number = 0; bool flag = true;//true，看1则翻转；false，看0则翻转 for(int i =0;i&amp;lt;target.length();i++){ if(flag &amp;amp;&amp;amp; target[i]==&amp;#39;1&amp;#39;){ flag = !flag; number++; }else if(!flag &amp;amp;&amp;amp; target[i]==&amp;#39;0&amp;#39;){ flag = !flag; number++; } } return number; } }; 扩展问题是今天碰到的字节笔试的第三题，给定一个长度为n的环状数组，按动一次开关可以改变自己和左右的状态（0-&amp;gt;1/1-&amp;gt;0）。初始全部为0，问如何得到1。 这个问题比较类似POJ1830，相当于自动加上了开关变化的限制。&#xA;题目类型说明： 这道题目居然是道异或方程组的高斯消元问题。 核心原理倒是不难，现在有原状态b0和目标状态b1，就可以得到状态改变量b 例如对于原始例子而言，b_0=[0,0,0,0]，b_1=[1,1,1,1]，则b = b_0^b_1=[1,1,1,1]，其中b[i]表示第i个灯的状态&#xA;整个问题可以建模成A*x=b，其中A矩阵为开关i与j之间的影响，A[i][j]=1表示开关j会对开关i产生影响。x向量表示开关i的操作，1表示开，0表示关。 显然，x[i]对应在A矩阵中为第j列，x[i]=1时第j列被激活，以字节拿到题目为例，相当于A[j][j]=A[j-1][j]=A[j+1][j]=1，一旦j列被激活就会对周围和自己产生影响。 将A转化为分块矩阵A=[a1,a2,...,an]，则变为一个异或方程组的消元问题，使用高斯消元法即可求解。&#xA;POJ1830代码 高斯消元部分原理&#xA;线性方程组写成增广矩阵形式 找主元，对增广矩阵进行行行变换；对元素，在第i列中及以下选取绝对值最大的元素，将所有元素中最大的所在的行与第i行进行交换. 消元，采用高斯消元法使得新得到的第i行以下的元素均为零 重复上述过程，直到得到下三角阵 对上三角阵回代求解。 具体描述普通高斯消元伪代码 Link to heading 给定N行N+1列的增广矩阵aug 第一步、循环，i从0-&amp;gt;N-1，枚举主元 1.</description>
-    </item>
-    <item>
-      <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
-      <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Sun, 14 Mar 2021 14:08:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
-      <description>字节笔试题，原题忘记了，但是稍微有些区别&#xA;题目 大致意思就是反转。 实现核心就是利用亮点：&#xA;开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution { public: int minFlips(string target) { //时序无关性，因此所有的1都是反转得到的 //从头开始枚举1。字符串不翻转，反转自身 int number = 0; bool flag = true;//true，看1则翻转；false，看0则翻转 for(int i =0;i&amp;lt;target.length();i++){ if(flag &amp;amp;&amp;amp; target[i]==&amp;#39;1&amp;#39;){ flag = !flag; number++; }else if(!flag &amp;amp;&amp;amp; target[i]==&amp;#39;0&amp;#39;){ flag = !flag; number++; } } return number; } }; 扩展问题是今天碰到的字节笔试的第三题，给定一个长度为n的环状数组，按动一次开关可以改变自己和左右的状态（0-&amp;gt;1/1-&amp;gt;0）。初始全部为0，问如何得到1。 这个问题比较类似POJ1830，相当于自动加上了开关变化的限制。&#xA;题目类型说明： 这道题目居然是道异或方程组的高斯消元问题。 核心原理倒是不难，现在有原状态b0和目标状态b1，就可以得到状态改变量b 例如对于原始例子而言，b_0=[0,0,0,0]，b_1=[1,1,1,1]，则b = b_0^b_1=[1,1,1,1]，其中b[i]表示第i个灯的状态&#xA;整个问题可以建模成A*x=b，其中A矩阵为开关i与j之间的影响，A[i][j]=1表示开关j会对开关i产生影响。x向量表示开关i的操作，1表示开，0表示关。 显然，x[i]对应在A矩阵中为第j列，x[i]=1时第j列被激活，以字节拿到题目为例，相当于A[j][j]=A[j-1][j]=A[j+1][j]=1，一旦j列被激活就会对周围和自己产生影响。 将A转化为分块矩阵A=[a1,a2,...,an]，则变为一个异或方程组的消元问题，使用高斯消元法即可求解。&#xA;POJ1830代码 高斯消元部分原理&#xA;线性方程组写成增广矩阵形式 找主元，对增广矩阵进行行行变换；对元素，在第i列中及以下选取绝对值最大的元素，将所有元素中最大的所在的行与第i行进行交换. 消元，采用高斯消元法使得新得到的第i行以下的元素均为零 重复上述过程，直到得到下三角阵 对上三角阵回代求解。 具体描述普通高斯消元伪代码 Link to heading 给定N行N+1列的增广矩阵aug 第一步、循环，i从0-&amp;gt;N-1，枚举主元 1.</description>
-    </item>
-  </channel>
+    <description>计算机/算法/算法思考 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E6%80%9D%E8%80%83/" rel="self" type="application/rss+xml" /><item>
+  <title>全排列问题与康托编码</title>
+  <link>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</link>
+  <pubDate>Mon, 15 Mar 2021 08:57:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210317_%E5%85%A8%E6%8E%92%E5%88%97%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BA%B7%E6%89%98%E7%BC%96%E7%A0%81/</guid>
+  <description><![CDATA[leetocde的permutation-sequence问题 使用康托编码可以在O(n)是时间内求解。 题目采用康托编码的思路。其实就是康托展]]></description>
+</item>
+<item>
+  <title>【算法-字节笔试-中等难度】Tarjan算法求解公共祖先问题LCA，并介绍倍增算法</title>
+  <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</link>
+  <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_tarjan%E7%AE%97%E6%B3%95%E6%B1%82%E8%A7%A3%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E9%97%AE%E9%A2%98lca%E4%B8%8E%E5%80%8D%E5%A2%9E/</guid>
+  <description><![CDATA[今天字节笔试的第二题，详情由于保密协议不能上网，但是大意就是给一大堆节点，去求LCA。递归直接爆栈，用stack写递归有一个点，改进优化了一]]></description>
+</item>
+<item>
+  <title>【字节笔试，算法-简单-&gt;困难】leetcode 1529灯泡开关 &#43; POJ 1830开关问题，从搜索到高斯消元法</title>
+  <link>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</link>
+  <pubDate>Sun, 14 Mar 2021 14:08:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210314_%E5%AD%97%E8%8A%82%E7%AC%94%E8%AF%95_%E5%BC%80%E5%85%B3%E9%97%AE%E9%A2%98/</guid>
+  <description><![CDATA[字节笔试题，原题忘记了，但是稍微有些区别 题目 大致意思就是反转。 实现核心就是利用亮点： 开关本身顺序对结果没有影响 所有的1都由翻转本身得到。 class Solution]]></description>
+</item>
+</channel>
 </rss>

@@ -1,32 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/软件工程/软件测试/压力测试 on 实践出真知</title>
+    <title>计算机/软件工程/软件测试/压力测试 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/</link>
-    <description>Recent content in 计算机/软件工程/软件测试/压力测试 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Vegeta压测工具学习与使用</title>
-      <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 24 Jun 2022 17:27:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-    <item>
-      <title>Vegeta压测工具学习与使用</title>
-      <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 24 Jun 2022 17:27:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-    <item>
-      <title>Vegeta压测工具学习与使用</title>
-      <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 24 Jun 2022 17:27:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-  </channel>
+    <description>计算机/软件工程/软件测试/压力测试 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95/" rel="self" type="application/rss+xml" /><item>
+  <title>Vegeta压测工具学习与使用</title>
+  <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+  <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item>
+</channel>
 </rss>

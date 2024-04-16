@@ -1,16 +1,7 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Categories - Category - Practise make perfect</title>
-        <link>http://wtysos11.github.io/en/categories/</link>
-        <description>Categories - Category - Practise make perfect</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>wtysos11@163.com (Timothy Wu)</managingEditor>
-            <webMaster>wtysos11@163.com (Timothy Wu)</webMaster><lastBuildDate>Wed, 11 Aug 2021 10:20:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/en/categories/" rel="self" type="application/rss+xml" /><item>
-    <title>CS paper reading</title>
-    <link>http://wtysos11.github.io/en/categories/cs-paper-reading/</link>
-    <pubDate>Wed, 11 Aug 2021 10:20:04 &#43;0800</pubDate>
-    <author>Timothy Wu</author>
-    <guid>http://wtysos11.github.io/en/categories/cs-paper-reading/</guid>
-    <description><![CDATA[]]></description>
-</item>
-</channel>
+  <channel>
+    <title>Categories - Category - Practise make perfect</title>
+    <link>http://wtysos11.github.io/en/categories/</link>
+    <description>Categories - Category | Practise make perfect</description>
+    <generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="http://wtysos11.github.io/en/categories/" rel="self" type="application/rss+xml" /></channel>
 </rss>

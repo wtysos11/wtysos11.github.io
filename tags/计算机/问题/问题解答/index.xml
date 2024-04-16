@@ -1,74 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/问题/问题解答 on 实践出真知</title>
+    <title>计算机/问题/问题解答 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/</link>
-    <description>Recent content in 计算机/问题/问题解答 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
-      <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
-      <pubDate>Thu, 17 Jun 2021 14:22:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
-      <description>今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是一个结构体，另外一个自然是一个interface。代码的作者称这行代码要求后面的结构体必须实现前面的接口，不然会出现编译错误。&#xA;说实话，我第一眼真的没反应过来。直到我看到了这个问题 这一行实际上是变量赋值的变体var VariableName variableType = variableValue，其中的值是(*HelloServiceClient)类型，实际值为nil。&#xA;另外有类似的语句&#xA;//T is a struct var _ I = T{} // Verify that T implements I. var _ I = (*T)(nil) // Verify that *T implements I. 这个问题的本质其实是接口的定义：结构体只要实现了接口的定义，它就能被赋予该接口的变量。 对于指针来说就要更复杂一些，详见#180 。概要来说，就是对用指针实现的接口，该指针类型的普通结构体不能使用，具体原因也比较复杂（详见Go程序设计与实现-接口相关章节）</description>
-    </item>
-    <item>
-      <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
-      <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
-      <pubDate>Thu, 17 Jun 2021 14:22:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
-      <description>今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是一个结构体，另外一个自然是一个interface。代码的作者称这行代码要求后面的结构体必须实现前面的接口，不然会出现编译错误。&#xA;说实话，我第一眼真的没反应过来。直到我看到了这个问题 这一行实际上是变量赋值的变体var VariableName variableType = variableValue，其中的值是(*HelloServiceClient)类型，实际值为nil。&#xA;另外有类似的语句&#xA;//T is a struct var _ I = T{} // Verify that T implements I. var _ I = (*T)(nil) // Verify that *T implements I. 这个问题的本质其实是接口的定义：结构体只要实现了接口的定义，它就能被赋予该接口的变量。 对于指针来说就要更复杂一些，详见#180 。概要来说，就是对用指针实现的接口，该指针类型的普通结构体不能使用，具体原因也比较复杂（详见Go程序设计与实现-接口相关章节）</description>
-    </item>
-    <item>
-      <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
-      <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
-      <pubDate>Thu, 17 Jun 2021 14:22:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
-      <description>今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是一个结构体，另外一个自然是一个interface。代码的作者称这行代码要求后面的结构体必须实现前面的接口，不然会出现编译错误。&#xA;说实话，我第一眼真的没反应过来。直到我看到了这个问题 这一行实际上是变量赋值的变体var VariableName variableType = variableValue，其中的值是(*HelloServiceClient)类型，实际值为nil。&#xA;另外有类似的语句&#xA;//T is a struct var _ I = T{} // Verify that T implements I. var _ I = (*T)(nil) // Verify that *T implements I. 这个问题的本质其实是接口的定义：结构体只要实现了接口的定义，它就能被赋予该接口的变量。 对于指针来说就要更复杂一些，详见#180 。概要来说，就是对用指针实现的接口，该指针类型的普通结构体不能使用，具体原因也比较复杂（详见Go程序设计与实现-接口相关章节）</description>
-    </item>
-    <item>
-      <title>golang中函数如何设置参数默认值</title>
-      <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
-      <pubDate>Sun, 13 Jun 2021 14:50:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
-      <description>参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。&#xA;设置参数值的好处：&#xA;可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：&#xA;强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &amp;#34;&amp;#34; { a = &amp;#34;default-a&amp;#34; } if b == 0 { b = 5 } return fmt.Sprintf(&amp;#34;%s%d&amp;#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。&#xA;使用可变参数语法糖 Link to heading // a is required, b is optional.</description>
-    </item>
-    <item>
-      <title>golang中函数如何设置参数默认值</title>
-      <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
-      <pubDate>Sun, 13 Jun 2021 14:50:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
-      <description>参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。&#xA;设置参数值的好处：&#xA;可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：&#xA;强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &amp;#34;&amp;#34; { a = &amp;#34;default-a&amp;#34; } if b == 0 { b = 5 } return fmt.Sprintf(&amp;#34;%s%d&amp;#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。&#xA;使用可变参数语法糖 Link to heading // a is required, b is optional.</description>
-    </item>
-    <item>
-      <title>golang中函数如何设置参数默认值</title>
-      <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
-      <pubDate>Sun, 13 Jun 2021 14:50:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
-      <description>参考资料 Link to heading Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认值。Go始终在使得自己变得尽可能的简单，而增加这种额外的支持会使parser变得更复杂。&#xA;设置参数值的好处：&#xA;可以缺省部分参数。 可以提供一种默认的，行之有效的配置。 但是参考资料中提到了几种实现默认值的方法：&#xA;强制改变 Link to heading // Both parameters are optional, use empty string for default value func Concat1(a string, b int) string { if a == &amp;#34;&amp;#34; { a = &amp;#34;default-a&amp;#34; } if b == 0 { b = 5 } return fmt.Sprintf(&amp;#34;%s%d&amp;#34;, a, b) } go的一大特点就是所有的变量都必须经过初始化。那如果在函数内部读取到参数值为初始化值，即可进行对应的操作。 但是这种方法无法解决设置参数默认值时所经常应对的场景，即参数缺省问题。&#xA;使用可变参数语法糖 Link to heading // a is required, b is optional.</description>
-    </item>
-    <item>
-      <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
-      <pubDate>Sat, 12 Jun 2021 10:38:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
-      <description>遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码&#xA;package main import &amp;#34;fmt&amp;#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&amp;#34;%s, code=%d&amp;#34;, e.Message, e.Code) } func main() { fmt.Println(&amp;#34;In main function&amp;#34;) var rpcErr error = NewRPCError(400, &amp;#34;unknown err&amp;#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</description>
-    </item>
-    <item>
-      <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
-      <pubDate>Sat, 12 Jun 2021 10:38:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
-      <description>遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码&#xA;package main import &amp;#34;fmt&amp;#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&amp;#34;%s, code=%d&amp;#34;, e.Message, e.Code) } func main() { fmt.Println(&amp;#34;In main function&amp;#34;) var rpcErr error = NewRPCError(400, &amp;#34;unknown err&amp;#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</description>
-    </item>
-    <item>
-      <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
-      <pubDate>Sat, 12 Jun 2021 10:38:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
-      <description>遇到问题 Link to heading 这个问题的来源是今天在复习接口的时候遇到了一份代码&#xA;package main import &amp;#34;fmt&amp;#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&amp;#34;%s, code=%d&amp;#34;, e.Message, e.Code) } func main() { fmt.Println(&amp;#34;In main function&amp;#34;) var rpcErr error = NewRPCError(400, &amp;#34;unknown err&amp;#34;) // typecheck1 err := AsErr(rpcErr) // typecheck2 println(err) } func NewRPCError(code int64, msg string) error { return RPCError{ // typecheck3， must be &amp;amp;RPCError Code: code, Message: msg, } } func AsErr(err error) error { return err } 这份代码有一个compile-time error，在func NewRPCError的返回值处会报错误</description>
-    </item>
-  </channel>
+    <description>计算机/问题/问题解答 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 17 Jun 2021 14:22:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E9%97%AE%E9%A2%98/%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94/" rel="self" type="application/rss+xml" /><item>
+  <title>golang接口与实现以及var _ I = (*T)(nil)的意义</title>
+  <link>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</link>
+  <pubDate>Thu, 17 Jun 2021 14:22:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210617_golang%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0%E7%AD%89/</guid>
+  <description><![CDATA[今天在看书的时候发现了这么一句话var _ HelloServiceInterface = (*HelloServiceClient)(nil)，其中HelloServiceClient是]]></description>
+</item>
+<item>
+  <title>golang中函数如何设置参数默认值</title>
+  <link>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</link>
+  <pubDate>Sun, 13 Jun 2021 14:50:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/</guid>
+  <description><![CDATA[参考资料 Golang and default values 这个问题相当麻烦，根据golang-nuts/google groups中的这篇文章，golang现在与将来都不会支持参数默认]]></description>
+</item>
+<item>
+  <title>golang基础问题：X does not implement Y (... method has a point receiver)</title>
+  <link>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</link>
+  <pubDate>Sat, 12 Jun 2021 10:38:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210612_golang%E5%9F%BA%E7%A1%80%E9%97%AE%E9%A2%98_x-does-not-implement-y-...-method-has-a-point-receiver/</guid>
+  <description><![CDATA[遇到问题这个问题的来源是今天在复习接口的时候遇到了一份代码 package main import &#34;fmt&#34; type RPCError struct { Code int64 Message string } func (e *RPCError) Error() string { return fmt.Sprintf(&#34;%s, code=%d&#34;, e.Message, e.Code) } func main() { fmt.Println(&#34;In main function&#34;) var rpcErr error = NewRPCError(400, &#34;unknown err&#34;) // typecheck1 err]]></description>
+</item>
+</channel>
 </rss>

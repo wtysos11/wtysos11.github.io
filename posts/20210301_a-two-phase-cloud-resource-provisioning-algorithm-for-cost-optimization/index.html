@@ -1,209 +1,182 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  A two-phase cloud resource provisioning algorithm for cost optimization · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="A two-phase cloud resource provisioning algorithm for cost optimization Link to heading 1 Introduction Link to heading 主要的三种付费方式：
-On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-demand和reserved的收费方式。但是它们的目标都只是使用reserved收费的资源来满足最低服务需求，并用on-demand的资源来满足剩余需求。
-本文的目标是找到最佳的实例数，即resource provisioning problem。为了降低资源的租用成本，本文使用了on-demand和reserved instance两种方式来进行一个两阶段的资源分配，并决定最佳的reserved instance的实例数来最小化花费。为此，需要基于预测的流量信息来满足SLA的要求。
-主要贡献：
-使用on-demand和reserved instance的两阶段资源部署算法来减少资源租用花费 在第一阶段，将资源配置问题建模为two-stage stochastic programming problem，并用sample average approximation的方式和dual decomposition method的方式来求解 在第二阶段，使用ARIMA-Kalman model来预测流量，并决定on-demand的实例数量。 使用现实世界的流量和Amazon EC2购买模型来验证结果。 2 related work Link to heading 主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="A two-phase cloud resource provisioning algorithm for cost optimization"/>
-<meta name="twitter:description" content="A two-phase cloud resource provisioning algorithm for cost optimization Link to heading 1 Introduction Link to heading 主要的三种付费方式：
-On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-demand和reserved的收费方式。但是它们的目标都只是使用reserved收费的资源来满足最低服务需求，并用on-demand的资源来满足剩余需求。
-本文的目标是找到最佳的实例数，即resource provisioning problem。为了降低资源的租用成本，本文使用了on-demand和reserved instance两种方式来进行一个两阶段的资源分配，并决定最佳的reserved instance的实例数来最小化花费。为此，需要基于预测的流量信息来满足SLA的要求。
-主要贡献：
-使用on-demand和reserved instance的两阶段资源部署算法来减少资源租用花费 在第一阶段，将资源配置问题建模为two-stage stochastic programming problem，并用sample average approximation的方式和dual decomposition method的方式来求解 在第二阶段，使用ARIMA-Kalman model来预测流量，并决定on-demand的实例数量。 使用现实世界的流量和Amazon EC2购买模型来验证结果。 2 related work Link to heading 主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。"/>
-
-<meta property="og:title" content="A two-phase cloud resource provisioning algorithm for cost optimization" />
-<meta property="og:description" content="A two-phase cloud resource provisioning algorithm for cost optimization Link to heading 1 Introduction Link to heading 主要的三种付费方式：
-On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-demand和reserved的收费方式。但是它们的目标都只是使用reserved收费的资源来满足最低服务需求，并用on-demand的资源来满足剩余需求。
-本文的目标是找到最佳的实例数，即resource provisioning problem。为了降低资源的租用成本，本文使用了on-demand和reserved instance两种方式来进行一个两阶段的资源分配，并决定最佳的reserved instance的实例数来最小化花费。为此，需要基于预测的流量信息来满足SLA的要求。
-主要贡献：
-使用on-demand和reserved instance的两阶段资源部署算法来减少资源租用花费 在第一阶段，将资源配置问题建模为two-stage stochastic programming problem，并用sample average approximation的方式和dual decomposition method的方式来求解 在第二阶段，使用ARIMA-Kalman model来预测流量，并决定on-demand的实例数量。 使用现实世界的流量和Amazon EC2购买模型来验证结果。 2 related work Link to heading 主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>A two-phase cloud resource provisioning algorithm for cost optimization - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一" /><meta name="keywords" content='内容/停止更新/论文总结, 计算机/资源预测' /><meta itemprop="name" content="A two-phase cloud resource provisioning algorithm for cost optimization">
+<meta itemprop="description" content="A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一"><meta itemprop="datePublished" content="2021-03-01T19:49:04+08:00" />
+<meta itemprop="dateModified" content="2024-01-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1936">
+<meta itemprop="keywords" content="内容/停止更新/论文总结,计算机/资源预测," /><meta property="og:title" content="A two-phase cloud resource provisioning algorithm for cost optimization" />
+<meta property="og:description" content="A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-01T19:49:04+08:00" />
 <meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/">
-              A two-phase cloud resource provisioning algorithm for cost optimization
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="A two-phase cloud resource provisioning algorithm for cost optimization"/>
+<meta name="twitter:description" content="A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" /><link rel="next" href="http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "A two-phase cloud resource provisioning algorithm for cost optimization",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization\/"
+    },"genre": "posts","keywords": "内容\/停止更新\/论文总结, 计算机\/资源预测","wordcount":  1936 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization\/","datePublished": "2021-03-01T19:49:04+08:00","dateModified": "2024-01-21T00:00:00+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2021-03-01T19:49:04&#43;08:00">
-                三月 1, 2021
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">内容/停止更新/论文总结</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%B5%84%E6%BA%90%E9%A2%84%E6%B5%8B/">计算机/资源预测</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>A two-phase cloud resource provisioning algorithm for cost optimization</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="post-meta-line"><span title="发布于 2021-03-01 19:49:04"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-03-01">2021-03-01</time></span>&nbsp;<span title="更新于 2024-01-21 00:00:00"><i class="fa-regular fa-calendar-check fa-fw me-1" aria-hidden="true"></i><time datetime="2024-01-21">2024-01-21</time></span>&nbsp;<span title="1936 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2000 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <h1 id="a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization">
-  A two-phase cloud resource provisioning algorithm for cost optimization
-  <a class="heading-link" href="#a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<h2 id="1-introduction">
-  1 Introduction
-  <a class="heading-link" href="#1-introduction">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>主要的三种付费方式：</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-introduction">1 Introduction</a></li>
+    <li><a href="#2-related-work">2 related work</a></li>
+    <li><a href="#3-problem-formulation">3 Problem Formulation</a>
+      <ul>
+        <li><a href="#31-云环境">3.1 云环境</a></li>
+        <li><a href="#32-cloud-resource-provisioning-problem">3.2 Cloud Resource Provisioning Problem</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-resource-reservation">4 Resource Reservation</a>
+      <ul>
+        <li><a href="#41-sample-average-approximationsaa">4.1 Sample Average Approximation(SAA)</a></li>
+        <li><a href="#42-dual-decomposition-based-branch-and-bound-ddbnb">4.2 Dual Decomposition-Based Branch and Bound (DDBnB)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization" class="heading-element">
+  <a href="#a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization" class="heading-mark"></a>A two-phase cloud resource provisioning algorithm for cost optimization</h1><h2 id="1-introduction" class="heading-element">
+  <a href="#1-introduction" class="heading-mark"></a>1 Introduction</h2><p>主要的三种付费方式：</p>
 <ul>
 <li>On-demand pricing model</li>
 <li>Reserved pricing model</li>
@@ -218,146 +191,69 @@ On-demand pricing model Reserved pricing model spot pricing model 现有的模�
 <li>在第二阶段，使用ARIMA-Kalman model来预测流量，并决定on-demand的实例数量。</li>
 <li>使用现实世界的流量和Amazon EC2购买模型来验证结果。</li>
 </ol>
-<h2 id="2-related-work">
-  2 related work
-  <a class="heading-link" href="#2-related-work">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。</p>
-<h2 id="3-problem-formulation">
-  3 Problem Formulation
-  <a class="heading-link" href="#3-problem-formulation">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>本节主要内容为模型的假设，包括VM的配置与价格模型。基于这些假设，我们可以对云资源分配问题进行建模。</p>
-<h3 id="31-云环境">
-  3.1 云环境
-  <a class="heading-link" href="#31-%e4%ba%91%e7%8e%af%e5%a2%83">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>云资源提供商提供多种不同的VM给用户，$V={V_1,&hellip;,V_M}$代表了不同种类的虚拟机，M为虚拟机的种类。每一个VM的种类有着自己的资源配置和处理容量。令$C_i$表示$V_i$类虚拟机在不违反QoS的情况下所能处理的最大并发用户数或者最大服务请求速率。</p>
+<h2 id="2-related-work" class="heading-element">
+  <a href="#2-related-work" class="heading-mark"></a>2 related work</h2><p>主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。</p>
+<h2 id="3-problem-formulation" class="heading-element">
+  <a href="#3-problem-formulation" class="heading-mark"></a>3 Problem Formulation</h2><p>本节主要内容为模型的假设，包括VM的配置与价格模型。基于这些假设，我们可以对云资源分配问题进行建模。</p>
+<h3 id="31-云环境" class="heading-element">
+  <a href="#31-%e4%ba%91%e7%8e%af%e5%a2%83" class="heading-mark"></a>3.1 云环境</h3><p>云资源提供商提供多种不同的VM给用户，$V={V_1,&hellip;,V_M}$代表了不同种类的虚拟机，M为虚拟机的种类。每一个VM的种类有着自己的资源配置和处理容量。令$C_i$表示$V_i$类虚拟机在不违反QoS的情况下所能处理的最大并发用户数或者最大服务请求速率。</p>
 <p>我们采用小时计费的方式，并考虑两种不同的模型：on-demand实例和instance实例。令$p_i^o$表示类型$V_i$的on-demand费用，令$p_i^R$与$p_i^r$分别代表reserved instance的总支付费用与每小时费用。令$T$代表reserved instance的使用时间。这样，虚拟机类型$V_i$的实际成本为$p_i^R/T+p_i^r$，即平均每小时的总费用加上每小时的实际费用。一般来说，reserved instance的每小时费用都要低于on-demand的付费。</p>
-<h3 id="32-cloud-resource-provisioning-problem">
-  3.2 Cloud Resource Provisioning Problem
-  <a class="heading-link" href="#32-cloud-resource-provisioning-problem">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>在一个reservation period中考虑这个cloud resource provision problem，令t=1,2,&hellip;,T为该reservation period中的hour index，令$d_t$为时间t时的workload，$R=(n_1^r,n_2^r,&hellip;,n_M^r)$表示reservation decision，其中$n_i^r$为$V_i$类虚拟机的数量。这样，就可以计算出reserved实例的processing capacity $\sum_{i=1}^{M}n_i^r C_i$，以及总费用。</p>
+<h3 id="32-cloud-resource-provisioning-problem" class="heading-element">
+  <a href="#32-cloud-resource-provisioning-problem" class="heading-mark"></a>3.2 Cloud Resource Provisioning Problem</h3><p>在一个reservation period中考虑这个cloud resource provision problem，令t=1,2,&hellip;,T为该reservation period中的hour index，令$d_t$为时间t时的workload，$R=(n_1^r,n_2^r,&hellip;,n_M^r)$表示reservation decision，其中$n_i^r$为$V_i$类虚拟机的数量。这样，就可以计算出reserved实例的processing capacity $\sum_{i=1}^{M}n_i^r C_i$，以及总费用。</p>
 <p>对于每一个时间点t，如果reserved instance能够满足需求，显然也没有再购买on-demand资源的必要</p>
 <p>因此，on demand的使用费用可以写为$U(R,d_t) = min \sum_{i-1}^M n_{ti}^o p)i^o$，其中$n_{ti}^o$就是类型$V_i$在时间t所使用的on-demand的实例数</p>
 <p>此时，resource reservation problem可以建模为最小化reserved instance费用与on-demand instance的费用。显然这个问题是依赖于reservation阶段的流量的，这个在现在来说是不知道的，但我们可以基于历史数据来预测流量的分布情况$p_D(d)$。</p>
-<h2 id="4-resource-reservation">
-  4 Resource Reservation
-  <a class="heading-link" href="#4-resource-reservation">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<h3 id="41-sample-average-approximationsaa">
-  4.1 Sample Average Approximation(SAA)
-  <a class="heading-link" href="#41-sample-average-approximationsaa">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>如果scenarios的数量比较大的话，直接求解前面的最优化式子是非常困难的。sample average approximation就是用来减少scenarios数量的方法。考虑到workload是一个一维的随机变量，就可以使用uniform discretization grid来产生一个scenarios的集合${\tilde{d_1},\tilde{d_2},&hellip;,\tilde{d_N}}$，其中$N$是采样大小。用采样结果来拟合复杂的概率结果，化简two-stage stochastic problem。</p>
-<h3 id="42-dual-decomposition-based-branch-and-bound-ddbnb">
-  4.2 Dual Decomposition-Based Branch and Bound (DDBnB)
-  <a class="heading-link" href="#42-dual-decomposition-based-branch-and-bound-ddbnb">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>scenario decomposition是引入copy $R_j$作为每个scenario中第一阶段决策动作$R$，然后重新建模原问题。</p>
+<h2 id="4-resource-reservation" class="heading-element">
+  <a href="#4-resource-reservation" class="heading-mark"></a>4 Resource Reservation</h2><h3 id="41-sample-average-approximationsaa" class="heading-element">
+  <a href="#41-sample-average-approximationsaa" class="heading-mark"></a>4.1 Sample Average Approximation(SAA)</h3><p>如果scenarios的数量比较大的话，直接求解前面的最优化式子是非常困难的。sample average approximation就是用来减少scenarios数量的方法。考虑到workload是一个一维的随机变量，就可以使用uniform discretization grid来产生一个scenarios的集合${\tilde{d_1},\tilde{d_2},&hellip;,\tilde{d_N}}$，其中$N$是采样大小。用采样结果来拟合复杂的概率结果，化简two-stage stochastic problem。</p>
+<h3 id="42-dual-decomposition-based-branch-and-bound-ddbnb" class="heading-element">
+  <a href="#42-dual-decomposition-based-branch-and-bound-ddbnb" class="heading-mark"></a>4.2 Dual Decomposition-Based Branch and Bound (DDBnB)</h3><p>scenario decomposition是引入copy $R_j$作为每个scenario中第一阶段决策动作$R$，然后重新建模原问题。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-01-21 00:00:00">更新于 2024-01-21&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-hashtags="内容/停止更新/论文总结,计算机/资源预测"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-hashtag="内容/停止更新/论文总结"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/" data-title="A two-phase cloud resource provisioning algorithm for cost optimization"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="post-tag" title="标签 - 内容/停止更新/论文总结">内容/停止更新/论文总结</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%B5%84%E6%BA%90%E9%A2%84%E6%B5%8B/" class="post-tag" title="标签 - 计算机/资源预测">计算机/资源预测</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/" class="post-nav-item" rel="prev" title="Business-Driven Long-Term Capacity Planning for SaaS Applications"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Business-Driven Long-Term Capacity Planning for SaaS Applications</a>
+      <a href="/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" class="post-nav-item" rel="next" title="《Java核心技术 卷I：基础知识》读书笔记">《Java核心技术 卷I：基础知识》读书笔记<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

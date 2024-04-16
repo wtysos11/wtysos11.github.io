@@ -1,19 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>快速复习 on 实践出真知</title>
+    <title>快速复习 - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0/</link>
-    <description>Recent content in 快速复习 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://wtysos11.github.io/categories/%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>python日志模块logging学习与快速复习笔记</title>
-      <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Tue, 05 May 2020 09:08:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考：&#xA;csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细，比较规范 基础知识 Link to heading 日志级别 Link to heading CRITICAL &amp;gt; ERROR &amp;gt; WARNING &amp;gt; INFO &amp;gt; DEBUG &amp;gt; NOTSET，如果将日志级别设置为INFO，则INFO以下的日志将不会输出。默认设置级别为WARNING。&#xA;常用函数 Link to heading logging.basicConfig() # 使用一系列key-value值规定日志的基本配置信息，level规定输出的log级别，format定义输出log的格式，datafmt为输出的时间格式，filename为log文件名，filemode为打开log文件的模式。 logging.debug/info/warning/error/critical(str) #输出错误信息 logging.log(logging.DEBUG/..., str) #另外一种输出错误信息的方式 #可以使用如下代码将log信息同时输出到console上 console = logging.StreamHandler() # 定义console handler console.setLevel(logging.INFO) # 定义该handler级别 formatter = logging.Formatter(&amp;#39;%(asctime)s %(filename)s : %(levelname)s %(message)s&amp;#39;) #定义该handler格式 console.setFormatter(formatter) # Create an instance logging.getLogger().addHandler(console) 例子 Link to heading 例1：控制台与文件输出 Link to heading 设置输出格式，同时输出到控制台与文件</description>
-    </item>
-  </channel>
+    <description>快速复习 - 分类 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 05 May 2020 09:08:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+  <title>python日志模块logging学习与快速复习笔记</title>
+  <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+  <pubDate>Tue, 05 May 2020 09:08:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+  <description><![CDATA[因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考： csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细]]></description>
+</item>
+</channel>
 </rss>

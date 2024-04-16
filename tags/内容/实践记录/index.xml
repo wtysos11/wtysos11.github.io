@@ -1,88 +1,87 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>内容/实践记录 on 实践出真知</title>
+    <title>内容/实践记录 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/</link>
-    <description>Recent content in 内容/实践记录 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>基于大模型构建本地知识库</title>
-      <link>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</link>
-      <pubDate>Wed, 03 Jan 2024 11:32:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</guid>
-      <description>基于大模型构建本地知识库，尝试使用ChatGPT、chatglm和Langchain-chatchat</description>
-    </item>
-    <item>
-      <title>istio应用对外访问极速入门</title>
-      <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
-      <pubDate>Sat, 30 Oct 2021 16:41:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
-      <description>istio框架下如何暴露服务，其实挺简单的。</description>
-    </item>
-    <item>
-      <title>华为云服务器ubuntu18.04环境下构建k8s多机集群</title>
-      <link>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</link>
-      <pubDate>Wed, 25 Aug 2021 20:19:18 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</guid>
-      <description>在华为云买了两台x86的hecs服务器，于是顺便就在ubuntu18.04环境下装了次k8sv1.22.1。由于之前没有考虑可重复性的问题，这次特地重新做了几次确保了一下，方便以后继续重复操作。</description>
-    </item>
-    <item>
-      <title>golang中的赋值:=的一次误用与shadow variable</title>
-      <link>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</link>
-      <pubDate>Thu, 08 Jul 2021 11:32:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</guid>
-      <description>今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致如下&#xA;func getEle() (int,error){ return rand.Intn(100),nil } func exchangeGradually(fp int){ var fingerprint int = fp for i:=0;i&amp;lt;5;i++{ oldfingerprint := fingerprint fingerprint,err := getEle() if err != nil{ panic(err) } fmt.Println(fingerprint,oldfingerprint) } } func main() { exchangeGradually(10) } 可以试着执行一下，原本预期中oldfingerprint是随着fingerprint改变而改变的，但是实际上是不变的。原因是很简单的，因为:=重新分配了一个变量覆盖掉了原有的变量。&#xA;但是我原本以为是不会覆盖的，因为之前写错误处理的时候往往也是直接val,err := ...这样写下来。现在看来，:=应该是会重新声明左侧的所有变量并覆盖作用域。&#xA;从这里可以引出shadow error的问题，类似于shadow variable。shadow error是指很多时候需要在defer中处理error，但是被后面的错误给覆盖了，类似于&#xA;func getErr1() (int,error){ return 1,fmt.Errorf(&amp;#34;error 1&amp;#34;) } func getErr2() (int,error){ return 2,fmt.Errorf(&amp;#34;error 2&amp;#34;) } func exchangeGradually(fp int){ a1,err := getErr1() fmt.Println(a1,err) defer func() { fmt.Println(err) }() a2,err := getErr2() fmt.</description>
-    </item>
-    <item>
-      <title>golang函数参数中接口指针的传递</title>
-      <link>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</link>
-      <pubDate>Thu, 01 Jul 2021 16:34:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</guid>
-      <description>其实是一个很简单的问题，但是如果是之前一直写go的话可能没有意识到指针的本质，就走不出来了。&#xA;最近写代码的时候遇到了一个问题：有一个功能需要使用一个接口，有多个结构体实现了这个接口（经典OO场景）。这些方法中，有一些方法可以修改结构体中的指定属性，并且有一个对应的方法来返回这个属性。&#xA;出于业务需要，值被修改的地方和它被使用的地方是不同的。由于要和原有代码兼容，希望这个代码尽量表现的与原来的一样。&#xA;一个小demo，直接返回interface值来完成传递。看着很正常，但是因为是传值，所以与原有代码不太一致，也不够直观。&#xA;package main import &amp;#34;fmt&amp;#34; type tt interface { setName(string) getName() string } type testA struct{ name string } type testDouble struct{ name string } func (t *testA) setName(n string){ t.name = n } func (t *testA) getName() string{ return t.name } func (t *testDouble) setName(n string){ t.name = n + n } func (t *testDouble) getName() string{ return t.name } func setName(s tt,n string) tt{ t := testA{} t.</description>
-    </item>
-    <item>
-      <title>kubernetes服务：学习ingress与暴露服务简单实验</title>
-      <link>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</link>
-      <pubDate>Sun, 06 Jun 2021 16:30:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</guid>
-      <description>参考资料：&#xA;kubernetes ingress实战 Intro to Kube ingress: Set up nginx Ingress in Kubernetes Bare Metal ingress的nip.io相关资料 实验室集群中已经有一个ingress-controller，ingress.class为nginx。 本次实验的目标是将服务通过ingress暴露到外部服务，最好能够直接通过外网IP访问。&#xA;实验所需镜像 Link to heading 原本用的是google的镜像，但是因为在国内，弄起来太麻烦了。所以还是从dockerhub上选了一个类似的镜像。&#xA;apiVersion: v1 kind: Namespace metadata: name: echoserver --- apiVersion: apps/v1 kind: Deployment metadata: name: echoserver namespace: echoserver spec: replicas: 2 selector: matchLabels: app: echoserver template: metadata: labels: app: echoserver spec: containers: - image: ealen/echo-server:latest imagePullPolicy: IfNotPresent name: echoserver ports: - containerPort: 80 env: - name: PORT value: &amp;#34;80&amp;#34; --- apiVersion: v1 kind: Service metadata: name: echoserver namespace: echoserver spec: ports: - port: 80 targetPort: 80 protocol: TCP type: ClusterIP selector: app: echoserver --- apiVersion: networking.</description>
-    </item>
-    <item>
-      <title>kubernetes内部访问服务的方式</title>
-      <link>http://wtysos11.github.io/posts/20210606_kubernetes%E5%86%85%E9%83%A8%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
-      <pubDate>Sun, 06 Jun 2021 16:23:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E5%86%85%E9%83%A8%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
-      <description>最近因为实验室集群整体爆炸，需要修改旧服务器的网络配置。为此，需要进行一系列的网络测试。同时，这也是一个新的label系列。总是有一些代码，非常常用，但是用的时候就是找不到，想也想不起来，就非得去查。很难受。&#xA;之前做网络测试的手段太原始了（指新建ubuntu容器后登陆进去），不够灵活方便，而且也找不到代码和镜像了。为此，我总结了几个比较好的快速访问方式&#xA;方式1 Link to heading 最直接的方式肯定是登陆进服务内部，比如istio中提到的&#xA;在执行命令后：kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml，如果此时所有的svc和pods都跑起来了，可以通过运行kubectl exec -it $(kubectl get pod -l app=ratings -o jsonpath=&#39;{.items[0].metadata.name}&#39;) -c ratings -- curl productpage:9080/productpage | grep -o &amp;quot;&amp;lt;title&amp;gt;.*&amp;lt;/title&amp;gt;&amp;quot;来检测到结果。&#xA;其中的kubectl exec -it可以登陆容器并打开控制台，而服务的名称由$(kubectl get pod -l app=ratings -o jsonpath=&#39;{.items[0].metadata.name}&#39;)，-c参数保证了在存在注入的情况下能正常运行。&#xA;--连接两条不同的命令，后面就不需要过多的解释了。&#xA;甚至不一定是同一个镜像，比如使用sleep镜像进行（足够小）&#xA;export SLEEP_POD=$(kubectl get pod -l app=sleep -o jsonpath={.items..metadata.name})#这里要自行加上-n=test kubectl exec -it $SLEEP_POD -c sleep curl http://ratings.default.svc.cluster.local:9080/ratings/1 {&amp;#34;id&amp;#34;:1,&amp;#34;ratings&amp;#34;:{&amp;#34;Reviewer1&amp;#34;:5,&amp;#34;Reviewer2&amp;#34;:4}} 方式2 Link to heading 临时开一个curl镜像进行网络检查&#xA;官方在httpbin里也展示了如何通过curl镜像来进行内网测试(同样，注意命名空间)&#xA;kubectl run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent httpbin:8000/html kubectl run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent --head httpbin:8000/status/500 time kubectl run -i --rm --restart=Never dummy --image=dockerqa/curl:ubuntu-trusty --command -- curl --silent httpbin:8000/delay/5 网络测试的对象 Link to heading 我一开始想用hello来做，但是其实挺不好的，没什么代表性。 echo-server这个就很不错，像是一个回音壁一样，将所有的请求全部打回。 docker pull ealen/echo-server</description>
-    </item>
-    <item>
-      <title>Vagrant如何手动下载官网镜像并导入</title>
-      <link>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</link>
-      <pubDate>Thu, 03 Jun 2021 09:36:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</guid>
-      <description>参考：&#xA;手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且curl到了vagrantcloud，但是就是拉不下来镜像……无奈之下只能自力更生，直接搜索然后下载，比如这个RancherOS。我所进行的实验是Vagrant快速部署k8s，因为实验室服务器不够了，没有抵挡地住诱惑。&#xA;或者也可以查看使用vagrant up获得的信息（如下），其中URL即为下载地址。&#xA;Bringing machine &amp;#39;server-01&amp;#39; up with &amp;#39;virtualbox&amp;#39; provider... Bringing machine &amp;#39;node-01&amp;#39; up with &amp;#39;virtualbox&amp;#39; provider... Bringing machine &amp;#39;node-02&amp;#39; up with &amp;#39;virtualbox&amp;#39; provider... ==&amp;gt; server-01: Box &amp;#39;chrisurwin/RancherOS&amp;#39; could not be found. Attempting to find and install... server-01: Box Provider: virtualbox server-01: Box Version: 1.5.1 ==&amp;gt; server-01: Loading metadata for box &amp;#39;chrisurwin/RancherOS&amp;#39; server-01: URL: https://vagrantcloud.com/chrisurwin/RancherOS ==&amp;gt; server-01: Adding box &amp;#39;chrisurwin/RancherOS&amp;#39; (v1.</description>
-    </item>
-    <item>
-      <title>记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考</title>
-      <link>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</link>
-      <pubDate>Fri, 09 Apr 2021 09:36:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</guid>
-      <description>http://ita.ee.lbl.gov 这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也没有办法连上。 然后我又通过google搜索了一下，发现可以找得到，但是网址是ftp版本的。虽然打不开，但是快照是连的上的，说明服务器是正常的。 我又试了一下winscp连接，然后不行……&#xA;这时我注意到了该组织维护的另外一个网站，我当时就想着说发个邮件问一下。不过发邮件前，我问了一下师兄。师兄想了一下，让我试着用Filezilla直接开。 我试了一下，在host里输入ita.ee.lbl.gov快速连接，然后就开了…… 开了…… QAQ我忙活了一上午！！！ 所以winscp和filezilla以及windows自带的FTP有什么区别吗，为什么其他两个连不上，但是就filezilla可以呢，是默认参数的区别吗？</description>
-    </item>
-    <item>
-      <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
-      <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
-      <pubDate>Tue, 13 Oct 2020 12:37:13 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
-      <description>后续更新，不一定会记得更新&#xA;kubernetes虚拟机多级环境部署与Istio的安装 Link to heading 标签：项目实践 kubernetes istio&#xA;计划在三台2C4G的机器上安装kubernetes。其中master和slave的系统均为Ubuntu18.04桌面版。（原本想用CentOS的，下载的时候就是这样了，费事改了）&#xA;目前需要在实验室的服务器上进行部署，得了，最终结果也是一样的。&#xA;分为以下几个步骤：&#xA;安装基本软件 访问谷歌镜像仓库gcr.io 完成三台机器关于安装kubeadm的相关工作 安装Istio 部署相关应用（prometheus、grafana） 参考文献：&#xA;掘金 cnblog，这一篇是我后来看到的，写的更好一些。 安装基本软件 Link to heading 如果使用包管理软件，请务必检查自身的包管理软件为最新。&#xA;以Ubuntu的apt为例，首先请务必使用最新的镜像仓库（最好手动弄一下），然后再执行一遍sudo apt-get update来更新。&#xA;配置docker Link to heading 略&#xA;配置kubectl、kubeadm、kubelet Link to heading 在执行命令之前，请首先使用检查是否能够访问到指定的包。以apt为例，使用apt-cache policy &amp;lt;package&amp;gt;可以检查远程仓库中包的版本。&#xA;apt-get install kubectl kubeadm kubelet 系统配置 Link to heading 关闭防火墙 关闭SELinux 关闭swap 下载kubeadm所需镜像 Link to heading 从阿里云下载 Link to heading 首先使用kubeadm config images list列出kubeadm所需要的所有镜像&#xA;k8s.gcr.io/kube-apiserver:v1.19.2 k8s.gcr.io/kube-controller-manager:v1.19.2 k8s.gcr.io/kube-scheduler:v1.19.2 k8s.gcr.io/kube-proxy:v1.19.2 k8s.gcr.io/pause:3.2 k8s.gcr.io/etcd:3.4.13-0 k8s.gcr.io/coredns:1.7.0 即所有的系统镜像为v1.</description>
-    </item>
-    <item>
-      <title>在k8s中上线gatling镜像并在内网发送流量</title>
-      <link>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
-      <pubDate>Mon, 12 Oct 2020 15:44:17 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201012_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
-      <description>后续更新，我不一定会记得更新过来。&#xA;在k8s中上线gatling镜像并在内网发送流量 Link to heading 很多时候我们会面临一个问题，即外网的带宽是有限的，虽然未来有扩容的可能，但是短时间内也不能直接扩容，而测试本身是无限的。因此，如果不能够在内网下直接发包进行测试，那由于带宽限制打不到较大的压力，对于一些容器的测试很可能就达不到效果。&#xA;因此我们需要在内网有一个能够配置的压力测试容器，目前选定了gatling，因为其功能比较强大，而且安装很方便。&#xA;镜像构造 Link to heading 初始镜像构造 Link to heading 虽然之前已经做了ubuntu的镜像，并且可以使用apt-get install来安装gatling，但是这种方式安装后有些不太会用，似乎更多是作为一个插件存在而不是独立存在的软件。&#xA;我还是选择了自己最熟悉的方式，直接从官网上下载了开源版本的standalone gatling.zip，解压后将目录重命名为gatling，Dockerfile如下:&#xA;FROM ubuntu:18.04 MAINTAINER wtysos11 &amp;#34;wtysos11@gmail.com&amp;#34; COPY sources.list ./ ADD gatling ./gatling RUN rm /etc/apt/sources.list\ &amp;amp;&amp;amp; mv sources.list /etc/apt/sources.list\ &amp;amp;&amp;amp; apt-get update \ &amp;amp;&amp;amp; apt-get install -y openjdk-8-jdk scala #&amp;amp;&amp;amp; apt-get install -y gatling CMD [&amp;#34;/bin/bash&amp;#34;] sources.list为清华的apt镜像，为了加速；gatling可以在java8下运行，必须要安装scala（其实我个人觉得只安装scala就够了，保险起见）&#xA;操作完之后执行docker build . -t ubuntu-wtynettest:0.0.2构造镜像，然后执行docker run --name test -d ubuntu-wtynettest:0.0.2 sleep infinity。再使用docker exec -it test bash</description>
-    </item>
-  </channel>
+    <description>内容/实践记录 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/" rel="self" type="application/rss+xml" /><item>
+  <title>基于大模型构建本地知识库</title>
+  <link>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</link>
+  <pubDate>Wed, 03 Jan 2024 11:32:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/</guid>
+  <description><![CDATA[基于大模型构建本地知识库，尝试使用ChatGPT、chatglm和Langchain-chatchat]]></description>
+</item>
+<item>
+  <title>istio应用对外访问极速入门</title>
+  <link>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+  <pubDate>Sat, 30 Oct 2021 16:41:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+  <description><![CDATA[istio框架下如何暴露服务，其实挺简单的。]]></description>
+</item>
+<item>
+  <title>华为云服务器ubuntu18.04环境下构建k8s多机集群</title>
+  <link>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</link>
+  <pubDate>Wed, 25 Aug 2021 20:19:18 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210825_ubuntu%E4%B8%8B%E6%9E%84%E5%BB%BAk8s%E5%A4%9A%E6%9C%BA%E9%9B%86%E7%BE%A4/</guid>
+  <description><![CDATA[在华为云买了两台x86的hecs服务器，于是顺便就在ubuntu18.04环境下装了次k8sv1.22.1。由于之前没有考虑可重复性的问题，这次特地重新做了几次确保了一下，方便以后继续重复操作。]]></description>
+</item>
+<item>
+  <title>golang中的赋值:=的一次误用与shadow variable</title>
+  <link>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</link>
+  <pubDate>Thu, 08 Jul 2021 11:32:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210708_golang%E4%B8%AD%E7%9A%84%E8%B5%8B%E5%80%BC%E7%9A%84%E4%B8%80%E6%AC%A1%E8%AF%AF%E7%94%A8%E4%B8%8Eshadow-variable/</guid>
+  <description><![CDATA[今天遇到了一个问题，我需要设置一个循环中的变量用于下一次循环之中。因为修改的时候一些问题（处理err），所以不小心将之前的=改为了:=。大致]]></description>
+</item>
+<item>
+  <title>golang函数参数中接口指针的传递</title>
+  <link>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</link>
+  <pubDate>Thu, 01 Jul 2021 16:34:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210701_golang%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E4%B8%AD%E6%8E%A5%E5%8F%A3%E6%8C%87%E9%92%88%E7%9A%84%E4%BC%A0%E9%80%92/</guid>
+  <description><![CDATA[其实是一个很简单的问题，但是如果是之前一直写go的话可能没有意识到指针的本质，就走不出来了。 最近写代码的时候遇到了一个问题：有一个功能需要使]]></description>
+</item>
+<item>
+  <title>kubernetes服务：学习ingress与暴露服务简单实验</title>
+  <link>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</link>
+  <pubDate>Sun, 06 Jun 2021 16:30:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E6%9C%8D%E5%8A%A1_%E5%AD%A6%E4%B9%A0ingress%E4%B8%8E%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1%E7%AE%80%E5%8D%95%E5%AE%9E%E9%AA%8C/</guid>
+  <description><![CDATA[参考资料： kubernetes ingress实战 Intro to Kube ingress: Set up nginx Ingress in Kubernetes Bare Metal ingress的nip.io相关资料 实验室集群中已经有一个ingress-contro]]></description>
+</item>
+<item>
+  <title>kubernetes内部访问服务的方式</title>
+  <link>http://wtysos11.github.io/posts/20210606_kubernetes%E5%86%85%E9%83%A8%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F/</link>
+  <pubDate>Sun, 06 Jun 2021 16:23:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210606_kubernetes%E5%86%85%E9%83%A8%E8%AE%BF%E9%97%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F/</guid>
+  <description><![CDATA[最近因为实验室集群整体爆炸，需要修改旧服务器的网络配置。为此，需要进行一系列的网络测试。同时，这也是一个新的label系列。总是有一些代码，]]></description>
+</item>
+<item>
+  <title>Vagrant如何手动下载官网镜像并导入</title>
+  <link>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</link>
+  <pubDate>Thu, 03 Jun 2021 09:36:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/</guid>
+  <description><![CDATA[参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu]]></description>
+</item>
+<item>
+  <title>记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考</title>
+  <link>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</link>
+  <pubDate>Fri, 09 Apr 2021 09:36:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/</guid>
+  <description><![CDATA[http://ita.ee.lbl.gov 这个是之前很多文章提到的web server log的存放地点。具体来说，该地址是The Internet Traffic Archive的所在。我尝试了挺久的，但是发现即使挂上代理也]]></description>
+</item>
+<item>
+  <title>kubernetes虚拟机多级环境部署与Istio的安装</title>
+  <link>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</link>
+  <pubDate>Tue, 13 Oct 2020 12:37:13 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20201013_kubernetes%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%A4%9A%E7%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2%E4%B8%8Eistio%E7%9A%84%E5%AE%89%E8%A3%85/</guid>
+  <description><![CDATA[后续更新，不一定会记得更新 kubernetes虚拟机多级环境部署与Istio的安装标签：项目实践 kubernetes istio 计划在三台2C4G的机器上安装kuber]]></description>
+</item>
+</channel>
 </rss>

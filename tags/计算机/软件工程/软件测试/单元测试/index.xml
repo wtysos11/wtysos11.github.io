@@ -1,32 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/软件工程/软件测试/单元测试 on 实践出真知</title>
+    <title>计算机/软件工程/软件测试/单元测试 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</link>
-    <description>Recent content in 计算机/软件工程/软件测试/单元测试 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>golang单元测试整理归纳</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
-      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
-      <description>本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识&#xA;参考资料 Link to heading Go by example，中文版，例子确实是最快的学习方式。 基础知识 Link to heading 一般测试文件应该与被测试文件放在同一个目录下，比如被测试代码为intutils.go时，被测试代码应该写为intutils_test.go。&#xA;通常会编写一个名称以Test开头的函数来创建测试（这个我记得是必须的，不然识别不出来）。例如GoLand自动生成的测试文件(Alt+Insert，之前写Java的时候经常用这个来生成DAO)&#xA;func TestTest(t *testing.T) { type args struct { a int } tests := []struct { name string args args want int }{ // TODO: Add test cases. //{name,args{},want},... } for _, tt := range tests { t.Run(tt.name, func(t *testing.T) { if got := Test(tt.args.a); got != tt.want { t.Errorf(&amp;#34;Test() = %v, want %v&amp;#34;, got, tt.</description>
-    </item>
-    <item>
-      <title>golang单元测试整理归纳</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
-      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
-      <description>本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识&#xA;参考资料 Link to heading Go by example，中文版，例子确实是最快的学习方式。 基础知识 Link to heading 一般测试文件应该与被测试文件放在同一个目录下，比如被测试代码为intutils.go时，被测试代码应该写为intutils_test.go。&#xA;通常会编写一个名称以Test开头的函数来创建测试（这个我记得是必须的，不然识别不出来）。例如GoLand自动生成的测试文件(Alt+Insert，之前写Java的时候经常用这个来生成DAO)&#xA;func TestTest(t *testing.T) { type args struct { a int } tests := []struct { name string args args want int }{ // TODO: Add test cases. //{name,args{},want},... } for _, tt := range tests { t.Run(tt.name, func(t *testing.T) { if got := Test(tt.args.a); got != tt.want { t.Errorf(&amp;#34;Test() = %v, want %v&amp;#34;, got, tt.</description>
-    </item>
-    <item>
-      <title>golang单元测试整理归纳</title>
-      <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
-      <pubDate>Sat, 12 Jun 2021 16:02:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
-      <description>本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识&#xA;参考资料 Link to heading Go by example，中文版，例子确实是最快的学习方式。 基础知识 Link to heading 一般测试文件应该与被测试文件放在同一个目录下，比如被测试代码为intutils.go时，被测试代码应该写为intutils_test.go。&#xA;通常会编写一个名称以Test开头的函数来创建测试（这个我记得是必须的，不然识别不出来）。例如GoLand自动生成的测试文件(Alt+Insert，之前写Java的时候经常用这个来生成DAO)&#xA;func TestTest(t *testing.T) { type args struct { a int } tests := []struct { name string args args want int }{ // TODO: Add test cases. //{name,args{},want},... } for _, tt := range tests { t.Run(tt.name, func(t *testing.T) { if got := Test(tt.args.a); got != tt.want { t.Errorf(&amp;#34;Test() = %v, want %v&amp;#34;, got, tt.</description>
-    </item>
-  </channel>
+    <description>计算机/软件工程/软件测试/单元测试 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="self" type="application/rss+xml" /><item>
+  <title>golang单元测试整理归纳</title>
+  <link>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</link>
+  <pubDate>Sat, 12 Jun 2021 16:02:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/</guid>
+  <description><![CDATA[本文目的 复习并整理go test相关知识 要求：能让我在短时间内通过阅读该文掌握写一份go单元测试所需要的知识 参考资料 Go by example，中文版]]></description>
+</item>
+</channel>
 </rss>

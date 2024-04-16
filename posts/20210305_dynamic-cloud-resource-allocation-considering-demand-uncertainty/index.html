@@ -1,240 +1,195 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  Dynamic Cloud Resource Allocation Considering Demand Uncertainty · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty Link to heading 2019 TCC,CCF C类
-看到C类效果这样心里还是有点底，这个用来PK应该是没问题的
-1 Link to heading 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。
-贡献可以分为以下部分：
-部署了动态云资源分配方法，解决了在资源预分配和动态分配两阶段的资源调度问题。开发了随机优化方法来将用户需求建模为随机变量，并实现了10%的部署代价提升。 2 Related work Link to heading 动态资源分配分为两个阶段：
-第一阶段，资源在不考虑用户需求的情况下被分配。 第二阶段，为了保证QoS，采用on-demand的方式分配资源。 由于是离散的，因此不能使用凸优化方法，不能保证有全局最优解。
-Robust Cloud Resouce Provisioning，考虑了三个不确定性：demand、price和cloud resource availability
-在第一阶段，预付费资源完成，将特定数量的资源分配给了应用。 在第二阶段，判定资源是否够用，开始采购on-demand资源 总体来说该作者列的引文都是关于stochastic programming的
-3 System model and assumptions Link to heading 3.1 Problem Definition Link to heading 为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。
-算法主要将数据库应用与一般网络应用进行区分。(database instnace and computing instance)
-然后进行了一系列的数学符号定义
-4 Dynamic Cloud Resource Allocation Algorithm Link to heading 本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。 第二阶段，将non-deterministic user demand建模成随机变量，来动态分配on-demand的资源。">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"/>
-<meta name="twitter:description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty Link to heading 2019 TCC,CCF C类
-看到C类效果这样心里还是有点底，这个用来PK应该是没问题的
-1 Link to heading 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。
-贡献可以分为以下部分：
-部署了动态云资源分配方法，解决了在资源预分配和动态分配两阶段的资源调度问题。开发了随机优化方法来将用户需求建模为随机变量，并实现了10%的部署代价提升。 2 Related work Link to heading 动态资源分配分为两个阶段：
-第一阶段，资源在不考虑用户需求的情况下被分配。 第二阶段，为了保证QoS，采用on-demand的方式分配资源。 由于是离散的，因此不能使用凸优化方法，不能保证有全局最优解。
-Robust Cloud Resouce Provisioning，考虑了三个不确定性：demand、price和cloud resource availability
-在第一阶段，预付费资源完成，将特定数量的资源分配给了应用。 在第二阶段，判定资源是否够用，开始采购on-demand资源 总体来说该作者列的引文都是关于stochastic programming的
-3 System model and assumptions Link to heading 3.1 Problem Definition Link to heading 为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。
-算法主要将数据库应用与一般网络应用进行区分。(database instnace and computing instance)
-然后进行了一系列的数学符号定义
-4 Dynamic Cloud Resource Allocation Algorithm Link to heading 本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。 第二阶段，将non-deterministic user demand建模成随机变量，来动态分配on-demand的资源。"/>
-
-<meta property="og:title" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" />
-<meta property="og:description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty Link to heading 2019 TCC,CCF C类
-看到C类效果这样心里还是有点底，这个用来PK应该是没问题的
-1 Link to heading 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。
-贡献可以分为以下部分：
-部署了动态云资源分配方法，解决了在资源预分配和动态分配两阶段的资源调度问题。开发了随机优化方法来将用户需求建模为随机变量，并实现了10%的部署代价提升。 2 Related work Link to heading 动态资源分配分为两个阶段：
-第一阶段，资源在不考虑用户需求的情况下被分配。 第二阶段，为了保证QoS，采用on-demand的方式分配资源。 由于是离散的，因此不能使用凸优化方法，不能保证有全局最优解。
-Robust Cloud Resouce Provisioning，考虑了三个不确定性：demand、price和cloud resource availability
-在第一阶段，预付费资源完成，将特定数量的资源分配给了应用。 在第二阶段，判定资源是否够用，开始采购on-demand资源 总体来说该作者列的引文都是关于stochastic programming的
-3 System model and assumptions Link to heading 3.1 Problem Definition Link to heading 为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。
-算法主要将数据库应用与一般网络应用进行区分。(database instnace and computing instance)
-然后进行了一系列的数学符号定义
-4 Dynamic Cloud Resource Allocation Algorithm Link to heading 本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。 第二阶段，将non-deterministic user demand建模成随机变量，来动态分配on-demand的资源。" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Dynamic Cloud Resource Allocation Considering Demand Uncertainty - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了" /><meta name="keywords" content='计算机/科研/资源调度预测' /><meta itemprop="name" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty">
+<meta itemprop="description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了"><meta itemprop="datePublished" content="2021-03-05T10:46:04+08:00" />
+<meta itemprop="dateModified" content="2021-03-05T10:46:04+08:00" />
+<meta itemprop="wordCount" content="1647">
+<meta itemprop="keywords" content="计算机/科研/资源调度预测," /><meta property="og:title" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" />
+<meta property="og:description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-03-05T10:46:04+08:00" />
 <meta property="article:modified_time" content="2021-03-05T10:46:04+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/">
-              Dynamic Cloud Resource Allocation Considering Demand Uncertainty
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"/>
+<meta name="twitter:description" content="Dynamic Cloud Resource Allocation Considering Demand Uncertainty2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" /><link rel="next" href="http://wtysos11.github.io/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Dynamic Cloud Resource Allocation Considering Demand Uncertainty",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty\/"
+    },"genre": "posts","keywords": "计算机\/科研\/资源调度预测","wordcount":  1647 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty\/","datePublished": "2021-03-05T10:46:04+08:00","dateModified": "2021-03-05T10:46:04+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2021-03-05T10:46:04&#43;08:00">
-                三月 5, 2021
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/">计算机/科研/资源调度预测</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Dynamic Cloud Resource Allocation Considering Demand Uncertainty</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="post-meta-line"><span title="发布于 2021-03-05 10:46:04"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-03-05">2021-03-05</time></span>&nbsp;<span title="1647 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1700 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <h1 id="dynamic-cloud-resource-allocation-considering-demand-uncertainty">
-  Dynamic Cloud Resource Allocation Considering Demand Uncertainty
-  <a class="heading-link" href="#dynamic-cloud-resource-allocation-considering-demand-uncertainty">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>2019 TCC,CCF C类</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1">1</a></li>
+    <li><a href="#2-related-work">2 Related work</a></li>
+    <li><a href="#3-system-model-and-assumptions">3 System model and assumptions</a>
+      <ul>
+        <li><a href="#31-problem-definition">3.1 Problem Definition</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-dynamic-cloud-resource-allocation-algorithm">4 Dynamic Cloud Resource Allocation Algorithm</a>
+      <ul>
+        <li><a href="#41-dcra-flowchart-overview">4.1 DCRA Flowchart Overview</a></li>
+        <li><a href="#42-cloud-resource-reservation-optimization">4.2 Cloud Resource Reservation Optimization</a></li>
+        <li><a href="#43-dynamic-cloud-provision-optimization">4.3 Dynamic Cloud Provision Optimization</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-performance-analysis">5 Performance Analysis</a>
+      <ul>
+        <li><a href="#51-experimental-setup">5.1 Experimental Setup</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="dynamic-cloud-resource-allocation-considering-demand-uncertainty" class="heading-element">
+  <a href="#dynamic-cloud-resource-allocation-considering-demand-uncertainty" class="heading-mark"></a>Dynamic Cloud Resource Allocation Considering Demand Uncertainty</h1><p>2019 TCC,CCF C类</p>
 <p>看到C类效果这样心里还是有点底，这个用来PK应该是没问题的</p>
-<h2 id="1">
-  1
-  <a class="heading-link" href="#1">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。</p>
+<h2 id="1" class="heading-element">
+  <a href="#1" class="heading-mark"></a>1</h2><p>本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了按需分配和预付费资源的有点，实现了混合的解决方案来最小化总部署费用的同时，满足流量变化下的QoS。</p>
 <p>贡献可以分为以下部分：</p>
 <ol>
 <li>部署了动态云资源分配方法，解决了在资源预分配和动态分配两阶段的资源调度问题。开发了随机优化方法来将用户需求建模为随机变量，并实现了10%的部署代价提升。</li>
 </ol>
-<h2 id="2-related-work">
-  2 Related work
-  <a class="heading-link" href="#2-related-work">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>动态资源分配分为两个阶段：</p>
+<h2 id="2-related-work" class="heading-element">
+  <a href="#2-related-work" class="heading-mark"></a>2 Related work</h2><p>动态资源分配分为两个阶段：</p>
 <ol>
 <li>第一阶段，资源在不考虑用户需求的情况下被分配。</li>
 <li>第二阶段，为了保证QoS，采用on-demand的方式分配资源。</li>
@@ -246,166 +201,83 @@ Robust Cloud Resouce Provisioning，考虑了三个不确定性：demand、price
 <li>在第二阶段，判定资源是否够用，开始采购on-demand资源</li>
 </ul>
 <p>总体来说该作者列的引文都是关于stochastic programming的</p>
-<h2 id="3-system-model-and-assumptions">
-  3 System model and assumptions
-  <a class="heading-link" href="#3-system-model-and-assumptions">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<h3 id="31-problem-definition">
-  3.1 Problem Definition
-  <a class="heading-link" href="#31-problem-definition">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。</p>
+<h2 id="3-system-model-and-assumptions" class="heading-element">
+  <a href="#3-system-model-and-assumptions" class="heading-mark"></a>3 System model and assumptions</h2><h3 id="31-problem-definition" class="heading-element">
+  <a href="#31-problem-definition" class="heading-mark"></a>3.1 Problem Definition</h3><p>为了满足不同用户的需求，云服务提供商会提供不同配置的VM，这将作为算法的输入。</p>
 <p>算法主要将数据库应用与一般网络应用进行区分。(database instnace and computing instance)</p>
 <p>然后进行了一系列的数学符号定义</p>
-<h2 id="4-dynamic-cloud-resource-allocation-algorithm">
-  4 Dynamic Cloud Resource Allocation Algorithm
-  <a class="heading-link" href="#4-dynamic-cloud-resource-allocation-algorithm">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。
+<h2 id="4-dynamic-cloud-resource-allocation-algorithm" class="heading-element">
+  <a href="#4-dynamic-cloud-resource-allocation-algorithm" class="heading-mark"></a>4 Dynamic Cloud Resource Allocation Algorithm</h2><p>本文采用的是两阶段算法，第一阶段，使用预付费的资源来满足最低QoS的需求。
 第二阶段，将non-deterministic user demand建模成随机变量，来动态分配on-demand的资源。</p>
-<h3 id="41-dcra-flowchart-overview">
-  4.1 DCRA Flowchart Overview
-  <a class="heading-link" href="#41-dcra-flowchart-overview">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>在reservation phase，算法会决定满足最细骄傲用户需求的资源，来作为分配预付费资源的依据。</p>
+<h3 id="41-dcra-flowchart-overview" class="heading-element">
+  <a href="#41-dcra-flowchart-overview" class="heading-mark"></a>4.1 DCRA Flowchart Overview</h3><p>在reservation phase，算法会决定满足最细骄傲用户需求的资源，来作为分配预付费资源的依据。</p>
 <p>在dynamic provision phase，DCRA算法会在每一个周期内(15-min)监控用户的实际需求。</p>
 <p>除此之外，对于云服务提供商而言，如果购买了on-demand的机器，它不会在意你是使用了一小时还是几秒钟。因此，较短的动态分配周期并不能帮助减少分配的花费，但是可以帮助减少资源不足的情况，因为它可以尽快启动机器。</p>
 <p>在动态阶段，如果监控平均用户流量$r_{avg}$超过了最低期望流量$r_{min}$，网络服务将处于资源不足的状态，这时就应该启动资源动态分配算法来满足动态的流量需求。输入当前流量，输出期望的on-demand资源数量。</p>
-<h3 id="42-cloud-resource-reservation-optimization">
-  4.2 Cloud Resource Reservation Optimization
-  <a class="heading-link" href="#42-cloud-resource-reservation-optimization">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>reserved phase，目标是确保资源在最小代价下满足QoS的最小需求。</p>
+<h3 id="42-cloud-resource-reservation-optimization" class="heading-element">
+  <a href="#42-cloud-resource-reservation-optimization" class="heading-mark"></a>4.2 Cloud Resource Reservation Optimization</h3><p>reserved phase，目标是确保资源在最小代价下满足QoS的最小需求。</p>
 <p>代价函数包括了，DB实例的代价、存储代价、计算实例代价和IO的代价。</p>
 <p>满足的约束是，实例的数量与单位实例能处理流量的乘积，要大于最小的流量估计值。</p>
 <p>这里默认web application request arrival rate服从泊松过程分布，直接用了排队论的公式来联系到达速率、响应时间与CPU占用率之间的关系。</p>
 <p>接下来是一些合法性约束条件，确保后续不会出现非法解</p>
-<h3 id="43-dynamic-cloud-provision-optimization">
-  4.3 Dynamic Cloud Provision Optimization
-  <a class="heading-link" href="#43-dynamic-cloud-provision-optimization">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>我觉得它这里还是说的不错，流量本身是uncertaint nature，这使得deterministic resource allocation optimization不足以应对现实的情况。</p>
+<h3 id="43-dynamic-cloud-provision-optimization" class="heading-element">
+  <a href="#43-dynamic-cloud-provision-optimization" class="heading-mark"></a>4.3 Dynamic Cloud Provision Optimization</h3><p>我觉得它这里还是说的不错，流量本身是uncertaint nature，这使得deterministic resource allocation optimization不足以应对现实的情况。</p>
 <p>作者引经据典，指出demand uncertainty can be modeled by a normal distribution。</p>
 <p>作者希望使用stochastic optimization approach，考虑服从正态分布的随机过程。</p>
 <p>最优化的目标optimization variables是on-demand的计算资源和数据库的实例数，以及它们的服务速率来满足更新的请求速率。</p>
 <p>建模的目标式流量的期望值$r_{ave_c}$与$r_{ave_{db}}$及其方差。为了保证满足95%的置信区间，选用两倍的方差。</p>
 <p>同样采用排队论方式建模，来建立请求率与访问时间之间的关系。</p>
-<h2 id="5-performance-analysis">
-  5 Performance Analysis
-  <a class="heading-link" href="#5-performance-analysis">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<h3 id="51-experimental-setup">
-  5.1 Experimental Setup
-  <a class="heading-link" href="#51-experimental-setup">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>用户请求到达率依据排队论建模（2011,Optimal Resource Allocation for Multimedia Cloud Based on Queuing Model）</p>
+<h2 id="5-performance-analysis" class="heading-element">
+  <a href="#5-performance-analysis" class="heading-mark"></a>5 Performance Analysis</h2><h3 id="51-experimental-setup" class="heading-element">
+  <a href="#51-experimental-setup" class="heading-mark"></a>5.1 Experimental Setup</h3><p>用户请求到达率依据排队论建模（2011,Optimal Resource Allocation for Multimedia Cloud Based on Queuing Model）</p>
 <p>reserved instance固定使用一年的合约，on-demand资源使用小时级合约</p>
 <p>测试流量，其中之一为RUBiS流量；另外一个是SPEC。这两个都是benchmark流量。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-03-05 10:46:04">更新于 2021-03-05&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-hashtags="计算机/科研/资源调度预测"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-hashtag="计算机/科研/资源调度预测"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/" data-title="Dynamic Cloud Resource Allocation Considering Demand Uncertainty"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/" class="post-tag" title="标签 - 计算机/科研/资源调度预测">计算机/科研/资源调度预测</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/" class="post-nav-item" rel="prev" title="A two-phase cloud resource provisioning algorithm for cost optimization"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>A two-phase cloud resource provisioning algorithm for cost optimization</a>
+      <a href="/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/" class="post-nav-item" rel="next" title="数据结构-概述">数据结构-概述<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

@@ -1,197 +1,173 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  Vagrant如何手动下载官网镜像并导入 · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="参考：
-手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且curl到了vagrantcloud，但是就是拉不下来镜像……无奈之下只能自力更生，直接搜索然后下载，比如这个RancherOS。我所进行的实验是Vagrant快速部署k8s，因为实验室服务器不够了，没有抵挡地住诱惑。
-或者也可以查看使用vagrant up获得的信息（如下），其中URL即为下载地址。
-Bringing machine &#39;server-01&#39; up with &#39;virtualbox&#39; provider... Bringing machine &#39;node-01&#39; up with &#39;virtualbox&#39; provider... Bringing machine &#39;node-02&#39; up with &#39;virtualbox&#39; provider... ==&gt; server-01: Box &#39;chrisurwin/RancherOS&#39; could not be found. Attempting to find and install... server-01: Box Provider: virtualbox server-01: Box Version: 1.5.1 ==&gt; server-01: Loading metadata for box &#39;chrisurwin/RancherOS&#39; server-01: URL: https://vagrantcloud.com/chrisurwin/RancherOS ==&gt; server-01: Adding box &#39;chrisurwin/RancherOS&#39; (v1.">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Vagrant如何手动下载官网镜像并导入"/>
-<meta name="twitter:description" content="参考：
-手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且curl到了vagrantcloud，但是就是拉不下来镜像……无奈之下只能自力更生，直接搜索然后下载，比如这个RancherOS。我所进行的实验是Vagrant快速部署k8s，因为实验室服务器不够了，没有抵挡地住诱惑。
-或者也可以查看使用vagrant up获得的信息（如下），其中URL即为下载地址。
-Bringing machine &#39;server-01&#39; up with &#39;virtualbox&#39; provider... Bringing machine &#39;node-01&#39; up with &#39;virtualbox&#39; provider... Bringing machine &#39;node-02&#39; up with &#39;virtualbox&#39; provider... ==&gt; server-01: Box &#39;chrisurwin/RancherOS&#39; could not be found. Attempting to find and install... server-01: Box Provider: virtualbox server-01: Box Version: 1.5.1 ==&gt; server-01: Loading metadata for box &#39;chrisurwin/RancherOS&#39; server-01: URL: https://vagrantcloud.com/chrisurwin/RancherOS ==&gt; server-01: Adding box &#39;chrisurwin/RancherOS&#39; (v1."/>
-
-<meta property="og:title" content="Vagrant如何手动下载官网镜像并导入" />
-<meta property="og:description" content="参考：
-手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且curl到了vagrantcloud，但是就是拉不下来镜像……无奈之下只能自力更生，直接搜索然后下载，比如这个RancherOS。我所进行的实验是Vagrant快速部署k8s，因为实验室服务器不够了，没有抵挡地住诱惑。
-或者也可以查看使用vagrant up获得的信息（如下），其中URL即为下载地址。
-Bringing machine &#39;server-01&#39; up with &#39;virtualbox&#39; provider... Bringing machine &#39;node-01&#39; up with &#39;virtualbox&#39; provider... Bringing machine &#39;node-02&#39; up with &#39;virtualbox&#39; provider... ==&gt; server-01: Box &#39;chrisurwin/RancherOS&#39; could not be found. Attempting to find and install... server-01: Box Provider: virtualbox server-01: Box Version: 1.5.1 ==&gt; server-01: Loading metadata for box &#39;chrisurwin/RancherOS&#39; server-01: URL: https://vagrantcloud.com/chrisurwin/RancherOS ==&gt; server-01: Adding box &#39;chrisurwin/RancherOS&#39; (v1." />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Vagrant如何手动下载官网镜像并导入 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu" /><meta name="keywords" content='内容/实践记录, 计算机/vagrant' /><meta itemprop="name" content="Vagrant如何手动下载官网镜像并导入">
+<meta itemprop="description" content="参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu"><meta itemprop="datePublished" content="2021-06-03T09:36:14+08:00" />
+<meta itemprop="dateModified" content="2021-06-03T09:36:14+08:00" />
+<meta itemprop="wordCount" content="745">
+<meta itemprop="keywords" content="内容/实践记录,计算机/vagrant," /><meta property="og:title" content="Vagrant如何手动下载官网镜像并导入" />
+<meta property="og:description" content="参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-06-03T09:36:14+08:00" />
 <meta property="article:modified_time" content="2021-06-03T09:36:14+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/">
-              Vagrant如何手动下载官网镜像并导入
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Vagrant如何手动下载官网镜像并导入"/>
+<meta name="twitter:description" content="参考： 手工下载和导入vagrant镜像 How to add a downloaded .box file to Vagrant? 由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且cu"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" /><link rel="next" href="http://wtysos11.github.io/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Vagrant如何手动下载官网镜像并导入",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5\/"
+    },"genre": "posts","keywords": "内容\/实践记录, 计算机\/vagrant","wordcount":  745 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5\/","datePublished": "2021-06-03T09:36:14+08:00","dateModified": "2021-06-03T09:36:14+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2021-06-03T09:36:14&#43;08:00">
-                六月 3, 2021
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/">操作实践</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/">内容/实践记录</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/vagrant/">计算机/vagrant</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Vagrant如何手动下载官网镜像并导入</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" class="post-category" title="分类 - 操作实践"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 操作实践</a></span></div><div class="post-meta-line"><span title="发布于 2021-06-03 09:36:14"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-06-03">2021-06-03</time></span>&nbsp;<span title="745 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 800 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <p>参考：</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#搜索并获取镜像">搜索并获取镜像</a></li>
+    <li><a href="#导入镜像">导入镜像</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>参考：</p>
 <ul>
-<li><a href="https://favoorr.github.io/2017/01/06/import-vagrant-box-manually/"  class="external-link" target="_blank" rel="noopener">手工下载和导入vagrant镜像</a></li>
-<li><a href="https://stackoverflow.com/questions/22065698/how-to-add-a-downloaded-box-file-to-vagrant"  class="external-link" target="_blank" rel="noopener">How to add a downloaded .box file to Vagrant?</a></li>
+<li><a href="https://favoorr.github.io/2017/01/06/import-vagrant-box-manually/"target="_blank" rel="external nofollow noopener noreferrer">手工下载和导入vagrant镜像</a></li>
+<li><a href="https://stackoverflow.com/questions/22065698/how-to-add-a-downloaded-box-file-to-vagrant"target="_blank" rel="external nofollow noopener noreferrer">How to add a downloaded .box file to Vagrant?</a></li>
 </ul>
-<p>由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且curl到了vagrantcloud，但是就是拉不下来镜像……无奈之下只能自力更生，直接搜索然后下载，比如这个<a href="https://app.vagrantup.com/chrisurwin/boxes/RancherOS"  class="external-link" target="_blank" rel="noopener">RancherOS</a>。我所进行的实验是<a href="https://docs.rancher.cn/docs/rancher2/quick-start-guide/deployment/quickstart-vagrant/_index"  class="external-link" target="_blank" rel="noopener">Vagrant快速部署k8s</a>，因为实验室服务器不够了，没有抵挡地住诱惑。</p>
+<p>由于国内网络的问题，下载Vagrant镜像非常的困难。明明我已经开了全局代理并且curl到了vagrantcloud，但是就是拉不下来镜像……无奈之下只能自力更生，直接搜索然后下载，比如这个<a href="https://app.vagrantup.com/chrisurwin/boxes/RancherOS"target="_blank" rel="external nofollow noopener noreferrer">RancherOS</a>。我所进行的实验是<a href="https://docs.rancher.cn/docs/rancher2/quick-start-guide/deployment/quickstart-vagrant/_index"target="_blank" rel="external nofollow noopener noreferrer">Vagrant快速部署k8s</a>，因为实验室服务器不够了，没有抵挡地住诱惑。</p>
 <p>或者也可以查看使用<code>vagrant up</code>获得的信息（如下），其中URL即为下载地址。</p>
 <pre tabindex="0"><code>Bringing machine &#39;server-01&#39; up with &#39;virtualbox&#39; provider...
 Bringing machine &#39;node-01&#39; up with &#39;virtualbox&#39; provider...
@@ -202,23 +178,10 @@ Bringing machine &#39;node-02&#39; up with &#39;virtualbox&#39; provider...
 ==&gt; server-01: Loading metadata for box &#39;chrisurwin/RancherOS&#39;
     server-01: URL: https://vagrantcloud.com/chrisurwin/RancherOS
 ==&gt; server-01: Adding box &#39;chrisurwin/RancherOS&#39; (v1.5.1) for provider: virtualbox
-    server-01: Downloading: https://vagrantcloud.com/chrisurwin/boxes/RancherOS/versions/1.5.1/providers/virtualbox.box
-</code></pre><h2 id="搜索并获取镜像">
-  搜索并获取镜像
-  <a class="heading-link" href="#%e6%90%9c%e7%b4%a2%e5%b9%b6%e8%8e%b7%e5%8f%96%e9%95%9c%e5%83%8f">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>如前面所提到，直接到官网上可以搜索到对应的box。可以使用各种离线下载工具把它弄下来，因为不大我直接用浏览器下载了。</p>
-<h2 id="导入镜像">
-  导入镜像
-  <a class="heading-link" href="#%e5%af%bc%e5%85%a5%e9%95%9c%e5%83%8f">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>我所使用的环境是vagrant 2.2.16在win10下。一个非常麻烦的原因是这个版本有个<a href="https://github.com/hashicorp/vagrant/issues/12340"  class="external-link" target="_blank" rel="noopener">bug</a>，所以必须使用绝对路径不能用相对路径。</p>
+    server-01: Downloading: https://vagrantcloud.com/chrisurwin/boxes/RancherOS/versions/1.5.1/providers/virtualbox.box</code></pre><h2 id="搜索并获取镜像" class="heading-element">
+  <a href="#%e6%90%9c%e7%b4%a2%e5%b9%b6%e8%8e%b7%e5%8f%96%e9%95%9c%e5%83%8f" class="heading-mark"></a>搜索并获取镜像</h2><p>如前面所提到，直接到官网上可以搜索到对应的box。可以使用各种离线下载工具把它弄下来，因为不大我直接用浏览器下载了。</p>
+<h2 id="导入镜像" class="heading-element">
+  <a href="#%e5%af%bc%e5%85%a5%e9%95%9c%e5%83%8f" class="heading-mark"></a>导入镜像</h2><p>我所使用的环境是vagrant 2.2.16在win10下。一个非常麻烦的原因是这个版本有个<a href="https://github.com/hashicorp/vagrant/issues/12340"target="_blank" rel="external nofollow noopener noreferrer">bug</a>，所以必须使用绝对路径不能用相对路径。</p>
 <p>新建一个metadata.json放在下载好的box旁边。将box重命名为virtualbox.box</p>
 <pre tabindex="0"><code>{
     &#34;name&#34;: &#34;chrisurwin/RancherOS&#34;,
@@ -229,8 +192,7 @@ Bringing machine &#39;node-02&#39; up with &#39;virtualbox&#39; provider...
             &#34;url&#34;: &#34;file:///C:/Users/wtyso/Downloads/virtualbox.box&#34;
         }]
     }]
-}
-</code></pre><pre><code>PS：其中file内一定要有三个斜杠，不然会报错……但是我不能理解为什么一个斜杠又可以，而且转义不应该是\吗。有点懵
+}</code></pre><pre><code>PS：其中file内一定要有三个斜杠，不然会报错……但是我不能理解为什么一个斜杠又可以，而且转义不应该是\吗。有点懵
 </code></pre>
 <p>接下来，在当前目录下执行命令<code>vagrant box add C:\Users\wtyso\Downloads\metadata.json</code>
 终于可以看到好消息：</p>
@@ -239,93 +201,56 @@ Bringing machine &#39;node-02&#39; up with &#39;virtualbox&#39; provider...
 ==&gt; box: Adding box &#39;chrisurwin/RancherOS&#39; (v1.5.1) for provider: virtualbox
     box: Unpacking necessary files from: file:///C:/Users/wtyso/Downloads/virtualbox.box
     box:
-==&gt; box: Successfully added box &#39;chrisurwin/RancherOS&#39; (v1.5.1) for &#39;virtualbox&#39;!
-</code></pre><p>运行<code>vagrant box list</code>查看结果</p>
+==&gt; box: Successfully added box &#39;chrisurwin/RancherOS&#39; (v1.5.1) for &#39;virtualbox&#39;!</code></pre><p>运行<code>vagrant box list</code>查看结果</p>
 <pre tabindex="0"><code>(base) PS C:\Users\wtyso\Downloads&gt; vagrant box list
-chrisurwin/RancherOS (virtualbox, 1.5.1)
-</code></pre><p>可喜可贺可喜可贺，如此就基本完结了。</p>
+chrisurwin/RancherOS (virtualbox, 1.5.1)</code></pre><p>可喜可贺可喜可贺，如此就基本完结了。</p>
 <p>原作者还提到，如果没有版本号可以使用<code>vagrant box add centos/7 --box-version 1605.01 file://virtualbox.box</code>的方式导入，我就不赘述了。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-06-03 09:36:14">更新于 2021-06-03&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-title="Vagrant如何手动下载官网镜像并导入" data-hashtags="内容/实践记录,计算机/vagrant"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-hashtag="内容/实践记录"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-title="Vagrant如何手动下载官网镜像并导入" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-title="Vagrant如何手动下载官网镜像并导入"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-title="Vagrant如何手动下载官网镜像并导入"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-title="Vagrant如何手动下载官网镜像并导入" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-title="Vagrant如何手动下载官网镜像并导入" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210603_vagrant%E5%A6%82%E4%BD%95%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%AE%98%E7%BD%91%E9%95%9C%E5%83%8F%E5%B9%B6%E5%AF%BC%E5%85%A5/" data-title="Vagrant如何手动下载官网镜像并导入"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E5%86%85%E5%AE%B9/%E5%AE%9E%E8%B7%B5%E8%AE%B0%E5%BD%95/" class="post-tag" title="标签 - 内容/实践记录">内容/实践记录</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/vagrant/" class="post-tag" title="标签 - 计算机/Vagrant">计算机/Vagrant</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20210409_%E8%AE%B0%E4%B8%80%E6%AC%A1%E8%8E%B7%E5%8F%96-ita.ee.lbl.gov-%E4%B8%AD%E4%BF%A1%E6%81%AF%E7%9A%84%E8%BF%87%E7%A8%8B%E4%B8%8Eftp%E8%BF%9E%E6%8E%A5%E7%9A%84%E6%80%9D%E8%80%83/" class="post-nav-item" rel="prev" title="记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>记一次获取 ita.ee.lbl.gov 中信息的过程与FTP连接的思考</a>
+      <a href="/posts/20210604_go%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E4%BC%A0%E5%80%BC%E4%B8%8E%E6%8C%87%E9%92%88%E7%9A%84%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/" class="post-nav-item" rel="next" title="go语言函数传值与指针的相关问题">go语言函数传值与指针的相关问题<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

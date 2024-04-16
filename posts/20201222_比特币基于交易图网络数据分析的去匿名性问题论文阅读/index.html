@@ -1,195 +1,193 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  比特币，基于交易图网络数据分析的去匿名性问题论文阅读 · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="所有的论文都放在这边
-Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018. Do Bitcoin Users Really Care About Anonymity? Link to heading Do Bitcoin Users Really Care about Anonymity?">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="比特币，基于交易图网络数据分析的去匿名性问题论文阅读"/>
-<meta name="twitter:description" content="所有的论文都放在这边
-Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018. Do Bitcoin Users Really Care About Anonymity? Link to heading Do Bitcoin Users Really Care about Anonymity?"/>
-
-<meta property="og:title" content="比特币，基于交易图网络数据分析的去匿名性问题论文阅读" />
-<meta property="og:description" content="所有的论文都放在这边
-Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018. Do Bitcoin Users Really Care About Anonymity? Link to heading Do Bitcoin Users Really Care about Anonymity?" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>比特币，基于交易图网络数据分析的去匿名性问题论文阅读 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018." /><meta name="keywords" content='计算机/时间序列预测' /><meta itemprop="name" content="比特币，基于交易图网络数据分析的去匿名性问题论文阅读">
+<meta itemprop="description" content="所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018."><meta itemprop="datePublished" content="2020-12-22T19:20:04+08:00" />
+<meta itemprop="dateModified" content="2024-01-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2869">
+<meta itemprop="keywords" content="计算机/时间序列预测," /><meta property="og:title" content="比特币，基于交易图网络数据分析的去匿名性问题论文阅读" />
+<meta property="og:description" content="所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-12-22T19:20:04+08:00" />
 <meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">
-              比特币，基于交易图网络数据分析的去匿名性问题论文阅读
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="比特币，基于交易图网络数据分析的去匿名性问题论文阅读"/>
+<meta name="twitter:description" content="所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018."/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" /><link rel="prev" href="http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" /><link rel="next" href="http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "比特币，基于交易图网络数据分析的去匿名性问题论文阅读",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB\/"
+    },"genre": "posts","keywords": "计算机\/时间序列预测","wordcount":  2869 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB\/","datePublished": "2020-12-22T19:20:04+08:00","dateModified": "2024-01-21T00:00:00+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2020-12-22T19:20:04&#43;08:00">
-                十二月 22, 2020
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/">计算机/时间序列预测</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="post-meta-line"><span title="发布于 2020-12-22 19:20:04"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2020-12-22">2020-12-22</time></span>&nbsp;<span title="更新于 2024-01-21 00:00:00"><i class="fa-regular fa-calendar-check fa-fw me-1" aria-hidden="true"></i><time datetime="2024-01-21">2024-01-21</time></span>&nbsp;<span title="2869 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#相关工作">相关工作</a></li>
+  </ul>
 
-      <div class="post-content">
-        
-        <p>所有的论文都放在这边</p>
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#相关工作-1">相关工作</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#相关工作-2">相关工作</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#universal-detection-methods">Universal Detection Methods</a>
+      <ul>
+        <li><a href="#entity-portrait">entity portrait</a></li>
+        <li><a href="#transaction-pattern-recognition">Transaction Pattern Recognition</a></li>
+        <li><a href="#double-angle-detection">Double angle detection</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p>所有的论文都放在这边</p>
 <ol>
 <li>Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph
 Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018</li>
 <li>Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018.</li>
 </ol>
-<h1 id="do-bitcoin-users-really-care-about-anonymity">
-  Do Bitcoin Users Really Care About Anonymity?
-  <a class="heading-link" href="#do-bitcoin-users-really-care-about-anonymity">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph
+<h1 id="do-bitcoin-users-really-care-about-anonymity" class="heading-element">
+  <a href="#do-bitcoin-users-really-care-about-anonymity" class="heading-mark"></a>Do Bitcoin Users Really Care About Anonymity?</h1><p>Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph
 Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018</p>
 <p>看了一下，感觉可能和我想的有些不太一样。这个是关于比特币交易网络分析的文章，重点在于用户对于自身匿名性的在意程度。
 文章介绍了目前主流的四种去匿名性思路：</p>
@@ -200,86 +198,32 @@ Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018</p>
 <li>分析比特币交易图，这个是现在做的比较多的。Reid and Harrigan使用了一个多输入的启发式方法来进行分析，完成地址到用户的映射，等等。</li>
 </ol>
 <p>学界关于比特币的匿名性和去匿名性进行了激烈的竞争，但是没有人想过一个问题：比特币用户自身关心匿名性吗？从结果来看，越富有的账户越关心自身匿名性，但是大部分用户本身是不关心匿名性的，我们可以轻松找到大型组织的所有对应地址。</p>
-<h2 id="相关工作">
-  相关工作
-  <a class="heading-link" href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>不太重要，其中分析比特币交易图所列出的文献值得进行阅读。</p>
-<h1 id="breaking-bad-de-anonymising-entity-types-on-the-bitcoin-blockchain-using-supervised-machine-learning">
-  Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning
-  <a class="heading-link" href="#breaking-bad-de-anonymising-entity-types-on-the-bitcoin-blockchain-using-supervised-machine-learning">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>文章来源：课程论文搜索</p>
+<h2 id="相关工作" class="heading-element">
+  <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c" class="heading-mark"></a>相关工作</h2><p>不太重要，其中分析比特币交易图所列出的文献值得进行阅读。</p>
+<h1 id="breaking-bad-de-anonymising-entity-types-on-the-bitcoin-blockchain-using-supervised-machine-learning" class="heading-element">
+  <a href="#breaking-bad-de-anonymising-entity-types-on-the-bitcoin-blockchain-using-supervised-machine-learning" class="heading-mark"></a>Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning</h1><p>文章来源：课程论文搜索</p>
 <p>本文使用了有监督机器学习的方式，预测未定义实体的类型。数据集采用了从200M个交易记录中提取出的434个实体，将其分为10类。采用的方法Gradient Boosting，准确率77%，F1大约0.75。</p>
-<h2 id="intro">
-  Intro
-  <a class="heading-link" href="#intro">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>与公司合作，该数据提供方标注了一些数据，但是目前比特币网络上的大部分地址是没有被标注出来的。
+<h2 id="intro" class="heading-element">
+  <a href="#intro" class="heading-mark"></a>Intro</h2><p>与公司合作，该数据提供方标注了一些数据，但是目前比特币网络上的大部分地址是没有被标注出来的。
 标注类别：exchange, gambling, hosted wallet, merchant services, mining pool, mixing, ransomware, scam, tor market or other</p>
-<h2 id="相关工作-1">
-  相关工作
-  <a class="heading-link" href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c-1">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>与比特币相关的工作比较多的是采用无监督学习方式，比如聚类算法。</p>
-<h1 id="could-network-information-facilitate-address-clustering-in-bitcoin">
-  Could Network Information Facilitate Address Clustering in Bitcoin?
-  <a class="heading-link" href="#could-network-information-facilitate-address-clustering-in-bitcoin">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>论文计划使用地址信息来进行比特币的聚类，将所有用同一个用户创建的地址聚为一类。
+<h2 id="相关工作-1" class="heading-element">
+  <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c-1" class="heading-mark"></a>相关工作</h2><p>与比特币相关的工作比较多的是采用无监督学习方式，比如聚类算法。</p>
+<h1 id="could-network-information-facilitate-address-clustering-in-bitcoin" class="heading-element">
+  <a href="#could-network-information-facilitate-address-clustering-in-bitcoin" class="heading-mark"></a>Could Network Information Facilitate Address Clustering in Bitcoin?</h1><p>论文计划使用地址信息来进行比特币的聚类，将所有用同一个用户创建的地址聚为一类。
 结果显示只有8%的聚类与单个IP相关，说明比特币用户往往会使用很多个IP。
 由于比特币交易的特性，为了确认一个交易必须要向全网进行广播，因此持续的网络监听很可能可以将比特币地址与特定的IP相连接。但是如果用户使用动态分配的IP，比如在NAT路由器之后或者使用钱包应用。因此这些信息就不一定能够用在去匿名化上。
 思路：使用已有的启发式算法对用户和地址进行映射，然后对整个数据集进行聚类，看聚类所得到的用户与IP的对应关系。</p>
-<h2 id="相关工作-2">
-  相关工作
-  <a class="heading-link" href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c-2">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>去匿名化的第一个工作：Reid and Harrigan(前面提到过)，使用启发式方法，多输入模型分析追踪之后的交易。
+<h2 id="相关工作-2" class="heading-element">
+  <a href="#%e7%9b%b8%e5%85%b3%e5%b7%a5%e4%bd%9c-2" class="heading-mark"></a>相关工作</h2><p>去匿名化的第一个工作：Reid and Harrigan(前面提到过)，使用启发式方法，多输入模型分析追踪之后的交易。
 Meiklejohn，基于标准用户的行为进行</p>
-<h1 id="a-survey-on-blockchain-anomaly-detection-using-data-mining-techniques">
-  A Survey on Blockchain Anomaly Detection Using Data Mining Techniques
-  <a class="heading-link" href="#a-survey-on-blockchain-anomaly-detection-using-data-mining-techniques">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>匿名检测技术的综述
+<h1 id="a-survey-on-blockchain-anomaly-detection-using-data-mining-techniques" class="heading-element">
+  <a href="#a-survey-on-blockchain-anomaly-detection-using-data-mining-techniques" class="heading-mark"></a>A Survey on Blockchain Anomaly Detection Using Data Mining Techniques</h1><p>匿名检测技术的综述
 将方法分为两大类，一类为泛用检测方法，一类为专用检测方法。下面共有八个子类。</p>
-<h2 id="universal-detection-methods">
-  Universal Detection Methods
-  <a class="heading-link" href="#universal-detection-methods">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>指不为特定的异常设计的检测方法
+<h2 id="universal-detection-methods" class="heading-element">
+  <a href="#universal-detection-methods" class="heading-mark"></a>Universal Detection Methods</h2><p>指不为特定的异常设计的检测方法
 分为三个小类：entity portrait/ transaction pattern recognition/ double angle detection model</p>
-<h3 id="entity-portrait">
-  entity portrait
-  <a class="heading-link" href="#entity-portrait">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>主要任务是存储用户的活动，并对这些活动的性质进行分析。这方面活动的目的主要是为了去匿名化。</p>
+<h3 id="entity-portrait" class="heading-element">
+  <a href="#entity-portrait" class="heading-mark"></a>entity portrait</h3><p>主要任务是存储用户的活动，并对这些活动的性质进行分析。这方面活动的目的主要是为了去匿名化。</p>
 <ul>
 <li>Harlev: Breaking bad: de-anonymising entity types on the bitcoin blockchain using supervised machine learning.，这个前面有，使用了两百万个交易数据的434个实体，使用SMOTE方法解决类间不平衡问题，然后用Gradient Boosting监督学习方法进行分类。精确度77%、F1 75%</li>
 <li>Regulating cryptocurrencies: a supervised machine learning approach to de-anonymizing the bitcoin blockchain，同样使用了有监督的机器学习方法来预测没有分类的应用，训练数据中有957个实体，针对12类进行预测。使用了同样的Gradient Boosting算法（默认参数）</li>
@@ -289,149 +233,78 @@ Meiklejohn，基于标准用户的行为进行</p>
 <li>A Bayesian approach to identify bitcoin users，使用贝叶斯方法，构建概率论模型来对用户的行为特征建模，完成将比特币地址与交易和IP地址对应。通过两个月对一百多个用户的观察，他们能够识别几千个比特币用户，并将他们的交易行为与地理位置绑定。</li>
 <li>Learning to classify blockchain peers according to their behavior sequences，基于深度学习的方法，可以将用户根据行为进行分类，通过提取代表用户行为的序列数据来解决问题。</li>
 </ul>
-<h3 id="transaction-pattern-recognition">
-  Transaction Pattern Recognition
-  <a class="heading-link" href="#transaction-pattern-recognition">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>计划通过机器学习方法决定交易的类型。
+<h3 id="transaction-pattern-recognition" class="heading-element">
+  <a href="#transaction-pattern-recognition" class="heading-mark"></a>Transaction Pattern Recognition</h3><p>计划通过机器学习方法决定交易的类型。
 好像没什么用</p>
-<h3 id="double-angle-detection">
-  Double angle detection
-  <a class="heading-link" href="#double-angle-detection">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>计划同时找出异常的用户和地址</p>
+<h3 id="double-angle-detection" class="heading-element">
+  <a href="#double-angle-detection" class="heading-mark"></a>Double angle detection</h3><p>计划同时找出异常的用户和地址</p>
 <ul>
 <li>Anomaly detection in bitcoin network using unsupervised learning methods</li>
 <li>Anomaly detection in the bitcoin system - a network perspective
 该方法从30个已知事件中找出了一个偷窃事件。</li>
 </ul>
-<h1 id="an-evaluation-of-bitcoin-address-classifi--cation-based-on-transaction-history-summarization">
-  An evaluation of bitcoin address classifi- cation based on transaction history summarization
-  <a class="heading-link" href="#an-evaluation-of-bitcoin-address-classifi--cation-based-on-transaction-history-summarization">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>构建了新的feature来进行Bitcoin地址的分类，将交易历史集合表示为新的特征。</p>
-<h1 id="t-edge-temporal-weighted-multidigraph-embedding-for-ethereum-transaction-network-analysis">
-  T-EDGE: temporal weighted multidigraph embedding for Ethereum transaction network analysis
-  <a class="heading-link" href="#t-edge-temporal-weighted-multidigraph-embedding-for-ethereum-transaction-network-analysis">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>graph embeding方法，为了避免启发式特征提取的问题，更全面地代表动态交易网络的时序和经济结构，作者通过网络压缩的方式构建了以太坊的分析框架。</p>
-<h1 id="a-new-bitcoin-address-association-method-using-a-two-level-learner-model">
-  A New Bitcoin Address Association Method Using a Two-Level Learner Model
-  <a class="heading-link" href="#a-new-bitcoin-address-association-method-using-a-two-level-learner-model">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>来源：后续发展
+<h1 id="an-evaluation-of-bitcoin-address-classifi--cation-based-on-transaction-history-summarization" class="heading-element">
+  <a href="#an-evaluation-of-bitcoin-address-classifi--cation-based-on-transaction-history-summarization" class="heading-mark"></a>An evaluation of bitcoin address classifi- cation based on transaction history summarization</h1><p>构建了新的feature来进行Bitcoin地址的分类，将交易历史集合表示为新的特征。</p>
+<h1 id="t-edge-temporal-weighted-multidigraph-embedding-for-ethereum-transaction-network-analysis" class="heading-element">
+  <a href="#t-edge-temporal-weighted-multidigraph-embedding-for-ethereum-transaction-network-analysis" class="heading-mark"></a>T-EDGE: temporal weighted multidigraph embedding for Ethereum transaction network analysis</h1><p>graph embeding方法，为了避免启发式特征提取的问题，更全面地代表动态交易网络的时序和经济结构，作者通过网络压缩的方式构建了以太坊的分析框架。</p>
+<h1 id="a-new-bitcoin-address-association-method-using-a-two-level-learner-model" class="heading-element">
+  <a href="#a-new-bitcoin-address-association-method-using-a-two-level-learner-model" class="heading-mark"></a>A New Bitcoin Address Association Method Using a Two-Level Learner Model</h1><p>来源：后续发展
 做的仍然是比特币地址与用户的相关性分析，使得地址追踪变得可能。
 提取了比特币地址中的重要特征(主要是历史交易数据)，将聚类问题转变为二分类问题来降低计算复杂度。采用了一个两层的learner模型来分析两个比特币地址是否属于同一个用户。
 精度提升6~20%，召回率10%
 XGBoost,LightGBM, GBDT用在第一层，因为它们可以很好地处理所有的特征。DNN用在第二层，因为它在分类上表现出色。
 达到了95%以上</p>
-<h1 id="启发式分析方法">
-  启发式分析方法
-  <a class="heading-link" href="#%e5%90%af%e5%8f%91%e5%bc%8f%e5%88%86%e6%9e%90%e6%96%b9%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h1>
-<p>在最早的时候，人们使用基于启发式的方法来分析整个网络
+<h1 id="启发式分析方法" class="heading-element">
+  <a href="#%e5%90%af%e5%8f%91%e5%bc%8f%e5%88%86%e6%9e%90%e6%96%b9%e6%b3%95" class="heading-mark"></a>启发式分析方法</h1><p>在最早的时候，人们使用基于启发式的方法来分析整个网络
 目前最常用的方法就是多输入启发式方法，这个方法最早由：Bitcoin: a peer-to-peer electronic cash system此文是第一个提出使用启发式方法分析比特币交易网络的。启发式方法认为无论有多少输入，交易都会从一个用户开始，因此交易的地址应该全部归属于最初发出交易的用户。如此，可以合并所有交易中的输入地址，并合并成一个聚类，识别出这个聚类的地址所有者。</p>
 <p>Shadow address heuristic，第一次提出是在Evaluating user privacy in bitcoin中，并在A fistful of bitcoins: characterizing payments among men with no names被定义为change address。在比特币交易中，用户经常会新开一个地址来存放零钱。这个启发式方法的容错会更低一些，因为对shadow address的识别是基于对交易现象的观察而不是客观现象进行的。其他一些情况也使用了这种方法，在Data-driven de-anonymization in bitcoin中，使用了两种启发式方法来进行去匿名化，召回率69.3%，并研究了多种启发式方法结合的情况，发现结合后的提升小于1%。</p>
 <p>在Deanonymisation of clients in bitcoin P2P network和An analysis of anonymity in bitcoin using P2P network traffic中，与之前的分析交易图不同，它们更关注交易地址与实际IP地址的对应关系。使用网络层级技术来追踪IP地址，但是很容易被防御，如果使用了CoinShuffle: practical decentralized coin mixing for bitcoin中提到的VPN或混淆技术</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-01-21 00:00:00">更新于 2024-01-21&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读" data-hashtags="计算机/时间序列预测"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-hashtag="计算机/时间序列预测"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" data-title="比特币，基于交易图网络数据分析的去匿名性问题论文阅读"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/" class="post-tag" title="标签 - 计算机/时间序列预测">计算机/时间序列预测</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/" class="post-nav-item" rel="prev" title="如何让pandas根据指定列的指进行partition"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>如何让pandas根据指定列的指进行partition</a>
+      <a href="/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/" class="post-nav-item" rel="next" title="现代人工智能课程复习">现代人工智能课程复习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

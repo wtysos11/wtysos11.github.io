@@ -1,81 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/python on 实践出真知</title>
+    <title>计算机/Python - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/python/</link>
-    <description>Recent content in 计算机/python on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/python/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Conv1d原理解析</title>
-      <link>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 27 Sep 2021 09:49:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</guid>
-      <description>torch中的Conv1d解析</description>
-    </item>
-    <item>
-      <title>Conv1d原理解析</title>
-      <link>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 27 Sep 2021 09:49:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</guid>
-      <description>torch中的Conv1d解析</description>
-    </item>
-    <item>
-      <title>torch.einsum函数学习</title>
-      <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Thu, 09 Sep 2021 15:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
-      <description>torch.einsum函数的使用例子与说明</description>
-    </item>
-    <item>
-      <title>torch.einsum函数学习</title>
-      <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Thu, 09 Sep 2021 15:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
-      <description>torch.einsum函数的使用例子与说明</description>
-    </item>
-    <item>
-      <title>python命令行库如何实现子命令共享参数？</title>
-      <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
-      <pubDate>Thu, 02 Sep 2021 15:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
-      <description>比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。</description>
-    </item>
-    <item>
-      <title>python命令行库如何实现子命令共享参数？</title>
-      <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
-      <pubDate>Thu, 02 Sep 2021 15:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
-      <description>比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。</description>
-    </item>
-    <item>
-      <title>如何让pandas根据指定列的指进行partition</title>
-      <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
-      <pubDate>Sun, 22 Nov 2020 19:20:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
-      <description>问题描述 Link to heading 我拿到了一个维基百科的列表，其数据如下：&#xA;datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce_Mar铆a 18 2015-08-30 12:00:00 UTC Portal:Current_events 116 UTF-8的问题暂且不谈，现在需要将其作为csv文件读入内存中，并且按照title分成不同的datehour-&amp;gt;views表，并按照datehour排序。将2015~2020的数据按照同样的操作进行处理，并将它们拼接成一张大表，最后将每一个title对应的表导出到csv，title写入到index.txt中。&#xA;##解决方案&#xA;朴素想法 Link to heading 最朴素的想法就是遍历一遍原表的所有行，构建一个字典，字典的每个key是title，value是两个list。不断将原有数据放入其中，然后到时候直接遍历keys，根据两个list构建pd，排序后导出。&#xA;更python的做法 Link to heading 朴素想法应该是够用的，但是不美观，不够pythonic，看着很别扭。于是我搜索了How to partition DataFrame by column value in pandas?&#xA;boolean index Link to heading stackoverflow里有人提问如何将离散数据进行二分类，把小于和大于某个值的数据分到两个DataFrame中。直接用df1 = df[df[&amp;quot;Sales&amp;quot;]&amp;gt;=s]这样的语句就可以完成。 但是这在我们的场景上并不太适用。当然，可以提前遍历一遍把title做成集合再循环遍历，不过这也不是很pythonic。&#xA;groupby Link to heading 同样是上面那个问题，有人提到可以使用groupby方法。groupby听着就很满足我的需求，它让我想起了SQL里面的同名功能。&#xA;df.groupby(&#39;ColumnName&#39;).groups可以显示所有的列中的元素。 df.groupby(&#39;ColumnName&#39;)可以进行遍历，结果是一个(name,subDF)的二元组，name为分组的元素名称，subDF为分组后的DataFrame 对df.</description>
-    </item>
-    <item>
-      <title>如何让pandas根据指定列的指进行partition</title>
-      <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
-      <pubDate>Sun, 22 Nov 2020 19:20:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
-      <description>问题描述 Link to heading 我拿到了一个维基百科的列表，其数据如下：&#xA;datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce_Mar铆a 18 2015-08-30 12:00:00 UTC Portal:Current_events 116 UTF-8的问题暂且不谈，现在需要将其作为csv文件读入内存中，并且按照title分成不同的datehour-&amp;gt;views表，并按照datehour排序。将2015~2020的数据按照同样的操作进行处理，并将它们拼接成一张大表，最后将每一个title对应的表导出到csv，title写入到index.txt中。&#xA;##解决方案&#xA;朴素想法 Link to heading 最朴素的想法就是遍历一遍原表的所有行，构建一个字典，字典的每个key是title，value是两个list。不断将原有数据放入其中，然后到时候直接遍历keys，根据两个list构建pd，排序后导出。&#xA;更python的做法 Link to heading 朴素想法应该是够用的，但是不美观，不够pythonic，看着很别扭。于是我搜索了How to partition DataFrame by column value in pandas?&#xA;boolean index Link to heading stackoverflow里有人提问如何将离散数据进行二分类，把小于和大于某个值的数据分到两个DataFrame中。直接用df1 = df[df[&amp;quot;Sales&amp;quot;]&amp;gt;=s]这样的语句就可以完成。 但是这在我们的场景上并不太适用。当然，可以提前遍历一遍把title做成集合再循环遍历，不过这也不是很pythonic。&#xA;groupby Link to heading 同样是上面那个问题，有人提到可以使用groupby方法。groupby听着就很满足我的需求，它让我想起了SQL里面的同名功能。&#xA;df.groupby(&#39;ColumnName&#39;).groups可以显示所有的列中的元素。 df.groupby(&#39;ColumnName&#39;)可以进行遍历，结果是一个(name,subDF)的二元组，name为分组的元素名称，subDF为分组后的DataFrame 对df.</description>
-    </item>
-    <item>
-      <title>python日志模块logging学习与快速复习笔记</title>
-      <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Tue, 05 May 2020 09:08:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考：&#xA;csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细，比较规范 基础知识 Link to heading 日志级别 Link to heading CRITICAL &amp;gt; ERROR &amp;gt; WARNING &amp;gt; INFO &amp;gt; DEBUG &amp;gt; NOTSET，如果将日志级别设置为INFO，则INFO以下的日志将不会输出。默认设置级别为WARNING。&#xA;常用函数 Link to heading logging.basicConfig() # 使用一系列key-value值规定日志的基本配置信息，level规定输出的log级别，format定义输出log的格式，datafmt为输出的时间格式，filename为log文件名，filemode为打开log文件的模式。 logging.debug/info/warning/error/critical(str) #输出错误信息 logging.log(logging.DEBUG/..., str) #另外一种输出错误信息的方式 #可以使用如下代码将log信息同时输出到console上 console = logging.StreamHandler() # 定义console handler console.setLevel(logging.INFO) # 定义该handler级别 formatter = logging.Formatter(&amp;#39;%(asctime)s %(filename)s : %(levelname)s %(message)s&amp;#39;) #定义该handler格式 console.setFormatter(formatter) # Create an instance logging.getLogger().addHandler(console) 例子 Link to heading 例1：控制台与文件输出 Link to heading 设置输出格式，同时输出到控制台与文件</description>
-    </item>
-    <item>
-      <title>python日志模块logging学习与快速复习笔记</title>
-      <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Tue, 05 May 2020 09:08:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-      <description>因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考：&#xA;csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细，比较规范 基础知识 Link to heading 日志级别 Link to heading CRITICAL &amp;gt; ERROR &amp;gt; WARNING &amp;gt; INFO &amp;gt; DEBUG &amp;gt; NOTSET，如果将日志级别设置为INFO，则INFO以下的日志将不会输出。默认设置级别为WARNING。&#xA;常用函数 Link to heading logging.basicConfig() # 使用一系列key-value值规定日志的基本配置信息，level规定输出的log级别，format定义输出log的格式，datafmt为输出的时间格式，filename为log文件名，filemode为打开log文件的模式。 logging.debug/info/warning/error/critical(str) #输出错误信息 logging.log(logging.DEBUG/..., str) #另外一种输出错误信息的方式 #可以使用如下代码将log信息同时输出到console上 console = logging.StreamHandler() # 定义console handler console.setLevel(logging.INFO) # 定义该handler级别 formatter = logging.Formatter(&amp;#39;%(asctime)s %(filename)s : %(levelname)s %(message)s&amp;#39;) #定义该handler格式 console.setFormatter(formatter) # Create an instance logging.getLogger().addHandler(console) 例子 Link to heading 例1：控制台与文件输出 Link to heading 设置输出格式，同时输出到控制台与文件</description>
-    </item>
-  </channel>
+    <description>计算机/Python - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 27 Sep 2021 09:49:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/python/" rel="self" type="application/rss+xml" /><item>
+  <title>Conv1d原理解析</title>
+  <link>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</link>
+  <pubDate>Mon, 27 Sep 2021 09:49:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</guid>
+  <description><![CDATA[torch中的Conv1d解析]]></description>
+</item>
+<item>
+  <title>torch.einsum函数学习</title>
+  <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
+  <pubDate>Thu, 09 Sep 2021 15:46:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
+  <description><![CDATA[torch.einsum函数的使用例子与说明]]></description>
+</item>
+<item>
+  <title>python命令行库如何实现子命令共享参数？</title>
+  <link>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</link>
+  <pubDate>Thu, 02 Sep 2021 15:46:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210902_python%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%A8%8B%E5%BA%8F%E5%AD%90%E5%91%BD%E4%BB%A4%E5%85%B1%E4%BA%AB%E5%8F%82%E6%95%B0/</guid>
+  <description><![CDATA[比较python下的命令行库：argparse、click的区别，实现子命令共享参数的需求。]]></description>
+</item>
+<item>
+  <title>如何让pandas根据指定列的指进行partition</title>
+  <link>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</link>
+  <pubDate>Sun, 22 Nov 2020 19:20:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20201122_%E5%A6%82%E4%BD%95%E8%AE%A9pandas%E6%A0%B9%E6%8D%AE%E6%8C%87%E5%AE%9A%E5%88%97%E7%9A%84%E6%8C%87%E8%BF%9B%E8%A1%8Cpartition/</guid>
+  <description><![CDATA[问题描述我拿到了一个维基百科的列表，其数据如下： datehour title views 2015-10-17 13:00:00 UTC Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License 2 2015-06-01 14:00:00 UTC Dulce_Mar铆a 10 2015-06-01 21:00:00 UTC Dulce_Mar铆a 25 2015-06-01 06:00:00 UTC Dulce]]></description>
+</item>
+<item>
+  <title>python日志模块logging学习与快速复习笔记</title>
+  <link>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+  <pubDate>Tue, 05 May 2020 09:08:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200505_python%E6%97%A5%E5%BF%97%E6%A8%A1%E5%9D%97logging%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%BF%AB%E9%80%9F%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+  <description><![CDATA[因为内容比较简单，就不做学习总结了，全部内容归类为快速复习。 参考： csdn-python logging，有例子，可以快速入门 cnblog - python日志处理模块，很详细]]></description>
+</item>
+</channel>
 </rss>

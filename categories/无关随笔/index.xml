@@ -1,47 +1,47 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>无关随笔 on 实践出真知</title>
+    <title>无关随笔 - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/%E6%97%A0%E5%85%B3%E9%9A%8F%E7%AC%94/</link>
-    <description>Recent content in 无关随笔 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <lastBuildDate>Sun, 21 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://wtysos11.github.io/categories/%E6%97%A0%E5%85%B3%E9%9A%8F%E7%AC%94/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>《心流：最优体验心理学》读书笔记与自我思考</title>
-      <link>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</link>
-      <pubDate>Fri, 24 Sep 2021 18:43:00 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</guid>
-      <description>对《心流：最优体验心理学》这本书的阅读感想，以及基于最近发生事情的一些体会。</description>
-    </item>
-    <item>
-      <title>专利讲座笔记</title>
-      <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Sat, 26 Jun 2021 21:13:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</guid>
-      <description> 专利学习 Link to heading 内容：&#xA;专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座&#xA;专利基本知识 Link to heading 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念。专利具体来说是分为三个类型：发明、实用新型、外观设计。&#xA;发明也分为产品发明和方法发明，一般毕业所注册的专利都是方法发明这一类，包括制造方法和控制方法或使用方法。发明专利是对产品、方法或者改进所提出的技术方案。&#xA;实用新型，又称为产品发明，定义上为对产品的形状、构造以其结合提出的适用于使用的新的技术方案。一般被称为小发明，不包含方法。（算法这类虚拟的方法类内容是不包含在实用新型中的）&#xA;外观设计，又称为产品设计。对产品的形状、图案、色彩或者其结合所作出的富有美感并适于工作上应用的新设计。&#xA;毕业要求的1分为公开发明专利，成果必须署名中山的数学，且必须为国家发明专利的第一发明人。&#xA;不能获得专利的情况：&#xA;科学发现，比如发现一种自然现象 智力活动的规则和方法，比如一种游戏规则（三国杀）。具体来说是可以人为地随意篡改也不影响技术方面的体现。 疾病的诊断和治疗方法。出于人道主义的考虑和社会伦理的原因。 动物和植物新品种（产品的生产方法除外） 用原子核变换方法获得的物质 专利的性质：&#xA;独占性 专利权人具有对其发明创造的制造、使用、销售、许诺销售和进出口的权利，也是最重要的性质。 时间性 从申请日到授权日大概要2-3年，审查周期很长。 地域性 只能在某个国家单独申请 专利权授予条件：&#xA;新颖性 指申请日以前没有同样的发明创造 在国内外的出版物上公开发表过。这一点比较经常遇到，在期刊发表后是不能申请专利的 在国内外公开使用过或者以其他方式为公众所知。 创造性 比新颖性要高。 要求具有突出的实质性特点和显著的进步（实用新型只需要具有实质性特点和进步即可） 涉及计算机程序的专利：&#xA;通常是以发明专利申请的形式提出 涉及计算机程序的发明是指：为解决发明提出的问题，全部或部分以计算机程序处理流程为基础（算法流程图），通过计算机执行按上述流程编制的计算机程序，对计算机外部对象或者内部对象进行控制或处理的解决方案。 并不一定要包含对计算机硬件的改变。 五类可以申请专利的计算机软件：&#xA;将计算机程序输入到一个公知的计算机来控制该计算机的内部操作，从而实现计算机内部性能的改进 用计算机程序来控制某一工业过程 用计算机程序来控制某一测量或者测试过程 使用一个计算机程序来实现外部数据处理 文件 Link to heading 主要是说明书（范围限定）和说明书附图&#xA;专利挖掘途径：&#xA;找出完成任务的组成部分：比如网站的前端、后台、服务器 分析各组成部分的技术要素：比如前端界面的多个功能模块 找出各技术要素的创新点：比如具体的权限功能模块 根据创新点总结技术方案：比如实现该模块的算法 </description>
-    </item>
-    <item>
-      <title>邓宁-克鲁格效应</title>
-      <link>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</link>
-      <pubDate>Thu, 17 Jun 2021 10:40:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</guid>
-      <description>每次都忘记这个效应叫什么名字，所以还是专门开个issue记录一下。 邓宁-克鲁格效应，按照百科的说法，是一种认知偏差，能力欠缺的人有一种虚幻的自我优越感，错误地认为自己比实际情况更加优秀 对于一般人来说也是会有类似的情况，只是可能峰值没有那么高。在知识和技能水平不断提高的过程中，势必会因为没有看到自身的缺点而导致自信程度增长速度远超想象。 其实这张图应该是没有画完的，愚昧之山不一定只有一座，开悟之坡爬得也不一定真的就是真理之山，我们所期望到达的终点也不过是一个新的起点。不过这个就是另外一个问题了。</description>
-    </item>
-    <item>
-      <title>使用ADEPT方法学习困难概念</title>
-      <link>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</link>
-      <pubDate>Tue, 14 Apr 2020 09:51:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</guid>
-      <description>原文地址&#xA;参考资料：&#xA;Learning Difficult Concepts with the ADEPT Method 缘起-强化学习 困难的概念往往让人疯狂，仅仅看一遍几乎没有任何效果，实际操作又过于繁琐。使用5个步骤来科学学习：&#xA;Analogy：tell me what it&amp;rsquo;s like. Diagram：help me visualize it Example：allow me to experience it Plain English：Describe it with everyday works. Technical Definition：Discuss the formal details（这里最好能够自行推导一下公式、算法正确性之类的，会比较深刻） Analogy：What Else is it like Link to heading 许多新的概念本身就是已有概念的改进、扩展和延伸，所以可以通过根据旧概念来学习新的概念。 以虚数为例，简单的介绍可以是负数的平方根。以下为一些更好的解释：&#xA;负数在1700之前都没有被认可，为什么会有比没有还小的东西。 数字是在数轴上，沿着数轴向0前进和后退 为什么不能向上或向下移动，数轴不一定是一维的。二维的轴就是虚数轴。 这样通过曲折的绕行，使用现实/过往例子来进行双向印证，能够帮助人更好地理解、记忆一些概念。&#xA;Diagram：Engage that half of your brain Link to heading 画个图总是好的，无论是思维导图、概念图还是干脆就是随手涂鸦。画图能够在最短时间内将心中所想具现出来，而且往往很容易让人理解。&#xA;Example：Let Me Experience The Idea Link to heading 很多时候，讲再久不如上手做一下，动作的信息量要高于语言。 不一定非要付诸于实际，可以选择去看别人的视频，看别人如何做实验。即使是数学这样抽象的学科，也有3Blue1Brown这样用动画来表现数学概念的人。 例子：Khan Academy或一些经典问题（最好带上答案甚至解析）</description>
-    </item>
-    <item>
-      <title>安卓环境下笔记软件总结</title>
-      <link>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Tue, 31 Mar 2020 09:51:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</guid>
-      <description>在综合了价格等因素后，我选择了华为MatepadPro，这样在不用电脑模拟器的情况下我还可以使用平板进行阅读和书写记录，从综合价格上来说是最划算的，使用寿命预期是5-7年，预期是工作三年之后再换最新的手机。（虽然今年年初亏的一波已经够买一台新手机了，mmp） 在实际使用的时候，我发现安卓平板下的笔记应用并没有苹果下那么丰富，苹果最著名的notability和goodnote组合似乎无法替代。因此我需要花费一些时间寻找比较适合的应用，同时记录下它们的应用场景来供自己进行选择。&#xA;会使用如下表格来进行分析：&#xA;总体： 背景是否可变 外部是否有标签 手写： 是否支持手写： 是否有框选 存储是矢量还是像素 延迟 快捷操作是否便捷 手写页面是下拉还是无限 手写笔迹、颜色 插入图片： 调节位置 调节大小 是否支持pdf 插入语音： 时间： 条数，是否重叠： 是否会自动翻译，允许保存原音 导出： 是否支持pdf 是否同步 备忘录 Link to heading 页面 Link to heading 简介 Link to heading 备忘录是华为官方应用，可以同时支持文本编辑、图片插入、语音输入（不超过5分钟，会自动识别，不能同时存储多条语音）、手写输入。 我比较喜欢的一点是它的背景是黑色的，缺点是手写时没有框选（虚线框，可以移动和删除内容），而且没有快捷手势来删除，极为不便。手写部分存入的是矢量图，删除的时候一删就是一条线，写的时候需要注意一下。&#xA;总结 Link to heading 总体： 背景是否可变：不可变，如上图一样，是黑色。 外部是否有标签：有标签，可以在左上角详情栏中点标签进行分类，可以根据标题进行搜索。 手写： 是否支持手写：支持手写，可以选择只使用主动笔 是否有框选：没有框选，不能移动 存储是矢量还是像素：矢量 延迟：极低，且字不会变形 快捷操作是否便捷：没有手势快捷操作，且删除很不便，必须要点一下橡皮擦进入擦除模式，而且很容易点错。 手写页面是下拉还是无限：下拉，而且不能放大缩小 手写笔迹、颜色：支持铅笔、钢笔、中性笔、划线笔，颜色只能使用预设的七种颜色。 插入图片： 调节位置：长按图片可以移动位置，文字内容不能与图片重复，但手写内容可以覆盖（且只能覆盖） 调节大小：单击可以进行图片编辑，可以修图（亮度、饱和度、裁剪、旋转），但是不能缩放。 是否支持pdf：不能导入pdf文件，哪怕只有一张（可以考虑截图） 插入语音： 时间：5分钟 条数，是否重叠：只能一条，自动接上。 是否会自动翻译，允许保存原音：会自动翻译，同时会保留一条原音。 导出： 是否支持pdf：可以选择打印界面保存为pdf. 是否同步：单机软件，不能同步。 场景 Link to heading 紧急情况记录绝对够用，日常书写也还行，但是如果经常需要删改的话会很不舒服，已经提了建议，也不知道会不会改。 总体而言，对手写的支持非常好，书写基本没有延迟，偶尔可能手写笔有问题，会出现过于敏感导致有墨点的情况。</description>
-    </item>
-  </channel>
+    <description>无关随笔 - 分类 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 24 Sep 2021 18:43:00 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E6%97%A0%E5%85%B3%E9%9A%8F%E7%AC%94/" rel="self" type="application/rss+xml" /><item>
+  <title>《心流：最优体验心理学》读书笔记与自我思考</title>
+  <link>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</link>
+  <pubDate>Fri, 24 Sep 2021 18:43:00 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</guid>
+  <description><![CDATA[对《心流：最优体验心理学》这本书的阅读感想，以及基于最近发生事情的一些体会。]]></description>
+</item>
+<item>
+  <title>专利讲座笔记</title>
+  <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>
+  <pubDate>Sat, 26 Jun 2021 21:13:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</guid>
+  <description><![CDATA[专利学习内容： 专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座 专利基本知识知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念]]></description>
+</item>
+<item>
+  <title>邓宁-克鲁格效应</title>
+  <link>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</link>
+  <pubDate>Thu, 17 Jun 2021 10:40:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</guid>
+  <description><![CDATA[每次都忘记这个效应叫什么名字，所以还是专门开个issue记录一下。 邓宁-克鲁格效应，按照百科的说法，是一种认知偏差，能力欠缺的人有一种虚幻的]]></description>
+</item>
+<item>
+  <title>使用ADEPT方法学习困难概念</title>
+  <link>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</link>
+  <pubDate>Tue, 14 Apr 2020 09:51:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</guid>
+  <description><![CDATA[原文地址 参考资料： Learning Difficult Concepts with the ADEPT Method 缘起-强化学习 困难的概念往往让人疯狂，仅仅看一遍几乎没有任何效果，实际操作又过于繁琐。使用5个步骤来科学学习]]></description>
+</item>
+<item>
+  <title>安卓环境下笔记软件总结</title>
+  <link>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</link>
+  <pubDate>Tue, 31 Mar 2020 09:51:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</guid>
+  <description><![CDATA[在综合了价格等因素后，我选择了华为MatepadPro，这样在不用电脑模拟器的情况下我还可以使用平板进行阅读和书写记录，从综合价格上来说是最]]></description>
+</item>
+</channel>
 </rss>

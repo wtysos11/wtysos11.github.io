@@ -1,347 +1,309 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  Leetcode 5: 最长回文子串 · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="Leetcode第五题：最长回文子串">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Leetcode 5: 最长回文子串"/>
-<meta name="twitter:description" content="Leetcode第五题：最长回文子串"/>
-
-<meta property="og:title" content="Leetcode 5: 最长回文子串" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Leetcode 5: 最长回文子串 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="Leetcode第五题：最长回文子串" /><meta name="keywords" content='计算机/算法/算法题解, 计算机/算法/字符串, 计算机/算法/动态规划' /><meta itemprop="name" content="Leetcode 5: 最长回文子串">
+<meta itemprop="description" content="Leetcode第五题：最长回文子串"><meta itemprop="datePublished" content="2022-04-05T12:09:02+08:00" />
+<meta itemprop="dateModified" content="2022-04-05T12:09:02+08:00" />
+<meta itemprop="wordCount" content="2161">
+<meta itemprop="keywords" content="计算机/算法/算法题解,计算机/算法/字符串,计算机/算法/动态规划," /><meta property="og:title" content="Leetcode 5: 最长回文子串" />
 <meta property="og:description" content="Leetcode第五题：最长回文子串" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-04-05T12:09:02+08:00" />
 <meta property="article:modified_time" content="2022-04-05T12:09:02+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/">
-              Leetcode 5: 最长回文子串
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Leetcode 5: 最长回文子串"/>
+<meta name="twitter:description" content="Leetcode第五题：最长回文子串"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" /><link rel="prev" href="http://wtysos11.github.io/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" /><link rel="next" href="http://wtysos11.github.io/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Leetcode 5: 最长回文子串",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2\/"
+    },"genre": "posts","keywords": "计算机\/算法\/算法题解, 计算机\/算法\/字符串, 计算机\/算法\/动态规划","wordcount":  2161 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2\/","datePublished": "2022-04-05T12:09:02+08:00","dateModified": "2022-04-05T12:09:02+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2022-04-05T12:09:02&#43;08:00">
-                四月 5, 2022
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">Leetcode刷题记录</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">计算机/算法/算法题解</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2/">计算机/算法/字符串</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">计算机/算法/动态规划</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Leetcode 5: 最长回文子串</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/leetcode%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-category" title="分类 - Leetcode刷题记录"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Leetcode刷题记录</a></span></div><div class="post-meta-line"><span title="发布于 2022-04-05 12:09:02"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-04-05">2022-04-05</time></span>&nbsp;<span title="2161 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2200 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <h2 id="5-最长回文子串">
-  5 最长回文子串
-  <a class="heading-link" href="#5-%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e5%ad%90%e4%b8%b2">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>找到的题解：</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#5-最长回文子串">5 最长回文子串</a>
+      <ul>
+        <li><a href="#朴素暴力写法">朴素暴力写法</a></li>
+        <li><a href="#缓存探索回文点写法">缓存探索回文点写法</a></li>
+        <li><a href="#动态规划做法">动态规划做法</a></li>
+        <li><a href="#双指针方法">双指针方法</a></li>
+        <li><a href="#马拉车算法">马拉车算法</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="5-最长回文子串" class="heading-element">
+  <a href="#5-%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e5%ad%90%e4%b8%b2" class="heading-mark"></a>5 最长回文子串</h2><p>找到的题解：</p>
 <ul>
-<li><a href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0005.%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2.md"  class="external-link" target="_blank" rel="noopener">https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0005.最长回文子串.md</a></li>
-<li><a href="https://leetcode-cn.com/problems/longest-palindromic-substring/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-bao-gu/"  class="external-link" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-palindromic-substring/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-bao-gu/</a></li>
+<li><a href="https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0005.%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2.md"target="_blank" rel="external nofollow noopener noreferrer">https://github.com/youngyangyang04/leetcode-master/blob/master/problems/0005.最长回文子串.md</a></li>
+<li><a href="https://leetcode-cn.com/problems/longest-palindromic-substring/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-bao-gu/"target="_blank" rel="external nofollow noopener noreferrer">https://leetcode-cn.com/problems/longest-palindromic-substring/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-bao-gu/</a></li>
 </ul>
 <p>对于给定的字符串，返回其最长的回文子串。难度倒是不高，就是比较麻烦。</p>
-<h3 id="朴素暴力写法">
-  朴素暴力写法
-  <a class="heading-link" href="#%e6%9c%b4%e7%b4%a0%e6%9a%b4%e5%8a%9b%e5%86%99%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>最先想到的当然是朴素的暴力写法：从头开始枚举所有的子串，直到找到回文子串</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">bool</span> <span style="color:#d2a8ff;font-weight:bold">judgePalindrome</span>(string s){
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>s.length()<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>;i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(s[i]<span style="color:#ff7b72;font-weight:bold">!=</span>s[s.length()<span style="color:#ff7b72;font-weight:bold">-</span>i<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>]){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> false;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> true;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    string longestPalindrome(string s) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> longest_length <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> longest_pos <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>s.length();i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>            <span style="color:#8b949e;font-style:italic">// 重复尝试所有的开头
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>
-</span></span><span style="display:flex;"><span>            <span style="color:#8b949e;font-style:italic">// 然后尝试枚举长度，长度最小为当前的最大长度
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>            <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> j<span style="color:#ff7b72;font-weight:bold">=</span>s.length()<span style="color:#ff7b72;font-weight:bold">-</span>i;j<span style="color:#ff7b72;font-weight:bold">&gt;</span>longest_length;j<span style="color:#ff7b72;font-weight:bold">--</span>){
-</span></span><span style="display:flex;"><span>                <span style="color:#8b949e;font-style:italic">//判断是否为回文子串
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                <span style="color:#ff7b72">bool</span> result <span style="color:#ff7b72;font-weight:bold">=</span> judgePalindrome(s.substr(i,j));
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">if</span>(result){
-</span></span><span style="display:flex;"><span>                    longest_pos <span style="color:#ff7b72;font-weight:bold">=</span> i;
-</span></span><span style="display:flex;"><span>                    longest_length <span style="color:#ff7b72;font-weight:bold">=</span> j;
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">break</span>;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> s.substr(longest_pos,longest_length);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
-</span></span><span style="display:flex;"><span>    Solution s;
-</span></span><span style="display:flex;"><span>    cout<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>s.longestPalindrome(<span style="color:#a5d6ff">&#34;abccb&#34;</span>)<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>复杂度为O(n^3)，n为字符串长度。结果不出意外的超时了。</p>
-<h3 id="缓存探索回文点写法">
-  缓存探索回文点写法
-  <a class="heading-link" href="#%e7%bc%93%e5%ad%98%e6%8e%a2%e7%b4%a2%e5%9b%9e%e6%96%87%e7%82%b9%e5%86%99%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>另外的一个想法是，既然要判断最长的回文子串，那首先要回文。要回文，首先要相等。因此先跑一遍，用字典记录下所有字符以及其相等的位置。（已知字符仅包括数字和英文字母）</p>
+<h3 id="朴素暴力写法" class="heading-element">
+  <a href="#%e6%9c%b4%e7%b4%a0%e6%9a%b4%e5%8a%9b%e5%86%99%e6%b3%95" class="heading-mark"></a>朴素暴力写法</h3><p>最先想到的当然是朴素的暴力写法：从头开始枚举所有的子串，直到找到回文子串</p>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">judgePalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">!=</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">longestPalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">longest_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">longest_pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 重复尝试所有的开头
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 然后尝试枚举长度，长度最小为当前的最大长度
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">-</span><span class="n">i</span><span class="p">;</span><span class="n">j</span><span class="o">&gt;</span><span class="n">longest_length</span><span class="p">;</span><span class="n">j</span><span class="o">--</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//判断是否为回文子串
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="kt">bool</span> <span class="n">result</span> <span class="o">=</span> <span class="n">judgePalindrome</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">longest_pos</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">longest_length</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">longest_pos</span><span class="p">,</span><span class="n">longest_length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">longestPalindrome</span><span class="p">(</span><span class="s">&#34;abccb&#34;</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>复杂度为O(n^3)，n为字符串长度。结果不出意外的超时了。</p>
+<h3 id="缓存探索回文点写法" class="heading-element">
+  <a href="#%e7%bc%93%e5%ad%98%e6%8e%a2%e7%b4%a2%e5%9b%9e%e6%96%87%e7%82%b9%e5%86%99%e6%b3%95" class="heading-mark"></a>缓存探索回文点写法</h3><p>另外的一个想法是，既然要判断最长的回文子串，那首先要回文。要回文，首先要相等。因此先跑一遍，用字典记录下所有字符以及其相等的位置。（已知字符仅包括数字和英文字母）</p>
 <p>一个想法是，根据所有的相等情况从大到小枚举可能的回文点范围，并记录下回文点的位置，做一次探测。</p>
 <p>考虑到回文子串的嵌套特性同一回文点记录回文中心和回文上界，如果长度为偶数则记录0.5。</p>
 <p>这样，构建回文相等map的复杂度为O(n)，探索所有的相等可能性为O(n^2)，叠加上对回文串的检查一样是O(n^3)。只是由于进行了很多记忆，并且只在相等情况下搜索，因此常数项相对来说会小很多。</p>
 <p>这个思路的一个基本想法是：对于一个更长的字符串，如果以其中心点的更小长度内曾经探明没有回文子串，那么这个子串一定不回文。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;map&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;math.h&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">bool</span> <span style="color:#d2a8ff;font-weight:bold">judgePalindrome</span>(string s){
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>s.length()<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>;i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(s[i]<span style="color:#ff7b72;font-weight:bold">!=</span>s[s.length()<span style="color:#ff7b72;font-weight:bold">-</span>i<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>]){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">return</span> false;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> true;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    string longestPalindrome(string s) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> longest_length <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> longest_pos <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        map<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">char</span>,vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;</span> store;
-</span></span><span style="display:flex;"><span>        map<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">double</span>,<span style="color:#ff7b72">int</span><span style="color:#ff7b72;font-weight:bold">&gt;</span> record; <span style="color:#8b949e;font-style:italic">// record[i]=j表示在回文点i上探索过的最大长度为j
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>s.length();i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>            store[s[i]].push_back(i);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span> ( <span style="color:#ff7b72">const</span> <span style="color:#ff7b72">auto</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span><span style="color:#79c0ff;font-weight:bold">myPair</span> : store ) {
-</span></span><span style="display:flex;"><span>            <span style="color:#8b949e;font-style:italic">// 遍历所有的key
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//            cout&lt;&lt;myPair.first&lt;&lt;endl;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>            <span style="color:#ff7b72">auto</span> arr <span style="color:#ff7b72;font-weight:bold">=</span> myPair.second;
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span>(arr.size()<span style="color:#ff7b72;font-weight:bold">&lt;=</span><span style="color:#a5d6ff">1</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">continue</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//            for(int i=0;i&lt;arr.size();i++){
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//                cout&lt;&lt;arr[i]&lt;&lt;&#34; &#34;;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//            }
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//            cout&lt;&lt;endl;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>            <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">&lt;</span>arr.size();i<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> j<span style="color:#ff7b72;font-weight:bold">=</span>i<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;j<span style="color:#ff7b72;font-weight:bold">&lt;</span>arr.size();j<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">int</span> pos1 <span style="color:#ff7b72;font-weight:bold">=</span> arr[i];
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">int</span> pos2 <span style="color:#ff7b72;font-weight:bold">=</span> arr[j];
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">double</span> mid_point <span style="color:#ff7b72;font-weight:bold">=</span> (<span style="color:#ff7b72">double</span>)(pos1<span style="color:#ff7b72;font-weight:bold">+</span>pos2)<span style="color:#ff7b72;font-weight:bold">/</span><span style="color:#a5d6ff">2</span>;
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">int</span> cur_length <span style="color:#ff7b72;font-weight:bold">=</span> ceil(pos2<span style="color:#ff7b72;font-weight:bold">-</span>mid_point);
-</span></span><span style="display:flex;"><span>                    <span style="color:#8b949e;font-style:italic">// 如果在record中有，就不进行记录
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    <span style="color:#ff7b72">bool</span> isRecord <span style="color:#ff7b72;font-weight:bold">=</span> false;
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">if</span>(record.find(mid_point)<span style="color:#ff7b72;font-weight:bold">!=</span>record.end()){
-</span></span><span style="display:flex;"><span>                        <span style="color:#ff7b72">if</span>(record[mid_point]<span style="color:#ff7b72;font-weight:bold">&lt;=</span>cur_length){
-</span></span><span style="display:flex;"><span>                            isRecord <span style="color:#ff7b72;font-weight:bold">=</span> true;
-</span></span><span style="display:flex;"><span>                        }
-</span></span><span style="display:flex;"><span>                    }
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">if</span>(isRecord) {
-</span></span><span style="display:flex;"><span>                        <span style="color:#ff7b72">continue</span>;
-</span></span><span style="display:flex;"><span>                    }
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>(pos2<span style="color:#ff7b72;font-weight:bold">-</span>pos1<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span><span style="color:#ff7b72;font-weight:bold">&lt;</span>longest_length){
-</span></span><span style="display:flex;"><span>                        <span style="color:#ff7b72">continue</span>;
-</span></span><span style="display:flex;"><span>                    }
-</span></span><span style="display:flex;"><span>                    <span style="color:#8b949e;font-style:italic">// 无记录，则进行搜索
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                    <span style="color:#ff7b72">bool</span> result <span style="color:#ff7b72;font-weight:bold">=</span> judgePalindrome(s.substr(pos1,pos2<span style="color:#ff7b72;font-weight:bold">-</span>pos1<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>));
-</span></span><span style="display:flex;"><span>                    <span style="color:#ff7b72">if</span>(result){
-</span></span><span style="display:flex;"><span>                        longest_length <span style="color:#ff7b72;font-weight:bold">=</span> pos2<span style="color:#ff7b72;font-weight:bold">-</span>pos1<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>                        longest_pos <span style="color:#ff7b72;font-weight:bold">=</span> pos1;
-</span></span><span style="display:flex;"><span>                    }<span style="color:#ff7b72">else</span>{
-</span></span><span style="display:flex;"><span>                        <span style="color:#8b949e;font-style:italic">// 如果小的字符串内部没有回文，那么更大的长度也不会有
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                        record[mid_point] <span style="color:#ff7b72;font-weight:bold">=</span> cur_length;
-</span></span><span style="display:flex;"><span>                    }
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">if</span>(longest_length<span style="color:#ff7b72;font-weight:bold">==</span><span style="color:#a5d6ff">0</span>){
-</span></span><span style="display:flex;"><span>            longest_length <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>            longest_pos <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> s.substr(longest_pos,longest_length);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>结果挺一般的，也就属于做出来的级别</p>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;map&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">judgePalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">!=</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">longestPalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">longest_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">longest_pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">map</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">store</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">map</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">record</span><span class="p">;</span> <span class="c1">// record[i]=j表示在回文点i上探索过的最大长度为j
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">store</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]].</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span> <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span><span class="nl">myPair</span> <span class="p">:</span> <span class="n">store</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 遍历所有的key
+</span></span></span><span class="line"><span class="cl"><span class="c1">//            cout&lt;&lt;myPair.first&lt;&lt;endl;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">auto</span> <span class="n">arr</span> <span class="o">=</span> <span class="n">myPair</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">&lt;=</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//            for(int i=0;i&lt;arr.size();i++){
+</span></span></span><span class="line"><span class="cl"><span class="c1">//                cout&lt;&lt;arr[i]&lt;&lt;&#34; &#34;;
+</span></span></span><span class="line"><span class="cl"><span class="c1">//            }
+</span></span></span><span class="line"><span class="cl"><span class="c1">//            cout&lt;&lt;endl;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">arr</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">int</span> <span class="n">pos1</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">int</span> <span class="n">pos2</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">double</span> <span class="n">mid_point</span> <span class="o">=</span> <span class="p">(</span><span class="kt">double</span><span class="p">)(</span><span class="n">pos1</span><span class="o">+</span><span class="n">pos2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">int</span> <span class="n">cur_length</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">pos2</span><span class="o">-</span><span class="n">mid_point</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// 如果在record中有，就不进行记录
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="kt">bool</span> <span class="n">isRecord</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">mid_point</span><span class="p">)</span><span class="o">!=</span><span class="n">record</span><span class="p">.</span><span class="n">end</span><span class="p">()){</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="n">mid_point</span><span class="p">]</span><span class="o">&lt;=</span><span class="n">cur_length</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">isRecord</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span><span class="p">(</span><span class="n">isRecord</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">pos2</span><span class="o">-</span><span class="n">pos1</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">longest_length</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// 无记录，则进行搜索
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="kt">bool</span> <span class="n">result</span> <span class="o">=</span> <span class="n">judgePalindrome</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">pos1</span><span class="p">,</span><span class="n">pos2</span><span class="o">-</span><span class="n">pos1</span><span class="o">+</span><span class="mi">1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span><span class="p">(</span><span class="n">result</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">longest_length</span> <span class="o">=</span> <span class="n">pos2</span><span class="o">-</span><span class="n">pos1</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">longest_pos</span> <span class="o">=</span> <span class="n">pos1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">// 如果小的字符串内部没有回文，那么更大的长度也不会有
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="n">record</span><span class="p">[</span><span class="n">mid_point</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_length</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">longest_length</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">longest_length</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">longest_pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">longest_pos</span><span class="p">,</span><span class="n">longest_length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div><p>结果挺一般的，也就属于做出来的级别</p>
 <p>执行用时：<strong>708 ms</strong>, 在所有 C++ 提交中击败了<strong>8.91</strong>%的用户</p>
 <p>内存消耗：<strong>322.3 MB</strong>, 在所有 C++ 提交中击败了<strong>28.12</strong>%的用户</p>
 <p>通过测试用例：<strong>180 / 180</strong></p>
-<h3 id="动态规划做法">
-  动态规划做法
-  <a class="heading-link" href="#%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92%e5%81%9a%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>此外，由于回文子串的可扩展性，是具备最优子结构的。因此这道题可以考虑用动态规划来做</p>
+<h3 id="动态规划做法" class="heading-element">
+  <a href="#%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92%e5%81%9a%e6%b3%95" class="heading-mark"></a>动态规划做法</h3><p>此外，由于回文子串的可扩展性，是具备最优子结构的。因此这道题可以考虑用动态规划来做</p>
 <ol>
 <li>确定dp数组的大小，以及其内容，代表的含义</li>
 <li>写dp的递推公式</li>
@@ -378,93 +340,79 @@
 <ul>
 <li>正确</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;iostream&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic">#include</span> <span style="color:#8b949e;font-weight:bold;font-style:italic">&lt;vector&gt;</span><span style="color:#8b949e;font-weight:bold;font-style:italic">
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-weight:bold;font-style:italic"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">using</span> <span style="color:#ff7b72">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    string longestPalindrome(string s) {
-</span></span><span style="display:flex;"><span>        vector<span style="color:#ff7b72;font-weight:bold">&lt;</span>vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">bool</span><span style="color:#ff7b72;font-weight:bold">&gt;&gt;</span> dp(s.length(),vector<span style="color:#ff7b72;font-weight:bold">&lt;</span><span style="color:#ff7b72">bool</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>(s.length(),false));
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> longest_pos <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> longest_length <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> j<span style="color:#ff7b72;font-weight:bold">=</span><span style="color:#a5d6ff">0</span>;j<span style="color:#ff7b72;font-weight:bold">&lt;</span>s.length();j<span style="color:#ff7b72;font-weight:bold">++</span>){
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">for</span>(<span style="color:#ff7b72">int</span> i<span style="color:#ff7b72;font-weight:bold">=</span>j;i<span style="color:#ff7b72;font-weight:bold">&gt;=</span><span style="color:#a5d6ff">0</span>;i<span style="color:#ff7b72;font-weight:bold">--</span>){
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">if</span>(i<span style="color:#ff7b72;font-weight:bold">==</span>j){
-</span></span><span style="display:flex;"><span>                    dp[i][j]<span style="color:#ff7b72;font-weight:bold">=</span>true;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>                <span style="color:#ff7b72">else</span> <span style="color:#d2a8ff;font-weight:bold">if</span>((s[i]<span style="color:#ff7b72;font-weight:bold">==</span>s[j] <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> dp[i<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>][j<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span>]) <span style="color:#ff7b72;font-weight:bold">||</span> (s[i]<span style="color:#ff7b72;font-weight:bold">==</span>s[j] <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> i<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span> <span style="color:#ff7b72;font-weight:bold">&gt;</span> j<span style="color:#ff7b72;font-weight:bold">-</span><span style="color:#a5d6ff">1</span> )){
-</span></span><span style="display:flex;"><span>                    dp[i][j]<span style="color:#ff7b72;font-weight:bold">=</span>true;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//                if(dp[i][j]){
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//                    cout&lt;&lt;i&lt;&lt;&#34; &#34;&lt;&lt;j&lt;&lt;&#34; &#34;&lt;&lt;s.substr(i,j-i+1)&lt;&lt;endl;
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//                }
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>                <span style="color:#ff7b72">if</span>(dp[i][j] <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> j<span style="color:#ff7b72;font-weight:bold">-</span>i<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span><span style="color:#ff7b72;font-weight:bold">&gt;</span>longest_length){
-</span></span><span style="display:flex;"><span>                    longest_length <span style="color:#ff7b72;font-weight:bold">=</span> j<span style="color:#ff7b72;font-weight:bold">-</span>i<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>                    longest_pos <span style="color:#ff7b72;font-weight:bold">=</span> i;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> s.substr(longest_pos,longest_length);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">int</span> <span style="color:#d2a8ff;font-weight:bold">main</span>() {
-</span></span><span style="display:flex;"><span>    Solution s;
-</span></span><span style="display:flex;"><span>    cout<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>s.longestPalindrome(<span style="color:#a5d6ff">&#34;cbbd&#34;</span>)<span style="color:#ff7b72;font-weight:bold">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">return</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>执行用时：<strong>428 ms</strong>, 在所有 C++ 提交中击败了**34.57%**的用户</p>
+<div class="highlight" id="id-3"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="n">longestPalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span> <span class="n">dp</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">(),</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">(),</span><span class="nb">false</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">longest_pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">longest_length</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">j</span><span class="o">&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="n">j</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">j</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="n">j</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span> <span class="nf">if</span><span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">||</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="o">&gt;</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span> <span class="p">)){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//                if(dp[i][j]){
+</span></span></span><span class="line"><span class="cl"><span class="c1">//                    cout&lt;&lt;i&lt;&lt;&#34; &#34;&lt;&lt;j&lt;&lt;&#34; &#34;&lt;&lt;s.substr(i,j-i+1)&lt;&lt;endl;
+</span></span></span><span class="line"><span class="cl"><span class="c1">//                }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">j</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">&gt;</span><span class="n">longest_length</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">longest_length</span> <span class="o">=</span> <span class="n">j</span><span class="o">-</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">longest_pos</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">longest_pos</span><span class="p">,</span><span class="n">longest_length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Solution</span> <span class="n">s</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">s</span><span class="p">.</span><span class="n">longestPalindrome</span><span class="p">(</span><span class="s">&#34;cbbd&#34;</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>执行用时：<strong>428 ms</strong>, 在所有 C++ 提交中击败了**34.57%**的用户</p>
 <p>内存消耗：<strong>29.4 MB</strong>, 在所有 C++ 提交中击败了**48.89%**的用户</p>
 <p>通过测试用例：<strong>180 / 180</strong></p>
-<h3 id="双指针方法">
-  双指针方法
-  <a class="heading-link" href="#%e5%8f%8c%e6%8c%87%e9%92%88%e6%96%b9%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>该方法的想法是尝试扩展。回文字符串一定是从某个中心出发的，这个中心可能是一个字符或者两个字符，因此总共应该有n+n-1个中心。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#ff7b72">class</span> <span style="color:#f0883e;font-weight:bold">Solution</span> {
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">public</span><span style="color:#ff7b72;font-weight:bold">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> left <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> right <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">int</span> maxLength <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>    string <span style="color:#d2a8ff;font-weight:bold">longestPalindrome</span>(string s) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">int</span> result <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">for</span> (<span style="color:#ff7b72">int</span> i <span style="color:#ff7b72;font-weight:bold">=</span> <span style="color:#a5d6ff">0</span>; i <span style="color:#ff7b72;font-weight:bold">&lt;</span> s.size(); i<span style="color:#ff7b72;font-weight:bold">++</span>) {
-</span></span><span style="display:flex;"><span>            extend(s, i, i, s.size()); <span style="color:#8b949e;font-style:italic">// 以i为中心
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>            extend(s, i, i <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>, s.size()); <span style="color:#8b949e;font-style:italic">// 以i和i+1为中心
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">return</span> s.substr(left, maxLength);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#ff7b72">void</span> <span style="color:#d2a8ff;font-weight:bold">extend</span>(<span style="color:#ff7b72">const</span> string<span style="color:#ff7b72;font-weight:bold">&amp;</span> s, <span style="color:#ff7b72">int</span> i, <span style="color:#ff7b72">int</span> j, <span style="color:#ff7b72">int</span> n) {
-</span></span><span style="display:flex;"><span>        <span style="color:#ff7b72">while</span> (i <span style="color:#ff7b72;font-weight:bold">&gt;=</span> <span style="color:#a5d6ff">0</span> <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> j <span style="color:#ff7b72;font-weight:bold">&lt;</span> n <span style="color:#ff7b72;font-weight:bold">&amp;&amp;</span> s[i] <span style="color:#ff7b72;font-weight:bold">==</span> s[j]) {
-</span></span><span style="display:flex;"><span>            <span style="color:#ff7b72">if</span> (j <span style="color:#ff7b72;font-weight:bold">-</span> i <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span> <span style="color:#ff7b72;font-weight:bold">&gt;</span> maxLength) {
-</span></span><span style="display:flex;"><span>                left <span style="color:#ff7b72;font-weight:bold">=</span> i;
-</span></span><span style="display:flex;"><span>                right <span style="color:#ff7b72;font-weight:bold">=</span> j;
-</span></span><span style="display:flex;"><span>                maxLength <span style="color:#ff7b72;font-weight:bold">=</span> j <span style="color:#ff7b72;font-weight:bold">-</span> i <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">1</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            i<span style="color:#ff7b72;font-weight:bold">--</span>;
-</span></span><span style="display:flex;"><span>            j<span style="color:#ff7b72;font-weight:bold">++</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>执行用时：<strong>16 ms</strong>, 在所有 C++ 提交中击败了**91.46%**的用户</p>
+<h3 id="双指针方法" class="heading-element">
+  <a href="#%e5%8f%8c%e6%8c%87%e9%92%88%e6%96%b9%e6%b3%95" class="heading-mark"></a>双指针方法</h3><p>该方法的想法是尝试扩展。回文字符串一定是从某个中心出发的，这个中心可能是一个字符或者两个字符，因此总共应该有n+n-1个中心。</p>
+<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Solution</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">maxLength</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">string</span> <span class="nf">longestPalindrome</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">extend</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">());</span> <span class="c1">// 以i为中心
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">extend</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">());</span> <span class="c1">// 以i和i+1为中心
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">s</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">maxLength</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">extend</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">s</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">-</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">maxLength</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">left</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">right</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">maxLength</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">i</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div><p>执行用时：<strong>16 ms</strong>, 在所有 C++ 提交中击败了**91.46%**的用户</p>
 <p>内存消耗：<strong>7.1 MB</strong>, 在所有 C++ 提交中击败了**79.68%**的用户</p>
 <p>通过测试用例：<strong>180 / 180</strong></p>
 <p>一下子快了很多</p>
 </li>
 </ul>
-<h3 id="马拉车算法">
-  马拉车算法
-  <a class="heading-link" href="#%e9%a9%ac%e6%8b%89%e8%bd%a6%e7%ae%97%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<pre><code>另外有一个专门的算法****Manacher's Algorithm****
+<h3 id="马拉车算法" class="heading-element">
+  <a href="#%e9%a9%ac%e6%8b%89%e8%bd%a6%e7%ae%97%e6%b3%95" class="heading-mark"></a>马拉车算法</h3><pre><code>另外有一个专门的算法****Manacher's Algorithm****
 
 该算法可以解决最长回文子字符串问题，时间复杂度为线性
 
@@ -540,87 +488,52 @@ int main() {
 通过测试用例：**180 / 180**
 
 但是这个算法实在是有点复杂</code></pre>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-04-05 12:09:02">更新于 2022-04-05&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-title="Leetcode 5: 最长回文子串" data-hashtags="计算机/算法/算法题解,计算机/算法/字符串,计算机/算法/动态规划"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-hashtag="计算机/算法/算法题解"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-title="Leetcode 5: 最长回文子串" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-title="Leetcode 5: 最长回文子串"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-title="Leetcode 5: 最长回文子串"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-title="Leetcode 5: 最长回文子串" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-title="Leetcode 5: 最长回文子串" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220405_leetcode_5_%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2/" data-title="Leetcode 5: 最长回文子串"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" class="post-tag" title="标签 - 计算机/算法/算法题解">计算机/算法/算法题解</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-tag" title="标签 - 计算机/算法/字符串">计算机/算法/字符串</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="post-tag" title="标签 - 计算机/算法/动态规划">计算机/算法/动态规划</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20211030_istio%E5%BA%94%E7%94%A8%E5%AF%B9%E5%A4%96%E8%AE%BF%E9%97%AE%E6%9E%81%E9%80%9F%E5%85%A5%E9%97%A8/" class="post-nav-item" rel="prev" title="istio应用对外访问极速入门"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>istio应用对外访问极速入门</a>
+      <a href="/posts/20220407_leetcode_310_%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91/" class="post-nav-item" rel="next" title="Leetcode 310: 最小高度树">Leetcode 310: 最小高度树<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

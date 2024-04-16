@@ -1,32 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>内容/停止更新/论文总结 on 实践出真知</title>
+    <title>内容/停止更新/论文总结 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/</link>
-    <description>Recent content in 内容/停止更新/论文总结 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
-      <link>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</link>
-      <pubDate>Mon, 01 Mar 2021 19:49:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</guid>
-      <description>A two-phase cloud resource provisioning algorithm for cost optimization Link to heading 1 Introduction Link to heading 主要的三种付费方式：&#xA;On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-demand和reserved的收费方式。但是它们的目标都只是使用reserved收费的资源来满足最低服务需求，并用on-demand的资源来满足剩余需求。&#xA;本文的目标是找到最佳的实例数，即resource provisioning problem。为了降低资源的租用成本，本文使用了on-demand和reserved instance两种方式来进行一个两阶段的资源分配，并决定最佳的reserved instance的实例数来最小化花费。为此，需要基于预测的流量信息来满足SLA的要求。&#xA;主要贡献：&#xA;使用on-demand和reserved instance的两阶段资源部署算法来减少资源租用花费 在第一阶段，将资源配置问题建模为two-stage stochastic programming problem，并用sample average approximation的方式和dual decomposition method的方式来求解 在第二阶段，使用ARIMA-Kalman model来预测流量，并决定on-demand的实例数量。 使用现实世界的流量和Amazon EC2购买模型来验证结果。 2 related work Link to heading 主要提到了云资源分配问题可以被建模为stochastic programming problem，然后使用branch and bound and cutting plane method求解，或者使用启发式方法，比如genetic algorithm, particle swarm optimization, hybrid algorithm等。一般使用PSO来探索解空间，使用GA来更新结果。</description>
-    </item>
-    <item>
-      <title>bottleneck detection</title>
-      <link>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</link>
-      <pubDate>Wed, 22 Apr 2020 17:36:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</guid>
-      <description>原文地址&#xA;主要还是针对微服务调度中bottleneck的定义入手&#xA;瓶颈点定义 Link to heading 从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。 在多层应用(multi-tier applications)中，其中的bottleneck指的是资源层面的，即在某一层增加资源能够最大化的优化服务的性能。&#xA;多层服务中的bottleneck Link to heading Agile Dynamic Provisioning of Multi-Tier Internet Applications Link to heading Chapter 1 Link to heading 师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。 定义：每一层的处理能力是固定的 x req/s，如果说中间有一层处理能力最低，显然整个服务的处理速度都将受到影响。 需要注意的是，对瓶颈层的增加并不代表对整个服务的服务质量都会增加，可能需要在消除所有的瓶颈层之后整个服务的服务性能才能得到提升。&#xA;因为现在已经有很多的单层调度机制被使用了，要给很简单的想法就是给每一层都配置一个单层调度器。因此，我们的第一步就是在每一层的流量超过容纳上限的时候增加实例数量，这个可以通过监控队列长度、层间响应时间、或者丢包率来实现，这个方法称为independent per-tier provisioning.&#xA;想法1：多层模型，逐个找到bottleneck并增加。问题在于增加的速度可能很慢，最多可能需要遍历所有层才能完成实例扩缩，这对于变化较快的网络流量显然是不行的。 想法2：直接将多层模型作为一个黑箱进行考虑。问题在于需要增加多少个实例，以及在哪里增加。因为多层模型是一个黑箱，显然调度器无法获取内部的信息，即不知道究竟是哪一层出了问题。对于单层服务模型，可以建立一个应用模型来决定在响应时间范围内对于给定的流量需要多少个服务，从而进行对应的扩缩。但是将这个模型用于多层模型中并不一定可行，因为每一层的服务与应用性质都是不同的。以简单的电子商务应用为例，这意味着将HTTP服务器、Java服务器和数据库系统一起建模，这将是一个困难的工作。第三，不是所有的层都可以增加实例，比如数据库系统就很难实时增加实例。 综上，不能将多层应用作为黑箱进行调度。 特色：&#xA;predictive and reactive provisioning:使用预测式调度来进行小时或天级别、使用响应式调度来进行更细致的调度。 使用了基于排队论的分析模型来同时对多层网络应用进行分析 快速的服务器切换，允许虚拟机来处理更快发生的网络波动。 能够处理基于session的流量。 这个调度方法可以被归类为自适应adaptive或半自动的semi-autonomous，它们是能够快速适应环境同时只需要人类有限的接触。&#xA;Chapter2 System Overview Link to heading 2.1 Multi-tier Internet Applications 多层网络架构：整个网络架构由顺序连接的多个应用层组成，如同管道一样，中间的一层会收到前面预处理的数据，并将自己处理好的数据传输给下一层。 本文定义的SLA，使用平均响应时间(average response time)或一个合适的响应时间分位点（a suitable high percentile of the response time distribution）</description>
-    </item>
-    <item>
-      <title>【总结性】微服务调度相关论文</title>
-      <link>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</link>
-      <pubDate>Sat, 11 Apr 2020 10:20:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</guid>
-      <description>原始地址&#xA;阅读和微服务相关的论文&#xA;【论文名称】 调度类型，调度方法，调度对象，索引 综述文献：&#xA;A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014年的综述文献。 Elasticity in Cloud Computing : State of the Art and Research Challenges，弹性调度的综述文献，对调度的不同方法、使用虚拟机还是docker进行调度等方向进行了分类。 Auto-Scaling Web Applications in Clouds: A Taxonomy and Survey，另外一篇综述文献 A Survey and Taxonomy of Self-Aware and Self-Adaptive Cloud Autoscaling Systems 高价值文献：&#xA;A reliable and cost-efficient auto-scaling system for web applications using heterogeneous spot instances&#xA;Renewable-aware geographical load balancing of web applications for sustainable data centers</description>
-    </item>
-  </channel>
+    <description>内容/停止更新/论文总结 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 01 Mar 2021 19:49:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" rel="self" type="application/rss+xml" /><item>
+  <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
+  <link>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</link>
+  <pubDate>Mon, 01 Mar 2021 19:49:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</guid>
+  <description><![CDATA[A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一]]></description>
+</item>
+<item>
+  <title>bottleneck detection</title>
+  <link>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</link>
+  <pubDate>Wed, 22 Apr 2020 17:36:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200422_bottleneck_detection/</guid>
+  <description><![CDATA[原文地址 主要还是针对微服务调度中bottleneck的定义入手 瓶颈点定义从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间]]></description>
+</item>
+<item>
+  <title>【总结性】微服务调度相关论文</title>
+  <link>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</link>
+  <pubDate>Sat, 11 Apr 2020 10:20:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/</guid>
+  <description><![CDATA[原始地址 阅读和微服务相关的论文 【论文名称】 调度类型，调度方法，调度对象，索引 综述文献： A Review of Auto-scaling Techniques for Elastic Applications in Cloud Environments，2014]]></description>
+</item>
+</channel>
 </rss>

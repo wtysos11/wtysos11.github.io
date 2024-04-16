@@ -1,32 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/算法/区间问题 on 实践出真知</title>
+    <title>计算机/算法/区间问题 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%8C%BA%E9%97%B4%E9%97%AE%E9%A2%98/</link>
-    <description>Recent content in 计算机/算法/区间问题 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%8C%BA%E9%97%B4%E9%97%AE%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>树状数组、线段树与RMQ</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
-      <pubDate>Wed, 17 Mar 2021 19:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
-      <description>区间修改问题常用的三种手段，我觉得还是有必要复习一下。&#xA;树状数组 Link to heading binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数组的核心是lowbit：x&amp;amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。 这样就可以算出非叶子节点对应的管辖范围&#xA;单点修改，一路上山&#xA;int tree[MAXN]; inline void update(int i, int x) { for (int pos = i; pos &amp;lt; MAXN; pos += lowbit(pos)) tree[pos] += x; } 求前n项和，一路下山&#xA;inline int query(int n) { int ans = 0; for (int pos = n; pos; pos -= lowbit(pos)) ans += tree[pos]; return ans; } 区间查询&#xA;inline int query(int a, int b) { return query(b) - query(a - 1); } 举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]+c[4]，这是比较自然的。 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。</description>
-    </item>
-    <item>
-      <title>树状数组、线段树与RMQ</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
-      <pubDate>Wed, 17 Mar 2021 19:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
-      <description>区间修改问题常用的三种手段，我觉得还是有必要复习一下。&#xA;树状数组 Link to heading binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数组的核心是lowbit：x&amp;amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。 这样就可以算出非叶子节点对应的管辖范围&#xA;单点修改，一路上山&#xA;int tree[MAXN]; inline void update(int i, int x) { for (int pos = i; pos &amp;lt; MAXN; pos += lowbit(pos)) tree[pos] += x; } 求前n项和，一路下山&#xA;inline int query(int n) { int ans = 0; for (int pos = n; pos; pos -= lowbit(pos)) ans += tree[pos]; return ans; } 区间查询&#xA;inline int query(int a, int b) { return query(b) - query(a - 1); } 举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]+c[4]，这是比较自然的。 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。</description>
-    </item>
-    <item>
-      <title>树状数组、线段树与RMQ</title>
-      <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
-      <pubDate>Wed, 17 Mar 2021 19:57:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
-      <description>区间修改问题常用的三种手段，我觉得还是有必要复习一下。&#xA;树状数组 Link to heading binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我手边 树状数组的核心是lowbit：x&amp;amp;(-x)，其中-x为x的负数的补码表示形式，计算出来可以得到x的二进制从右往左的第一个1所对应的十进制数字。 这样就可以算出非叶子节点对应的管辖范围&#xA;单点修改，一路上山&#xA;int tree[MAXN]; inline void update(int i, int x) { for (int pos = i; pos &amp;lt; MAXN; pos += lowbit(pos)) tree[pos] += x; } 求前n项和，一路下山&#xA;inline int query(int n) { int ans = 0; for (int pos = n; pos; pos -= lowbit(pos)) ans += tree[pos]; return ans; } 区间查询&#xA;inline int query(int a, int b) { return query(b) - query(a - 1); } 举个例子，查询前6个的和，lowbit(6) =2 ，所以S[6] = c[6]+c[4]，这是比较自然的。 更新的时候，如果要更新6的话，需要更新c[6]和c[8]的值。 唯一的问题就是需要多加理解，二进制表示毕竟不够直观。但是原题目是很简单的。</description>
-    </item>
-  </channel>
+    <description>计算机/算法/区间问题 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 17 Mar 2021 19:57:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E5%8C%BA%E9%97%B4%E9%97%AE%E9%A2%98/" rel="self" type="application/rss+xml" /><item>
+  <title>树状数组、线段树与RMQ</title>
+  <link>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</link>
+  <pubDate>Wed, 17 Mar 2021 19:57:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210317_%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E7%BA%BF%E6%AE%B5%E6%A0%91%E4%B8%8Ermq/</guid>
+  <description><![CDATA[区间修改问题常用的三种手段，我觉得还是有必要复习一下。 树状数组binary index tree 来自OI-wiki的图，我记得刘汝佳书里也有，不过那本书不在我]]></description>
+</item>
+</channel>
 </rss>

@@ -1,199 +1,184 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  腾讯云cos获取文件操作实践--Go SDK · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="腾讯云cos获取文件操作实践--Go SDK"/>
-<meta name="twitter:description" content="使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证"/>
-
-<meta property="og:title" content="腾讯云cos获取文件操作实践--Go SDK" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>腾讯云cos获取文件操作实践--Go SDK - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证" /><meta name="keywords" content='计算机/go' /><meta itemprop="name" content="腾讯云cos获取文件操作实践--Go SDK">
+<meta itemprop="description" content="使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证"><meta itemprop="datePublished" content="2022-06-23T20:45:23+08:00" />
+<meta itemprop="dateModified" content="2022-06-23T20:45:23+08:00" />
+<meta itemprop="wordCount" content="1810">
+<meta itemprop="keywords" content="计算机/go," /><meta property="og:title" content="腾讯云cos获取文件操作实践--Go SDK" />
 <meta property="og:description" content="使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-06-23T20:45:23+08:00" />
 <meta property="article:modified_time" content="2022-06-23T20:45:23+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/">
-              腾讯云cos获取文件操作实践--Go SDK
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="腾讯云cos获取文件操作实践--Go SDK"/>
+<meta name="twitter:description" content="使用腾讯云cos的Go SDK获取文件时的一些问题与实践验证"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" /><link rel="next" href="http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "腾讯云cos获取文件操作实践--Go SDK",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5\/"
+    },"genre": "posts","keywords": "计算机\/go","wordcount":  1810 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5\/","datePublished": "2022-06-23T20:45:23+08:00","dateModified": "2022-06-23T20:45:23+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2022-06-23T20:45:23&#43;08:00">
-                六月 23, 2022
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">Go基础学习</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/">计算机/go</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>腾讯云cos获取文件操作实践--Go SDK</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - Go基础学习"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Go基础学习</a></span></div><div class="post-meta-line"><span title="发布于 2022-06-23 20:45:23"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-06-23">2022-06-23</time></span>&nbsp;<span title="1810 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1900 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <h2 id="问题">
-  问题
-  <a class="heading-link" href="#%e9%97%ae%e9%a2%98">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>腾讯云的对象存储可以看做是一个线上的KV，因为最近有需求所以试着用了一下。在使用的时候遇到了一些问题，具体来说是<code>cos.BucketGetOptions</code>中的Delimiter的使用问题。</p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#问题">问题</a></li>
+    <li><a href="#实践与代码">实践与代码</a>
+      <ul>
+        <li><a href="#环境构造">环境构造</a></li>
+        <li><a href="#文件下载">文件下载</a></li>
+        <li><a href="#文件批量下载">文件批量下载</a></li>
+        <li><a href="#文件列出">文件列出</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="问题" class="heading-element">
+  <a href="#%e9%97%ae%e9%a2%98" class="heading-mark"></a>问题</h2><p>腾讯云的对象存储可以看做是一个线上的KV，因为最近有需求所以试着用了一下。在使用的时候遇到了一些问题，具体来说是<code>cos.BucketGetOptions</code>中的Delimiter的使用问题。</p>
 <ul>
-<li><a href="https://cloud.tencent.com/document/product/436/65647"  class="external-link" target="_blank" rel="noopener">列出对象</a>中使用的Delimiter为&quot;/&quot;</li>
-<li><a href="https://cloud.tencent.com/document/product/436/65646"  class="external-link" target="_blank" rel="noopener">下载对象</a>中使用的Delimiter为&quot;&quot;</li>
+<li><a href="https://cloud.tencent.com/document/product/436/65647"target="_blank" rel="external nofollow noopener noreferrer">列出对象</a>中使用的Delimiter为&quot;/&quot;</li>
+<li><a href="https://cloud.tencent.com/document/product/436/65646"target="_blank" rel="external nofollow noopener noreferrer">下载对象</a>中使用的Delimiter为&quot;&quot;</li>
 </ul>
 <p>按官方的说法，delimiter表示列出当前目录下的object，设置为空的时候列出所有的object。我不太清楚这个所有具体是什么意思，因此还是实践了一下。</p>
-<h2 id="实践与代码">
-  实践与代码
-  <a class="heading-link" href="#%e5%ae%9e%e8%b7%b5%e4%b8%8e%e4%bb%a3%e7%a0%81">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>代码与<a href="https://www.challengefilter.com/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/"  class="external-link" target="_blank" rel="noopener">腾讯cos Go SDK使用学习</a>比较类似，本身应该没有难度。</p>
+<h2 id="实践与代码" class="heading-element">
+  <a href="#%e5%ae%9e%e8%b7%b5%e4%b8%8e%e4%bb%a3%e7%a0%81" class="heading-mark"></a>实践与代码</h2><p>代码与<a href="https://www.challengefilter.com/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/"target="_blank" rel="external nofollow noopener noreferrer">腾讯cos Go SDK使用学习</a>比较类似，本身应该没有难度。</p>
 <p>代码包含以下内容：</p>
 <ol>
 <li>环境构造：通过批量上传文件来构建复杂的文件环境，为后续获取与下载文件提供基础</li>
@@ -201,260 +186,191 @@
 <li>文件批量下载：测试delimiter选项在下载中的影响</li>
 <li>文件列出：测试delimiter选项在文件列出中的影响</li>
 </ol>
-<h3 id="环境构造">
-  环境构造
-  <a class="heading-link" href="#%e7%8e%af%e5%a2%83%e6%9e%84%e9%80%a0">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>使用以下函数构造环境，注意：腾讯云对象存储不是免费服务，使用时注意费用情况。本文示例的文件操作理论上不会超过免费限制，但在修改代码的时候请注意。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(){
-</span></span><span style="display:flex;"><span>    u, _ <span style="color:#ff7b72;font-weight:bold">:=</span> url.<span style="color:#d2a8ff;font-weight:bold">Parse</span>(<span style="color:#a5d6ff">&#34;https://wtytest-1252789333.cos.ap-guangzhou.myqcloud.com&#34;</span>)
-</span></span><span style="display:flex;"><span>	b <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>cos.BaseURL{BucketURL: u}
-</span></span><span style="display:flex;"><span>	c <span style="color:#ff7b72;font-weight:bold">:=</span> cos.<span style="color:#d2a8ff;font-weight:bold">NewClient</span>(b, <span style="color:#ff7b72;font-weight:bold">&amp;</span>http.Client{
-</span></span><span style="display:flex;"><span>		Transport: <span style="color:#ff7b72;font-weight:bold">&amp;</span>cos.AuthorizationTransport{
-</span></span><span style="display:flex;"><span>			<span style="color:#8b949e;font-style:italic">// 通过环境变量获取密钥
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			<span style="color:#8b949e;font-style:italic">// 环境变量 COS_SECRETID 表示用户的 SecretId，登录访问管理控制台查看密钥，https://console.cloud.tencent.com/cam/capi
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			SecretID: <span style="color:#a5d6ff">&#34;secretID&#34;</span>,
-</span></span><span style="display:flex;"><span>			<span style="color:#8b949e;font-style:italic">// 环境变量 COS_SECRETKEY 表示用户的 SecretKey，登录访问管理控制台查看密钥，https://console.cloud.tencent.com/cam/capi
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			SecretKey: <span style="color:#a5d6ff">&#34;secret&#34;</span>,
-</span></span><span style="display:flex;"><span>			<span style="color:#8b949e;font-style:italic">// Debug 模式，把对应 请求头部、请求内容、响应头部、响应内容 输出到标准输出
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>			Transport: <span style="color:#ff7b72;font-weight:bold">&amp;</span>debug.DebugRequestTransport{
-</span></span><span style="display:flex;"><span>				RequestHeader:  <span style="color:#79c0ff">true</span>,
-</span></span><span style="display:flex;"><span>				RequestBody:    <span style="color:#79c0ff">true</span>,
-</span></span><span style="display:flex;"><span>				ResponseHeader: <span style="color:#79c0ff">true</span>,
-</span></span><span style="display:flex;"><span>				ResponseBody:   <span style="color:#79c0ff">false</span>,
-</span></span><span style="display:flex;"><span>			},
-</span></span><span style="display:flex;"><span>		},
-</span></span><span style="display:flex;"><span>	})
-</span></span><span style="display:flex;"><span>	<span style="color:#8b949e;font-style:italic">// 1. 批量上传文件，构建测试集合
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#d2a8ff;font-weight:bold">uploadFileToCos</span>(<span style="color:#a5d6ff">0</span>, <span style="color:#a5d6ff">&#34;&#34;</span>, c)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">uploadFileToCos</span>(depth <span style="color:#ff7b72">int</span>, prefix <span style="color:#ff7b72">string</span>, c <span style="color:#ff7b72;font-weight:bold">*</span>cos.Client) {
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">if</span> depth &gt; <span style="color:#a5d6ff">5</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">return</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>; i &lt; <span style="color:#a5d6ff">3</span>; i<span style="color:#ff7b72;font-weight:bold">++</span> {
-</span></span><span style="display:flex;"><span>		s <span style="color:#ff7b72;font-weight:bold">:=</span> rand.<span style="color:#d2a8ff;font-weight:bold">Intn</span>(<span style="color:#a5d6ff">100</span>)
-</span></span><span style="display:flex;"><span>		filePath <span style="color:#ff7b72;font-weight:bold">:=</span> prefix <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">&#34;file&#34;</span> <span style="color:#ff7b72;font-weight:bold">+</span> strconv.<span style="color:#d2a8ff;font-weight:bold">Itoa</span>(s)
-</span></span><span style="display:flex;"><span>		err <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#d2a8ff;font-weight:bold">uploadFileByName</span>(filePath, <span style="color:#a5d6ff">&#34;file&#34;</span><span style="color:#ff7b72;font-weight:bold">+</span>strconv.<span style="color:#d2a8ff;font-weight:bold">Itoa</span>(s), c)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#d2a8ff;font-weight:bold">log_status</span>(err)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> i <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>; i &lt; <span style="color:#a5d6ff">2</span>; i<span style="color:#ff7b72;font-weight:bold">++</span> {
-</span></span><span style="display:flex;"><span>		s <span style="color:#ff7b72;font-weight:bold">:=</span> rand.<span style="color:#d2a8ff;font-weight:bold">Intn</span>(<span style="color:#a5d6ff">100</span>)
-</span></span><span style="display:flex;"><span>		filePrefix <span style="color:#ff7b72;font-weight:bold">:=</span> prefix <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">&#34;path&#34;</span> <span style="color:#ff7b72;font-weight:bold">+</span> strconv.<span style="color:#d2a8ff;font-weight:bold">Itoa</span>(s) <span style="color:#ff7b72;font-weight:bold">+</span> <span style="color:#a5d6ff">&#34;/&#34;</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#d2a8ff;font-weight:bold">uploadFileToCos</span>(depth<span style="color:#ff7b72;font-weight:bold">+</span><span style="color:#a5d6ff">1</span>, filePrefix, c)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="文件下载">
-  文件下载
-  <a class="heading-link" href="#%e6%96%87%e4%bb%b6%e4%b8%8b%e8%bd%bd">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// 随便选一个文件名，测试一下是否成功写入
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">//getFileByName(&#34;path59/file81&#34;, c)
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic">// 结果为content: file81
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">getFileByName</span>(name <span style="color:#ff7b72">string</span>, c <span style="color:#ff7b72;font-weight:bold">*</span>cos.Client) {
-</span></span><span style="display:flex;"><span>	resp, err <span style="color:#ff7b72;font-weight:bold">:=</span> c.Object.<span style="color:#d2a8ff;font-weight:bold">Get</span>(context.<span style="color:#d2a8ff;font-weight:bold">Background</span>(), name, <span style="color:#79c0ff">nil</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#d2a8ff;font-weight:bold">log_status</span>(err)
-</span></span><span style="display:flex;"><span>	bs, _ <span style="color:#ff7b72;font-weight:bold">:=</span> ioutil.<span style="color:#d2a8ff;font-weight:bold">ReadAll</span>(resp.Body)
-</span></span><span style="display:flex;"><span>	resp.Body.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;content:&#34;</span>, string(bs))
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="文件批量下载">
-  文件批量下载
-  <a class="heading-link" href="#%e6%96%87%e4%bb%b6%e6%89%b9%e9%87%8f%e4%b8%8b%e8%bd%bd">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">main</span>(){
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">const</span> NoDelimiter = <span style="color:#a5d6ff">&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">const</span> FolderDelimiter = <span style="color:#a5d6ff">&#34;/&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">const</span> path1 = <span style="color:#a5d6ff">&#34;path59/path33/path43/&#34;</span> <span style="color:#8b949e;font-style:italic">// 测试末尾为/
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>    <span style="color:#ff7b72">const</span> path2 = <span style="color:#a5d6ff">&#34;path59/path33/path43&#34;</span> <span style="color:#8b949e;font-style:italic">// 测试末尾不为/
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	<span style="color:#d2a8ff;font-weight:bold">getAllFileInPrefix</span>(path1, NoDelimiter, c)
-</span></span><span style="display:flex;"><span>	<span style="color:#d2a8ff;font-weight:bold">getAllFileInPrefix</span>(path1, FolderDelimiter, c)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">getAllFileInPrefix</span>(prefix <span style="color:#ff7b72">string</span>, delimiter <span style="color:#ff7b72">string</span>, c <span style="color:#ff7b72;font-weight:bold">*</span>cos.Client) {
-</span></span><span style="display:flex;"><span>	totalFileCount <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>
-</span></span><span style="display:flex;"><span>	isTruncated <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#79c0ff">true</span>
-</span></span><span style="display:flex;"><span>	marker <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">&#34;&#34;</span>
-</span></span><span style="display:flex;"><span>	count <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> isTruncated {
-</span></span><span style="display:flex;"><span>		fmt.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;count:%d marker:%s isTruncated:%v&#34;</span>, count, marker, isTruncated)
-</span></span><span style="display:flex;"><span>		count<span style="color:#ff7b72;font-weight:bold">++</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		opt <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>cos.BucketGetOptions{
-</span></span><span style="display:flex;"><span>			Prefix:    prefix,
-</span></span><span style="display:flex;"><span>			Marker:    marker,
-</span></span><span style="display:flex;"><span>			Delimiter: delimiter,
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		v, _, err <span style="color:#ff7b72;font-weight:bold">:=</span> c.Bucket.<span style="color:#d2a8ff;font-weight:bold">Get</span>(context.<span style="color:#d2a8ff;font-weight:bold">Background</span>(), opt)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#d2a8ff;font-weight:bold">log_status</span>(err)
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">return</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">for</span> _, content <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72">range</span> v.Contents {
-</span></span><span style="display:flex;"><span>			resp, err <span style="color:#ff7b72;font-weight:bold">:=</span> c.Object.<span style="color:#d2a8ff;font-weight:bold">Get</span>(context.<span style="color:#d2a8ff;font-weight:bold">Background</span>(), content.Key, <span style="color:#79c0ff">nil</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
-</span></span><span style="display:flex;"><span>				<span style="color:#d2a8ff;font-weight:bold">log_status</span>(err)
-</span></span><span style="display:flex;"><span>				<span style="color:#ff7b72">return</span>
-</span></span><span style="display:flex;"><span>			}
-</span></span><span style="display:flex;"><span>			bs, _ <span style="color:#ff7b72;font-weight:bold">:=</span> ioutil.<span style="color:#d2a8ff;font-weight:bold">ReadAll</span>(resp.Body)
-</span></span><span style="display:flex;"><span>			resp.Body.<span style="color:#d2a8ff;font-weight:bold">Close</span>()
-</span></span><span style="display:flex;"><span>			fmt.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;key:%s content:%s\n&#34;</span>, content.Key, string(bs))
-</span></span><span style="display:flex;"><span>			totalFileCount<span style="color:#ff7b72;font-weight:bold">++</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		marker = v.NextMarker
-</span></span><span style="display:flex;"><span>		isTruncated = v.IsTruncated
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;total file count is &#34;</span>, totalFileCount, <span style="color:#a5d6ff">&#34; with count:&#34;</span>, count)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>当cos的键的前缀末尾有&quot;/&ldquo;时，采用NoDelimiter能获得21个文件，采用FolderDelimiter能获得3个文件。
+<h3 id="环境构造" class="heading-element">
+  <a href="#%e7%8e%af%e5%a2%83%e6%9e%84%e9%80%a0" class="heading-mark"></a>环境构造</h3><p>使用以下函数构造环境，注意：腾讯云对象存储不是免费服务，使用时注意费用情况。本文示例的文件操作理论上不会超过免费限制，但在修改代码的时候请注意。</p>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">u</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">url</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">&#34;https://wtytest-1252789333.cos.ap-guangzhou.myqcloud.com&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">b</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">cos</span><span class="p">.</span><span class="nx">BaseURL</span><span class="p">{</span><span class="nx">BucketURL</span><span class="p">:</span> <span class="nx">u</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">c</span> <span class="o">:=</span> <span class="nx">cos</span><span class="p">.</span><span class="nf">NewClient</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">http</span><span class="p">.</span><span class="nx">Client</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Transport</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">cos</span><span class="p">.</span><span class="nx">AuthorizationTransport</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 通过环境变量获取密钥
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="c1">// 环境变量 COS_SECRETID 表示用户的 SecretId，登录访问管理控制台查看密钥，https://console.cloud.tencent.com/cam/capi
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">SecretID</span><span class="p">:</span> <span class="s">&#34;secretID&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// 环境变量 COS_SECRETKEY 表示用户的 SecretKey，登录访问管理控制台查看密钥，https://console.cloud.tencent.com/cam/capi
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">SecretKey</span><span class="p">:</span> <span class="s">&#34;secret&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// Debug 模式，把对应 请求头部、请求内容、响应头部、响应内容 输出到标准输出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">Transport</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">debug</span><span class="p">.</span><span class="nx">DebugRequestTransport</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">RequestHeader</span><span class="p">:</span>  <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">RequestBody</span><span class="p">:</span>    <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">ResponseHeader</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">ResponseBody</span><span class="p">:</span>   <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">})</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 1. 批量上传文件，构建测试集合
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">uploadFileToCos</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">uploadFileToCos</span><span class="p">(</span><span class="nx">depth</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">prefix</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="o">*</span><span class="nx">cos</span><span class="p">.</span><span class="nx">Client</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">depth</span> <span class="p">&gt;</span> <span class="mi">5</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">s</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">filePath</span> <span class="o">:=</span> <span class="nx">prefix</span> <span class="o">+</span> <span class="s">&#34;file&#34;</span> <span class="o">+</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">err</span> <span class="o">:=</span> <span class="nf">uploadFileByName</span><span class="p">(</span><span class="nx">filePath</span><span class="p">,</span> <span class="s">&#34;file&#34;</span><span class="o">+</span><span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">s</span><span class="p">),</span> <span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">log_status</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">s</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">filePrefix</span> <span class="o">:=</span> <span class="nx">prefix</span> <span class="o">+</span> <span class="s">&#34;path&#34;</span> <span class="o">+</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#34;/&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="nf">uploadFileToCos</span><span class="p">(</span><span class="nx">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">filePrefix</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="文件下载" class="heading-element">
+  <a href="#%e6%96%87%e4%bb%b6%e4%b8%8b%e8%bd%bd" class="heading-mark"></a>文件下载</h3><div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 随便选一个文件名，测试一下是否成功写入
+</span></span></span><span class="line"><span class="cl"><span class="c1">//getFileByName(&#34;path59/file81&#34;, c)
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 结果为content: file81
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">getFileByName</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="o">*</span><span class="nx">cos</span><span class="p">.</span><span class="nx">Client</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Object</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">name</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">log_status</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">bs</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;content:&#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">bs</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="文件批量下载" class="heading-element">
+  <a href="#%e6%96%87%e4%bb%b6%e6%89%b9%e9%87%8f%e4%b8%8b%e8%bd%bd" class="heading-mark"></a>文件批量下载</h3><div class="highlight" id="id-3"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">const</span> <span class="nx">NoDelimiter</span> <span class="p">=</span> <span class="s">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">const</span> <span class="nx">FolderDelimiter</span> <span class="p">=</span> <span class="s">&#34;/&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">const</span> <span class="nx">path1</span> <span class="p">=</span> <span class="s">&#34;path59/path33/path43/&#34;</span> <span class="c1">// 测试末尾为/
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">const</span> <span class="nx">path2</span> <span class="p">=</span> <span class="s">&#34;path59/path33/path43&#34;</span> <span class="c1">// 测试末尾不为/
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nf">getAllFileInPrefix</span><span class="p">(</span><span class="nx">path1</span><span class="p">,</span> <span class="nx">NoDelimiter</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">getAllFileInPrefix</span><span class="p">(</span><span class="nx">path1</span><span class="p">,</span> <span class="nx">FolderDelimiter</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">getAllFileInPrefix</span><span class="p">(</span><span class="nx">prefix</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">delimiter</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="o">*</span><span class="nx">cos</span><span class="p">.</span><span class="nx">Client</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">totalFileCount</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">isTruncated</span> <span class="o">:=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">marker</span> <span class="o">:=</span> <span class="s">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">count</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">isTruncated</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;count:%d marker:%s isTruncated:%v&#34;</span><span class="p">,</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">marker</span><span class="p">,</span> <span class="nx">isTruncated</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">count</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="nx">opt</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">cos</span><span class="p">.</span><span class="nx">BucketGetOptions</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Prefix</span><span class="p">:</span>    <span class="nx">prefix</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Marker</span><span class="p">:</span>    <span class="nx">marker</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Delimiter</span><span class="p">:</span> <span class="nx">delimiter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">v</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Bucket</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">opt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">log_status</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">content</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">v</span><span class="p">.</span><span class="nx">Contents</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Object</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">content</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nf">log_status</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">bs</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;key:%s content:%s\n&#34;</span><span class="p">,</span> <span class="nx">content</span><span class="p">.</span><span class="nx">Key</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">bs</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">totalFileCount</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">marker</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">NextMarker</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">isTruncated</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">IsTruncated</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;total file count is &#34;</span><span class="p">,</span> <span class="nx">totalFileCount</span><span class="p">,</span> <span class="s">&#34; with count:&#34;</span><span class="p">,</span> <span class="nx">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>当cos的键的前缀末尾有&quot;/&ldquo;时，采用NoDelimiter能获得21个文件，采用FolderDelimiter能获得3个文件。
 当cos的键的前缀末尾没有&rdquo;/&ldquo;时，采用NoDelimiter能获得21个文件，采用FolderDelimiter能获得0个文件。</p>
 <p>这说明delimiter为&rdquo;/&ldquo;的时候可以理解为文件夹模式，文件夹模式只对模拟出的文件夹（即前缀末尾有&rdquo;/&quot;）起作用。
 如果delimiter为空字符串的时候则会尝试匹配前缀相同的对象。</p>
-<h3 id="文件列出">
-  文件列出
-  <a class="heading-link" href="#%e6%96%87%e4%bb%b6%e5%88%97%e5%87%ba">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>文件列出与文件下载开始的一段逻辑有点类似，不过加上了commonPrefix。测试代码与此前相同，此处不再赘述。</p>
-<div class="highlight"><pre tabindex="0" style="color:#e6edf3;background-color:#0d1117;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff7b72">func</span> <span style="color:#d2a8ff;font-weight:bold">listAllFileInPrefix</span>(prefix <span style="color:#ff7b72">string</span>, delimiter <span style="color:#ff7b72">string</span>, c <span style="color:#ff7b72;font-weight:bold">*</span>cos.Client) {
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">var</span> marker <span style="color:#ff7b72">string</span>
-</span></span><span style="display:flex;"><span>	opt <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72;font-weight:bold">&amp;</span>cos.BucketGetOptions{
-</span></span><span style="display:flex;"><span>		Prefix:    prefix,
-</span></span><span style="display:flex;"><span>		Delimiter: delimiter,
-</span></span><span style="display:flex;"><span>		MaxKeys:   <span style="color:#a5d6ff">1000</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	totalFileCount <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>
-</span></span><span style="display:flex;"><span>	commonPrefixCount <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#a5d6ff">0</span>
-</span></span><span style="display:flex;"><span>	isTruncated <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#79c0ff">true</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff7b72">for</span> isTruncated {
-</span></span><span style="display:flex;"><span>		opt.Marker = marker
-</span></span><span style="display:flex;"><span>		v, _, err <span style="color:#ff7b72;font-weight:bold">:=</span> c.Bucket.<span style="color:#d2a8ff;font-weight:bold">Get</span>(context.<span style="color:#d2a8ff;font-weight:bold">Background</span>(), opt)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">if</span> err <span style="color:#ff7b72;font-weight:bold">!=</span> <span style="color:#79c0ff">nil</span> {
-</span></span><span style="display:flex;"><span>			fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(err)
-</span></span><span style="display:flex;"><span>			<span style="color:#ff7b72">break</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#ff7b72">for</span> _, content <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72">range</span> v.Contents {
-</span></span><span style="display:flex;"><span>			fmt.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;Object: %v\n&#34;</span>, content.Key)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		totalFileCount <span style="color:#ff7b72;font-weight:bold">+=</span> len(v.Contents)
-</span></span><span style="display:flex;"><span>		<span style="color:#8b949e;font-style:italic">// common prefix表示表示被delimiter截断的路径, 如delimter设置为/, common prefix则表示所有子目录的路径
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		<span style="color:#ff7b72">for</span> _, commonPrefix <span style="color:#ff7b72;font-weight:bold">:=</span> <span style="color:#ff7b72">range</span> v.CommonPrefixes {
-</span></span><span style="display:flex;"><span>			fmt.<span style="color:#d2a8ff;font-weight:bold">Printf</span>(<span style="color:#a5d6ff">&#34;CommonPrefixes: %v\n&#34;</span>, commonPrefix)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		commonPrefixCount <span style="color:#ff7b72;font-weight:bold">+=</span> len(v.CommonPrefixes)
-</span></span><span style="display:flex;"><span>		isTruncated = v.IsTruncated <span style="color:#8b949e;font-style:italic">// 是否还有数据
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>		marker = v.NextMarker       <span style="color:#8b949e;font-style:italic">// 设置下次请求的起始 key
-</span></span></span><span style="display:flex;"><span><span style="color:#8b949e;font-style:italic"></span>	}
-</span></span><span style="display:flex;"><span>	fmt.<span style="color:#d2a8ff;font-weight:bold">Println</span>(<span style="color:#a5d6ff">&#34;total file count&#34;</span>, totalFileCount, <span style="color:#a5d6ff">&#34; commonPrefix:&#34;</span>, commonPrefixCount)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>当cos的键的前缀末尾有&quot;/&ldquo;时，采用NoDelimiter能获得21个文件且没有截断路径，采用FolderDelimiter能获得3个文件并截断了2个路径（当前目录下的两个子目录）。
+<h3 id="文件列出" class="heading-element">
+  <a href="#%e6%96%87%e4%bb%b6%e5%88%97%e5%87%ba" class="heading-mark"></a>文件列出</h3><p>文件列出与文件下载开始的一段逻辑有点类似，不过加上了commonPrefix。测试代码与此前相同，此处不再赘述。</p>
+<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">listAllFileInPrefix</span><span class="p">(</span><span class="nx">prefix</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">delimiter</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="o">*</span><span class="nx">cos</span><span class="p">.</span><span class="nx">Client</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">marker</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">opt</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">cos</span><span class="p">.</span><span class="nx">BucketGetOptions</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Prefix</span><span class="p">:</span>    <span class="nx">prefix</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Delimiter</span><span class="p">:</span> <span class="nx">delimiter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">MaxKeys</span><span class="p">:</span>   <span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">totalFileCount</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">commonPrefixCount</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">isTruncated</span> <span class="o">:=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">isTruncated</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">opt</span><span class="p">.</span><span class="nx">Marker</span> <span class="p">=</span> <span class="nx">marker</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">v</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Bucket</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">(),</span> <span class="nx">opt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">content</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">v</span><span class="p">.</span><span class="nx">Contents</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Object: %v\n&#34;</span><span class="p">,</span> <span class="nx">content</span><span class="p">.</span><span class="nx">Key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">totalFileCount</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">Contents</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// common prefix表示表示被delimiter截断的路径, 如delimter设置为/, common prefix则表示所有子目录的路径
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">commonPrefix</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">v</span><span class="p">.</span><span class="nx">CommonPrefixes</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;CommonPrefixes: %v\n&#34;</span><span class="p">,</span> <span class="nx">commonPrefix</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">commonPrefixCount</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">CommonPrefixes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">isTruncated</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">IsTruncated</span> <span class="c1">// 是否还有数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">marker</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">NextMarker</span>       <span class="c1">// 设置下次请求的起始 key
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;total file count&#34;</span><span class="p">,</span> <span class="nx">totalFileCount</span><span class="p">,</span> <span class="s">&#34; commonPrefix:&#34;</span><span class="p">,</span> <span class="nx">commonPrefixCount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>当cos的键的前缀末尾有&quot;/&ldquo;时，采用NoDelimiter能获得21个文件且没有截断路径，采用FolderDelimiter能获得3个文件并截断了2个路径（当前目录下的两个子目录）。
 当cos的键的前缀末尾没有&rdquo;/&ldquo;时，采用NoDelimiter能获得21个文件且没有截断路径，采用FolderDelimiter能获得0个文件，但是截断了一个路径（<code>path59/path33/path43/</code>）。</p>
-<h2 id="总结">
-  总结
-  <a class="heading-link" href="#%e6%80%bb%e7%bb%93">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>对象存储的delimiter可以开启文件夹模式来模拟一般操作系统中的文件夹，总体来说还是比较有用的。</p>
+<h2 id="总结" class="heading-element">
+  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h2><p>对象存储的delimiter可以开启文件夹模式来模拟一般操作系统中的文件夹，总体来说还是比较有用的。</p>
 <p>平时不看评论，如果希望和我交流可以发邮件到wtysos11@gmail.com。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-06-23 20:45:23">更新于 2022-06-23&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-title="腾讯云cos获取文件操作实践--Go SDK" data-hashtags="计算机/go"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-hashtag="计算机/go"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-title="腾讯云cos获取文件操作实践--Go SDK" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-title="腾讯云cos获取文件操作实践--Go SDK"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-title="腾讯云cos获取文件操作实践--Go SDK"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-title="腾讯云cos获取文件操作实践--Go SDK" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-title="腾讯云cos获取文件操作实践--Go SDK" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220623_%E8%85%BE%E8%AE%AF%E4%BA%91cos%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5/" data-title="腾讯云cos获取文件操作实践--Go SDK"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/" class="post-tag" title="标签 - 计算机/Go">计算机/Go</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20220615_%E5%A4%9A%E5%8D%8F%E7%A8%8B%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AAslice%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" class="post-nav-item" rel="prev" title="多协程写同一个slice的最佳实践"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>多协程写同一个slice的最佳实践</a>
+      <a href="/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/" class="post-nav-item" rel="next" title="布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons">布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

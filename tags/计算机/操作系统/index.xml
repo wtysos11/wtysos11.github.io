@@ -1,25 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>计算机/操作系统 on 实践出真知</title>
+    <title>计算机/操作系统 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
-    <description>Recent content in 计算机/操作系统 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>操作系统-概述</title>
-      <link>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</link>
-      <pubDate>Tue, 09 Mar 2021 14:24:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</guid>
-      <description>整理磁盘时发现的408笔记&#xA;第一章 操作系统概述 Link to heading 1.1 操作系统的基本概念 Link to heading 操作系统是控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的工作和资源的分配，以提供给用户和其他软件方便的接口和环境的程序集合。&#xA;1.1.2 操作系统的特征 Link to heading 并发、共享、虚拟和异步，其中现代操作系统最基本的特征是并发和共享。&#xA;并发：两个或多个事件在同一时间间隔内发生。（并行是同一时刻内发生）单处理机环境的并发在微观上表现为程序分时交替执行，操作系统的并发性是通过分时得以实现的。 共享：系统中的资源可供多个并发执行的进程共同使用。 虚拟：将物理的实体变为若干逻辑上的对应物 异步：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行是以不可预知的速度向前推进。 操作系统的接口：&#xA;命令接口：用户利用这些操作命令来组织和控制作业的执行。 程序接口：程序员用其来请求操作系统服务（系统调用） 命令接口分为联机命令接口和脱机命令接口。联机命令接口用于分时系统，脱机命令接口用于批处理系统。&#xA;程序接口由一组系统调用命令（广义指令）组成，包括图形接口等。 PS：系统调用是操作系统提供给应用程序使用内核功能的接口。库函数是高级语言中提供的与系统调用对应的函数（部分与系统调用无关），目的是隐藏访管指令的细节，更加抽象、透明。&#xA;1.2 操作系统的发展与分类 Link to heading 1.2.1 手工操作阶段（此阶段无操作系统） Link to heading 略过&#xA;1.2.2 批处理阶段 Link to heading 单道批处理系统：内存中始终保持一道作业 多道批处理系统：可以允许多个程序同时进入内存进行作业。&#xA;多道程序设计特点：&#xA;多道：计算机内存中同时存放多道相互独立的程序 宏观上并行：同时进入系统的多道程序都处于运行状态，即它们先后开始了各自的运行，但都未完成。 微观上串行：内存中的多道程序轮流占有CPU。 在分时系统中，时间片一定的时候，用户数量越多，每个用户分到的时间片就越少，响应时间自然就变长。&#xA;实时系统为了保证高响应时间，一般内存调度使用抢占式的优先级高者优先算法。&#xA;1.2.3 分时操作系统 Link to heading 分配时间片给进程。 实现分时系统最关键的问题是如何使用户能与自己的作业进行交互。&#xA;多道程序设计的基本特征： 引入多道程序设计后，程序的执行就失去了封闭性和顺序性&#xA;多道程序系统通过组织作业使CPU总有一个作业可以执行，从而提高了CPU的利用率、系统吞吐量和IO设备利用率，但是系统要付出额外的开销来组织作业和切换作业，所以开销会比单道程序系统更大。&#xA;1.3 操作系统的运行环境 Link to heading 用户态与核心态，使用访管指令进行切换，切换时会引起一次中断。 中断处理功能需要在核心态下进行。</description>
-    </item>
-    <item>
-      <title>操作系统-概述</title>
-      <link>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</link>
-      <pubDate>Tue, 09 Mar 2021 14:24:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</guid>
-      <description>整理磁盘时发现的408笔记&#xA;第一章 操作系统概述 Link to heading 1.1 操作系统的基本概念 Link to heading 操作系统是控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的工作和资源的分配，以提供给用户和其他软件方便的接口和环境的程序集合。&#xA;1.1.2 操作系统的特征 Link to heading 并发、共享、虚拟和异步，其中现代操作系统最基本的特征是并发和共享。&#xA;并发：两个或多个事件在同一时间间隔内发生。（并行是同一时刻内发生）单处理机环境的并发在微观上表现为程序分时交替执行，操作系统的并发性是通过分时得以实现的。 共享：系统中的资源可供多个并发执行的进程共同使用。 虚拟：将物理的实体变为若干逻辑上的对应物 异步：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行是以不可预知的速度向前推进。 操作系统的接口：&#xA;命令接口：用户利用这些操作命令来组织和控制作业的执行。 程序接口：程序员用其来请求操作系统服务（系统调用） 命令接口分为联机命令接口和脱机命令接口。联机命令接口用于分时系统，脱机命令接口用于批处理系统。&#xA;程序接口由一组系统调用命令（广义指令）组成，包括图形接口等。 PS：系统调用是操作系统提供给应用程序使用内核功能的接口。库函数是高级语言中提供的与系统调用对应的函数（部分与系统调用无关），目的是隐藏访管指令的细节，更加抽象、透明。&#xA;1.2 操作系统的发展与分类 Link to heading 1.2.1 手工操作阶段（此阶段无操作系统） Link to heading 略过&#xA;1.2.2 批处理阶段 Link to heading 单道批处理系统：内存中始终保持一道作业 多道批处理系统：可以允许多个程序同时进入内存进行作业。&#xA;多道程序设计特点：&#xA;多道：计算机内存中同时存放多道相互独立的程序 宏观上并行：同时进入系统的多道程序都处于运行状态，即它们先后开始了各自的运行，但都未完成。 微观上串行：内存中的多道程序轮流占有CPU。 在分时系统中，时间片一定的时候，用户数量越多，每个用户分到的时间片就越少，响应时间自然就变长。&#xA;实时系统为了保证高响应时间，一般内存调度使用抢占式的优先级高者优先算法。&#xA;1.2.3 分时操作系统 Link to heading 分配时间片给进程。 实现分时系统最关键的问题是如何使用户能与自己的作业进行交互。&#xA;多道程序设计的基本特征： 引入多道程序设计后，程序的执行就失去了封闭性和顺序性&#xA;多道程序系统通过组织作业使CPU总有一个作业可以执行，从而提高了CPU的利用率、系统吞吐量和IO设备利用率，但是系统要付出额外的开销来组织作业和切换作业，所以开销会比单道程序系统更大。&#xA;1.3 操作系统的运行环境 Link to heading 用户态与核心态，使用访管指令进行切换，切换时会引起一次中断。 中断处理功能需要在核心态下进行。</description>
-    </item>
-  </channel>
+    <description>计算机/操作系统 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 09 Mar 2021 14:24:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="self" type="application/rss+xml" /><item>
+  <title>操作系统-概述</title>
+  <link>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</link>
+  <pubDate>Tue, 09 Mar 2021 14:24:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210309_%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/</guid>
+  <description><![CDATA[整理磁盘时发现的408笔记 第一章 操作系统概述 1.1 操作系统的基本概念操作系统是控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的]]></description>
+</item>
+</channel>
 </rss>

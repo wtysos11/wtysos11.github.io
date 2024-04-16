@@ -1,174 +1,217 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-    <head>
-	<meta name="generator" content="Hugo 0.100.2" />
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noodp" />
-        <title>实践出真知</title><meta name="Description" content="后端技术博客"><meta property="og:title" content="实践出真知" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+	<meta name="generator" content="Hugo 0.124.1">
+    
+      <meta name="theme" content='FixIt v0.3.2'>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="后端技术博客" /><meta name="keywords" content='go, kubernetes' /><meta itemprop="name" content="实践出真知">
+<meta itemprop="description" content="后端技术博客"><meta property="og:title" content="实践出真知" />
 <meta property="og:description" content="后端技术博客" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://wtysos11.github.io/" /><meta property="og:site_name" content="实践出真知" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="实践出真知"/>
+<meta property="og:url" content="http://wtysos11.github.io/" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="实践出真知"/>
 <meta name="twitter:description" content="后端技术博客"/>
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wtysos11.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="实践出真知">
-    <link rel="feed" href="/index.xml" type="application/rss+xml" title="实践出真知"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
-    {
-        "@context": "http://schema.org",
-        "@type": "WebSite",
-        "url": "http:\/\/wtysos11.github.io\/","inLanguage": "zh-CN","author": {
-                "@type": "Person",
-                "name": "Timothy Wu"
-            },"description": "后端技术博客","name": "实践出真知"
-    }
-    </script></head>
-    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
-
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
-    <div class="header-wrapper">
-        <div class="header-title">
-            <a href="/" title="实践出真知">My cool site</a>
-        </div>
-        <div class="menu">
-            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-desktop">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-                </a><a href="javascript:void(0);" class="menu-item language" title="选择语言">
-                    <i class="fa fa-globe" aria-hidden="true"></i>                      
-                    <select class="language-select" id="language-select-desktop" onchange="location = this.value;"><option value="/en/">English</option><option value="/" selected>简体中文</option></select>
-                </a></div>
-        </div>
-    </div>
-</header><header class="mobile" id="header-mobile">
-    <div class="header-container">
-        <div class="header-wrapper">
-            <div class="header-title">
-                <a href="/" title="实践出真知">My cool site</a>
-            </div>
-            <div class="menu-toggle" id="menu-toggle-mobile">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-        <div class="menu" id="menu-mobile"><div class="search-wrapper">
-                    <div class="search mobile" id="search-mobile">
-                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
-                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
-                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
-                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-                        </a>
-                        <span class="search-button search-loading" id="search-loading-mobile">
-                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-                        </span>
-                    </div>
-                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-                        取消
-                    </a>
-                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
-                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-            </a><a href="javascript:void(0);" class="menu-item" title="选择语言">
-                    <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-                    <select class="language-select" onchange="location = this.value;"><option value="/en/">English</option><option value="/" selected>简体中文</option></select>
-                </a></div>
-    </div>
-</header><div class="search-dropdown desktop">
-        <div id="search-dropdown-desktop"></div>
-    </div>
-    <div class="search-dropdown mobile">
-        <div id="search-dropdown-mobile"></div>
-    </div><main class="main">
-                <div class="container"><div class="page home" data-home="posts"><div class="home-profile"><div class="home-subtitle"><div id="id-1" class="typeit"></div></div><div class="links"><a href="https://github.com/http://github.com/wtysos11/" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="https://stackoverflow.com/users/https://stackoverflow.com/users/7086030/carlo-wu" title="Stack Overflow" target="_blank" rel="noopener noreffer me"><i class="fab fa-stack-overflow fa-fw" aria-hidden="true"></i></a></div></div>
-<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/">数据结构-概述</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-09">2021-03-09</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机基础</a></span></div><div class="content">整理磁盘时发现考研408时自己的笔记 第一章 绪论 1.1 数据结构的基本概念 数据：信息的载体 数据元素：数据的基本单位。一个数据元素可由若干个数据项组成</div><div class="post-footer">
-        <a href="/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E8%80%83%E7%A0%94/">分类/学习/学习笔记/笔记/考研</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%9F%BA%E7%A1%80/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">分类/知识库/计算机/基础/数据结构与算法</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/">Dynamic Cloud Resource Allocation Considering Demand Uncertainty</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-05">2021-03-05</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div><div class="content">Dynamic Cloud Resource Allocation Considering Demand Uncertainty 2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1 本文提出了一种混合方法来为基于云的网络应用分配云资源。结合</div><div class="post-footer">
-        <a href="/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/">分类/学习/学习笔记/笔记/科研/资源调度预测</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/">A two-phase cloud resource provisioning algorithm for cost optimization</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-04">2021-03-04</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div><div class="content">Profit Maximization for Cloud Brokers in Cloud Computing CCF A类 IEEE Transactions on Parallel and Distributed Systems，2019 摘要 为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务</div><div class="post-footer">
-        <a href="/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/">分类/学习/学习笔记/笔记/科研/资源调度预测</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《Java核心技术 卷I：基础知识》读书笔记</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-03">2021-03-03</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Java基础学习</a></span></div><div class="content">第一章 Java程序设计概述 太简单了，直接略过。 1.2 Java“白皮书”的关键术语 简单性：指相对于C++简单（指针、多重继承等），但设计者也并没有</div><div class="post-footer">
-        <a href="/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E7%9F%A5%E8%AF%86%E5%BA%93/%E8%AE%A1%E7%AE%97%E6%9C%BA/java/">分类/知识库/计算机/java</a>,&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">分类/学习/学习笔记/笔记/读书笔记</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/">A two-phase cloud resource provisioning algorithm for cost optimization</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-01">2021-03-01</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div><div class="content">A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction 主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一些考虑了on-dema</div><div class="post-footer">
-        <a href="/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/">分类/学习/学习笔记/笔记/科研/资源调度预测</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/">Business-Driven Long-Term Capacity Planning for SaaS Applications</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://github.com/wtysos11/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Timothy Wu</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-03-01">2021-03-01</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>计算机论文阅读</a></span></div><div class="content">未完成 本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？ Business-Driven Long-Term Capacity Planning for SaaS Applications 2015 TCC ，没记</div><div class="post-footer">
-        <a href="/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/">阅读全文</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/%E5%88%86%E7%B1%BB/%E5%AD%A6%E4%B9%A0/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E7%AC%94%E8%AE%B0/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/">分类/学习/学习笔记/笔记/科研/资源调度预测</a></div></div>
-</article><ul class="pagination"><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/">1</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link" aria-hidden="true">&hellip;</span>
-                </li><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/page/10/">10</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/page/11/">11</a>
-                    </span>
-                </li><li class="page-item active">
-                    <span class="page-link">
-                        <a href="/page/12/">12</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/page/13/">13</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/page/14/">14</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link" aria-hidden="true">&hellip;</span>
-                </li><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/page/16/">16</a>
-                    </span>
-                </li></ul></div></div>
-            </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.100.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/wtysos11/" target="_blank">Timothy Wu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
-        </div>
-    </footer></div>
-
-        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
-                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
-            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
-                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="实践出真知">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="实践出真知"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "url": "http:\/\/wtysos11.github.io\/","inLanguage": "zh-CN","description": "后端技术博客","name": "实践出真知"
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":30},"data":{"id-1":"Life is like a Markov chain. It is independent of your past, and only depends on your present."},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">
+                      <a href="/en/" class="menu-link" title="English">English</a>
+                    </li><li class="menu-item">
+                      <span class="menu-link text-secondary" title="简体中文">简体中文</span>
+                    </li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option value="/en/">English</option><option value="/" selected disabled>简体中文</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><div class="page home posts"><div class="home-profile"><h1 class="home-title"></h1><p class="home-subtitle"><span class="d-none">Life is like a Markov chain. It is independent of your past, and only depends on your present.</span>
+        <span id="typeit-profile-subtitle" class="typeit"></span></p><div class="links"><a href="https://github.com/http://github.com/wtysos11/" title="GitHub"target="_blank" rel="external nofollow noopener noreferrer me"><i class="fa-brands fa-github-alt fa-fw" aria-hidden="true"></i>
+    </a><a href="https://stackoverflow.com/users/https://stackoverflow.com/users/7086030/carlo-wu" title="Stack Overflow"target="_blank" rel="external nofollow noopener noreferrer me"><i class="fa-brands fa-stack-overflow fa-fw" aria-hidden="true"></i>
+    </a><a href="/index.xml" title="RSS"target="_blank" rel="external nofollow noopener noreferrer me"><i class="fa-solid fa-rss fa-fw" aria-hidden="true"></i>
+    </a></div></div>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h2 class="single-title" itemprop="name headline"><a href="/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/">数据结构-概述</a>
+  </h2><div class="post-meta"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span>&nbsp;<span class="post-publish" title='2021-03-09 14:21:14'>发布于 <time datetime="2021-03-09">2021-03-09</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="分类 - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="content">整理磁盘时发现考研408时自己的笔记 第一章 绪论 1.1 数据结构的基本概念 数据：信息的载体 数据元素：数据的基本单位。一个数据元素可由若干个数据项组成</div><div class="post-footer">
+    <a href="/posts/20210309_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/%E7%9F%A5%E8%AF%86/%E8%80%83%E7%A0%94/' class="post-tag">知识/考研</a><a href='/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/' class="post-tag">计算机/数据结构与算法</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h2 class="single-title" itemprop="name headline"><a href="/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/">Dynamic Cloud Resource Allocation Considering Demand Uncertainty</a>
+  </h2><div class="post-meta"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span>&nbsp;<span class="post-publish" title='2021-03-05 10:46:04'>发布于 <time datetime="2021-03-05">2021-03-05</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="content">Dynamic Cloud Resource Allocation Considering Demand Uncertainty2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了</div><div class="post-footer">
+    <a href="/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/' class="post-tag">计算机/科研/资源调度预测</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h2 class="single-title" itemprop="name headline"><a href="/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/">A two-phase cloud resource provisioning algorithm for cost optimization</a>
+  </h2><div class="post-meta"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span>&nbsp;<span class="post-publish" title='2021-03-04 11:03:04'>发布于 <time datetime="2021-03-04">2021-03-04</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="content">Profit Maximization for Cloud Brokers in Cloud ComputingCCF A类 IEEE Transactions on Parallel and Distributed Systems，2019 摘要为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务提</div><div class="post-footer">
+    <a href="/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/' class="post-tag">计算机/科研/资源调度预测</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h2 class="single-title" itemprop="name headline"><a href="/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">《Java核心技术 卷I：基础知识》读书笔记</a>
+  </h2><div class="post-meta"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span>&nbsp;<span class="post-publish" title='2021-03-03 18:08:14'>发布于 <time datetime="2021-03-03">2021-03-03</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - Java基础学习"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Java基础学习</a></span></div><div class="content">第一章 Java程序设计概述太简单了，直接略过。 1.2 Java“白皮书”的关键术语 简单性：指相对于C++简单（指针、多重继承等），但设计者也并没有</div><div class="post-footer">
+    <a href="/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/java/' class="post-tag">计算机/Java</a><a href='/tags/%E5%86%85%E5%AE%B9/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/' class="post-tag">内容/读书笔记</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h2 class="single-title" itemprop="name headline"><a href="/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/">A two-phase cloud resource provisioning algorithm for cost optimization</a>
+  </h2><div class="post-meta"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span>&nbsp;<span class="post-publish" title='2021-03-01 19:49:04'>发布于 <time datetime="2021-03-01">2021-03-01</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="content">A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一</div><div class="post-footer">
+    <a href="/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/' class="post-tag">内容/停止更新/论文总结</a><a href='/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%B5%84%E6%BA%90%E9%A2%84%E6%B5%8B/' class="post-tag">计算机/资源预测</a></div></div>
+</article>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h2 class="single-title" itemprop="name headline"><a href="/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/">Business-Driven Long-Term Capacity Planning for SaaS Applications</a>
+  </h2><div class="post-meta"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span>&nbsp;<span class="post-publish" title='2021-03-01 16:57:04'>发布于 <time datetime="2021-03-01">2021-03-01</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="content">未完成 本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？ Business-Driven Long-Term Capacity Planning for SaaS Applications2015 TCC ，没记错</div><div class="post-footer">
+    <a href="/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href='/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%A7%91%E7%A0%94/%E8%B5%84%E6%BA%90%E8%B0%83%E5%BA%A6%E9%A2%84%E6%B5%8B/' class="post-tag">计算机/科研/资源调度预测</a></div></div>
+</article>
+<ul class="pagination"><li class="page-item">
+          <span class="page-link">
+            <a href="/">1</a>
+          </span>
+        </li><li class="page-item">
+          <span class="page-link" aria-hidden="true">&hellip;</span>
+        </li><li class="page-item">
+          <span class="page-link">
+            <a href="/page/10/">10</a>
+          </span>
+        </li><li class="page-item">
+          <span class="page-link">
+            <a href="/page/11/">11</a>
+          </span>
+        </li><li class="page-item active">
+          <span class="page-link">
+            <a href="/page/12/">12</a>
+          </span>
+        </li><li class="page-item">
+          <span class="page-link">
+            <a href="/page/13/">13</a>
+          </span>
+        </li><li class="page-item">
+          <span class="page-link">
+            <a href="/page/14/">14</a>
+          </span>
+        </li><li class="page-item">
+          <span class="page-link" aria-hidden="true">&hellip;</span>
+        </li><li class="page-item">
+          <span class="page-link">
+            <a href="/page/16/">16</a>
+          </span>
+        </li></ul></div></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/typeit/index.umd.js" defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"typeit-profile-subtitle":"Life is like a Markov chain. It is independent of your past, and only depends on your present."},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"typeit-profile-subtitle":["typeit-profile-subtitle"]},"duration":-1,"loop":false,"speed":100}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

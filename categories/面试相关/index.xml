@@ -1,19 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>面试相关 on 实践出真知</title>
+    <title>面试相关 - 分类 - 实践出真知</title>
     <link>http://wtysos11.github.io/categories/%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3/</link>
-    <description>Recent content in 面试相关 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <lastBuildDate>Wed, 24 Feb 2021 19:12:04 +0800</lastBuildDate>
-    <atom:link href="http://wtysos11.github.io/categories/%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>阿里春招简历小课堂笔记</title>
-      <link>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Wed, 24 Feb 2021 19:12:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</guid>
-      <description> 简历的内容 Link to heading 简历，总结而言是经历的总结。&#xA;简历自答：&#xA;用一句话或者三个词描述自己是一个怎么样的人 我热爱/喜欢做的事情是什么 我擅长做的事情是什么/特长/核心竞争力 我的目标是什么（短期/长期） 我的近两个i有哪些(自我总结) 由五个小问题引出两个总结性的问题：定位思考与职业匹配&#xA;一个例子：&#xA;教育背景（记得加学期、可以写GPA） 专业技能 项目经历（文字要凝练，做了什么，什么身份 科研成果（亮点突出，一句话能让第一眼能让面试官判断，论文几篇、什么量级） 实习经历（量化描述，用数据支撑自己在实习期间做的事情。用一句话，因为你给这个项目、给公司带来了哪些不同。如果没有实习经历，尽量还是要找一个实习经历） 竞赛成绩（标注量级） 获奖情况（奖学金情况，标注量级） 校园活动 其他经历 注意事项 Link to heading 简历中的文字颜色不应该超过两种，最好只使用一种，不要加粗，且格式最好保持前后一致。&#xA;总结 Link to heading 七颗龙珠：&#xA;真实诚信。而且大公司简历会在系统中留档 自我总结 亮点突出 量化描述 文字凝练（一眼看懂，不用思考，简单明了，重点突出） 格式整洁（全文上下保持同一格式，不要加过多的颜色，由其是文字颜色） 一页为佳 春招信息 Link to heading 开启时间：3月份 信源：钉钉校招群，阿里官网 申请机会：春招秋招各两次，分别是网申和内退。春招通过之后，秋招可以有直通面试。 春招没有过，秋招不受影响 实习一般多久？最少一个月，可以两个月到三个月。疫情期间开放远程实习，但是建议现场实习。 无法来实习，仍然建议参与春招，来积累经验，体验过程。 内推过程：集团内部的同学将我的简历放到系统里面，然后会发一个链接，我再进行完善。 春招有日常实习。 </description>
-    </item>
-  </channel>
+    <description>面试相关 - 分类 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Feb 2021 19:12:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E9%9D%A2%E8%AF%95%E7%9B%B8%E5%85%B3/" rel="self" type="application/rss+xml" /><item>
+  <title>阿里春招简历小课堂笔记</title>
+  <link>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</link>
+  <pubDate>Wed, 24 Feb 2021 19:12:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</guid>
+  <description><![CDATA[简历的内容简历，总结而言是经历的总结。 简历自答： 用一句话或者三个词描述自己是一个怎么样的人 我热爱/喜欢做的事情是什么 我擅长做的事情是什么/特]]></description>
+</item>
+</channel>
 </rss>

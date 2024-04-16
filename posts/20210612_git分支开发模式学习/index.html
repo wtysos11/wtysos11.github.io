@@ -1,206 +1,175 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  Git分支开发模式学习 · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content=" 本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备
-参考资料 Link to heading segmentationfault official-分支开发工作流 按照官方的分类就比较简单：
-长期分支：分支将长期存在，不同分支之间的区别将是稳定性的区别。其中master最稳定，dev比较不稳定，topic次之。 短期分支：除了master外不存在长期分支，所有分支都将短期存在，目标为实现一种主题（单一的特性或工作）。实现完成之后就合并到master中 阿里的分支模式分类就更接近生产，除了强调开发外也强调发布。
-TBD（主干开发模式），有点类似长期分支，但是比长期分支简单很多。最简单的版本就是所有团队成员共有一个开发分支，这样的问题在于如果团队变大的话，每天各个成员光是在合并提交上就会花费很多时间。因此要求每次变更提交都要足够小，且能快速完成验证。 特性分支开发模式(Git-Flow)：这个是真的有点类似Git官方中长期分支与短期分支的结合。就每一个特性来说，所有关于该特性的开发工作都会集中在一个分支上，当完成该特性的工作之后，再把特性分支合并回代码主路径上并准备发布 长期存在着多个分支，比如feature分支（功能开发）、develop（功能集成）、release（版本发布）、hotfix（线上修改）、master（最新已发布版本基线） 每个特性都在对应的feature分支上开发。特性开发完毕并验证通过后会merge到develop分支（大部分时间都与master接近）进行集中验证。然后验证完毕之后单独拉到release分支进行发布。中间的任何错误都会从release分支往回传，其中master分支永远是最新的可运行分支。 缺点：分支特别多，而且非常复杂。develop分支等的意义比较冗余（与master等相比） Github-Flow，任务导向型，更贴近短期分支。实际上也是大部分开源项目所采用的方法。 master分支的所有代码都应该是最新的可部署、可工作版本 新的工作从master拉取分支，并以工作任务进行命名 完成任务后提交pull-request合并到master分支并提起代码评审，评审通过后进行合并。 Gitlab-Flow，将pull-request改为了merge-request，与Github-Flow非常相似 最大的区别是发布侧，引入了对应生产环境的production分支和预发环境的pre-production分支。 ">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Git分支开发模式学习"/>
-<meta name="twitter:description" content=" 本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备
-参考资料 Link to heading segmentationfault official-分支开发工作流 按照官方的分类就比较简单：
-长期分支：分支将长期存在，不同分支之间的区别将是稳定性的区别。其中master最稳定，dev比较不稳定，topic次之。 短期分支：除了master外不存在长期分支，所有分支都将短期存在，目标为实现一种主题（单一的特性或工作）。实现完成之后就合并到master中 阿里的分支模式分类就更接近生产，除了强调开发外也强调发布。
-TBD（主干开发模式），有点类似长期分支，但是比长期分支简单很多。最简单的版本就是所有团队成员共有一个开发分支，这样的问题在于如果团队变大的话，每天各个成员光是在合并提交上就会花费很多时间。因此要求每次变更提交都要足够小，且能快速完成验证。 特性分支开发模式(Git-Flow)：这个是真的有点类似Git官方中长期分支与短期分支的结合。就每一个特性来说，所有关于该特性的开发工作都会集中在一个分支上，当完成该特性的工作之后，再把特性分支合并回代码主路径上并准备发布 长期存在着多个分支，比如feature分支（功能开发）、develop（功能集成）、release（版本发布）、hotfix（线上修改）、master（最新已发布版本基线） 每个特性都在对应的feature分支上开发。特性开发完毕并验证通过后会merge到develop分支（大部分时间都与master接近）进行集中验证。然后验证完毕之后单独拉到release分支进行发布。中间的任何错误都会从release分支往回传，其中master分支永远是最新的可运行分支。 缺点：分支特别多，而且非常复杂。develop分支等的意义比较冗余（与master等相比） Github-Flow，任务导向型，更贴近短期分支。实际上也是大部分开源项目所采用的方法。 master分支的所有代码都应该是最新的可部署、可工作版本 新的工作从master拉取分支，并以工作任务进行命名 完成任务后提交pull-request合并到master分支并提起代码评审，评审通过后进行合并。 Gitlab-Flow，将pull-request改为了merge-request，与Github-Flow非常相似 最大的区别是发布侧，引入了对应生产环境的production分支和预发环境的pre-production分支。 "/>
-
-<meta property="og:title" content="Git分支开发模式学习" />
-<meta property="og:description" content=" 本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备
-参考资料 Link to heading segmentationfault official-分支开发工作流 按照官方的分类就比较简单：
-长期分支：分支将长期存在，不同分支之间的区别将是稳定性的区别。其中master最稳定，dev比较不稳定，topic次之。 短期分支：除了master外不存在长期分支，所有分支都将短期存在，目标为实现一种主题（单一的特性或工作）。实现完成之后就合并到master中 阿里的分支模式分类就更接近生产，除了强调开发外也强调发布。
-TBD（主干开发模式），有点类似长期分支，但是比长期分支简单很多。最简单的版本就是所有团队成员共有一个开发分支，这样的问题在于如果团队变大的话，每天各个成员光是在合并提交上就会花费很多时间。因此要求每次变更提交都要足够小，且能快速完成验证。 特性分支开发模式(Git-Flow)：这个是真的有点类似Git官方中长期分支与短期分支的结合。就每一个特性来说，所有关于该特性的开发工作都会集中在一个分支上，当完成该特性的工作之后，再把特性分支合并回代码主路径上并准备发布 长期存在着多个分支，比如feature分支（功能开发）、develop（功能集成）、release（版本发布）、hotfix（线上修改）、master（最新已发布版本基线） 每个特性都在对应的feature分支上开发。特性开发完毕并验证通过后会merge到develop分支（大部分时间都与master接近）进行集中验证。然后验证完毕之后单独拉到release分支进行发布。中间的任何错误都会从release分支往回传，其中master分支永远是最新的可运行分支。 缺点：分支特别多，而且非常复杂。develop分支等的意义比较冗余（与master等相比） Github-Flow，任务导向型，更贴近短期分支。实际上也是大部分开源项目所采用的方法。 master分支的所有代码都应该是最新的可部署、可工作版本 新的工作从master拉取分支，并以工作任务进行命名 完成任务后提交pull-request合并到master分支并提起代码评审，评审通过后进行合并。 Gitlab-Flow，将pull-request改为了merge-request，与Github-Flow非常相似 最大的区别是发布侧，引入了对应生产环境的production分支和预发环境的pre-production分支。 " />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Git分支开发模式学习 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备 参考资料 segmentationfault official-分支开发工作流 按照官方的分" /><meta name="keywords" content='计算机/软件工程, 计算机/工具/git' /><meta itemprop="name" content="Git分支开发模式学习">
+<meta itemprop="description" content="本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备 参考资料 segmentationfault official-分支开发工作流 按照官方的分"><meta itemprop="datePublished" content="2021-06-12T16:02:14+08:00" />
+<meta itemprop="dateModified" content="2021-06-12T16:02:14+08:00" />
+<meta itemprop="wordCount" content="1004">
+<meta itemprop="keywords" content="计算机/软件工程,计算机/工具/git," /><meta property="og:title" content="Git分支开发模式学习" />
+<meta property="og:description" content="本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备 参考资料 segmentationfault official-分支开发工作流 按照官方的分" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-06-12T16:02:14+08:00" />
 <meta property="article:modified_time" content="2021-06-12T16:02:14+08:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/">
-              Git分支开发模式学习
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Git分支开发模式学习"/>
+<meta name="twitter:description" content="本文目标 了解不同的分支开发模式并给出自己的理解 为熟练掌握并选择不同的分支开发模式做准备 参考资料 segmentationfault official-分支开发工作流 按照官方的分"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/" /><link rel="next" href="http://wtysos11.github.io/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Git分支开发模式学习",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0\/"
+    },"genre": "posts","keywords": "计算机\/软件工程, 计算机\/工具\/git","wordcount":  1004 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0\/","datePublished": "2021-06-12T16:02:14+08:00","dateModified": "2021-06-12T16:02:14+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2021-06-12T16:02:14&#43;08:00">
-                六月 12, 2021
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/git%E5%AD%A6%E4%B9%A0/">Git学习</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">计算机/软件工程</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%B7%A5%E5%85%B7/git/">计算机/工具/git</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Git分支开发模式学习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/git%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - Git学习"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Git学习</a></span></div><div class="post-meta-line"><span title="发布于 2021-06-12 16:02:14"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2021-06-12">2021-06-12</time></span>&nbsp;<span title="1004 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1100 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <blockquote>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><blockquote>
 <p>本文目标
 了解不同的分支开发模式并给出自己的理解
 为熟练掌握并选择不同的分支开发模式做准备</p>
 </blockquote>
-<h2 id="参考资料">
-  参考资料
-  <a class="heading-link" href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<ul>
-<li><a href="https://segmentfault.com/a/1190000023159791"  class="external-link" target="_blank" rel="noopener">segmentationfault</a></li>
-<li><a href="https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E5%B7%A5%E4%BD%9C%E6%B5%81#_topic_branch"  class="external-link" target="_blank" rel="noopener">official-分支开发工作流</a></li>
+<h2 id="参考资料" class="heading-element">
+  <a href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99" class="heading-mark"></a>参考资料</h2><ul>
+<li><a href="https://segmentfault.com/a/1190000023159791"target="_blank" rel="external nofollow noopener noreferrer">segmentationfault</a></li>
+<li><a href="https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E5%B7%A5%E4%BD%9C%E6%B5%81#_topic_branch"target="_blank" rel="external nofollow noopener noreferrer">official-分支开发工作流</a></li>
 </ul>
 <p>按照官方的分类就比较简单：</p>
 <ul>
@@ -227,91 +196,56 @@ TBD（主干开发模式），有点类似长期分支，但是比长期分支�
 <li>Gitlab-Flow，将pull-request改为了merge-request，与Github-Flow非常相似
 <ul>
 <li>最大的区别是发布侧，引入了对应生产环境的production分支和预发环境的pre-production分支。
-<img src="https://segmentfault.com/img/remote/1460000023159797" alt="Gitlab-flow"></li>
+<img loading="lazy" src="https://segmentfault.com/img/remote/1460000023159797" alt="Gitlab-flow" srcset="https://segmentfault.com/img/remote/1460000023159797?size=small, https://segmentfault.com/img/remote/1460000023159797?size=medium 1.5x, https://segmentfault.com/img/remote/1460000023159797?size=large 2x" data-title="Gitlab-flow" class="suffix-invalid suffix-invalid__small suffix-invalid__large" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></li>
 </ul>
 </li>
 </ul>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2021-06-12 16:02:14">更新于 2021-06-12&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-title="Git分支开发模式学习" data-hashtags="计算机/软件工程,计算机/工具/git"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-hashtag="计算机/软件工程"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-title="Git分支开发模式学习" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-title="Git分支开发模式学习"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-title="Git分支开发模式学习"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-title="Git分支开发模式学习" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-title="Git分支开发模式学习" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20210612_git%E5%88%86%E6%94%AF%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E5%AD%A6%E4%B9%A0/" data-title="Git分支开发模式学习"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" class="post-tag" title="标签 - 计算机/软件工程">计算机/软件工程</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%B7%A5%E5%85%B7/git/" class="post-tag" title="标签 - 计算机/工具/Git">计算机/工具/Git</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20210612_golang%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E6%95%B4%E7%90%86%E5%BD%92%E7%BA%B3/" class="post-nav-item" rel="prev" title="golang单元测试整理归纳"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>golang单元测试整理归纳</a>
+      <a href="/posts/20210613_golang%E4%B8%AD%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0%E9%BB%98%E8%AE%A4%E5%80%BC/" class="post-nav-item" rel="next" title="golang中函数如何设置参数默认值">golang中函数如何设置参数默认值<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>

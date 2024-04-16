@@ -1,102 +1,87 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
-    <title>内容/学习笔记 on 实践出真知</title>
+    <title>内容/学习笔记 - 标签 - 实践出真知</title>
     <link>http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-    <description>Recent content in 内容/学习笔记 on 实践出真知</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Gopherfest 2015：Go Proverbs with Rob Pike</title>
-      <link>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</link>
-      <pubDate>Mon, 27 Jun 2022 21:13:15 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-    <item>
-      <title>Vegeta压测工具学习与使用</title>
-      <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
-      <pubDate>Fri, 24 Jun 2022 17:27:23 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-      <description>阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能</description>
-    </item>
-    <item>
-      <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>
-      <link>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
-      <pubDate>Mon, 13 Jun 2022 09:01:42 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
-      <description>前言 Link to heading 参考资料 Link to heading 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用go run -race main.go应该都可以检出数据竞争。 原论文 感觉自己很多地方翻译的不是很好，省略了很多的内容，还是推荐阅读原文 数据竞争检测 Link to heading data race的检测可以通过go build中加入-race来进行。详情见此文所举的例子&#xA;本文统一将data race译为数据竞争&#xA;摘要 Link to heading Go作为将并发置为首位的语言，在现代基于微服务的系统中变得越来越受欢迎。同样，data race（数据竞争）也因此变得愈发普遍。本文在Uber的工业应用场景中进行了相关的实验，说明Go中语言习语和编写方式的细微差别使得Go非常容易受到数据竞争的影响。&#xA;动态的race detector可以识别（内部），但是面临着可伸缩性和flakiness的挑战。作者将自制的数据竞争检测器应用于Uber2100个微服务共计四千六百万条Go代码上，并最终检测2000个数据竞争，修复了其中的1000个。&#xA;1 Introduction Link to heading 介绍了一些Go的优点，特别是其中适合于编写微服务的部分。 Go中不同goroutine之间的通信包括消息队列传输（channel）和共享内存。这里的共享内存应该指的是对同一个进程内数据的直接访问。&#xA;数据竞争的条件：&#xA;对于两个或者更多访问同一个数据对象(datum)的goroutine而言，至少有一个是写 这些goroutine之间没有顺序（比如channel或者lock所形成的偏序关系） 数据竞争的后果很严重，可能会导致最终的结果出现异常，并造成服务下线。 Go内置的数据竞争检测器采用了基于ThreadSanitizer的动态检测，包括lock-set和happens-before算法。其代价根据程序的大小变化，但是一般会造成内存占用增加5到10倍，执行时间增加2到10倍，并且编译时间会增加2倍。&#xA;本文介绍了使用Go的默认动态检测器来持续在uber的生产环境中检测数据竞争。尽管已经有了很多检测数据竞争的算法，但是这与在真实环境的设置中部署动态分析还有显著的差距。由于动态竞争检测的不确定性，将其作为连续检测的一部分进行集成是不切实际的；部署它作为事后检测过程又在不重复报告的同时确定正确的竞争拥有者这一点上引入了复杂性和挑战。我们根据实际情况精心设计了部署的选择。&#xA;我们使用了十万个Godanyuan测试来检验代码并检测数据竞争。在六个月内，连续监控系统检测了2000条以上的数据竞争，210个开发者使用790个补丁修复了其中多达1000个数据竞争，上下的正在被积极地解决。系统每天能从新引入的代码中检测到5个新的数据竞争。&#xA;分析结果显示除了常见的错误外，Go有着独特的方面来引入并发错误，包括&#xA;transparent capture-by-reference of free variables named return variables deferred functions ability to mix shared memory with message passing indistinguishable value vs pointer semantics extensive use of thread-unsafe built-in map flexible gropu synchronization confusing slice 并且与Go简单的使用goroutine来进行并发的特性结合，使得Go很容易出现数据竞争。 （因此本文主要讨论的是由Go的语法特点引起的数据竞争） 贡献：</description>
-    </item>
-    <item>
-      <title>消息队列基本概念与pulsar学习</title>
-      <link>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Wed, 08 Jun 2022 09:01:42 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</guid>
-      <description>消息队列学习 Link to heading 概念学习 Link to heading 参考资料：&#xA;IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念&#xA;消息（messages）：一组信息的集合 topic。 Topic和Queue应该指的是两种不同的模型，根据这篇JMS的文章、Kafka is it a topic or a queue、JMS Topic vs Queues。在Queue中，发送方直到消息会被发送到哪里去，存在特定的发送者和特定的接受者，而且一般是一对一的；在Topic中，虽然仍然存在发送者和接受者，但是它们互相之间是不知道的。 而且在队列中接受者不用担心超时问题；在Topic中接受者必须continuously active并且按时接收，不然消息就会超时。 在pulsar中，topic甚至不用预先创建，会根据{persistent|non-persistent}://tenant/namespace/topic的名称自动生成。 元数据（metadata）：参考BookKeeper Ledger Metadata，metadata更多应该是配置项的数据，以及一些全局范围内有作用的变量。 Pub/Sub：Pub-Sub Messaging 消息队列的优点：&#xA;分离消息的生产者和消费者，使其在代码层面解耦合 允许消费者对消息进行异步处理，加快处理速度。 访问控制中的峰值控制。 Pulsar Link to heading 参考资料：&#xA;下一代消息队列pulsar到底是什么 pulsar/concepts-messaging 架构上来说，Pulsar是Pub-sub架构&#xA;Broker：无状态服务层，负责接受和传递消息、集群负载均衡 Apache BookKeeper：有状态持久化层，由一组名为Bookie的存储节点组成 Producer：数据生产者，负责发布数据到Topic Consumer：数据消费者，负责从Topic订阅数据 使用ZooKeeper作为元数据存储&#xA;其他消息队列是分区存储，Pulsar是分片存储。&#xA;Pub-sub架构（发布/订阅），异步的服务间通信方式，适用于无服务器和微服务。发布到主题的任何消息都会立即被主题的所有订阅者接收。&#xA;多层架构：&#xA;租户，可以看作是第一个层级，比如大的部门 namespace：命名空间，可以看作是第二个层级。 Subscriptions Link to heading 有四种模式：&#xA;Consumerless subscriptions，这个是例外，没有consumer的时候subscription mode的undefined的。</description>
-    </item>
-    <item>
-      <title>Conv1d原理解析</title>
-      <link>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Mon, 27 Sep 2021 09:49:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</guid>
-      <description>torch中的Conv1d解析</description>
-    </item>
-    <item>
-      <title>torch.einsum函数学习</title>
-      <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Thu, 09 Sep 2021 15:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
-      <description>torch.einsum函数的使用例子与说明</description>
-    </item>
-    <item>
-      <title>torch.roll函数学习</title>
-      <link>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
-      <pubDate>Thu, 09 Sep 2021 10:46:02 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
-      <description>torch.roll函数的使用例子与说明</description>
-    </item>
-    <item>
-      <title>专利讲座笔记</title>
-      <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Sat, 26 Jun 2021 21:13:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</guid>
-      <description> 专利学习 Link to heading 内容：&#xA;专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座&#xA;专利基本知识 Link to heading 知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念。专利具体来说是分为三个类型：发明、实用新型、外观设计。&#xA;发明也分为产品发明和方法发明，一般毕业所注册的专利都是方法发明这一类，包括制造方法和控制方法或使用方法。发明专利是对产品、方法或者改进所提出的技术方案。&#xA;实用新型，又称为产品发明，定义上为对产品的形状、构造以其结合提出的适用于使用的新的技术方案。一般被称为小发明，不包含方法。（算法这类虚拟的方法类内容是不包含在实用新型中的）&#xA;外观设计，又称为产品设计。对产品的形状、图案、色彩或者其结合所作出的富有美感并适于工作上应用的新设计。&#xA;毕业要求的1分为公开发明专利，成果必须署名中山的数学，且必须为国家发明专利的第一发明人。&#xA;不能获得专利的情况：&#xA;科学发现，比如发现一种自然现象 智力活动的规则和方法，比如一种游戏规则（三国杀）。具体来说是可以人为地随意篡改也不影响技术方面的体现。 疾病的诊断和治疗方法。出于人道主义的考虑和社会伦理的原因。 动物和植物新品种（产品的生产方法除外） 用原子核变换方法获得的物质 专利的性质：&#xA;独占性 专利权人具有对其发明创造的制造、使用、销售、许诺销售和进出口的权利，也是最重要的性质。 时间性 从申请日到授权日大概要2-3年，审查周期很长。 地域性 只能在某个国家单独申请 专利权授予条件：&#xA;新颖性 指申请日以前没有同样的发明创造 在国内外的出版物上公开发表过。这一点比较经常遇到，在期刊发表后是不能申请专利的 在国内外公开使用过或者以其他方式为公众所知。 创造性 比新颖性要高。 要求具有突出的实质性特点和显著的进步（实用新型只需要具有实质性特点和进步即可） 涉及计算机程序的专利：&#xA;通常是以发明专利申请的形式提出 涉及计算机程序的发明是指：为解决发明提出的问题，全部或部分以计算机程序处理流程为基础（算法流程图），通过计算机执行按上述流程编制的计算机程序，对计算机外部对象或者内部对象进行控制或处理的解决方案。 并不一定要包含对计算机硬件的改变。 五类可以申请专利的计算机软件：&#xA;将计算机程序输入到一个公知的计算机来控制该计算机的内部操作，从而实现计算机内部性能的改进 用计算机程序来控制某一工业过程 用计算机程序来控制某一测量或者测试过程 使用一个计算机程序来实现外部数据处理 文件 Link to heading 主要是说明书（范围限定）和说明书附图&#xA;专利挖掘途径：&#xA;找出完成任务的组成部分：比如网站的前端、后台、服务器 分析各组成部分的技术要素：比如前端界面的多个功能模块 找出各技术要素的创新点：比如具体的权限功能模块 根据创新点总结技术方案：比如实现该模块的算法 </description>
-    </item>
-    <item>
-      <title>Go中nil意义的理解</title>
-      <link>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</link>
-      <pubDate>Mon, 21 Jun 2021 14:28:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
-      <description>对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频https://www.youtube.com/watch?v=ynoY2xz-F8s，Slides：https://speakerdeck.com/campoy/understanding-nil&#xA;nil是什么 Link to heading 就结果来说，nil是绝大部分Go中类型的初始值，包括指针、slices、maps、channels、functions等。而这其中，应该大部分类型最核心的实现都是指针，比如map和slice的本质就是指向内置对象的指针。&#xA;而对于接口而言就更加复杂一些，这个其实涉及到了接口的底层实现，详情参考Go语言接口的原理-Go语言设计与实现。&#xA;接口包括了一个指向值的指针和一个指向类型的指针。对接口来说，接口为nil代表着(nil,nil)，因此如果声明了一个自珍并且把指针赋值给了接口，那类型就不为nil了（*Person,nil）&#xA;type Person struct{ a int } func (p Person) String() string{ return strconv.Itoa(p.a) } func main(){ var s fmt.Stringer//接口类型，要求实现String()函数 fmt.Println(s == nil)//true var p *Person s = p fmt.Println(s == nil)//false，尽管值依旧为nil，但是类型不为nil } 什么时候nil不是nil Link to heading nil可以是一个nil接口/切片或者指针，是有实际意义的&#xA;type doError struct{ errorMessage string } func (err doError) Error() string{ return err.errorMessage } func do() error{ //错误地方：返回了error接口类型。改正：应该返回具体类型 * doError var err *doError return err //类型*doError是空的，但是它实现了接口 } func main(){ err := do() fmt.</description>
-    </item>
-    <item>
-      <title>分布式系统-CAP理论十二年回顾：规则变了</title>
-      <link>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</link>
-      <pubDate>Wed, 10 Mar 2021 14:21:14 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</guid>
-      <description>该文的阅读感想&#xA;CAP理论断言，最多只能满足数据一致性、可用性、分区容忍性这三要素中的两个。&#xA;REF: What is CAP&#xA;数据一致性（consistency）：所有节点访问同一份最新的数据副本。就是说所有副本之间互相同步，在任何时候保持着同一个状态 高可用性（availability）：每一个请求最终都会成功。对节点的任何读写请求都不会被拒绝。 网络容忍性(Network Partition Tolerance)：当网络断开连接的时候，系统能够继续运行。即使某些或者所有的节点都不能够互相通信。一般指的是跨区域的数据库，此时很难保证两个数据库之间相互连接。 通过显式处理分区情景，系统设计师可以做到优化数据一致性和可用性，进而取得三者的平衡。我自己对这句话的理解是这样的，假设现在存在两个节点N1和N2，所有更新操作都会互相通知，显然可以满足数据一致性C。当两者不能互相连接的时候，有三种情况：1. 两者继续服务，更新数据，此时数据必定不一致，就是放弃了C来换去A，同时维护P；2.N1和N2都不服务，放弃可用性来取得C和P。3. 只有N1服务，此时数据一致性得到部分保留，可用性得到部分保留，同时维护了P。我觉得第三种就是这种所谓的权衡。&#xA;作者指出，三选二这样的语句本身是不严谨的。实际上，只有在分区存在的前提下呈现完美的数据一致性和可用性这种很少见的情况是CAP理论所不允许出现的。因此在实际设计中有着很多的变通方案和灵活度。&#xA;三选二公式的误导性 Link to heading 分区很少发生，那么在系统不存在分区的情况下没理由去牺牲C和A。 C和A之间的取舍可以在同一系统中以非常细小的粒度反复发生，每一次的决策可能因为具体的操作，或者牵涉到特定的数据或用户而有所不同。 这三种性质都可以在程度上衡量，并不是非黑即白的有或者无，可用性是一个百分比，一致性也分很多级别，分区也有不同的定义。 CAP在大多数时候允许完美的C和A，那在P出现的时候，准备一些策略去处理其影响即可，包括：&#xA;探知分区发生 进入显式的分区模式以限制某些操作 启动恢复过程以恢复数据一致性并补偿分区期间发生的错误 ACID、BASE和CAP Link to heading ACID和BASE分处一致性-可用性分布图谱的两极&#xA;ACID Link to heading 数据库的传统设计思路，注重一致性，写入数据库教材的经典原则。这也是事务transaction的基本性质&#xA;原子性atom：操作要么全部成功，要么全部失败。所有的系统都受惠于原子性，这是没有理由改变的，可以极大简化分区恢复 一致性consistency：事务不能破坏任何数据库规则，如键的唯一性。（CAP的C仅指单一副本上的一致性，因此是其子集）ACID一致性不能在恢复过程中保持，因此分区恢复的时候要考虑重建一致性。 隔离性Isolation:数据库允许多个并发事务对其数据进行同时读写和修改的能力。隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。这也是CAP理论的核心，如果系统要求ACID隔离性，那在分区P期间，最多可以在分区的一侧维持操作。事务的可串行性要求全局的通信，因此在分区的情况下不能成立。只有在分区恢复时进行补偿，在分区前后保持一个较弱的正确性定义是可行的。 持久性Durability：事务处理结束后，对数据的修改就是永久的。牺牲持久性也没有意义。 CAP和延迟的联系 Link to heading CAP理论的经典解释是忽略网络延迟的，但实际中延迟和分区密切相关。在操作的间隙，系统需要作出决策：&#xA;取消操作，降低系统可用性。或是 继续操作，以冒险损失系统一致性为代价 依靠多次尝试通信来达成一致性，比如Paxos算法或者两阶段事务提交，仅仅是推迟了决策时间。无限期地尝试下去，本身就是选择一致性牺牲可用性的表现。&#xA;从延迟的角度抓住了设计的核心问题：分区两侧是否在无通信的情况下继续操作？&#xA;从这个实用的观察角度导出两条推论：&#xA;分区并不是全体节点的一致见解，因为有的节点检测到分区，有的节点没有 检测到分区的节点会进入到分区模式，这是优化C和A的核心环节。 CAP之惑 Link to heading 对于可用性和一致性的作用范围的误解比较严重。&#xA;离线模式正在变得越来越重要，比如HTML5的客户端持久化存储特性。这些离线系统在C和A中会更倾向于A，此时就不得不在长时间处于分区状态后进行恢复。&#xA;“一致性的作用范围”其实反映了这样一种观念，即在一定的边界内状态是一直的，但超出了边界就无从谈起。比如在一个主分区内可以保证完备的一致性和可用性，而在分区外服务是不可用的。&#xA;管理分区 Link to heading 由于基本操作是原子的，因此分区检测一定发生在两个事务之间，然后在分区结束后执行分区恢复来恢复一致性。&#xA;当系统进入分区模式，有两种可行的策略。其一是限制部分操作，因此会削弱可用性；其二是额外记录一些有利于后面分区恢复的操作信息。系统可以通过持续尝试恢复通信来察觉分区何时结束。&#xA;哪些操作可以执行？ Link to heading 决定限制哪些操作，主要取决于系统需要维持哪几项不变性约束。</description>
-    </item>
-    <item>
-      <title>阿里春招简历小课堂笔记</title>
-      <link>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</link>
-      <pubDate>Wed, 24 Feb 2021 19:12:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210224_%E9%98%BF%E9%87%8C%E6%98%A5%E6%8B%9B%E7%AE%80%E5%8E%86%E5%B0%8F%E8%AF%BE%E5%A0%82%E7%AC%94%E8%AE%B0/</guid>
-      <description> 简历的内容 Link to heading 简历，总结而言是经历的总结。&#xA;简历自答：&#xA;用一句话或者三个词描述自己是一个怎么样的人 我热爱/喜欢做的事情是什么 我擅长做的事情是什么/特长/核心竞争力 我的目标是什么（短期/长期） 我的近两个i有哪些(自我总结) 由五个小问题引出两个总结性的问题：定位思考与职业匹配&#xA;一个例子：&#xA;教育背景（记得加学期、可以写GPA） 专业技能 项目经历（文字要凝练，做了什么，什么身份 科研成果（亮点突出，一句话能让第一眼能让面试官判断，论文几篇、什么量级） 实习经历（量化描述，用数据支撑自己在实习期间做的事情。用一句话，因为你给这个项目、给公司带来了哪些不同。如果没有实习经历，尽量还是要找一个实习经历） 竞赛成绩（标注量级） 获奖情况（奖学金情况，标注量级） 校园活动 其他经历 注意事项 Link to heading 简历中的文字颜色不应该超过两种，最好只使用一种，不要加粗，且格式最好保持前后一致。&#xA;总结 Link to heading 七颗龙珠：&#xA;真实诚信。而且大公司简历会在系统中留档 自我总结 亮点突出 量化描述 文字凝练（一眼看懂，不用思考，简单明了，重点突出） 格式整洁（全文上下保持同一格式，不要加过多的颜色，由其是文字颜色） 一页为佳 春招信息 Link to heading 开启时间：3月份 信源：钉钉校招群，阿里官网 申请机会：春招秋招各两次，分别是网申和内退。春招通过之后，秋招可以有直通面试。 春招没有过，秋招不受影响 实习一般多久？最少一个月，可以两个月到三个月。疫情期间开放远程实习，但是建议现场实习。 无法来实习，仍然建议参与春招，来积累经验，体验过程。 内推过程：集团内部的同学将我的简历放到系统里面，然后会发一个链接，我再进行完善。 春招有日常实习。 </description>
-    </item>
-    <item>
-      <title>现代人工智能课程复习</title>
-      <link>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</link>
-      <pubDate>Sat, 09 Jan 2021 14:14:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20210109_%E7%8E%B0%E4%BB%A3%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AF%BE%E7%A8%8B%E5%A4%8D%E4%B9%A0/</guid>
-      <description>中山大学研一上学期现代人工智能技术复习的相关资料，主要内容为神经网络基础知识，可能涉及到线性代数、概率论、线性模型、卷积神经网络和CV进展&#xA;距离度量，重点记忆Mahalanobis距离和Minkowski距离 过拟合 Link to heading 训练集误差减小的时候，测试集误差增大。 解决方案：正则化，给误差函数增加一个惩罚项（L1/L2）&#xA;概率论 Link to heading 全概率公式，P(A) = P(A|Bi)P(Bi) 贝叶斯公式，P(Bi|A) = P(ABi)/P(A)&#xA;贝叶斯概率 Link to heading 后验概率= 先验概率*似然函数&#xA;bootstrap，自助法，频率学派使用。假设原始数据集有N个数据，可以采取随机抽取N个点的做法来生成新的数据集（可重复，可缺失）。这样可以在多个产生的数据集中评估参数估计的结果。&#xA;高斯分布 Link to heading 一元与多元的表示&#xA;交叉验证 Link to heading 信息准则：AIC与BIC&#xA;决策论 Link to heading 或者说贝叶斯决策/贝叶斯推断&#xA;最小化错误分类率。对于二分类问题，降低错误发生的概率，即把类1分给类2与类2分给类1两个事件。 最小化期望损失。使用损失函数来量化错误分类的代价。 拒绝选项 判别器 Link to heading 概率分布 Link to heading 二项分布（伯努利分布） Link to heading E = p, V = p(1-p)&#xA;高斯分布 Link to heading 对于多元实值向量，使熵取最大值的是高斯分布&#xA;中心极限定理：&#xA;独立同分布的中心极限定理。当n个随机变量独立同分布且n足够大的时候，可以将独立同分布的随机变量之和当作正态变量。 对于要定义的高斯分布，其协方差的酥油特征值要严格大于零，不然不能被正确的归一化。如果一个或多个特征值为零，则该高斯分布将是奇异的，被限制在一个低维的子空间上。 高斯分布的局限性在于它是单峰的，因此难以逼近多峰分布。解决方法是使用混合高斯分布，使用足够多的高斯分布，并调整它们的均值和方差以及线性组合的系数，几乎可以以任意精度近似所有的连续概率密度。</description>
-    </item>
-    <item>
-      <title>知乎分享：vscode从入门到进阶</title>
-      <link>http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/</link>
-      <pubDate>Sun, 24 May 2020 09:08:04 +0800</pubDate>
-      <guid>http://wtysos11.github.io/posts/20200524_%E7%9F%A5%E4%B9%8E%E5%88%86%E4%BA%AB_vscode%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6/</guid>
-      <description>地址：知乎 内容大纲&#xA;VS Code 的优势&#xA;VS 和 VS Code 到底有什么关系？&#xA;微软从 VS 组里面抽了一拨人做 VS Code，是真的吗？ VS 支持 Java ？背后的真相到底是怎样的？ 你真的会用 VS Code 了吗？&#xA;VS Code Insiders 版本 常用的配置项 命令面板 面包屑导航/大纲/缩略图 主题 快捷键 集成终端 如何更好地学习 VS Code ？&#xA;学会提问 学会搜索 学会学习 一起改进 VS Code，你也能成为 VS Code 的 Contributor&#xA;VS Code 的核心组件&#xA;Electron Monaco Editor Language Server Protocol Debug Adapter Protocol VS Code 怎么做开源的？&#xA;进阶&#xA;命令行 玩转 Git 打造自己的主题 快速创建属于你的 Code Snippet 玩转 Tasks，把重复的工作自动化 调试 远程开发 插件</description>
-    </item>
-  </channel>
+    <description>内容/学习笔记 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
+  <title>Gopherfest 2015：Go Proverbs with Rob Pike</title>
+  <link>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</link>
+  <pubDate>Mon, 27 Jun 2022 21:13:15 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/</guid>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item>
+<item>
+  <title>Vegeta压测工具学习与使用</title>
+  <link>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</link>
+  <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item>
+<item>
+  <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>
+  <link>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+  <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+  <description><![CDATA[前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g]]></description>
+</item>
+<item>
+  <title>消息队列基本概念与pulsar学习</title>
+  <link>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</link>
+  <pubDate>Wed, 08 Jun 2022 09:01:42 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/</guid>
+  <description><![CDATA[消息队列学习 概念学习参考资料： IBM Messages and queues Microsoft-MSMQ Overview KM-消息队列原理简介与对比选型 基础概念 消息（messages）：一组信息的集合 topic。 Top]]></description>
+</item>
+<item>
+  <title>Conv1d原理解析</title>
+  <link>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</link>
+  <pubDate>Mon, 27 Sep 2021 09:49:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210927_conv1d%E5%87%BD%E6%95%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/</guid>
+  <description><![CDATA[torch中的Conv1d解析]]></description>
+</item>
+<item>
+  <title>torch.einsum函数学习</title>
+  <link>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
+  <pubDate>Thu, 09 Sep 2021 15:46:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210909_torch.einsum%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
+  <description><![CDATA[torch.einsum函数的使用例子与说明]]></description>
+</item>
+<item>
+  <title>torch.roll函数学习</title>
+  <link>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</link>
+  <pubDate>Thu, 09 Sep 2021 10:46:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210909_torch.roll%E5%87%BD%E6%95%B0%E5%AD%A6%E4%B9%A0/</guid>
+  <description><![CDATA[torch.roll函数的使用例子与说明]]></description>
+</item>
+<item>
+  <title>专利讲座笔记</title>
+  <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>
+  <pubDate>Sat, 26 Jun 2021 21:13:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</guid>
+  <description><![CDATA[专利学习内容： 专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座 专利基本知识知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念]]></description>
+</item>
+<item>
+  <title>Go中nil意义的理解</title>
+  <link>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</link>
+  <pubDate>Mon, 21 Jun 2021 14:28:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210621_go%E4%B8%ADnil%E6%84%8F%E4%B9%89%E7%9A%84%E7%90%86%E8%A7%A3/</guid>
+  <description><![CDATA[对KM社区上译文的阅读 原文来自于Francesc Campoy在GopherCon 2016上的演讲Understanding nil：视频htt]]></description>
+</item>
+<item>
+  <title>分布式系统-CAP理论十二年回顾：规则变了</title>
+  <link>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</link>
+  <pubDate>Wed, 10 Mar 2021 14:21:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210310_cap%E7%90%86%E8%AE%BA%E5%8D%81%E4%BA%8C%E5%B9%B4%E5%9B%9E%E9%A1%BE_%E8%A7%84%E5%88%99%E5%8F%98%E4%BA%86/</guid>
+  <description><![CDATA[该文的阅读感想 CAP理论断言，最多只能满足数据一致性、可用性、分区容忍性这三要素中的两个。 REF: What is CAP 数据一致性（consistency）：所有]]></description>
+</item>
+</channel>
 </rss>

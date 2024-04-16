@@ -1,238 +1,183 @@
 <!DOCTYPE html>
-<html lang="zh">
-
-<head>
-  <title>
-  bottleneck detection · 实践出真知
-</title>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light dark">
-
-
-
-
-<meta name="author" content="Timothy Wu">
-<meta name="description" content="原文地址
-主要还是针对微服务调度中bottleneck的定义入手
-瓶颈点定义 Link to heading 从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。 在多层应用(multi-tier applications)中，其中的bottleneck指的是资源层面的，即在某一层增加资源能够最大化的优化服务的性能。
-多层服务中的bottleneck Link to heading Agile Dynamic Provisioning of Multi-Tier Internet Applications Link to heading Chapter 1 Link to heading 师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。 定义：每一层的处理能力是固定的 x req/s，如果说中间有一层处理能力最低，显然整个服务的处理速度都将受到影响。 需要注意的是，对瓶颈层的增加并不代表对整个服务的服务质量都会增加，可能需要在消除所有的瓶颈层之后整个服务的服务性能才能得到提升。
-因为现在已经有很多的单层调度机制被使用了，要给很简单的想法就是给每一层都配置一个单层调度器。因此，我们的第一步就是在每一层的流量超过容纳上限的时候增加实例数量，这个可以通过监控队列长度、层间响应时间、或者丢包率来实现，这个方法称为independent per-tier provisioning.
-想法1：多层模型，逐个找到bottleneck并增加。问题在于增加的速度可能很慢，最多可能需要遍历所有层才能完成实例扩缩，这对于变化较快的网络流量显然是不行的。 想法2：直接将多层模型作为一个黑箱进行考虑。问题在于需要增加多少个实例，以及在哪里增加。因为多层模型是一个黑箱，显然调度器无法获取内部的信息，即不知道究竟是哪一层出了问题。对于单层服务模型，可以建立一个应用模型来决定在响应时间范围内对于给定的流量需要多少个服务，从而进行对应的扩缩。但是将这个模型用于多层模型中并不一定可行，因为每一层的服务与应用性质都是不同的。以简单的电子商务应用为例，这意味着将HTTP服务器、Java服务器和数据库系统一起建模，这将是一个困难的工作。第三，不是所有的层都可以增加实例，比如数据库系统就很难实时增加实例。 综上，不能将多层应用作为黑箱进行调度。 特色：
-predictive and reactive provisioning:使用预测式调度来进行小时或天级别、使用响应式调度来进行更细致的调度。 使用了基于排队论的分析模型来同时对多层网络应用进行分析 快速的服务器切换，允许虚拟机来处理更快发生的网络波动。 能够处理基于session的流量。 这个调度方法可以被归类为自适应adaptive或半自动的semi-autonomous，它们是能够快速适应环境同时只需要人类有限的接触。
-Chapter2 System Overview Link to heading 2.1 Multi-tier Internet Applications 多层网络架构：整个网络架构由顺序连接的多个应用层组成，如同管道一样，中间的一层会收到前面预处理的数据，并将自己处理好的数据传输给下一层。 本文定义的SLA，使用平均响应时间(average response time)或一个合适的响应时间分位点（a suitable high percentile of the response time distribution）">
-<meta name="keywords" content="blog,developer,personal">
-
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="bottleneck detection"/>
-<meta name="twitter:description" content="原文地址
-主要还是针对微服务调度中bottleneck的定义入手
-瓶颈点定义 Link to heading 从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。 在多层应用(multi-tier applications)中，其中的bottleneck指的是资源层面的，即在某一层增加资源能够最大化的优化服务的性能。
-多层服务中的bottleneck Link to heading Agile Dynamic Provisioning of Multi-Tier Internet Applications Link to heading Chapter 1 Link to heading 师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。 定义：每一层的处理能力是固定的 x req/s，如果说中间有一层处理能力最低，显然整个服务的处理速度都将受到影响。 需要注意的是，对瓶颈层的增加并不代表对整个服务的服务质量都会增加，可能需要在消除所有的瓶颈层之后整个服务的服务性能才能得到提升。
-因为现在已经有很多的单层调度机制被使用了，要给很简单的想法就是给每一层都配置一个单层调度器。因此，我们的第一步就是在每一层的流量超过容纳上限的时候增加实例数量，这个可以通过监控队列长度、层间响应时间、或者丢包率来实现，这个方法称为independent per-tier provisioning.
-想法1：多层模型，逐个找到bottleneck并增加。问题在于增加的速度可能很慢，最多可能需要遍历所有层才能完成实例扩缩，这对于变化较快的网络流量显然是不行的。 想法2：直接将多层模型作为一个黑箱进行考虑。问题在于需要增加多少个实例，以及在哪里增加。因为多层模型是一个黑箱，显然调度器无法获取内部的信息，即不知道究竟是哪一层出了问题。对于单层服务模型，可以建立一个应用模型来决定在响应时间范围内对于给定的流量需要多少个服务，从而进行对应的扩缩。但是将这个模型用于多层模型中并不一定可行，因为每一层的服务与应用性质都是不同的。以简单的电子商务应用为例，这意味着将HTTP服务器、Java服务器和数据库系统一起建模，这将是一个困难的工作。第三，不是所有的层都可以增加实例，比如数据库系统就很难实时增加实例。 综上，不能将多层应用作为黑箱进行调度。 特色：
-predictive and reactive provisioning:使用预测式调度来进行小时或天级别、使用响应式调度来进行更细致的调度。 使用了基于排队论的分析模型来同时对多层网络应用进行分析 快速的服务器切换，允许虚拟机来处理更快发生的网络波动。 能够处理基于session的流量。 这个调度方法可以被归类为自适应adaptive或半自动的semi-autonomous，它们是能够快速适应环境同时只需要人类有限的接触。
-Chapter2 System Overview Link to heading 2.1 Multi-tier Internet Applications 多层网络架构：整个网络架构由顺序连接的多个应用层组成，如同管道一样，中间的一层会收到前面预处理的数据，并将自己处理好的数据传输给下一层。 本文定义的SLA，使用平均响应时间(average response time)或一个合适的响应时间分位点（a suitable high percentile of the response time distribution）"/>
-
-<meta property="og:title" content="bottleneck detection" />
-<meta property="og:description" content="原文地址
-主要还是针对微服务调度中bottleneck的定义入手
-瓶颈点定义 Link to heading 从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。 在多层应用(multi-tier applications)中，其中的bottleneck指的是资源层面的，即在某一层增加资源能够最大化的优化服务的性能。
-多层服务中的bottleneck Link to heading Agile Dynamic Provisioning of Multi-Tier Internet Applications Link to heading Chapter 1 Link to heading 师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。 定义：每一层的处理能力是固定的 x req/s，如果说中间有一层处理能力最低，显然整个服务的处理速度都将受到影响。 需要注意的是，对瓶颈层的增加并不代表对整个服务的服务质量都会增加，可能需要在消除所有的瓶颈层之后整个服务的服务性能才能得到提升。
-因为现在已经有很多的单层调度机制被使用了，要给很简单的想法就是给每一层都配置一个单层调度器。因此，我们的第一步就是在每一层的流量超过容纳上限的时候增加实例数量，这个可以通过监控队列长度、层间响应时间、或者丢包率来实现，这个方法称为independent per-tier provisioning.
-想法1：多层模型，逐个找到bottleneck并增加。问题在于增加的速度可能很慢，最多可能需要遍历所有层才能完成实例扩缩，这对于变化较快的网络流量显然是不行的。 想法2：直接将多层模型作为一个黑箱进行考虑。问题在于需要增加多少个实例，以及在哪里增加。因为多层模型是一个黑箱，显然调度器无法获取内部的信息，即不知道究竟是哪一层出了问题。对于单层服务模型，可以建立一个应用模型来决定在响应时间范围内对于给定的流量需要多少个服务，从而进行对应的扩缩。但是将这个模型用于多层模型中并不一定可行，因为每一层的服务与应用性质都是不同的。以简单的电子商务应用为例，这意味着将HTTP服务器、Java服务器和数据库系统一起建模，这将是一个困难的工作。第三，不是所有的层都可以增加实例，比如数据库系统就很难实时增加实例。 综上，不能将多层应用作为黑箱进行调度。 特色：
-predictive and reactive provisioning:使用预测式调度来进行小时或天级别、使用响应式调度来进行更细致的调度。 使用了基于排队论的分析模型来同时对多层网络应用进行分析 快速的服务器切换，允许虚拟机来处理更快发生的网络波动。 能够处理基于session的流量。 这个调度方法可以被归类为自适应adaptive或半自动的semi-autonomous，它们是能够快速适应环境同时只需要人类有限的接触。
-Chapter2 System Overview Link to heading 2.1 Multi-tier Internet Applications 多层网络架构：整个网络架构由顺序连接的多个应用层组成，如同管道一样，中间的一层会收到前面预处理的数据，并将自己处理好的数据传输给下一层。 本文定义的SLA，使用平均响应时间(average response time)或一个合适的响应时间分位点（a suitable high percentile of the response time distribution）" />
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>bottleneck detection - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="原文地址 主要还是针对微服务调度中bottleneck的定义入手 瓶颈点定义从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间" /><meta name="keywords" content='内容/停止更新/论文总结, 计算机/微服务调度' /><meta itemprop="name" content="bottleneck detection">
+<meta itemprop="description" content="原文地址 主要还是针对微服务调度中bottleneck的定义入手 瓶颈点定义从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间"><meta itemprop="datePublished" content="2020-04-22T17:36:04+08:00" />
+<meta itemprop="dateModified" content="2024-01-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="2920">
+<meta itemprop="keywords" content="内容/停止更新/论文总结,计算机/微服务调度," /><meta property="og:title" content="bottleneck detection" />
+<meta property="og:description" content="原文地址 主要还是针对微服务调度中bottleneck的定义入手 瓶颈点定义从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-22T17:36:04+08:00" />
 <meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
-
-
-
-
-
-<link rel="canonical" href="http://wtysos11.github.io/posts/20200422_bottleneck_detection/">
-
-
-<link rel="preload" href="/fonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
-
-  
-  
-  <link rel="stylesheet" href="/css/coder.min.577e3c5ead537873430da16f0964b754a120fd87c4e2203a00686e7c75b51378.css" integrity="sha256-V348Xq1TeHNDDaFvCWS3VKEg/YfE4iA6AGhufHW1E3g=" crossorigin="anonymous" media="screen" />
-
-
-
-
-
-
-  
-    
-    
-    <link rel="stylesheet" href="/css/coder-dark.min.a00e6364bacbc8266ad1cc81230774a1397198f8cfb7bcba29b7d6fcb54ce57f.css" integrity="sha256-oA5jZLrLyCZq0cyBIwd0oTlxmPjPt7y6KbfW/LVM5X8=" crossorigin="anonymous" media="screen" />
-  
-
-
-
- 
-
-
-
-
-<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
-
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-
-
-
-
-
-
-</head>
-
-
-
-
-
-
-<body class="preload-transitions colorscheme-auto">
-  
-<div class="float-container">
-    <a id="dark-mode-toggle" class="colorscheme-toggle">
-        <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
-    </a>
-</div>
-
-
-  <main class="wrapper">
-    <nav class="navigation">
-  <section class="container">
-    <a class="navigation-title" href="/">
-      实践出真知
-    </a>
-    
-      <input type="checkbox" id="menu-toggle" />
-      <label class="menu-button float-right" for="menu-toggle">
-        <i class="fa-solid fa-bars fa-fw" aria-hidden="true"></i>
-      </label>
-      <ul class="navigation-list">
-        
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/posts/">Blog</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/tags/">Tags</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/categories/">Categories</a>
-            </li>
-          
-            <li class="navigation-item">
-              <a class="navigation-link " href="/series/">series</a>
-            </li>
-          
-        
-        
-      </ul>
-    
-  </section>
-</nav>
-
-
-    <div class="content">
-      
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">
-            <a class="title-link" href="http://wtysos11.github.io/posts/20200422_bottleneck_detection/">
-              bottleneck detection
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="bottleneck detection"/>
+<meta name="twitter:description" content="原文地址 主要还是针对微服务调度中bottleneck的定义入手 瓶颈点定义从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" /><link rel="prev" href="http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/" /><link rel="next" href="http://wtysos11.github.io/posts/20200422_response-time-characterization-of-microservice-based-systems/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "bottleneck detection",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20200422_bottleneck_detection\/"
+    },"genre": "posts","keywords": "内容\/停止更新\/论文总结, 计算机\/微服务调度","wordcount":  2920 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20200422_bottleneck_detection\/","datePublished": "2020-04-22T17:36:04+08:00","dateModified": "2024-01-21T00:00:00+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
             </a>
-          </h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fa-solid fa-calendar" aria-hidden="true"></i>
-              <time datetime="2020-04-22T17:36:04&#43;08:00">
-                四月 22, 2020
-              </time>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
             </span>
-            <span class="reading-time">
-              <i class="fa-solid fa-clock" aria-hidden="true"></i>
-              
-            </span>
-          </div>
-          
-          <div class="categories">
-  <i class="fa-solid fa-folder" aria-hidden="true"></i>
-    <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">计算机论文阅读</a></div>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
 
-          <div class="tags">
-  <i class="fa-solid fa-tag" aria-hidden="true"></i>
-    <span class="tag">
-      <a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">内容/停止更新/论文总结</a>
-    </span>
-      <span class="separator">•</span>
-    <span class="tag">
-      <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/">计算机/微服务调度</a>
-    </span></div>
-
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>bottleneck detection</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="post-meta-line"><span title="发布于 2020-04-22 17:36:04"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2020-04-22">2020-04-22</time></span>&nbsp;<span title="更新于 2024-01-21 00:00:00"><i class="fa-regular fa-calendar-check fa-fw me-1" aria-hidden="true"></i><time datetime="2024-01-21">2024-01-21</time></span>&nbsp;<span title="2920 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 3000 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
         </div>
-      </header>
-
-      <div class="post-content">
-        
-        <p><a href="https://github.com/wtysos11/blogWiki/issues/22"  class="external-link" target="_blank" rel="noopener">原文地址</a></p>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#瓶颈点定义">瓶颈点定义</a>
+      <ul>
+        <li><a href="#多层服务中的bottleneck">多层服务中的bottleneck</a></li>
+        <li><a href="#其他想法">其他想法</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p><a href="https://github.com/wtysos11/blogWiki/issues/22"target="_blank" rel="external nofollow noopener noreferrer">原文地址</a></p>
 <blockquote>
 <p>主要还是针对微服务调度中bottleneck的定义入手</p>
 </blockquote>
-<h2 id="瓶颈点定义">
-  瓶颈点定义
-  <a class="heading-link" href="#%e7%93%b6%e9%a2%88%e7%82%b9%e5%ae%9a%e4%b9%89">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。
+<h2 id="瓶颈点定义" class="heading-element">
+  <a href="#%e7%93%b6%e9%a2%88%e7%82%b9%e5%ae%9a%e4%b9%89" class="heading-mark"></a>瓶颈点定义</h2><p>从师兄的说法上，瓶颈点指的是响应时间上的瓶颈点，即在该实例下响应时间是异常的，可以通过增加瓶颈点的实例来减少整体的响应时间。
 在多层应用(multi-tier applications)中，其中的bottleneck指的是资源层面的，即在某一层增加资源能够最大化的优化服务的性能。</p>
-<h3 id="多层服务中的bottleneck">
-  多层服务中的bottleneck
-  <a class="heading-link" href="#%e5%a4%9a%e5%b1%82%e6%9c%8d%e5%8a%a1%e4%b8%ad%e7%9a%84bottleneck">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<h4 id="agile-dynamic-provisioning-of-multi-tier-internet-applications">
-  Agile Dynamic Provisioning of Multi-Tier Internet Applications
-  <a class="heading-link" href="#agile-dynamic-provisioning-of-multi-tier-internet-applications">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h4>
-<h5 id="chapter-1">
-  Chapter 1
-  <a class="heading-link" href="#chapter-1">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h5>
-<p>师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。
+<h3 id="多层服务中的bottleneck" class="heading-element">
+  <a href="#%e5%a4%9a%e5%b1%82%e6%9c%8d%e5%8a%a1%e4%b8%ad%e7%9a%84bottleneck" class="heading-mark"></a>多层服务中的bottleneck</h3><h4 id="agile-dynamic-provisioning-of-multi-tier-internet-applications" class="heading-element">
+  <a href="#agile-dynamic-provisioning-of-multi-tier-internet-applications" class="heading-mark"></a>Agile Dynamic Provisioning of Multi-Tier Internet Applications</h4><h5 id="chapter-1" class="heading-element">
+  <a href="#chapter-1" class="heading-mark"></a>Chapter 1</h5><p>师兄推荐的论文。使用了排队论方法来明确每一层应该分配多少资源。
 定义：每一层的处理能力是固定的 x req/s，如果说中间有一层处理能力最低，显然整个服务的处理速度都将受到影响。
 需要注意的是，对瓶颈层的增加并不代表对整个服务的服务质量都会增加，可能需要在消除所有的瓶颈层之后整个服务的服务性能才能得到提升。</p>
 <p>因为现在已经有很多的单层调度机制被使用了，要给很简单的想法就是给每一层都配置一个单层调度器。因此，我们的第一步就是在每一层的流量超过容纳上限的时候增加实例数量，这个可以通过监控队列长度、层间响应时间、或者丢包率来实现，这个方法称为independent per-tier provisioning.</p>
@@ -249,24 +194,12 @@ Chapter2 System Overview Link to heading 2.1 Multi-tier Internet Applications �
 <li>能够处理基于session的流量。</li>
 </ul>
 <p>这个调度方法可以被归类为自适应adaptive或半自动的semi-autonomous，它们是能够快速适应环境同时只需要人类有限的接触。</p>
-<h5 id="chapter2-system-overview">
-  Chapter2 System Overview
-  <a class="heading-link" href="#chapter2-system-overview">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h5>
-<p>2.1 Multi-tier Internet Applications
+<h5 id="chapter2-system-overview" class="heading-element">
+  <a href="#chapter2-system-overview" class="heading-mark"></a>Chapter2 System Overview</h5><p>2.1 Multi-tier Internet Applications
 多层网络架构：整个网络架构由顺序连接的多个应用层组成，如同管道一样，中间的一层会收到前面预处理的数据，并将自己处理好的数据传输给下一层。
 本文定义的SLA，使用平均响应时间(average response time)或一个合适的响应时间分位点（a suitable high percentile of the response time distribution）</p>
-<h5 id="chapter3-provisioning-algorithm-overview">
-  Chapter3 Provisioning Algorithm Overview
-  <a class="heading-link" href="#chapter3-provisioning-algorithm-overview">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h5>
-<p>调度算法的目标：allocate sufficient capacity to the tiers of an application so that its SLA can be met even in the presence of the peak workload.（关键在于上界）
+<h5 id="chapter3-provisioning-algorithm-overview" class="heading-element">
+  <a href="#chapter3-provisioning-algorithm-overview" class="heading-mark"></a>Chapter3 Provisioning Algorithm Overview</h5><p>调度算法的目标：allocate sufficient capacity to the tiers of an application so that its SLA can be met even in the presence of the peak workload.（关键在于上界）
 主要问题：how much and when 调度多少，什么时候调度
 How much to provision:使用GG1排队论系统取分析。
 When to provision：依据系统的流量。网络流量存在长期的变化，比如天或季节级别的影响，而短期的变化往往难以预测。我们的</p>
@@ -274,23 +207,11 @@ When to provision：依据系统的流量。网络流量存在长期的变化，
 应用有K层，代表为T1,T2,&hellip;,Tk。让期望的end to end response time 为R，这个是SLA的规定值。可以预见，这个SLA将由每一层的响应时间组成，即R = d1+d2+&hellip;+dk。假设到来的session的访问率为lambda，因为调度是基于最坏(最小的)情况进行的，假定lambda是访问率的分布中的一个较高的分位点，是对peak session的一个估计值。
 给定一个peak session rate和per-tier response time，目标是决定需要分配多少服务器，使得每个层的响应时间达到di的平均响应时间。
 使用排队论模型，每个服务器都有一个队列，第一步是决定每一层能够处理的请求率和容量。给定服务器的容量，下一步是去计算需要多少台服务器才能够满足最大峰值的需要。使用G/G/1排队系统来进行建模，在G/G/1系统中，request到达服务器的间隔时间是服从一个已知的一个分布，每一个reuqest给服务器带来的工作量是相同的，队列允许长度为无限。一个G/G/1系统可以使用请求的平均响应时间和流量来代表inter-arrival和service time distribution。</p>
-<h4 id="bottleneck-detection-and-solution-recommendation-for-cloud-based-multi-tier-application">
-  Bottleneck Detection and Solution Recommendation for Cloud-Based Multi-Tier Application
-  <a class="heading-link" href="#bottleneck-detection-and-solution-recommendation-for-cloud-based-multi-tier-application">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h4>
-<p>对多层应用来说，检测瓶颈点（bottleneck points）是很重要且有挑战性的问题。因此，需要有一个机制来监视应用的表现变化，同时联系系统资源的使用情况来进行系统层面的分析。
+<h4 id="bottleneck-detection-and-solution-recommendation-for-cloud-based-multi-tier-application" class="heading-element">
+  <a href="#bottleneck-detection-and-solution-recommendation-for-cloud-based-multi-tier-application" class="heading-mark"></a>Bottleneck Detection and Solution Recommendation for Cloud-Based Multi-Tier Application</h4><p>对多层应用来说，检测瓶颈点（bottleneck points）是很重要且有挑战性的问题。因此，需要有一个机制来监视应用的表现变化，同时联系系统资源的使用情况来进行系统层面的分析。
 然而，自动标记和联系bottlenecked resources并不是容易完成的事情。我们需要注意到的是，多个潜在的bottleneck可以同时存在，相互影响</p>
-<h5 id="bottleneck-detection-using-knee-point-detection">
-  Bottleneck Detection Using Knee Point Detection
-  <a class="heading-link" href="#bottleneck-detection-using-knee-point-detection">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h5>
-<p>The bottleneck pattern of the application throughput can be described as a knee point of throughput curve, while the workload to the application increases. 瓶颈点指随着流量的增加，处理能力将达到一个上限，在这个上限之后单位时间内系统处理的请求数不会增加，这样会导致请求排队、响应时间增加。
+<h5 id="bottleneck-detection-using-knee-point-detection" class="heading-element">
+  <a href="#bottleneck-detection-using-knee-point-detection" class="heading-mark"></a>Bottleneck Detection Using Knee Point Detection</h5><p>The bottleneck pattern of the application throughput can be described as a knee point of throughput curve, while the workload to the application increases. 瓶颈点指随着流量的增加，处理能力将达到一个上限，在这个上限之后单位时间内系统处理的请求数不会增加，这样会导致请求排队、响应时间增加。
 因此在knee point之后，throughput不能再增加，因为资源已经到达bottleneck了。同时，一层中相同的bottleneck会最终扩散到其他层中，因为相同的bottleneck模式会触发其他层的bottleneck模式（可以见前文的例子）。
 首先在观察之后，很重要的一点是需要捕捉到knee point，即明确一层所能处理的请求的上界。然后，我们需要确定造成bottleneck的原因，在系统资源的情况下，通过分析不同层和资源的bottleneck pattern之间的时间关系来找出原因。</p>
 <p>2.1 Individual Knee Point Detection
@@ -299,107 +220,60 @@ When to provision：依据系统的流量。网络流量存在长期的变化，
 <p>2.2 Performance Profiling for Identifying the System bottlenecks
 在本方法中，使用资源使用率的变化曲线和流量的变化曲线来识别bottleneck。
 原理：在流量到达knee point前资源使用率的变化速率可以去代表每一种资源在面对流量变化时的使用情况与性能表现的变化，从而识别出bottleneck的位置。</p>
-<h3 id="其他想法">
-  其他想法
-  <a class="heading-link" href="#%e5%85%b6%e4%bb%96%e6%83%b3%e6%b3%95">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h3>
-<p>想法二：陈鹏飞老师学生所做的Microscaler: Automatic Scaling for Microservices with an Online Learning Approach这篇文章中提到了一个现象，即对于固定访问的流量，其分布是近似固定的。在服务异常的时候，这种响应时间分布是否会发生改变？是否能以此作为异常？</p>
-<h2 id="总结">
-  总结
-  <a class="heading-link" href="#%e6%80%bb%e7%bb%93">
-    <i class="fa-solid fa-link" aria-hidden="true" title="Link to heading"></i>
-    <span class="sr-only">Link to heading</span>
-  </a>
-</h2>
-<p>瓶颈点指的是什么：bottleneck，更多的是从资源层面上定义的。以第二篇文章为例，这里的bottleneck指的是资源到达瓶颈。其理论是同一层使用的处理能力是有上界的(knee point)，在资源使用率到达knee point之后就称这个资源到达了bottleneck，此时无论如何增加流量，都不能够使得服务处理更多的请求。（如果没有熔断器，反而可能会影响到服务的正常使用）
+<h3 id="其他想法" class="heading-element">
+  <a href="#%e5%85%b6%e4%bb%96%e6%83%b3%e6%b3%95" class="heading-mark"></a>其他想法</h3><p>想法二：陈鹏飞老师学生所做的Microscaler: Automatic Scaling for Microservices with an Online Learning Approach这篇文章中提到了一个现象，即对于固定访问的流量，其分布是近似固定的。在服务异常的时候，这种响应时间分布是否会发生改变？是否能以此作为异常？</p>
+<h2 id="总结" class="heading-element">
+  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h2><p>瓶颈点指的是什么：bottleneck，更多的是从资源层面上定义的。以第二篇文章为例，这里的bottleneck指的是资源到达瓶颈。其理论是同一层使用的处理能力是有上界的(knee point)，在资源使用率到达knee point之后就称这个资源到达了bottleneck，此时无论如何增加流量，都不能够使得服务处理更多的请求。（如果没有熔断器，反而可能会影响到服务的正常使用）
 如何识别瓶颈点：</p>
 <ul>
 <li>multi-tier应用可以使用排队论建模</li>
 </ul>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-01-21 00:00:00">更新于 2024-01-21&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-title="bottleneck detection" data-hashtags="内容/停止更新/论文总结,计算机/微服务调度"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-hashtag="内容/停止更新/论文总结"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-title="bottleneck detection" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-title="bottleneck detection"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-title="bottleneck detection"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-title="bottleneck detection" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-title="bottleneck detection" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20200422_bottleneck_detection/" data-title="bottleneck detection"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
 
-      </div>
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E5%86%85%E5%AE%B9/%E5%81%9C%E6%AD%A2%E6%9B%B4%E6%96%B0/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="post-tag" title="标签 - 内容/停止更新/论文总结">内容/停止更新/论文总结</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6/" class="post-tag" title="标签 - 计算机/微服务调度">计算机/微服务调度</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
 
+  <div class="post-nav"><a href="/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/" class="post-nav-item" rel="prev" title="使用ADEPT方法学习困难概念"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>使用ADEPT方法学习困难概念</a>
+      <a href="/posts/20200422_response-time-characterization-of-microservice-based-systems/" class="post-nav-item" rel="next" title="Response Time Characterization of Microservice-Based Systems">Response Time Characterization of Microservice-Based Systems<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
 
-      <footer>
-        
-
-
-        
-        
-        
-        
-        
-
-        
-      </footer>
-    </article>
-
-    
-  </section>
-
-    </div>
-
-    <footer class="footer">
-  <section class="container">
-    ©
-    
-      2020 -
-    
-    2024
-     Timothy Wu 
-    ·
-    
-     <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/" target="_blank" rel="noopener">Coder</a>.
-    
-  </section>
-</footer>
-
-  </main>
-
-  
-
-  
-  
-  <script src="/js/coder.min.6ae284be93d2d19dad1f02b0039508d9aab3180a12a06dcc71b0b0ef7825a317.js" integrity="sha256-auKEvpPS0Z2tHwKwA5UI2aqzGAoSoG3McbCw73gloxc="></script>
-  
-
-  
-
-  
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</body>
-
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
 </html>
