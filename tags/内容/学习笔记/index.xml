@@ -17,7 +17,7 @@
   <pubDate>Fri, 24 Jun 2022 17:27:23 &#43;0800</pubDate>
   <author>作者</author>
   <guid>http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/</guid>
-  <description><![CDATA[学习并了解vegeta相关的逻辑]]></description>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
 </item>
 <item>
   <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>

@@ -246,7 +246,7 @@
   <a href="#read%e7%9b%b8%e5%85%b3" class="heading-mark"></a>Read相关</h3><p>Read代表了对数据的读取等操作</p>
 <h4 id="reader" class="heading-element">
   <a href="#reader" class="heading-mark"></a>Reader</h4><p>其中，Reader实现了Read方法：</p>
-<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+<div class="highlight" id="id-3"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
 </span></span></span><span class="line"><span class="cl"><span class="cm">方法从数组p中读取最多len(p)个bytes，返回实际读取的bytes数量n和返回的错误err。Reader不会阻塞去进行等待，如果数据没有准备好（实际数据与len(p)不匹配），它会直接返回
 </span></span></span><span class="line"><span class="cl"><span class="cm">实现细节：
 </span></span></span><span class="line"><span class="cl"><span class="cm">1. Read方法读取到最后一个bytes是返回n,EOF/nil，之后再调用则应该返回0,EOF
@@ -258,7 +258,7 @@
 </span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Reader</span> <span class="kd">interface</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nf">Read</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>Read方法的实现例子：</p>
-<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// net包中conn有对应的实现，conn的Read依赖于netfd的Read，而后者依赖于bufferedPipe的Read
+<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// net包中conn有对应的实现，conn的Read依赖于netfd的Read，而后者依赖于bufferedPipe的Read
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 位置：src/net/net_fake.go:186
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">bufferedPipe</span><span class="p">)</span> <span class="nf">Read</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">p</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
@@ -288,7 +288,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">nil</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>PS：如果要进一步了解IO的细节，可以阅读<a href="https://jixiuf.github.io/blog/go_epoll.html/"target="_blank" rel="external nofollow noopener noreferrer">go_epoll</a></p>
 <p>IO库的Reader与底层关系太近，bytes中的可能要稍微好一些</p>
-<div class="highlight" id="id-3"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Read的位置为src/bytes/reader.go:39
+<div class="highlight" id="id-5"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Read的位置为src/bytes/reader.go:39
 </span></span></span><span class="line"><span class="cl"><span class="c1">// A Reader implements the io.Reader, io.ReaderAt, io.WriterTo, io.Seeker,
 </span></span></span><span class="line"><span class="cl"><span class="c1">// io.ByteScanner, and io.RuneScanner interfaces by reading from
 </span></span></span><span class="line"><span class="cl"><span class="c1">// a byte slice.
@@ -312,7 +312,7 @@
 </span></span><span class="line"><span class="cl">	<span class="k">return</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="其他reader相关的基本操作" class="heading-element">
   <a href="#%e5%85%b6%e4%bb%96reader%e7%9b%b8%e5%85%b3%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" class="heading-mark"></a>其他Reader相关的基本操作</h4><p>ReadAt和ReadFrom</p>
-<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+<div class="highlight" id="id-6"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
 </span></span></span><span class="line"><span class="cl"><span class="cm">与Read相比，ReadAt会在输入源的index==off的位置开始读取
 </span></span></span><span class="line"><span class="cl"><span class="cm">如果n&lt;len(p)，ReadAt必须返回错误来告知为什么没有读取完整。如果数据源可用但长度非len(p)，ReadAt会一直Block到出结果或者err
 </span></span></span><span class="line"><span class="cl"><span class="cm">PS: 从前面的网络包实现中可以发现，实际实现中并没有严格遵循这一点
@@ -373,7 +373,7 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="延伸reader" class="heading-element">
   <a href="#%e5%bb%b6%e4%bc%b8reader" class="heading-mark"></a>延伸Reader</h4><p>主要是SectionReader</p>
-<div class="highlight" id="id-5"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+<div class="highlight" id="id-7"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
 </span></span></span><span class="line"><span class="cl"><span class="cm">SectionReawder可以指定读取某一个范围的数据，该范围为从off之后n个点的数据，在读完n个点之后返回EOF
 </span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
 </span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">SectionReader</span> <span class="kd">struct</span> <span class="p">{</span>
@@ -384,7 +384,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewSectionReader</span><span class="p">(</span><span class="nx">r</span> <span class="nx">ReaderAt</span><span class="p">,</span> <span class="nx">off</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int64</span><span class="p">)</span> <span class="o">*</span><span class="nx">SectionReader</span></span></span></code></pre></div><p>官方给的例子：</p>
-<div class="highlight" id="id-6"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight" id="id-8"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
 </span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
@@ -407,7 +407,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="writer" class="heading-element">
   <a href="#writer" class="heading-mark"></a>Writer</h3><h4 id="write" class="heading-element">
   <a href="#write" class="heading-mark"></a>write</h4><p>Writer则需要实现Write方法</p>
-<div class="highlight" id="id-7"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+<div class="highlight" id="id-9"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
 </span></span></span><span class="line"><span class="cl"><span class="cm">与Read方法相对，write方法会从数组p中读取至多len(p)的数据写入到基本数据流中。
 </span></span></span><span class="line"><span class="cl"><span class="cm">其中实现并不一定要包含p，比如Discard就没有使用到p数组。
 </span></span></span><span class="line"><span class="cl"><span class="cm">问题：基本数据流该怎么调用？它是结构体的成员之一吗
@@ -429,7 +429,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nb">copy</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">m</span><span class="p">:],</span> <span class="nx">p</span><span class="p">),</span> <span class="kc">nil</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="其他writer相关的基本操作" class="heading-element">
   <a href="#%e5%85%b6%e4%bb%96writer%e7%9b%b8%e5%85%b3%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" class="heading-mark"></a>其他Writer相关的基本操作</h4><p>主要是WriteAt和WriteTo</p>
-<div class="highlight" id="id-8"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// src/bytes/buffer.go:249
+<div class="highlight" id="id-10"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// src/bytes/buffer.go:249
 </span></span></span><span class="line"><span class="cl"><span class="c1">// WriteTo writes data to w until the buffer is drained or an error occurs.
 </span></span></span><span class="line"><span class="cl"><span class="c1">// The return value n is the number of bytes written; it always fits into an
 </span></span></span><span class="line"><span class="cl"><span class="c1">// int, but it is int64 to match the io.WriterTo interface. Any error
@@ -489,7 +489,7 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="seeker" class="heading-element">
-  <a href="#seeker" class="heading-mark"></a>Seeker</h3><div class="highlight" id="id-9"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+  <a href="#seeker" class="heading-mark"></a>Seeker</h3><div class="highlight" id="id-11"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
 </span></span></span><span class="line"><span class="cl"><span class="cm">Seek方法将下一个Read或者Write的index设置为offset，而这个offset的解释则根据whence进行。
 </span></span></span><span class="line"><span class="cl"><span class="cm">SeekStart与开始相关，SeekCurrent与当前相关，SeekEnd与结尾相关
 </span></span></span><span class="line"><span class="cl"><span class="cm">Seek返回处理后得到的新的offset以及对应的错误
@@ -517,7 +517,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="管道以及常见函数" class="heading-element">
   <a href="#%e7%ae%a1%e9%81%93%e4%bb%a5%e5%8f%8a%e5%b8%b8%e8%a7%81%e5%87%bd%e6%95%b0" class="heading-mark"></a>管道以及常见函数</h3><p>没什么特别的地方，不赘述。详见：<a href="https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.1.html"target="_blank" rel="external nofollow noopener noreferrer">1.1 io — 基本的 IO 接口</a></p>
 <p>其中，管道的实现代码：</p>
-<div class="highlight" id="id-10"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// src/io/pipe.go:199
+<div class="highlight" id="id-12"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// src/io/pipe.go:199
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Pipe</span><span class="p">()</span> <span class="p">(</span><span class="o">*</span><span class="nx">PipeReader</span><span class="p">,</span> <span class="o">*</span><span class="nx">PipeWriter</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">p</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">pipe</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">		<span class="nx">wrCh</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">),</span> <span class="c1">// write channel
@@ -567,7 +567,7 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">nil</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>Copy的实现代码：</p>
-<div class="highlight" id="id-11"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Copy copies from src to dst until either EOF is reached
+<div class="highlight" id="id-13"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Copy copies from src to dst until either EOF is reached
 </span></span></span><span class="line"><span class="cl"><span class="c1">// on src or an error occurs. It returns the number of bytes
 </span></span></span><span class="line"><span class="cl"><span class="c1">// copied and the first error encountered while copying, if any.
 </span></span></span><span class="line"><span class="cl"><span class="c1">//
