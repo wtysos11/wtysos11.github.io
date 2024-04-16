@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>数据结构与算法复习 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="原文地址 内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来 数据结构与算法复习不包括全部内容 基础部分包括大O记号和" /><meta name="keywords" content='知识/考研, 计算机/数据结构与算法' /><meta itemprop="name" content="数据结构与算法复习">
+<meta itemprop="description" content="原文地址 内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来 数据结构与算法复习不包括全部内容 基础部分包括大O记号和"><meta itemprop="datePublished" content="2020-04-07T16:11:14+08:00" />
+<meta itemprop="dateModified" content="2020-04-07T16:11:14+08:00" />
+<meta itemprop="wordCount" content="2428">
+<meta itemprop="keywords" content="知识/考研,计算机/数据结构与算法," /><meta property="og:title" content="数据结构与算法复习" />
+<meta property="og:description" content="原文地址 内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来 数据结构与算法复习不包括全部内容 基础部分包括大O记号和" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-04-07T16:11:14+08:00" />
+<meta property="article:modified_time" content="2020-04-07T16:11:14+08:00" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="数据结构与算法复习"/>
+<meta name="twitter:description" content="原文地址 内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来 数据结构与算法复习不包括全部内容 基础部分包括大O记号和"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" /><link rel="prev" href="http://wtysos11.github.io/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" /><link rel="next" href="http://wtysos11.github.io/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "数据结构与算法复习",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0\/"
+    },"genre": "posts","keywords": "知识\/考研, 计算机\/数据结构与算法","wordcount":  2428 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0\/","datePublished": "2020-04-07T16:11:14+08:00","dateModified": "2020-04-07T16:11:14+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>数据结构与算法复习</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category" title="分类 - 计算机基础"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机基础</a></span></div><div class="post-meta-line"><span title="发布于 2020-04-07 16:11:14"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2020-04-07">2020-04-07</time></span>&nbsp;<span title="2428 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 2500 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 5 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#b树和b树">B树和B+树</a></li>
+    <li><a href="#红黑树">红黑树</a></li>
+    <li><a href="#红黑树-1">红黑树</a>
+      <ul>
+        <li><a href="#基础定义">基础定义</a></li>
+        <li><a href="#提升变换">提升变换</a></li>
+        <li><a href="#双红缺陷与修正">双红缺陷与修正</a></li>
+        <li><a href="#删除">删除</a></li>
+      </ul>
+    </li>
+    <li><a href="#红黑树具体实现">红黑树具体实现</a>
+      <ul>
+        <li><a href="#红黑树的插入">红黑树的插入</a></li>
+        <li><a href="#红黑树的删除">红黑树的删除</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><p><a href="https://github.com/wtysos11/blogWiki/issues/9"target="_blank" rel="external nofollow noopener noreferrer">原文地址</a></p>
+<blockquote>
+<p>内容上主要是复习了B树和红黑树，其他的因为太简单所以就只是过了一下，没记录下来</p>
+</blockquote>
+<h1 id="数据结构与算法复习" class="heading-element">
+  <a href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e4%b8%8e%e7%ae%97%e6%b3%95%e5%a4%8d%e4%b9%a0" class="heading-mark"></a>数据结构与算法复习</h1><p>不包括全部内容
+基础部分包括大O记号和小o记号的意义，P问题和NP问题和NP hard问题
+B树和B+树
+AVL平衡树和红黑树
+KMP</p>
+<p>资料：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV16E411B7yd?from=search&amp;seid=10474676112107124762"target="_blank" rel="external nofollow noopener noreferrer">B站-内功心法</a>，红黑树、平衡树、B树和B+树</li>
+<li><a href="https://www.bilibili.com/video/BV1db411L71m?p=320"target="_blank" rel="external nofollow noopener noreferrer">清华大学邓俊辉-数据结构与算法</a>，我计划把这篇与它的计算几何做两个观后笔记。</li>
+</ul>
+<h2 id="b树和b树" class="heading-element">
+  <a href="#b%e6%a0%91%e5%92%8cb%e6%a0%91" class="heading-mark"></a>B树和B+树</h2><p>资料来源：</p>
+<ul>
+<li>MIT6.046</li>
+<li><a href="https://blog.csdn.net/login_sonata/article/details/75268075"target="_blank" rel="external nofollow noopener noreferrer">博客</a></li>
+</ul>
+<p>M阶B树的特征：</p>
+<ol>
+<li>非叶子结点最多只有M个分支</li>
+<li>除根节点以外的非叶子结点分支数为上取整(M/2)到M。</li>
+<li>关键字个数=分支数-1</li>
+<li>所有叶子结点位于同一层</li>
+</ol>
+<p>区别：</p>
+<ol>
+<li>B树的关键字集合分布在整棵树中，而B+树的实际数据只在叶子节点中。因此B树的搜索有可能在非叶子结点结束。</li>
+<li>因为B+树的所有数据都在叶子节点中，所以B+树的叶子节点会依据关键字的大小自小而大的顺序链接，可以进行顺序遍历。非叶子结点可以看作是索引，结点中仅含有子树中的最大或最小关键字。同一个数字会在不同结点中重复出现。</li>
+</ol>
+<p>B+树的查询优势：</p>
+<ol>
+<li>B+树的中间结点不保存数据，所以磁盘也能够容纳更多结点元素</li>
+<li>B+树的查询必须查找到叶子节点，B树不必，因此B+树查找更加稳定，但并不慢</li>
+<li>对于范围查找来说，B+树只需要遍历叶子节点链表（因为是顺序链接的），而B树需要重复进行中序遍历。</li>
+</ol>
+<h2 id="红黑树" class="heading-element">
+  <a href="#%e7%ba%a2%e9%bb%91%e6%a0%91" class="heading-mark"></a>红黑树</h2><p>参考资料2：<a href="https://www.jianshu.com/p/e136ec79235c"target="_blank" rel="external nofollow noopener noreferrer">简书-30张图了解红黑树</a>
+参考资料3：<a href="https://www.bilibili.com/video/BV1db411L71m?p=320"target="_blank" rel="external nofollow noopener noreferrer">清华大学邓俊辉-红黑树演示</a>
+参考资料4：<a href="https://www.cnblogs.com/zhenbianshu/p/8185345.html"target="_blank" rel="external nofollow noopener noreferrer">使用2-4树看待红黑树</a></p>
+<p>AVL树：平衡二叉树，每个节点平衡因子的绝对值不超过1，即左右子树高度差不超过1。
+最大的作用是使得二叉查找树更平衡，本质上是特殊的二叉查找树。
+红黑树的性质：</p>
+<ol>
+<li>每个结点不是红色就是黑色</li>
+<li>不可能有连在一起的红色节点。</li>
+<li>根节点一定是黑色root</li>
+<li>每个红色节点的两个子节点都是黑色。叶子节点都是黑色。</li>
+</ol>
+<p>为了满足性质，有三种变化：</p>
+<ol>
+<li>红变黑，黑变红，保证根节点是黑色</li>
+<li>左旋</li>
+<li>右旋</li>
+</ol>
+<p>所有插入的点默认为红色。（PS：叶子节点为黑色）为什么这么规定：因为红黑树中所有的点都是黑色，也是满足要求的，这样可能会造成问题。</p>
+<ol>
+<li>变颜色的情况：当前结点的父亲是红色，且它的祖父结点的另一个子节点也是红色（叔叔结点）。
+<ul>
+<li>把父结点设为黑色</li>
+<li>把叔叔也设为黑色</li>
+<li>把祖父结点，也就是父节点的父节点设为红色</li>
+<li>把指针定义到祖父结点设为当前要操作的分析的点变换的规则</li>
+</ul>
+</li>
+<li>左旋：当前父结点是红色，叔叔结点是黑色，且当前结点是右子树。左旋以父节点为左旋。</li>
+<li>右旋：当前父结点是红色，叔叔结点是黑色，且当前的结点是左子树。右旋
+<ul>
+<li>把父节点变为黑色</li>
+<li>把祖父节点变为红色</li>
+<li>以租父节点旋转</li>
+</ul>
+</li>
+</ol>
+<p>重要例子：
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78733534-4b9f7800-7978-11ea-81c4-4ed6cd740242.png" alt="重要例子" srcset="https://user-images.githubusercontent.com/21279827/78733534-4b9f7800-7978-11ea-81c4-4ed6cd740242.png?size=small, https://user-images.githubusercontent.com/21279827/78733534-4b9f7800-7978-11ea-81c4-4ed6cd740242.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78733534-4b9f7800-7978-11ea-81c4-4ed6cd740242.png?size=large 2x" data-title="重要例子" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h2 id="红黑树-1" class="heading-element">
+  <a href="#%e7%ba%a2%e9%bb%91%e6%a0%91-1" class="heading-mark"></a>红黑树</h2><p>根据邓俊辉老师的思路来，之前那个人很多没有讲
+<a href="https://blog.csdn.net/wddpfx/article/details/82082724"target="_blank" rel="external nofollow noopener noreferrer">3+4重构</a>，AVL保持平衡的方式，因为涉及到3个结点和4个子树，被称为3+4重构。</p>
+<h3 id="基础定义" class="heading-element">
+  <a href="#%e5%9f%ba%e7%a1%80%e5%ae%9a%e4%b9%89" class="heading-mark"></a>基础定义</h3><p>红黑树是一种<a href="https://en.wikipedia.org/wiki/Persistent_data_structure"target="_blank" rel="external nofollow noopener noreferrer">persistent data structure</a>，操作不会就地更新，而是会生成一个新的数据结构。
+定义：</p>
+<ol>
+<li>树根必定为黑色</li>
+<li>外部节点均为黑色</li>
+<li>其余节点：如果为红色，只能有黑色的孩子</li>
+<li>外部节点到根：途中黑节点数目相等。</li>
+</ol>
+<h3 id="提升变换" class="heading-element">
+  <a href="#%e6%8f%90%e5%8d%87%e5%8f%98%e6%8d%a2" class="heading-mark"></a>提升变换</h3><p>红黑树的提升变换：红黑树本质上是2-4树，即4路平衡树。进行提升变化后可以变为原来的4阶B树。
+提升变化操作：将黑节点与其红孩子（可以迭代）视为B树的超级节点即可得到红黑树。4阶B树拆分，超级结点如果超过1个，则红黑相间且黑色占多数，则可以拆分成红黑树。</p>
+<h3 id="双红缺陷与修正" class="heading-element">
+  <a href="#%e5%8f%8c%e7%ba%a2%e7%bc%ba%e9%99%b7%e4%b8%8e%e4%bf%ae%e6%ad%a3" class="heading-mark"></a>双红缺陷与修正</h3><p>双红缺陷：有两个红结点相邻，表现在B树上是有两个红结点在B树中相邻。调整上可以使用局部3+4重构，重新染色。</p>
+<ul>
+<li>
+<p>已知本结点与父结点为红色</p>
+</li>
+<li>
+<p>RR-1：叔叔结点u-&gt;color=B，此时重新染色即可。
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78838865-ae048100-7a29-11ea-85a5-1c74236836cf.png" alt="RR-1" srcset="https://user-images.githubusercontent.com/21279827/78838865-ae048100-7a29-11ea-85a5-1c74236836cf.png?size=small, https://user-images.githubusercontent.com/21279827/78838865-ae048100-7a29-11ea-85a5-1c74236836cf.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78838865-ae048100-7a29-11ea-85a5-1c74236836cf.png?size=large 2x" data-title="RR-1" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>RR-2：叔叔结点u-&gt;color=R，此时合并为有4个关键码的超级结点，有3个红色。此时有5个分支，在4阶B树中是非法的，会发生上溢。B树中修复上溢，需要在问题结点中找到居中的关键码并进行分裂。
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78838822-93caa300-7a29-11ea-9e59-140c3fb9a2f1.png" alt="RR-2" srcset="https://user-images.githubusercontent.com/21279827/78838822-93caa300-7a29-11ea-9e59-140c3fb9a2f1.png?size=small, https://user-images.githubusercontent.com/21279827/78838822-93caa300-7a29-11ea-9e59-140c3fb9a2f1.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78838822-93caa300-7a29-11ea-9e59-140c3fb9a2f1.png?size=large 2x" data-title="RR-2" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>
+调整完成后，g作为新的调整基准点与上层进行调整。如果为根节点，则直接转为黑色并进行颜色变换处理。</p>
+</li>
+</ul>
+<p>双红修正算法复杂度：
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78839028-17848f80-7a2a-11ea-8bf3-0f299a4ff0fb.png" alt="双红缺陷复杂度" srcset="https://user-images.githubusercontent.com/21279827/78839028-17848f80-7a2a-11ea-8bf3-0f299a4ff0fb.png?size=small, https://user-images.githubusercontent.com/21279827/78839028-17848f80-7a2a-11ea-8bf3-0f299a4ff0fb.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78839028-17848f80-7a2a-11ea-8bf3-0f299a4ff0fb.png?size=large 2x" data-title="双红缺陷复杂度" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>
+因此会更加关心重构操作，因为这对于一个持久化结构而言更加重要。</p>
+<h3 id="删除" class="heading-element">
+  <a href="#%e5%88%a0%e9%99%a4" class="heading-mark"></a>删除</h3><p>按照BST的常规算法，删除操作会将检索到的数据点移除，并用某一个后代来替代。但红黑树的性质不一定会继续加以维持。有可能违反3、4的性质。
+情况0：被删除结点有一个红孩子。因为黑结点与其红孩子之间存在一条虚边，将红孩子上移并染色本质上相等于删除这条虚边，这样外部节点的黑距离是不变的，性质3也不会受到影响。
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78839509-346d9280-7a2b-11ea-9115-1519f8d26998.png" alt="情况0" srcset="https://user-images.githubusercontent.com/21279827/78839509-346d9280-7a2b-11ea-9115-1519f8d26998.png?size=small, https://user-images.githubusercontent.com/21279827/78839509-346d9280-7a2b-11ea-9115-1519f8d26998.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78839509-346d9280-7a2b-11ea-9115-1519f8d26998.png?size=large 2x" data-title="情况0" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>
+问题：
+双黑缺陷，此时外部节点的黑高度是不同的。从B 树角度，所属结点发生了下溢。需要考察两个结点，一个是原树中的父亲，一个是原树中的兄弟。
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78841879-20c52a80-7a31-11ea-8270-d9b2ee69a93c.png" alt="双黑缺陷" srcset="https://user-images.githubusercontent.com/21279827/78841879-20c52a80-7a31-11ea-8270-d9b2ee69a93c.png?size=small, https://user-images.githubusercontent.com/21279827/78841879-20c52a80-7a31-11ea-8270-d9b2ee69a93c.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78841879-20c52a80-7a31-11ea-8270-d9b2ee69a93c.png?size=large 2x" data-title="双黑缺陷" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<ul>
+<li>BB-1：下只是可能下的一种情况，其余情况与其对称或相似，不失一般性。下有三个结点，四棵子树，对此情况进行一次3+4重构
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78842090-aea11580-7a31-11ea-9982-ba9e0268b0ef.png" alt="BB-1" srcset="https://user-images.githubusercontent.com/21279827/78842090-aea11580-7a31-11ea-9982-ba9e0268b0ef.png?size=small, https://user-images.githubusercontent.com/21279827/78842090-aea11580-7a31-11ea-9982-ba9e0268b0ef.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78842090-aea11580-7a31-11ea-9982-ba9e0268b0ef.png?size=large 2x" data-title="BB-1" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78842155-d7290f80-7a31-11ea-84da-a8e3a98c109e.png" alt="BB-1 2" srcset="https://user-images.githubusercontent.com/21279827/78842155-d7290f80-7a31-11ea-84da-a8e3a98c109e.png?size=small, https://user-images.githubusercontent.com/21279827/78842155-d7290f80-7a31-11ea-84da-a8e3a98c109e.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78842155-d7290f80-7a31-11ea-84da-a8e3a98c109e.png?size=large 2x" data-title="BB-1 2" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>
+从第二幅图可以看出，双黑操作对应的是下溢，此时可以用B树操作进行处理。（PS，我个人觉得从2-4树的角度，第二幅图的结点颜色应该为黑色，不然很不对劲），对应的是3+4重构。</li>
+</ul>
+<p>s为黑，且两个孩子均为黑。根据父结点为红或黑分为两种子情况。</p>
+<ul>
+<li>
+<p>BB-2R：此时s所在的超级结点不够数量借出，因此直接合并。上层结点失去了一个关键码p，但不会继续发生下溢。因为p是红色的，因此超级结点中至少有一个黑色的父亲。
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78842328-4c94e000-7a32-11ea-9fff-d6eba842f57b.png" alt="BB-2R" srcset="https://user-images.githubusercontent.com/21279827/78842328-4c94e000-7a32-11ea-9fff-d6eba842f57b.png?size=small, https://user-images.githubusercontent.com/21279827/78842328-4c94e000-7a32-11ea-9fff-d6eba842f57b.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78842328-4c94e000-7a32-11ea-9fff-d6eba842f57b.png?size=large 2x" data-title="BB-2R" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>BB-2B：下层下溢会引发上层下溢，从而向上延伸
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78842579-eceb0480-7a32-11ea-8f41-c06770b39531.png" alt="BB-2B" srcset="https://user-images.githubusercontent.com/21279827/78842579-eceb0480-7a32-11ea-8f41-c06770b39531.png?size=small, https://user-images.githubusercontent.com/21279827/78842579-eceb0480-7a32-11ea-8f41-c06770b39531.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78842579-eceb0480-7a32-11ea-8f41-c06770b39531.png?size=large 2x" data-title="BB-2B" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+<li>
+<p>BB-3：兄弟结点S为红色，其余孩子均为黑。
+将BB-3转换为之前的情况
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78842784-9500cd80-7a33-11ea-928b-e57a671ef8ce.png" alt="BB-3" srcset="https://user-images.githubusercontent.com/21279827/78842784-9500cd80-7a33-11ea-928b-e57a671ef8ce.png?size=small, https://user-images.githubusercontent.com/21279827/78842784-9500cd80-7a33-11ea-928b-e57a671ef8ce.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78842784-9500cd80-7a33-11ea-928b-e57a671ef8ce.png?size=large 2x" data-title="BB-3" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/>
+问题没有解决：黑高度的异常依然存在。但无形中r已经有了黑色的兄弟s&rsquo;，由于p已经转为红色，之后只可能为BB-1或BB-2R。于是再经过一轮修复，红黑树的性质必然可以恢复。
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78842932-f32db080-7a33-11ea-8bc2-0c5946455b64.png" alt="删除复杂度" srcset="https://user-images.githubusercontent.com/21279827/78842932-f32db080-7a33-11ea-8bc2-0c5946455b64.png?size=small, https://user-images.githubusercontent.com/21279827/78842932-f32db080-7a33-11ea-8bc2-0c5946455b64.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78842932-f32db080-7a33-11ea-8bc2-0c5946455b64.png?size=large 2x" data-title="删除复杂度" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</li>
+</ul>
+<h2 id="红黑树具体实现" class="heading-element">
+  <a href="#%e7%ba%a2%e9%bb%91%e6%a0%91%e5%85%b7%e4%bd%93%e5%ae%9e%e7%8e%b0" class="heading-mark"></a>红黑树具体实现</h2><h3 id="红黑树的插入" class="heading-element">
+  <a href="#%e7%ba%a2%e9%bb%91%e6%a0%91%e7%9a%84%e6%8f%92%e5%85%a5" class="heading-mark"></a>红黑树的插入</h3><p>插入后需要进行的操作：检索插入位置并执行插入，插入后如果改变红黑树性质则进行平衡。
+注意，插入的结点一定为红色。
+如果插入的结点的父节点为黑色，直接插入
+如果插入结点的父节点为红色，则如上文的双红问题，以叔叔结点是否存在或颜色为判断标准.
+设父结点为P，叔叔结点为S，祖父结点为PP
+<img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78846389-31c86880-7a3e-11ea-97d3-373116f1ee70.png" alt="image" srcset="https://user-images.githubusercontent.com/21279827/78846389-31c86880-7a3e-11ea-97d3-373116f1ee70.png?size=small, https://user-images.githubusercontent.com/21279827/78846389-31c86880-7a3e-11ea-97d3-373116f1ee70.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78846389-31c86880-7a3e-11ea-97d3-373116f1ee70.png?size=large 2x" data-title="image" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="红黑树的删除" class="heading-element">
+  <a href="#%e7%ba%a2%e9%bb%91%e6%a0%91%e7%9a%84%e5%88%a0%e9%99%a4" class="heading-mark"></a>红黑树的删除</h3><p><img loading="lazy" src="https://user-images.githubusercontent.com/21279827/78846849-b7004d00-7a3f-11ea-994a-cca500d18fee.png" alt="image" srcset="https://user-images.githubusercontent.com/21279827/78846849-b7004d00-7a3f-11ea-994a-cca500d18fee.png?size=small, https://user-images.githubusercontent.com/21279827/78846849-b7004d00-7a3f-11ea-994a-cca500d18fee.png?size=medium 1.5x, https://user-images.githubusercontent.com/21279827/78846849-b7004d00-7a3f-11ea-994a-cca500d18fee.png?size=large 2x" data-title="image" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2020-04-07 16:11:14">更新于 2020-04-07&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="数据结构与算法复习" data-hashtags="知识/考研,计算机/数据结构与算法"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-hashtag="知识/考研"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="数据结构与算法复习" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="数据结构与算法复习"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="数据结构与算法复习"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="数据结构与算法复习" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="数据结构与算法复习" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20200407_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%A4%8D%E4%B9%A0/" data-title="数据结构与算法复习"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E7%9F%A5%E8%AF%86/%E8%80%83%E7%A0%94/" class="post-tag" title="标签 - 知识/考研">知识/考研</a><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-tag" title="标签 - 计算机/数据结构与算法">计算机/数据结构与算法</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/20200406_%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E5%A4%8D%E4%B9%A0/" class="post-nav-item" rel="prev" title="软件测试复习"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>软件测试复习</a>
+      <a href="/posts/20200411_%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87/" class="post-nav-item" rel="next" title="【总结性】微服务调度相关论文">【总结性】微服务调度相关论文<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

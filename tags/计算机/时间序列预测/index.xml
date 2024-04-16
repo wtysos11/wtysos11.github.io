@@ -1,0 +1,39 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>计算机/时间序列预测 - 标签 - 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/</link>
+    <description>计算机/时间序列预测 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Feb 2021 14:24:04 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B/" rel="self" type="application/rss+xml" /><item>
+  <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
+  <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
+  <pubDate>Wed, 03 Feb 2021 14:24:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
+  <description><![CDATA[Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020. 一篇关于时间序列增强的论文，很有意思。 Time Series Data Augmentation for Deep Learning: A Survey 摘要时间序列相关的问题中，时间序列数据可能]]></description>
+</item>
+<item>
+  <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
+  <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
+  <pubDate>Tue, 19 Jan 2021 19:50:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
+  <description><![CDATA[Recurrent Neural Networks for Time Series Forecasting: Current status and future directions2021 International Journal of Forecasting 文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向]]></description>
+</item>
+<item>
+  <title>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</title>
+  <link>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+  <pubDate>Tue, 22 Dec 2020 19:20:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
+  <description><![CDATA[所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018.]]></description>
+</item>
+<item>
+  <title>基于网站流量的时间序列预测资源整理</title>
+  <link>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</link>
+  <pubDate>Mon, 04 May 2020 10:20:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200504_%E5%9F%BA%E4%BA%8E%E7%BD%91%E7%AB%99%E6%B5%81%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E8%B5%84%E6%BA%90%E6%95%B4%E7%90%86/</guid>
+  <description><![CDATA[原文地址 去年到现在一些关于时间序列预测的资料的整理。 kaggle文章： everything you can do with time series kaggle - web-traffic-time-series-forecasting - 1st solution。谷歌的这个比赛是针对流量预测]]></description>
+</item>
+</channel>
+</rss>

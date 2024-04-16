@@ -1,0 +1,15 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Java基础学习 - 分类 - 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
+    <description>Java基础学习 - 分类 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 03 Mar 2021 18:08:14 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/java%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+  <title>《Java核心技术 卷I：基础知识》读书笔记</title>
+  <link>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
+  <pubDate>Wed, 03 Mar 2021 18:08:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210303_java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7i%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+  <description><![CDATA[第一章 Java程序设计概述太简单了，直接略过。 1.2 Java“白皮书”的关键术语 简单性：指相对于C++简单（指针、多重继承等），但设计者也并没有]]></description>
+</item>
+</channel>
+</rss>

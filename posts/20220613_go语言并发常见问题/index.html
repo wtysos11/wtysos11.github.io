@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g" /><meta name="keywords" content='计算机/go, 内容/学习笔记' /><meta itemprop="name" content="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang">
+<meta itemprop="description" content="前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g"><meta itemprop="datePublished" content="2022-06-13T09:01:42+08:00" />
+<meta itemprop="dateModified" content="2022-06-13T09:01:42+08:00" />
+<meta itemprop="wordCount" content="5919">
+<meta itemprop="keywords" content="计算机/go,内容/学习笔记," /><meta property="og:title" content="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang" />
+<meta property="og:description" content="前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-13T09:01:42+08:00" />
+<meta property="article:modified_time" content="2022-06-13T09:01:42+08:00" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang"/>
+<meta name="twitter:description" content="前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/" /><link rel="next" href="http://wtysos11.github.io/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98\/"
+    },"genre": "posts","keywords": "计算机\/go, 内容\/学习笔记","wordcount":  5919 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98\/","datePublished": "2022-06-13T09:01:42+08:00","dateModified": "2022-06-13T09:01:42+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" class="post-category" title="分类 - 计算机论文阅读"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机论文阅读</a></span></div><div class="post-meta-line"><span title="发布于 2022-06-13 09:01:42"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-06-13">2022-06-13</time></span>&nbsp;<span title="5919 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 6000 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 12 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a>
+      <ul>
+        <li><a href="#参考资料">参考资料</a></li>
+        <li><a href="#数据竞争检测">数据竞争检测</a></li>
+      </ul>
+    </li>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#1-introduction">1 Introduction</a></li>
+    <li><a href="#2-concurrency-in-go-services">2 Concurrency in Go Services</a></li>
+    <li><a href="#3-deploying-dynamic-data-race-detector">3 Deploying Dynamic Data Race Detector</a></li>
+    <li><a href="#4-observations-of-data-races-in-go">4 Observations of Data Races in Go</a>
+      <ul>
+        <li><a href="#42-races-due-to-transparent-capture-by-reference">4.2 Races due to Transparent Capture-by-Reference</a></li>
+        <li><a href="#43-data-races-due-to-slices">4.3 Data Races due to Slices</a></li>
+        <li><a href="#44-data-races-on-thread-unsafe-map">4.4 Data Races on Thread-Unsafe Map</a></li>
+        <li><a href="#45-mistakes-due-to-pass-by-value-vs-pass-by-reference-in-go">4.5 Mistakes due to Pass-by-Value vs. Pass-by-Reference in Go</a></li>
+        <li><a href="#46-mixing-shared-memory-with-message-passing">4.6 Mixing Shared Memory with Message Passing</a></li>
+        <li><a href="#47-incorrect-use-of-flexbile-group-synchronization">4.7 Incorrect Use of Flexbile Group Synchronization</a></li>
+        <li><a href="#48-parallel-testing-idiom">4.8 Parallel Testing Idiom</a></li>
+        <li><a href="#49-incorrect-or-missing-mutual-exclusion">4.9 Incorrect or Missing Mutual Exclusion</a></li>
+        <li><a href="#410-summary-of-findings">4.10 Summary of Findings</a></li>
+        <li><a href="#411-threats-to-validity">4.11 Threats to Validity</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h2 id="前言" class="heading-element">
+  <a href="#%e5%89%8d%e8%a8%80" class="heading-mark"></a>前言</h2><h3 id="参考资料" class="heading-element">
+  <a href="#%e5%8f%82%e8%80%83%e8%b5%84%e6%96%99" class="heading-mark"></a>参考资料</h3><ul>
+<li><a href="https://colobu.com/2022/04/07/A-Study-of-Real-World-Data-Races-in-Golang/"target="_blank" rel="external nofollow noopener noreferrer">鸟窝</a>，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。
+<ul>
+<li>本文在论文阅读的基础上加了很多可执行的例子，这些例子使用<code>go run -race main.go</code>应该都可以检出数据竞争。</li>
+</ul>
+</li>
+<li><a href="https://arxiv.org/pdf/2204.00764.pdf"target="_blank" rel="external nofollow noopener noreferrer">原论文</a>
+<ul>
+<li>感觉自己很多地方翻译的不是很好，省略了很多的内容，还是推荐阅读原文</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据竞争检测" class="heading-element">
+  <a href="#%e6%95%b0%e6%8d%ae%e7%ab%9e%e4%ba%89%e6%a3%80%e6%b5%8b" class="heading-mark"></a>数据竞争检测</h3><p>data race的检测可以通过<code>go build</code>中加入<code>-race</code>来进行。详情见此文所举的<a href="https://segmentfault.com/a/1190000017028859"target="_blank" rel="external nofollow noopener noreferrer">例子</a></p>
+<p>本文统一将data race译为数据竞争</p>
+<h2 id="摘要" class="heading-element">
+  <a href="#%e6%91%98%e8%a6%81" class="heading-mark"></a>摘要</h2><p>Go作为将并发置为首位的语言，在现代基于微服务的系统中变得越来越受欢迎。同样，data race（数据竞争）也因此变得愈发普遍。本文在Uber的工业应用场景中进行了相关的实验，说明Go中语言习语和编写方式的细微差别使得Go非常容易受到数据竞争的影响。</p>
+<p>动态的race detector可以识别（内部），但是面临着可伸缩性和flakiness的挑战。作者将自制的数据竞争检测器应用于Uber2100个微服务共计四千六百万条Go代码上，并最终检测2000个数据竞争，修复了其中的1000个。</p>
+<h2 id="1-introduction" class="heading-element">
+  <a href="#1-introduction" class="heading-mark"></a>1 Introduction</h2><p>介绍了一些Go的优点，特别是其中适合于编写微服务的部分。
+Go中不同goroutine之间的通信包括消息队列传输（channel）和共享内存。这里的共享内存应该指的是对同一个进程内数据的直接访问。</p>
+<p>数据竞争的条件：</p>
+<ol>
+<li>对于两个或者更多访问同一个数据对象(datum)的goroutine而言，至少有一个是写</li>
+<li>这些goroutine之间没有顺序（比如channel或者lock所形成的偏序关系）</li>
+</ol>
+<p>数据竞争的后果很严重，可能会导致最终的结果出现异常，并造成服务下线。
+Go内置的数据竞争检测器采用了基于ThreadSanitizer的动态检测，包括lock-set和happens-before算法。其代价根据程序的大小变化，但是一般会造成内存占用增加5到10倍，执行时间增加2到10倍，并且编译时间会增加2倍。</p>
+<p>本文介绍了使用Go的默认动态检测器来持续在uber的生产环境中检测数据竞争。尽管已经有了很多检测数据竞争的算法，但是这与在真实环境的设置中部署动态分析还有显著的差距。由于动态竞争检测的不确定性，将其作为连续检测的一部分进行集成是不切实际的；部署它作为事后检测过程又在不重复报告的同时确定正确的竞争拥有者这一点上引入了复杂性和挑战。我们根据实际情况精心设计了部署的选择。</p>
+<p>我们使用了十万个Godanyuan测试来检验代码并检测数据竞争。在六个月内，连续监控系统检测了2000条以上的数据竞争，210个开发者使用790个补丁修复了其中多达1000个数据竞争，上下的正在被积极地解决。系统每天能从新引入的代码中检测到5个新的数据竞争。</p>
+<p>分析结果显示除了常见的错误外，Go有着独特的方面来引入并发错误，包括</p>
+<ul>
+<li>transparent capture-by-reference of free variables</li>
+<li>named return variables</li>
+<li>deferred functions</li>
+<li>ability to mix shared memory with message passing</li>
+<li>indistinguishable value vs pointer semantics</li>
+<li>extensive use of thread-unsafe built-in map</li>
+<li>flexible gropu synchronization</li>
+<li>confusing slice
+并且与Go简单的使用goroutine来进行并发的特性结合，使得Go很容易出现数据竞争。
+（因此本文主要讨论的是由Go的语法特点引起的数据竞争）</li>
+</ul>
+<p>贡献：</p>
+<ol>
+<li>讨论Go的并发特点。</li>
+<li>明确在生产系统中部署动态数据竞争检测的技术难点。</li>
+<li>对我们Go程序中的数据竞争模式进行了细致的分析。</li>
+</ol>
+<h2 id="2-concurrency-in-go-services" class="heading-element">
+  <a href="#2-concurrency-in-go-services" class="heading-mark"></a>2 Concurrency in Go Services</h2><ul>
+<li>Observation 1：Go的开发者与Java开发者相比，用了更多的并发和同步结构。</li>
+<li>Observation 2： 使用Go进行微服务编程的开发人员在运行时使用的并发性明显多于其他语言。</li>
+</ul>
+<h2 id="3-deploying-dynamic-data-race-detector" class="heading-element">
+  <a href="#3-deploying-dynamic-data-race-detector" class="heading-mark"></a>3 Deploying Dynamic Data Race Detector</h2><p>部署部分不感兴趣，没看。</p>
+<h2 id="4-observations-of-data-races-in-go" class="heading-element">
+  <a href="#4-observations-of-data-races-in-go" class="heading-mark"></a>4 Observations of Data Races in Go</h2><p>此节列举了常见的数据竞争类型，即本文的重点部分</p>
+<h3 id="42-races-due-to-transparent-capture-by-reference" class="heading-element">
+  <a href="#42-races-due-to-transparent-capture-by-reference" class="heading-mark"></a>4.2 Races due to Transparent Capture-by-Reference</h3><ul>
+<li>Observation 3：对自由变量的透明引用捕获是数据竞争的常见原因(recipe，没get到这个点)</li>
+</ul>
+<p>Nested function，或者说闭包，将所有自由变量的引用透明地捕获了。与C++不同，Go的闭包没有说明捕获了哪些自由变量；也不像是java一样捕获的只是值。更经常的是Go的开发者在goroutine中使用闭包，这使得对这些自由变量的访问顺序变为未知。</p>
+<h4 id="421-loop-index-variable-capture-循环变量引用捕获" class="heading-element">
+  <a href="#421-loop-index-variable-capture-%e5%be%aa%e7%8e%af%e5%8f%98%e9%87%8f%e5%bc%95%e7%94%a8%e6%8d%95%e8%8e%b7" class="heading-mark"></a>4.2.1 Loop index variable capture 循环变量引用捕获</h4><p>很经典的错误，但是说实话，该错的时候还是会错。</p>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">job</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">jobs</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">ProcessJob</span><span class="p">(</span><span class="nx">job</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>可执行的例子：</p>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">jobs</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;test1&#34;</span><span class="p">,</span> <span class="s">&#34;test2&#34;</span><span class="p">,</span> <span class="s">&#34;test3&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">job</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">jobs</span> <span class="p">{</span> <span class="c1">// 写的位置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">job</span><span class="p">)</span> <span class="c1">// 读的位置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>结果为：</p>
+<pre tabindex="0"><code>test3
+==================
+WARNING: DATA RACE
+Read at 0x00c00009c210 by goroutine 7:
+  main.main.func1()
+      /Users/wty/go/src/vegetaTest/main.go:15 +0xa4
+
+Previous write at 0x00c00009c210 by main goroutine:
+  main.main()
+      /Users/wty/go/src/vegetaTest/main.go:11 +0x119
+
+Goroutine 7 (running) created at:
+  main.main()
+      /Users/wty/go/src/vegetaTest/main.go:13 +0x1fc
+==================
+test3
+test3
+Found 1 data race(s)
+exit status 66</code></pre><p>具体来说，在13行启动的goroutine发生了数据竞争，读写冲突，数据在读前被改变了。写的位置为11行，读的位置为15行。</p>
+<p>解决方法也很简单，显式地传值即可：</p>
+<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">jobs</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;test1&#34;</span><span class="p">,</span> <span class="s">&#34;test2&#34;</span><span class="p">,</span> <span class="s">&#34;test3&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">job</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">jobs</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">j</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}(</span><span class="nx">job</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>或者这样：</p>
+<div class="highlight" id="id-5"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">printStr</span><span class="p">(</span><span class="nx">j</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">jobs</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;test1&#34;</span><span class="p">,</span> <span class="s">&#34;test2&#34;</span><span class="p">,</span> <span class="s">&#34;test3&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">job</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">jobs</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="nf">printStr</span><span class="p">(</span><span class="nx">job</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="422-idiomatic-err-variable-capture" class="heading-element">
+  <a href="#422-idiomatic-err-variable-capture" class="heading-mark"></a>4.2.2 Idiomatic err variable capture</h4><p>err变量捕获。对于Go来说，一般会将函数的最后一个返回值作为错误变量err。
+一般来说，Go不会总是创建新的错误变量，如y的返回值中的err和z的返回值中的err。但是这使得两个err之间会发生数据竞争。</p>
+<div class="highlight" id="id-6"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="nx">x</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">Foo</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">y</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">y</span><span class="p">,</span><span class="nx">err</span> <span class="p">=</span> <span class="nf">Bar</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">z</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="nx">z</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">Baz</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>基于此构建例子：</p>
+<div class="highlight" id="id-7"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;errors&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Foo</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Bar</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;Bar&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Baz</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;Baz&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">x</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">Foo</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">var</span> <span class="nx">y</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">y</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">Bar</span><span class="p">()</span> <span class="c1">// 写的位置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">z</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">z</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">Baz</span><span class="p">()</span> <span class="c1">// 写的位置
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">z</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>此处的原因是闭包内将err捕获，从而导致内外两个地方对于err的赋值可能发生数据竞争。</p>
+<h4 id="423-named-return-variable-capture" class="heading-element">
+  <a href="#423-named-return-variable-capture" class="heading-mark"></a>4.2.3 Named return variable capture</h4><p>Go具有着具名返回值这一语法糖，但它会隐式地对变量进行赋值。
+一般来说，如果函数体比较长，会推荐使用具名返回值而不是直接返回。
+当变量被闭包捕获时就会发生数据竞争，包括被普通的捕获或者是被defer捕获。</p>
+<p>作者给的Named return variable variable capture例子</p>
+<div class="highlight" id="id-8"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NamedReturnCallee</span><span class="p">()</span> <span class="p">(</span><span class="nx">result</span> <span class="kt">int</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">result</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="o">...</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="c1">// 等价于 return 10
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="o">...</span> <span class="p">=</span> <span class="nx">result</span> <span class="c1">// read result，10/20
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">20</span> <span class="c1">// 等价于 result = 20，发生数据竞争
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Caller</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">retVal</span> <span class="o">:=</span> <span class="nf">NamedReturnCallee</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>基于此制作出的具有数据竞争的可运行示例</p>
+<div class="highlight" id="id-9"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;math/rand&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">getRand</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">maxN</span> <span class="o">:=</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">minN</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">x</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="nx">maxN</span><span class="o">-</span><span class="nx">minN</span><span class="p">)</span> <span class="o">+</span> <span class="nx">minN</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">x</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NamedReturnCallee</span><span class="p">()</span> <span class="p">(</span><span class="nx">result</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">result</span> <span class="p">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">randNum</span> <span class="o">:=</span> <span class="nf">getRand</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">randNum</span> <span class="p">&lt;</span> <span class="mi">50</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="c1">// 等价于 return 10
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">data</span> <span class="o">:=</span> <span class="nx">result</span> <span class="c1">// read result，10/20。这个读取是非常危险的
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">20</span> <span class="c1">// 等价于 result = 20，发生数据修改，数据竞争（读写冲突）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Caller</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">retVal</span> <span class="o">:=</span> <span class="nf">NamedReturnCallee</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;return retVal:&#34;</span><span class="p">,</span> <span class="nx">retVal</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">Caller</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>执行<code>go run -race main.go</code>之后，系统提示发生读写冲突，读的位置为新建的goroutine内部，写的位置为<code>return 20</code>。
+这个数据竞争的问题在于，可能会没有意识到具名返回值的具体返回本质上是对该具名变量的赋值，从而造成问题。</p>
+<p>作者给的Named return variable capture with a defer return例子</p>
+<div class="highlight" id="id-10"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Redeem</span><span class="p">(</span><span class="nx">request</span> <span class="nx">Entity</span><span class="p">)</span> <span class="p">(</span><span class="nx">resp</span> <span class="nx">Response</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="k">defer</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">Foo</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="p">=</span> <span class="nf">CheckRequest</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="o">...</span> <span class="c1">// err check but no return
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="nf">ProcessRequest</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">err</span><span class="o">!=</span><span class="kc">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="c1">// the defer functions return after here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></div><p>基于此构建出的可运行代码，数据竞争问题为err变量的读写冲突。</p>
+<div class="highlight" id="id-11"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;errors&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">testReq</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">id</span>   <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">testRsp</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">id</span>   <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">foo</span><span class="p">(</span><span class="nx">req</span> <span class="nx">testReq</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">(</span><span class="nx">testRsp</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rsp</span> <span class="o">:=</span> <span class="nx">testRsp</span><span class="p">{</span><span class="nx">name</span><span class="p">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">id</span><span class="p">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">rsp</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">CheckRequest</span><span class="p">(</span><span class="nx">req</span> <span class="nx">testReq</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">name</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;empty request name&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ProcessRequest</span><span class="p">(</span><span class="nx">req</span> <span class="nx">testReq</span><span class="p">,</span> <span class="nx">isNil</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">isNil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;ProcessRequest:&#34;</span><span class="p">,</span> <span class="nx">isNil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">redeem</span><span class="p">(</span><span class="nx">request</span> <span class="nx">testReq</span><span class="p">)</span> <span class="p">(</span><span class="nx">resp</span> <span class="nx">testRsp</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">resp</span> <span class="p">=</span> <span class="nx">testRsp</span><span class="p">{</span><span class="nx">name</span><span class="p">:</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="nx">id</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nf">foo</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="c1">// 此处对err的值进行写入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="p">=</span> <span class="nf">CheckRequest</span><span class="p">(</span><span class="nx">request</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span> <span class="c1">// err check but no return
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nf">ProcessRequest</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">)</span> <span class="c1">// 此处对err的值进行读取
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="c1">// the defer functions return after here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">req</span> <span class="o">:=</span> <span class="nx">testReq</span><span class="p">{</span><span class="nx">name</span><span class="p">:</span> <span class="s">&#34;test&#34;</span><span class="p">,</span> <span class="nx">id</span><span class="p">:</span> <span class="nx">i</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">redeem</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>该代码的问题在于defer函数执行的时候，最后的goroutine并不一定会结束，从而导致读写冲突。</p>
+<h3 id="43-data-races-due-to-slices" class="heading-element">
+  <a href="#43-data-races-due-to-slices" class="heading-mark"></a>4.3 Data Races due to Slices</h3><p>Observation 4：slices是让人困惑的类型，会导致微妙且难以诊断的数据竞争。
+这也是出现频率较高的数据竞争情况。</p>
+<p>作者给的例子：</p>
+<div class="highlight" id="id-12"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ProcessAll</span><span class="p">(</span><span class="nx">uuids</span> <span class="p">[]</span><span class="kt">string</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">myResults</span> <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">mutex</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">safeAppend</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">res</span> <span class="kt">string</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">mutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">myResults</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">myResults</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">mutex</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">uuid</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">uuids</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">id</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">results</span> <span class="p">[]</span><span class="kt">string</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">res</span> <span class="o">:=</span> <span class="nf">Foo</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">safeAppend</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}(</span><span class="nx">uuid</span><span class="p">,</span> <span class="nx">myResults</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>基于此构建的可执行程序</p>
+<div class="highlight" id="id-13"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Foo</span><span class="p">(</span><span class="nx">id</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">id</span> <span class="o">+</span> <span class="s">&#34;test&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">ProcessAll</span><span class="p">(</span><span class="nx">uuids</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">myResults</span> <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">mutex</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">safeAppend</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">res</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">mutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">myResults</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">myResults</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="c1">// 此处对myReults进行了写操作（新值/扩容）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">mutex</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">uuid</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">uuids</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">id</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">results</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">res</span> <span class="o">:=</span> <span class="nf">Foo</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">safeAppend</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}(</span><span class="nx">uuid</span><span class="p">,</span> <span class="nx">myResults</span><span class="p">)</span> <span class="c1">// 此处传入了myResults slices，读取slices的三个meta data。但这三个meta data可能已经在赋值的过程中发生了修改.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">uuids</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;uuid1&#34;</span><span class="p">,</span> <span class="s">&#34;uuid3&#34;</span><span class="p">,</span> <span class="s">&#34;uuid9&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nf">ProcessAll</span><span class="p">(</span><span class="nx">uuids</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">defer</span> <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>代码的问题在于对于slices myResults在append于后续传值这两个地方发生了读写冲突。
+论文作者建议对这部分代码的修改为（选择）：</p>
+<ol>
+<li>不要在ProcessAll最后的go func中传myResults的值，而是传引用。</li>
+<li>不要在safeAppend闭包中捕获myResults，而是应该在持有锁的时候直接解引用指针。</li>
+</ol>
+<h3 id="44-data-races-on-thread-unsafe-map" class="heading-element">
+  <a href="#44-data-races-on-thread-unsafe-map" class="heading-mark"></a>4.4 Data Races on Thread-Unsafe Map</h3><p>Observation 5:Go内建的map是线程不安全的并经常导致数据竞争问题。</p>
+<div class="highlight" id="id-14"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">processOrders</span><span class="p">(</span><span class="nx">uuids</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">error</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">errMap</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">uuid</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">uuids</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">uuid</span> <span class="kt">string</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">orderHandle</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">GetOrder</span><span class="p">(</span><span class="nx">uuid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">errMap</span><span class="p">[</span><span class="nx">uuid</span><span class="p">]</span> <span class="p">=</span> <span class="nx">err</span> <span class="c1">// 写写冲突，即使uuid一般是不同的，它们也有可能哈希到相同的内存空间或者因为哈希表的实现导致访问上的相互关联
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="k">return</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}(</span><span class="nx">uuid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nf">combineErrors</span><span class="p">(</span><span class="nx">errMap</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>这个就比较常见了，因此没有构造例子。在目前的Go版本中在goroutine中共享map应该是无法通过编译的。
+相较于其他语言（比如Java），Go代码更经常地使用哈希表，且哈希表的访问可以通过数组风格，因此更容易出现问题。</p>
+<h3 id="45-mistakes-due-to-pass-by-value-vs-pass-by-reference-in-go" class="heading-element">
+  <a href="#45-mistakes-due-to-pass-by-value-vs-pass-by-reference-in-go" class="heading-mark"></a>4.5 Mistakes due to Pass-by-Value vs. Pass-by-Reference in Go</h3><p>Observation 6：传值在Go中更被推荐，因为它可以简化逃逸分析，并让变量更可能被分配到栈上，从而降低GC的压力。开发者常常在变量传值（或者方法传值）上犯错，从而导致不一般的数据竞争。</p>
+<p>由于该例子比较简单，直接改写了作者给的示例代码使其可执行</p>
+<div class="highlight" id="id-15"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">a</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">CriticalSection</span><span class="p">(</span><span class="nx">m</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">m</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">a</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">m</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">a</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">mutex</span> <span class="o">:=</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// passes a copy of m to A.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">go</span> <span class="nf">CriticalSection</span><span class="p">(</span><span class="nx">mutex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="nf">CriticalSection</span><span class="p">(</span><span class="nx">mutex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>这里的问题是对于mutex采用了copy而不是传引用，这使得在两次调用中实际上使用的是不同的mutex。
+因此<code>a++</code>部分发生了数据竞争（尽管最终的结果可能是对的）
+如果执行<code>go vet</code>可以发现对<code>sync.Mutex</code>进行拷贝的告警。</p>
+<p>对于mutex是应该使用指针还是值一直有着讨论。如<a href="https://stackoverflow.com/questions/49808622/sync-mutex-and-sync-mutex-which-is-better"target="_blank" rel="external nofollow noopener noreferrer">so</a>上讨论的结果，如果需要共享状态（如上面的代码一样），则必须使用指针，或者让对应方法的接收器变为指针形式。否则应该新初始化mutex变量以避免共享锁结构。
+无论如何，mutex.Lock不应该被复制。</p>
+<h3 id="46-mixing-shared-memory-with-message-passing" class="heading-element">
+  <a href="#46-mixing-shared-memory-with-message-passing" class="heading-mark"></a>4.6 Mixing Shared Memory with Message Passing</h3><p>Observation 7：将channel和共享内存混用会使得代码变得复杂，并且可能导致数据竞争问题。</p>
+<p>作者提供的例子</p>
+<div class="highlight" id="id-16"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">Future</span><span class="p">)</span> <span class="nf">Start</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">f</span><span class="p">()</span> <span class="c1">// invoke a registered function
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">f</span><span class="p">.</span><span class="nx">response</span> <span class="p">=</span> <span class="nx">resp</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">f</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">f</span><span class="p">.</span><span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">1</span> <span class="c1">// may block forever!
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">Future</span><span class="p">)</span> <span class="nf">Wait</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="kt">error</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">select</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">f</span><span class="p">.</span><span class="nx">ch</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">Done</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">f</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nx">ErrCancelled</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">ErrCancelled</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>基于上面的函数构造出以下代码</p>
+<div class="highlight" id="id-17"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;context&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;errors&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;time&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Future</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">response</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span>      <span class="kt">error</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ch</span>       <span class="kd">chan</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">ErrCancelled</span> <span class="kt">error</span> <span class="p">=</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;error cancelled&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">Future</span><span class="p">)</span> <span class="nf">f</span><span class="p">()</span> <span class="p">(</span><span class="kt">string</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">Future</span><span class="p">)</span> <span class="nf">Start</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">f</span><span class="p">()</span> <span class="c1">// invoke a registered function
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">f</span><span class="p">.</span><span class="nx">response</span> <span class="p">=</span> <span class="nx">resp</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">f</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nx">err</span> <span class="c1">// write: init
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">f</span><span class="p">.</span><span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">Future</span><span class="p">)</span> <span class="nf">Wait</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">f</span><span class="p">.</span><span class="nx">ch</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">Done</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">f</span><span class="p">.</span><span class="nx">err</span> <span class="p">=</span> <span class="nx">ErrCancelled</span> <span class="c1">// write: context canceled
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="nx">ErrCancelled</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">Run</span><span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">Future</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">f</span><span class="p">.</span><span class="nf">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">ctx2</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">WithTimeout</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Duration</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Microsecond</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">Wait</span><span class="p">(</span><span class="nx">ctx2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">f</span> <span class="o">:=</span> <span class="nx">Future</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">f</span><span class="p">.</span><span class="nx">ch</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="nf">Run</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>论文作者对于该部分的数据竞争说明为在context超时的时候，ctx.Done对应的err会被赋值为ErrCancelled，
+这个操作会与初始化时修改err部分的代码有写冲突。
+数据竞争很难构造出来，大概是这样子。但我不确定这是否是作者期望的数据竞争。</p>
+<div class="highlight" id="id-18"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wty@TIANYANGWU-MB1 vegetaTest % go run -race main.go
+</span></span><span class="line"><span class="cl"><span class="o">==================</span>
+</span></span><span class="line"><span class="cl">WARNING: DATA RACE
+</span></span><span class="line"><span class="cl">Write at 0x00c0000a0190 by goroutine 7:
+</span></span><span class="line"><span class="cl">  main.<span class="o">(</span>*Future<span class="o">)</span>.Wait<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      /Users/wty/go/src/vegetaTest/main.go:36 +0x144
+</span></span><span class="line"><span class="cl">  main.Run<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      /Users/wty/go/src/vegetaTest/main.go:45 +0x65
+</span></span><span class="line"><span class="cl">  main.main·dwrap·1<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      /Users/wty/go/src/vegetaTest/main.go:55 +0x39
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Previous <span class="nb">read</span> at 0x00c0000a0190 by goroutine 8:
+</span></span><span class="line"><span class="cl">  runtime.racereadrange<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      &lt;autogenerated&gt;:1 +0x1b
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Goroutine <span class="m">7</span> <span class="o">(</span>running<span class="o">)</span> created at:
+</span></span><span class="line"><span class="cl">  main.main<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      /Users/wty/go/src/vegetaTest/main.go:55 +0xdd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Goroutine <span class="m">8</span> <span class="o">(</span>running<span class="o">)</span> created at:
+</span></span><span class="line"><span class="cl">  main.<span class="o">(</span>*Future<span class="o">)</span>.Start<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      /Users/wty/go/src/vegetaTest/main.go:23 +0x90
+</span></span><span class="line"><span class="cl">  main.Run<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      /Users/wty/go/src/vegetaTest/main.go:42 +0x30
+</span></span><span class="line"><span class="cl">  main.main·dwrap·1<span class="o">()</span>
+</span></span><span class="line"><span class="cl">      /Users/wty/go/src/vegetaTest/main.go:55 +0x39
+</span></span><span class="line"><span class="cl"><span class="o">==================</span>
+</span></span><span class="line"><span class="cl">error cancelled
+</span></span><span class="line"><span class="cl">Found <span class="m">1</span> data race<span class="o">(</span>s<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span> status <span class="m">66</span></span></span></code></pre></div><p>如果context没有超时的话，这部分代码是没有数据竞争问题的。不过可能会有其他问题，即Future的channel有可能永久阻塞。</p>
+<h3 id="47-incorrect-use-of-flexbile-group-synchronization" class="heading-element">
+  <a href="#47-incorrect-use-of-flexbile-group-synchronization" class="heading-mark"></a>4.7 Incorrect Use of Flexbile Group Synchronization</h3><p>Observation 8：Go在sync.WaitGroup中提供了更多的余地，其参与者的数量是动态的，在定义时没有决定。wg中Add与Done方法的不正确使用会导致数据竞争。</p>
+<p>Listing 10：作者提供的例子</p>
+<div class="highlight" id="id-19"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">WaitGrpExample</span><span class="p">(</span><span class="nx">itemIds</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">results</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="nx">itemIds</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="p">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="nx">itemIds</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span><span class="p">(</span><span class="nx">idx</span> <span class="kt">int</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// incorrect wg.Add placement
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">results</span><span class="p">[</span><span class="nx">idx</span><span class="p">]</span> <span class="p">=</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span> <span class="c1">// waits for the participants added so far.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="o">...</span> <span class="p">=</span> <span class="nx">results</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>这个例子的问题比较明显，wg.Add应该放在主goroutine中。如代码这样的写法可能会导致程序提前结束，使得执行到后面的代码时循环次数不足len(itemIds)次。并且导致对于results的读写争用。</p>
+<p>基于此代码构建示例：</p>
+<div class="highlight" id="id-20"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;sync&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">WaitGrpExample</span><span class="p">(</span><span class="nx">itemIds</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">results</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">itemIds</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">itemIds</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">idx</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// incorrect wg.Add placement
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">results</span><span class="p">[</span><span class="nx">idx</span><span class="p">]</span> <span class="p">=</span> <span class="nx">idx</span> <span class="c1">// 数据竞争：write at
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}(</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span> <span class="c1">// waits for the participants added so far.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">otherResult</span> <span class="o">:=</span> <span class="nx">results</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">otherResult</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">// 数据竞争：Previous read
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">itemIds</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">WaitGrpExample</span><span class="p">(</span><span class="nx">itemIds</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="48-parallel-testing-idiom" class="heading-element">
+  <a href="#48-parallel-testing-idiom" class="heading-mark"></a>4.8 Parallel Testing Idiom</h3><p>Observation 9：在Go的基于表格驱动的测试中并行执行测试可能会导致数据竞争，有时在测试代码中，有时在测试所调用的业务代码中。</p>
+<p>如<code>testing.T.Parallel()</code>可以使得测试并行执行，而测试中可以有多个子测试。这些测试之间的并行可能带来问题。
+作者并没有提供示例代码，不过应该与其他可能出现数据竞争的代码是相同的。</p>
+<h3 id="49-incorrect-or-missing-mutual-exclusion" class="heading-element">
+  <a href="#49-incorrect-or-missing-mutual-exclusion" class="heading-mark"></a>4.9 Incorrect or Missing Mutual Exclusion</h3><p>Observation 10：对互斥源语的不正确使用会导致数据竞争。</p>
+<p>这并不是Go独有的问题，而且同样是我们代码中数据竞争最经常出现的原因。</p>
+<h4 id="491-mutating-shared-data-in-a-reader-lock-protected-critical-section" class="heading-element">
+  <a href="#491-mutating-shared-data-in-a-reader-lock-protected-critical-section" class="heading-mark"></a>4.9.1 Mutating shared data in a Reader-lock-protected critical section</h4><p>在互斥工作区中使用读写锁，在只加读锁的情况下对工作区进行写入，修改了共享的数据。
+并发的reader可能会同时执行写的部分，造成写冲突。更严重的是在Accept部分可能会接受多次，导致网络IO操作被执行多次。</p>
+<div class="highlight" id="id-21"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">HealthGate</span><span class="p">)</span> <span class="nf">updateGate</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">g</span><span class="p">.</span><span class="nx">mutex</span><span class="p">.</span><span class="nf">RLock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">g</span><span class="p">.</span><span class="nx">mutex</span><span class="p">.</span><span class="nf">RUnlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// ... several read-only operations ...
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="o">...</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">g</span><span class="p">.</span><span class="nx">ready</span> <span class="p">=</span> <span class="kc">true</span> <span class="c1">// Concurrent writes.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">g</span><span class="p">.</span><span class="nx">gate</span><span class="p">.</span><span class="nf">Accept</span><span class="p">()</span> <span class="c1">// More than one Accept().
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="492-other-forms-for-incorrect-mutual-exclusion" class="heading-element">
+  <a href="#492-other-forms-for-incorrect-mutual-exclusion" class="heading-mark"></a>4.9.2 Other forms for incorrect mutual exclusion</h4><p>有很多互斥结构被不正确使用的例子。其中比较难察觉到的错误是部分互斥（partial mutual exclusion），即开发者在一个地方使用了锁，而在另外一个访问共享变量的地方忘记使用它。
+而在一些情况下，使用者使用了锁结构，但是过早的调用了解锁（unlock），导致一些对于共享变量的访问落在关键区之外。
+我们也观察到对于<code>sync.Atomic</code>包的部分使用，即在写共享变量的时候调用，但是忘记在读该共享变量的时候使用。</p>
+<h3 id="410-summary-of-findings" class="heading-element">
+  <a href="#410-summary-of-findings" class="heading-mark"></a>4.10 Summary of Findings</h3><p>作者总结了上面不同类型错误所导致的数据竞争在代码库中的数量。表3中的原因与Go的特有语法无关，因此在本文中讨论的比较少。从表2的数据可以发现，对slices的并发读写造成的数据竞争是最多的。</p>
+<p><img loading="lazy" src="/assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table2.png" alt="表2" srcset="/assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table2.png?size=small, /assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table2.png?size=medium 1.5x, /assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table2.png?size=large 2x" data-title="表2" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<p><img loading="lazy" src="/assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table3.png" alt="表3" srcset="/assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table3.png?size=small, /assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table3.png?size=medium 1.5x, /assets/20220613_Go%e8%af%ad%e8%a8%80%e5%b9%b6%e5%8f%91%e5%b8%b8%e8%a7%81%e9%97%ae%e9%a2%98/data_race_paper_table3.png?size=large 2x" data-title="表3" style="background: url(/images/loading.min.svg) no-repeat center;" onload="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}this.dataset.lazyloaded='';" onerror="this.title=this.dataset.title;for(const i of ['style', 'data-title','onerror','onload']){this.removeAttribute(i);}"/></p>
+<h3 id="411-threats-to-validity" class="heading-element">
+  <a href="#411-threats-to-validity" class="heading-mark"></a>4.11 Threats to Validity</h3><p>上述错误均是基于对Uber的Go仓库的分析结果，可能与其他地方的数据竞争情况不同。同时这些数据竞争都是由动态竞争检测器检测出来的，由于代码覆盖率等问题可能会遗漏部分类型的数据竞争。</p>
+<h2 id="总结" class="heading-element">
+  <a href="#%e6%80%bb%e7%bb%93" class="heading-mark"></a>总结</h2><p>总体来说，Go中的数据竞争总是由两个以上的goroutine之间存在至少一个对共享变量的写操作造成的，且写操作之间是没有偏序顺序(partial order)。由于Go特有的语法，导致变量在无意间发生了赋值与修改，从而引起数据竞争。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-06-13 09:01:42">更新于 2022-06-13&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang" data-hashtags="计算机/go,内容/学习笔记"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-hashtag="计算机/go"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" data-title="Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/" class="post-tag" title="标签 - 计算机/Go">计算机/Go</a><a href="/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-tag" title="标签 - 内容/学习笔记">内容/学习笔记</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/20220613_%E8%85%BE%E8%AE%AF%E4%BA%91cos-go-sdk%E4%BD%BF%E7%94%A8%E5%AD%A6%E4%B9%A0/" class="post-nav-item" rel="prev" title="腾讯云 cos Go SDK使用学习"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>腾讯云 cos Go SDK使用学习</a>
+      <a href="/posts/20220615_go%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E5%AE%9E%E8%B7%B5_cas/" class="post-nav-item" rel="next" title="由多个goroutine中获取第一个错误信息出发的CAS学习">由多个goroutine中获取第一个错误信息出发的CAS学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

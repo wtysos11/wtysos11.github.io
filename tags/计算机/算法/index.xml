@@ -1,0 +1,87 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>计算机/算法 - 标签 - 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/</link>
+    <description>计算机/算法 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+  <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+  <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+  <pubDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+  <description><![CDATA[Leetcode 380: O(1)时间插入、删除和获取随机元素22年4月13日每日一题 初始想法最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈]]></description>
+</item>
+<item>
+  <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+  <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+  <pubDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+  <description><![CDATA[Leetcode 380: O(1)时间插入、删除和获取随机元素22年4月13日每日一题 初始想法最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈]]></description>
+</item>
+<item>
+  <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+  <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+  <pubDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+  <description><![CDATA[Leetcode 380: O(1)时间插入、删除和获取随机元素22年4月13日每日一题 初始想法最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈]]></description>
+</item>
+<item>
+  <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+  <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+  <pubDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+  <description><![CDATA[Leetcode 380: O(1)时间插入、删除和获取随机元素22年4月13日每日一题 初始想法最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈]]></description>
+</item>
+<item>
+  <title>Leetcode 806: 写字符串需要的行数</title>
+  <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+  <pubDate>Tue, 12 Apr 2022 09:15:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+  <description><![CDATA[220412 每日一题，非常简单 class Solution { public: vector&lt;int&gt; numberOfLines(vector&lt;int&gt;&amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&lt;s.length();i++){ if(rest == 100 &amp;&amp; widths[s[i]-&#39;a&#39;]&gt;0){ rest = widths[s[i]-&#39;a&#39;]; linenum++; continue; } rest += widths[s[i]-&#39;a&#39;]; if(rest&gt;100){ rest = widths[s[i]-&#39;a&#39;]; linenum++; } } return vector&lt;int&gt;{linenum,rest}; } };]]></description>
+</item>
+<item>
+  <title>Leetcode 806: 写字符串需要的行数</title>
+  <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+  <pubDate>Tue, 12 Apr 2022 09:15:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+  <description><![CDATA[220412 每日一题，非常简单 class Solution { public: vector&lt;int&gt; numberOfLines(vector&lt;int&gt;&amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&lt;s.length();i++){ if(rest == 100 &amp;&amp; widths[s[i]-&#39;a&#39;]&gt;0){ rest = widths[s[i]-&#39;a&#39;]; linenum++; continue; } rest += widths[s[i]-&#39;a&#39;]; if(rest&gt;100){ rest = widths[s[i]-&#39;a&#39;]; linenum++; } } return vector&lt;int&gt;{linenum,rest}; } };]]></description>
+</item>
+<item>
+  <title>Leetcode 806: 写字符串需要的行数</title>
+  <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+  <pubDate>Tue, 12 Apr 2022 09:15:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+  <description><![CDATA[220412 每日一题，非常简单 class Solution { public: vector&lt;int&gt; numberOfLines(vector&lt;int&gt;&amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&lt;s.length();i++){ if(rest == 100 &amp;&amp; widths[s[i]-&#39;a&#39;]&gt;0){ rest = widths[s[i]-&#39;a&#39;]; linenum++; continue; } rest += widths[s[i]-&#39;a&#39;]; if(rest&gt;100){ rest = widths[s[i]-&#39;a&#39;]; linenum++; } } return vector&lt;int&gt;{linenum,rest}; } };]]></description>
+</item>
+<item>
+  <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+  <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+  <pubDate>Mon, 11 Apr 2022 10:01:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+  <description><![CDATA[Leetcode 357: 统计各位数字都不同的数字个数解法包括暴力解法和扩张方法。 暴力解法直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了]]></description>
+</item>
+<item>
+  <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+  <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+  <pubDate>Mon, 11 Apr 2022 10:01:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+  <description><![CDATA[Leetcode 357: 统计各位数字都不同的数字个数解法包括暴力解法和扩张方法。 暴力解法直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了]]></description>
+</item>
+<item>
+  <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+  <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+  <pubDate>Mon, 11 Apr 2022 10:01:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+  <description><![CDATA[Leetcode 357: 统计各位数字都不同的数字个数解法包括暴力解法和扩张方法。 暴力解法直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了]]></description>
+</item>
+</channel>
+</rss>

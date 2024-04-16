@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Gopherfest 2015：Go Proverbs with Rob Pike - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能" /><meta name="keywords" content='计算机/go, 内容/学习笔记' /><meta itemprop="name" content="Gopherfest 2015：Go Proverbs with Rob Pike">
+<meta itemprop="description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能"><meta itemprop="datePublished" content="2022-06-27T21:13:15+08:00" />
+<meta itemprop="dateModified" content="2024-01-21T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1544">
+<meta itemprop="keywords" content="计算机/go,内容/学习笔记," /><meta property="og:title" content="Gopherfest 2015：Go Proverbs with Rob Pike" />
+<meta property="og:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-27T21:13:15+08:00" />
+<meta property="article:modified_time" content="2024-01-21T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Gopherfest 2015：Go Proverbs with Rob Pike"/>
+<meta name="twitter:description" content="阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" /><link rel="next" href="http://wtysos11.github.io/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Gopherfest 2015：Go Proverbs with Rob Pike",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220627_gopherfest2015_go_proverbs_rob_pike\/"
+    },"genre": "posts","keywords": "计算机\/go, 内容\/学习笔记","wordcount":  1544 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220627_gopherfest2015_go_proverbs_rob_pike\/","datePublished": "2022-06-27T21:13:15+08:00","dateModified": "2024-01-21T00:00:00+00:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Gopherfest 2015：Go Proverbs with Rob Pike</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category" title="分类 - 计算机视频学习笔记"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> 计算机视频学习笔记</a></span></div><div class="post-meta-line"><span title="发布于 2022-06-27 21:13:15"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-06-27">2022-06-27</time></span>&nbsp;<span title="更新于 2024-01-21 00:00:00"><i class="fa-regular fa-calendar-check fa-fw me-1" aria-hidden="true"></i><time datetime="2024-01-21">2024-01-21</time></span>&nbsp;<span title="1544 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 1600 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="content" id="content"><h1 id="gopherfest-2015go-proverbs-with-rob-pike" class="heading-element">
+  <a href="#gopherfest-2015go-proverbs-with-rob-pike" class="heading-mark"></a>Gopherfest 2015：Go Proverbs with Rob Pike</h1><ul>
+<li><a href="https://www.youtube.com/watch?v=PAAkCSZUG1c&amp;t=568s"target="_blank" rel="external nofollow noopener noreferrer">原视频</a></li>
+</ul>
+<p>Proverb：最早是围棋中的概念</p>
+<p>一些Proverb</p>
+<ul>
+<li>Don&rsquo;t communicate by sharing memory, share memory by communicating.</li>
+<li>Concurrency is not parallelism.
+<ul>
+<li>Talk in Waza.</li>
+<li>Concurrency is a way of structuring your program to make it easier to understand and scalable.</li>
+<li>Parallelism is simply the execution of multiple go routines in parallel.</li>
+</ul>
+</li>
+<li>Channels orchestrate; mutexes serialize.
+<ul>
+<li>Beginner&rsquo;s question: when to use mutex, cond &hellip; all these stuffs</li>
+<li>Mutex: fine-grained, serialize execution. Only allow one thing to go.</li>
+<li>go routine and channel give you a way to structure the program, arrange how the pieces work.</li>
+</ul>
+</li>
+<li>The bigger the interface, the weaker the abstraction.
+<ul>
+<li>与java的接口风格不同。例子：空接口，io.Reader和io.Writer，平均方法数量为2/3，但是非常实用</li>
+<li>个人的其他思考：接口最好不要作为暴露给其他包的第一层，特别当包的逻辑是复杂逻辑时（比如算法）。
+<ul>
+<li>一个是之前用的时候Go的编译器还不支持，跳转起来很麻烦。简单的包还好说，复杂的包就比较头大了。</li>
+<li>而且在具体使用这个包的时候，由于暴露的是接口，很难第一时间对应到具体的实现。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Make the zero value useful.
+<ul>
+<li>例子：bytes buffer/ sync.Mutex可以直接被放在结构体中，不需要任何的初始化。</li>
+<li>bytes buffer认为zero value is a valid buffer ready to use.</li>
+<li>A way to sturcutre your data to make sure that the programs are much easier to use.
+<ul>
+<li>==&gt; less api, always good thing.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>interface{} says nothing
+<ul>
+<li>interface{}在接口作为参数的情况下非常好用。但是interface{}方法如果被作为参数传入给其他函数，可能会执行一些方法，并导致异常的退出。而且很难检查出来，因此被称为says nothing.</li>
+<li>因此，如果要将interface{}作为参数的时候，必须要有足够的原因与对应的检查。【不要滥用！】</li>
+</ul>
+</li>
+<li>Gofmt&rsquo;s style is no one&rsquo;s favorite, yet gofmt is everyone&rsquo;s favorite.
+<ul>
+<li>这个我倒是比较认同的，我记得rust也有formatter，vscode的python插件中我自己也经常使用Formatter。</li>
+<li>I don&rsquo;t like how it formats, but I like it formats.</li>
+</ul>
+</li>
+<li>A little copying is better than a little dependency.
+<ul>
+<li>保持依赖树的简单</li>
+<li>如果需要的并不是整行代码，而是其中的几行，那就应该直接拷贝。
+<ul>
+<li>但如果需要同步修改则是另外一回事，比如频繁更新的业务代码即使只有几行，也应该引用更新频率不高的基础代码。因为一般人肯定不想再基础代码更新的时候从浩如烟海的业务代码中找出引用这几行的部分并进行更新。</li>
+</ul>
+</li>
+<li>Example: strings和unicode都有IsPrint函数，其中strings库中的这个函数是对Unicode的简单实现（而并没有引用）</li>
+<li>Don&rsquo;t be afraid to copy when it makes sense.</li>
+<li>这个也是我看这个视频的主要原因。可以用一个问题来概述：什么时候应该引用？
+<ul>
+<li>比如说，如果有一个redis client在其他的库中【生产环境】，当前库的逻辑与该库的逻辑基本一致，是否应该引用这个client？</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Syscall must always be guarded with build tags.
+<ul>
+<li>syscall isn&rsquo;t protable, it&rsquo;s system specific package</li>
+<li>如果代码中引用了syscall，需要确定保持版本一致，确保对每个不同的system和architecture都有对应的实现和测试，确保有效。否则，就应该使用os包或者其他类似的库。</li>
+</ul>
+</li>
+<li>Cgo must always be guarded with build tags.
+<ul>
+<li>C is not portable.</li>
+<li>同样的原因</li>
+</ul>
+</li>
+<li>Cgo is not Go.
+<ul>
+<li>Cgo很可能会导致runtime error，非常的危险</li>
+<li>垃圾回收等有可能会失效，或者说Go的所有对于类型和指针的约束都可能会被破坏</li>
+</ul>
+</li>
+<li>With the unsafe package there are no guarantees.
+<ul>
+<li>之前版本使用unsafe包的代码在之后包可能会变得不再泛用</li>
+<li>尽量不要在长期运行的程序中使用unsafe（Don&rsquo;t use unsafe unless you&rsquo;re prepared to have your program break one day）</li>
+</ul>
+</li>
+<li>Clear is better than clever.
+<ul>
+<li>Go的风格，更多为可读性、可维护性等妥协</li>
+</ul>
+</li>
+<li>Reflection is never clear
+<ul>
+<li>只有极少数人需要使用，it&rsquo;s a very powerful but very very difficult to use feature.</li>
+</ul>
+</li>
+<li>Errors are values.</li>
+<li>Don&rsquo;t just check errors, handle them gracefully
+<ul>
+<li>这个比较有感触。前段时间刚碰上一个bug，原因就是有一个地方直接把报的错误给截断了，导致debug的时候很难定位到问题。</li>
+</ul>
+</li>
+<li>Design the architecture, name the components, document the details.
+<ul>
+<li>当设计大型系统的时候，命名是非常重要的。命名需要能区分不同的部分，并传递其中的意义。</li>
+</ul>
+</li>
+<li>Documentation is for users.
+<ul>
+<li>这个也是老问题了，文档不是写给自己的，是写给不懂的人。</li>
+<li>Go文档的另外一个特点是轻量级（没有annotation）</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<p>一些其他的思想：</p>
+<ul>
+<li>KISS：Keep it simple and stupid</li>
+<li>DRY：Don&rsquo;t repeat yourself</li>
+</ul>
+<p>感想：Rob Pike究竟对java有多大的怨念</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2024-01-21 00:00:00">更新于 2024-01-21&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-title="Gopherfest 2015：Go Proverbs with Rob Pike" data-hashtags="计算机/go,内容/学习笔记"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-hashtag="计算机/go"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-title="Gopherfest 2015：Go Proverbs with Rob Pike" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-title="Gopherfest 2015：Go Proverbs with Rob Pike"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-title="Gopherfest 2015：Go Proverbs with Rob Pike"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-title="Gopherfest 2015：Go Proverbs with Rob Pike" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-title="Gopherfest 2015：Go Proverbs with Rob Pike" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220627_gopherfest2015_go_proverbs_rob_pike/" data-title="Gopherfest 2015：Go Proverbs with Rob Pike"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/" class="post-tag" title="标签 - 计算机/Go">计算机/Go</a><a href="/tags/%E5%86%85%E5%AE%B9/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-tag" title="标签 - 内容/学习笔记">内容/学习笔记</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/20220624_vegeta%E5%8E%8B%E6%B5%8B%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="post-nav-item" rel="prev" title="Vegeta压测工具学习与使用"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Vegeta压测工具学习与使用</a>
+      <a href="/posts/20240103_%E5%9F%BA%E4%BA%8E%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%9E%84%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93/" class="post-nav-item" rel="next" title="基于大模型构建本地知识库">基于大模型构建本地知识库<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

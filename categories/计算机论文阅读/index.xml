@@ -1,0 +1,87 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>计算机论文阅读 - 分类 - 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+    <description>计算机论文阅读 - 分类 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="self" type="application/rss+xml" /><item>
+  <title>布隆过滤器综述文章论文阅读：Optimizing Bloom Filter: Challenges, Solutions, and Comparisons</title>
+  <link>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</link>
+  <pubDate>Fri, 24 Jun 2022 17:15:23 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220624_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%BC%E8%BF%B0%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB/</guid>
+  <description><![CDATA[阅读关于布隆过滤器的综述文章，该论文通过多个方面分析了现有的布隆过滤器及其变体的实现与性能]]></description>
+</item>
+<item>
+  <title>Go语言并发常见问题：A-Study-of-Real-World-Data-Races-in-Golang</title>
+  <link>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</link>
+  <pubDate>Mon, 13 Jun 2022 09:01:42 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220613_go%E8%AF%AD%E8%A8%80%E5%B9%B6%E5%8F%91%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/</guid>
+  <description><![CDATA[前言 参考资料 鸟窝，主要是看到这篇文章后发现了Uber的A Study of Real-World Data Races in Golang。 本文在论文阅读的基础上加了很多可执行的例子，这些例子使用g]]></description>
+</item>
+<item>
+  <title>Dynamic Cloud Resource Allocation Considering Demand Uncertainty</title>
+  <link>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</link>
+  <pubDate>Fri, 05 Mar 2021 10:46:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210305_dynamic-cloud-resource-allocation-considering-demand-uncertainty/</guid>
+  <description><![CDATA[Dynamic Cloud Resource Allocation Considering Demand Uncertainty2019 TCC,CCF C类 看到C类效果这样心里还是有点底，这个用来PK应该是没问题的 1本文提出了一种混合方法来为基于云的网络应用分配云资源。结合了]]></description>
+</item>
+<item>
+  <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
+  <link>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</link>
+  <pubDate>Thu, 04 Mar 2021 11:03:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210304_profit-maximization-for-cloud-brokers-in-cloud-computing/</guid>
+  <description><![CDATA[Profit Maximization for Cloud Brokers in Cloud ComputingCCF A类 IEEE Transactions on Parallel and Distributed Systems，2019 摘要为了降低云用户的耗费，引入cloud broker（下称中间商）。中间商从云服务提]]></description>
+</item>
+<item>
+  <title>A two-phase cloud resource provisioning algorithm for cost optimization</title>
+  <link>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</link>
+  <pubDate>Mon, 01 Mar 2021 19:49:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210301_a-two-phase-cloud-resource-provisioning-algorithm-for-cost-optimization/</guid>
+  <description><![CDATA[A two-phase cloud resource provisioning algorithm for cost optimization 1 Introduction主要的三种付费方式： On-demand pricing model Reserved pricing model spot pricing model 现有的模型大多都只考虑了on-demand的收费方式，有一]]></description>
+</item>
+<item>
+  <title>Business-Driven Long-Term Capacity Planning for SaaS Applications</title>
+  <link>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</link>
+  <pubDate>Mon, 01 Mar 2021 16:57:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210301_business-driven-long-term-capacity-planning-for-saas-applications/</guid>
+  <description><![CDATA[未完成 本次阅读的关注重点是，如何根据已经给定的流量需求来分析所需要的满足SLA的实例数量？ 是否可以用强化学习来进行？ Business-Driven Long-Term Capacity Planning for SaaS Applications2015 TCC ，没记错]]></description>
+</item>
+<item>
+  <title>Temporal fusion transformers for interpretable multi-horizon time series forecasting</title>
+  <link>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</link>
+  <pubDate>Mon, 15 Feb 2021 11:00:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210215_temporal-fusion-transformers-for-interpretable-multi-horizon-time-series-forecasting/</guid>
+  <description><![CDATA[Temporal fusion transformers for interpretable multi-horizon time series forecasting 摘要文章关注的是multi-horizon forecasting，这方面包含了很多的输入数据，包括static covari]]></description>
+</item>
+<item>
+  <title>Time Series Data Augmentation for Deep Learning: A Survey</title>
+  <link>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</link>
+  <pubDate>Wed, 03 Feb 2021 14:24:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210203_time-series-data-augmentation-for-deep-learning_a-survey/</guid>
+  <description><![CDATA[Wen Q, Sun L, Song X, et al. Time series data augmentation for deep learning: A survey[J]. arXiv preprint arXiv:2002.12478, 2020. 一篇关于时间序列增强的论文，很有意思。 Time Series Data Augmentation for Deep Learning: A Survey 摘要时间序列相关的问题中，时间序列数据可能]]></description>
+</item>
+<item>
+  <title>Recurrent Neural Networks for Time Series Forecasting: Current status and future directions</title>
+  <link>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</link>
+  <pubDate>Tue, 19 Jan 2021 19:50:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210119_recurrent-neural-networks-for-time-series-forecasting_current-status-and-future-directions/</guid>
+  <description><![CDATA[Recurrent Neural Networks for Time Series Forecasting: Current status and future directions2021 International Journal of Forecasting 文章对基于RNN的时间序列预测方法进行了比较全面地综述，而且这是发表在IJF上的文章，意味着这篇文章会更偏向]]></description>
+</item>
+<item>
+  <title>比特币，基于交易图网络数据分析的去匿名性问题论文阅读</title>
+  <link>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+  <pubDate>Tue, 22 Dec 2020 19:20:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20201222_%E6%AF%94%E7%89%B9%E5%B8%81%E5%9F%BA%E4%BA%8E%E4%BA%A4%E6%98%93%E5%9B%BE%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%BB%E5%8C%BF%E5%90%8D%E6%80%A7%E9%97%AE%E9%A2%98%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
+  <description><![CDATA[所有的论文都放在这边 Do Bitcoin Users Really Care about Anonymity? An Analysis of the Bitcoin Transaction Graph Proceedings - 2018 IEEE International Conference on Big Data, Big Data 2018 Harlev M A, Sun Yin H, Langenheldt K C, et al. Breaking bad: De-anonymising entity types on the bitcoin blockchain using supervised machine learning[C]//Proceedings of the 51st Hawaii International Conference on System Sciences. 2018.]]></description>
+</item>
+</channel>
+</rss>

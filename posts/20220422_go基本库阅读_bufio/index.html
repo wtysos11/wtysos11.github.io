@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Go基本库阅读：bufio库 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="bufio这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考" /><meta name="keywords" content='计算机/go' /><meta itemprop="name" content="Go基本库阅读：bufio库">
+<meta itemprop="description" content="bufio这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考"><meta itemprop="datePublished" content="2022-04-22T12:50:02+08:00" />
+<meta itemprop="dateModified" content="2022-04-22T12:50:02+08:00" />
+<meta itemprop="wordCount" content="2983">
+<meta itemprop="keywords" content="计算机/go," /><meta property="og:title" content="Go基本库阅读：bufio库" />
+<meta property="og:description" content="bufio这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-22T12:50:02+08:00" />
+<meta property="article:modified_time" content="2022-04-22T12:50:02+08:00" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Go基本库阅读：bufio库"/>
+<meta name="twitter:description" content="bufio这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。 本质上相当于io加上缓冲区。 参考"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" /><link rel="next" href="http://wtysos11.github.io/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Go基本库阅读：bufio库",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio\/"
+    },"genre": "posts","keywords": "计算机\/go","wordcount":  2983 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio\/","datePublished": "2022-04-22T12:50:02+08:00","dateModified": "2022-04-22T12:50:02+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Go基本库阅读：bufio库</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - Go基础学习"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Go基础学习</a></span></div><div class="post-meta-line"><span title="发布于 2022-04-22 12:50:02"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-04-22">2022-04-22</time></span>&nbsp;<span title="2983 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 3000 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#reader">Reader</a></li>
+    <li><a href="#writer">Writer</a></li>
+    <li><a href="#scanner">Scanner</a></li>
+    <li><a href="#使用">使用</a>
+      <ul>
+        <li><a href="#实现细节">实现细节</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="bufio" class="heading-element">
+  <a href="#bufio" class="heading-mark"></a>bufio</h1><p>这个库是io库的实现，如果需要自行实现io库可以看一下这个库中Read和Write相关函数的实现。</p>
+<p>本质上相当于io加上缓冲区。</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.4.html"target="_blank" rel="external nofollow noopener noreferrer">1.4 bufio库</a>
+<ul>
+<li>常见的表述，包括函数功能解释参考此文，本文不再赘述</li>
+</ul>
+</li>
+<li><a href="https://cs.opensource.google/go/go/&#43;/refs/tags/go1.18.1:src/bufio/bufio.go;l=207"target="_blank" rel="external nofollow noopener noreferrer">源代码</a>
+<ul>
+<li>代码</li>
+</ul>
+</li>
+</ul>
+<h2 id="reader" class="heading-element">
+  <a href="#reader" class="heading-mark"></a>Reader</h2><p>bufio的Reader本质上是io.Reader的wrap，只是多了一个缓冲区并进行了一些对应的实现</p>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Reader</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">buf</span>          <span class="p">[]</span><span class="kt">byte</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">rd</span>           <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span> <span class="c1">// reader provided by the client
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">r</span><span class="p">,</span> <span class="nx">w</span>         <span class="kt">int</span>       <span class="c1">// buf read and write positions 其中r代表着缓冲区的开头，w代表着缓冲区的末尾
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">err</span>          <span class="kt">error</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">lastByte</span>     <span class="kt">int</span> <span class="c1">// last byte read for UnreadByte; -1 means invalid
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">lastRuneSize</span> <span class="kt">int</span> <span class="c1">// size of last rune read for UnreadRune; -1 means invalid
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></div><p>初始化函数，下列函数可以初始化并得到一个新的Reader</p>
+<ul>
+<li>NewReaderSize：根据给定的ReaderSize申请缓冲区</li>
+<li>NewReader：根据默认的ReaderSize申请缓冲区</li>
+<li>Reset：重置各项参数，如果本身是nil则用默认值申请缓冲区</li>
+</ul>
+<p>常用到的工具函数：</p>
+<ul>
+<li>fill，从rd中读取chunk，填充缓冲区。总是会尝试写满缓冲区，并且每次调用前会先整理缓冲区。</li>
+</ul>
+<p>读取系列</p>
+<ul>
+<li>Read，如果缓冲区无数据则直接调用io.Reader.Read；如果缓冲区有数据，则将缓冲区数据写入到数组中。</li>
+<li>Peek，读取n个字节而不让缓冲区前进（表现在代码中则是b.r不变）。会反复调用fill直到缓冲区满或者缓冲区中的有效元素达到指定的大小，很有bufio特色的函数，只有在有缓冲的情况下才能实现的功能。</li>
+<li>ReadSlice，读取到delimiter为止</li>
+<li>ReadByte，读取下一个字节的数据</li>
+<li>ReadLine，本质上是ReadSlice(’\n’)</li>
+</ul>
+<p>ReadBytes和ReadSlice的区别：</p>
+<ul>
+<li>ReadSlice返回的对象是Reader中的buffer，因此可能会在下一次读的时候失效；在代码中可以比较清楚的看到返回值line直接就是b.buf。</li>
+<li>ReadBytes则进行了复制，对返回得到的full和frag进行了对应的复制，拷贝到新的数组上
+<ul>
+<li>但是ReadBytes本质上是调用了ReadSlice进行的，核心代码如下：</li>
+</ul>
+</li>
+</ul>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// collectFragments reads until the first occurrence of delim in the input. It
+</span></span></span><span class="line"><span class="cl"><span class="c1">// returns (slice of full buffers, remaining bytes before delim, total number
+</span></span></span><span class="line"><span class="cl"><span class="c1">// of bytes in the combined first two elements, error).
+</span></span></span><span class="line"><span class="cl"><span class="c1">// The complete result is equal to
+</span></span></span><span class="line"><span class="cl"><span class="c1">// `bytes.Join(append(fullBuffers, finalFragment), nil)`, which has a
+</span></span></span><span class="line"><span class="cl"><span class="c1">// length of `totalLen`. The result is structured in this way to allow callers
+</span></span></span><span class="line"><span class="cl"><span class="c1">// to minimize allocations and copies.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Reader</span><span class="p">)</span> <span class="nf">collectFragments</span><span class="p">(</span><span class="nx">delim</span> <span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">fullBuffers</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">finalFragment</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">totalLen</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">frag</span> <span class="p">[]</span><span class="kt">byte</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Use ReadSlice to look for delim, accumulating full buffers.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="kd">var</span> <span class="nx">e</span> <span class="kt">error</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">frag</span><span class="p">,</span> <span class="nx">e</span> <span class="p">=</span> <span class="nx">b</span><span class="p">.</span><span class="nf">ReadSlice</span><span class="p">(</span><span class="nx">delim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">e</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span> <span class="c1">// got final fragment
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">break</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="nx">ErrBufferFull</span> <span class="p">{</span> <span class="c1">// unexpected error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">err</span> <span class="p">=</span> <span class="nx">e</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// Make a copy of the buffer.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">buf</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">frag</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">copy</span><span class="p">(</span><span class="nx">buf</span><span class="p">,</span> <span class="nx">frag</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fullBuffers</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">fullBuffers</span><span class="p">,</span> <span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">totalLen</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">totalLen</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">frag</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">fullBuffers</span><span class="p">,</span> <span class="nx">frag</span><span class="p">,</span> <span class="nx">totalLen</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h2 id="writer" class="heading-element">
+  <a href="#writer" class="heading-mark"></a>Writer</h2><p>类似，费事写了</p>
+<h2 id="scanner" class="heading-element">
+  <a href="#scanner" class="heading-mark"></a>Scanner</h2><p><a href="https://zhuanlan.zhihu.com/p/37673679"target="_blank" rel="external nofollow noopener noreferrer">Scanner-知乎</a></p>
+<p>Scanner专门使用了一个文件src/bufio/scan.go来实现，结构体定义如下。简单来说，Scan是为了分词功能而设计的，可以将流式的输入切分成多个token。对于非流式的输入，使用strings或bytes中的Split会更简单一些。</p>
+<div class="highlight" id="id-3"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Scanner provides a convenient interface for reading data such as
+</span></span></span><span class="line"><span class="cl"><span class="c1">// a file of newline-delimited lines of text. Successive calls to
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the Scan method will step through the &#39;tokens&#39; of a file, skipping
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the bytes between the tokens. The specification of a token is
+</span></span></span><span class="line"><span class="cl"><span class="c1">// defined by a split function of type SplitFunc; the default split
+</span></span></span><span class="line"><span class="cl"><span class="c1">// function breaks the input into lines with line termination stripped. Split
+</span></span></span><span class="line"><span class="cl"><span class="c1">// functions are defined in this package for scanning a file into
+</span></span></span><span class="line"><span class="cl"><span class="c1">// lines, bytes, UTF-8-encoded runes, and space-delimited words. The
+</span></span></span><span class="line"><span class="cl"><span class="c1">// client may instead provide a custom split function.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Scanning stops unrecoverably at EOF, the first I/O error, or a token too
+</span></span></span><span class="line"><span class="cl"><span class="c1">// large to fit in the buffer. When a scan stops, the reader may have
+</span></span></span><span class="line"><span class="cl"><span class="c1">// advanced arbitrarily far past the last token. Programs that need more
+</span></span></span><span class="line"><span class="cl"><span class="c1">// control over error handling or large tokens, or must run sequential scans
+</span></span></span><span class="line"><span class="cl"><span class="c1">// on a reader, should use bufio.Reader instead.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Scanner</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">r</span>            <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span> <span class="c1">// The reader provided by the client.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">split</span>        <span class="nx">SplitFunc</span> <span class="c1">// The function to split the tokens.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">maxTokenSize</span> <span class="kt">int</span>       <span class="c1">// Maximum size of a token; modified by tests.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">token</span>        <span class="p">[]</span><span class="kt">byte</span>    <span class="c1">// Last token returned by split. 得到的token，Text或Bytes方法实际上返回的就是这个值
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">buf</span>          <span class="p">[]</span><span class="kt">byte</span>    <span class="c1">// Buffer used as argument to split.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">start</span>        <span class="kt">int</span>       <span class="c1">// First non-processed byte in buf.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">end</span>          <span class="kt">int</span>       <span class="c1">// End of data in buf.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">err</span>          <span class="kt">error</span>     <span class="c1">// Sticky error.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">empties</span>      <span class="kt">int</span>       <span class="c1">// Count of successive empty tokens.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">scanCalled</span>   <span class="kt">bool</span>      <span class="c1">// Scan has been called; buffer is in use.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">done</span>         <span class="kt">bool</span>      <span class="c1">// Scan has finished.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></div><p>其中比较关键的几个成员是split、maxTokenSize、token、buf等</p>
+<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// SplitFunc is the signature of the split function used to tokenize the
+</span></span></span><span class="line"><span class="cl"><span class="c1">// input. The arguments are an initial substring of the remaining unprocessed
+</span></span></span><span class="line"><span class="cl"><span class="c1">// data and a flag, atEOF, that reports whether the Reader has no more data
+</span></span></span><span class="line"><span class="cl"><span class="c1">// to give. The return values are the number of bytes to advance the input
+</span></span></span><span class="line"><span class="cl"><span class="c1">// and the next token to return to the user, if any, plus an error, if any.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Scanning stops if the function returns an error, in which case some of
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the input may be discarded. If that error is ErrFinalToken, scanning
+</span></span></span><span class="line"><span class="cl"><span class="c1">// stops with no error.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Otherwise, the Scanner advances the input. If the token is not nil,
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the Scanner returns it to the user. If the token is nil, the
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Scanner reads more data and continues scanning; if there is no more
+</span></span></span><span class="line"><span class="cl"><span class="c1">// data--if atEOF was true--the Scanner returns. If the data does not
+</span></span></span><span class="line"><span class="cl"><span class="c1">// yet hold a complete token, for instance if it has no newline while
+</span></span></span><span class="line"><span class="cl"><span class="c1">// scanning lines, a SplitFunc can return (0, nil, nil) to signal the
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Scanner to read more data into the slice and try again with a
+</span></span></span><span class="line"><span class="cl"><span class="c1">// longer slice starting at the same point in the input.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// The function is never called with an empty data slice unless atEOF
+</span></span></span><span class="line"><span class="cl"><span class="c1">// is true. If atEOF is true, however, data may be non-empty and,
+</span></span></span><span class="line"><span class="cl"><span class="c1">// as always, holds unprocessed text.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">SplitFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">atEOF</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">(</span><span class="nx">advance</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">token</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 翻译一下，data是需要分词的数据源，atEOF表明后面是否还有数据（当前是否为EOF）
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 输出的advance为读取的数据总量，token为得到的分词，err为错误系信息
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 默认使用的SplitFunc是SplitLines
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ScanLines is a split function for a Scanner that returns each line of
+</span></span></span><span class="line"><span class="cl"><span class="c1">// text, stripped of any trailing end-of-line marker. The returned line may
+</span></span></span><span class="line"><span class="cl"><span class="c1">// be empty. The end-of-line marker is one optional carriage return followed
+</span></span></span><span class="line"><span class="cl"><span class="c1">// by one mandatory newline. In regular expression notation, it is `\r?\n`.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// The last non-empty line of input will be returned even if it has no
+</span></span></span><span class="line"><span class="cl"><span class="c1">// newline.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">ScanLines</span><span class="p">(</span><span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">atEOF</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">(</span><span class="nx">advance</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">token</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 如果达到了EOF而且没有需要读写的数据，则直接返回0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">atEOF</span> <span class="o">&amp;&amp;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">bytes</span><span class="p">.</span><span class="nf">IndexByte</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="sc">&#39;\n&#39;</span><span class="p">);</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// We have a full newline-terminated line.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nf">dropCR</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">i</span><span class="p">]),</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// If we&#39;re at EOF, we have a final, non-terminated line. Return it.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">atEOF</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nx">data</span><span class="p">),</span> <span class="nf">dropCR</span><span class="p">(</span><span class="nx">data</span><span class="p">),</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Request more data.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// dropCR drops a terminal \r from the data.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">dropCR</span><span class="p">(</span><span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">[]</span><span class="kt">byte</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\r&#39;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">data</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">data</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h2 id="使用" class="heading-element">
+  <a href="#%e4%bd%bf%e7%94%a8" class="heading-mark"></a>使用</h2><p>简单的例子：</p>
+<div class="highlight" id="id-5"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;bufio&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;strings&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">const</span> <span class="nx">input</span> <span class="p">=</span> <span class="s">&#34;This is The Golang Standard Library.\nWelcome you!&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewScanner</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">input</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">scanner</span><span class="p">.</span><span class="nf">Split</span><span class="p">(</span><span class="nx">bufio</span><span class="p">.</span><span class="nx">ScanWords</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">count</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Scan</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nf">Text</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">count</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Err</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;reading input:&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><ul>
+<li>使用NewScanner等方法可以初始化Scanner</li>
+<li>使用Split等方法可以改变其属性</li>
+<li>scanner.Scan如同Next一样，如果有数据（token或残留数据）则返回true，并且结果可以通过scanner.Text()或者scanner.Bytes()等拿到</li>
+</ul>
+<h3 id="实现细节" class="heading-element">
+  <a href="#%e5%ae%9e%e7%8e%b0%e7%bb%86%e8%8a%82" class="heading-mark"></a>实现细节</h3><p>Scan函数是核心</p>
+<div class="highlight" id="id-6"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// src/bufio/scan.go:136
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 返回是否完成，false为已经结束，true为未结束
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Scan advances the Scanner to the next token, which will then be
+</span></span></span><span class="line"><span class="cl"><span class="c1">// available through the Bytes or Text method. It returns false when the
+</span></span></span><span class="line"><span class="cl"><span class="c1">// scan stops, either by reaching the end of the input or an error.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// After Scan returns false, the Err method will return any error that
+</span></span></span><span class="line"><span class="cl"><span class="c1">// occurred during scanning, except that if it was io.EOF, Err
+</span></span></span><span class="line"><span class="cl"><span class="c1">// will return nil.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Scan panics if the split function returns too many empty
+</span></span></span><span class="line"><span class="cl"><span class="c1">// tokens without advancing the input. This is a common error mode for
+</span></span></span><span class="line"><span class="cl"><span class="c1">// scanners.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Scanner</span><span class="p">)</span> <span class="nf">Scan</span><span class="p">()</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">done</span> <span class="p">{</span> <span class="c1">// 如果已经完成，则返回false
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">s</span><span class="p">.</span><span class="nx">scanCalled</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Loop until we have a token.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// See if we can get a token with what we already have.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// If we&#39;ve run out of data but have an error, give the split function
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// a chance to recover any remaining, possibly empty token.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="p">&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="o">||</span> <span class="nx">s</span><span class="p">.</span><span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">advance</span><span class="p">,</span> <span class="nx">token</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">s</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">s</span><span class="p">.</span><span class="nx">start</span><span class="p">:</span><span class="nx">s</span><span class="p">.</span><span class="nx">end</span><span class="p">],</span> <span class="nx">s</span><span class="p">.</span><span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span><span class="p">)</span><span class="c1">//如果s.err!=nil时为EOF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="nx">ErrFinalToken</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">s</span><span class="p">.</span><span class="nx">token</span> <span class="p">=</span> <span class="nx">token</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">s</span><span class="p">.</span><span class="nx">done</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">					<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">s</span><span class="p">.</span><span class="nf">setErr</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">s</span><span class="p">.</span><span class="nf">advance</span><span class="p">(</span><span class="nx">advance</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">token</span> <span class="p">=</span> <span class="nx">token</span> <span class="c1">// 注册得到的token
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">if</span> <span class="nx">token</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nx">advance</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">s</span><span class="p">.</span><span class="nx">empties</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// token !=nil, s.err!=nil &amp;&amp; advance&lt;=0 这个条件说明splitFunc实现的有问题
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="c1">// Returning tokens not advancing input at EOF.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">s</span><span class="p">.</span><span class="nx">empties</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">					<span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">empties</span> <span class="p">&gt;</span> <span class="nx">maxConsecutiveEmptyReads</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">						<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;bufio.Scan: too many empty tokens without progressing&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">					<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 后面的全部为s.end == s.start &amp;&amp; s.err == nil，或者s.token==nil
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// We cannot generate a token with what we are holding.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// If we&#39;ve already hit EOF or an I/O error, we are done.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// Shut it down.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// Must read more data.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// 尝试读取更多的数据来继续Scan
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// First, shift data to beginning of buffer if there&#39;s lots of empty space
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// or space is needed.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="o">||</span> <span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="p">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nb">copy</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">s</span><span class="p">.</span><span class="nx">start</span><span class="p">:</span><span class="nx">s</span><span class="p">.</span><span class="nx">end</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="o">-=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">start</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// Is the buffer full? If so, resize.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">// Guarantee no overflow in the multiplication below.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="kd">const</span> <span class="nx">maxInt</span> <span class="p">=</span> <span class="nb">int</span><span class="p">(^</span><span class="nb">uint</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">maxTokenSize</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">maxInt</span><span class="o">/</span><span class="mi">2</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">s</span><span class="p">.</span><span class="nf">setErr</span><span class="p">(</span><span class="nx">ErrTooLong</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">newSize</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">newSize</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">newSize</span> <span class="p">=</span> <span class="nx">startBufSize</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">newSize</span> <span class="p">&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">maxTokenSize</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">newSize</span> <span class="p">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">maxTokenSize</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">newBuf</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">newSize</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="nb">copy</span><span class="p">(</span><span class="nx">newBuf</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">s</span><span class="p">.</span><span class="nx">start</span><span class="p">:</span><span class="nx">s</span><span class="p">.</span><span class="nx">end</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">buf</span> <span class="p">=</span> <span class="nx">newBuf</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="o">-=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">start</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Finally we can read some input. Make sure we don&#39;t get stuck with
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// a misbehaving Reader. Officially we don&#39;t need to do this, but let&#39;s
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// be extra careful: Scanner is for safe, simple jobs.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">for</span> <span class="nx">loop</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">r</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">s</span><span class="p">.</span><span class="nx">end</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span><span class="o">-</span><span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="p">&lt;</span> <span class="nx">n</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">s</span><span class="p">.</span><span class="nf">setErr</span><span class="p">(</span><span class="nx">ErrBadReadCount</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">s</span><span class="p">.</span><span class="nx">end</span> <span class="o">+=</span> <span class="nx">n</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">s</span><span class="p">.</span><span class="nf">setErr</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">n</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">s</span><span class="p">.</span><span class="nx">empties</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">loop</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">loop</span> <span class="p">&gt;</span> <span class="nx">maxConsecutiveEmptyReads</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">s</span><span class="p">.</span><span class="nf">setErr</span><span class="p">(</span><span class="nx">io</span><span class="p">.</span><span class="nx">ErrNoProgress</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// advance consumes n bytes of the buffer. It reports whether the advance was legal.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 检查的同时会修改s.start
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Scanner</span><span class="p">)</span> <span class="nf">advance</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">s</span><span class="p">.</span><span class="nf">setErr</span><span class="p">(</span><span class="nx">ErrNegativeAdvance</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span> <span class="p">&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">end</span><span class="o">-</span><span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">s</span><span class="p">.</span><span class="nf">setErr</span><span class="p">(</span><span class="nx">ErrAdvanceTooFar</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">s</span><span class="p">.</span><span class="nx">start</span> <span class="o">+=</span> <span class="nx">n</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-04-22 12:50:02">更新于 2022-04-22&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-title="Go基本库阅读：bufio库" data-hashtags="计算机/go"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-hashtag="计算机/go"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-title="Go基本库阅读：bufio库" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-title="Go基本库阅读：bufio库"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-title="Go基本库阅读：bufio库"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-title="Go基本库阅读：bufio库" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-title="Go基本库阅读：bufio库" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" data-title="Go基本库阅读：bufio库"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/" class="post-tag" title="标签 - 计算机/Go">计算机/Go</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" class="post-nav-item" rel="prev" title="Go基本库阅读：io库"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Go基本库阅读：io库</a>
+      <a href="/posts/20220608_pulsar%E4%B8%8E%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AD%A6%E4%B9%A0/" class="post-nav-item" rel="next" title="消息队列基本概念与pulsar学习">消息队列基本概念与pulsar学习<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

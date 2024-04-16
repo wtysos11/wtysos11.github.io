@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <meta name="robots" content="noodp" />
+    <title>Go基本库阅读：io库 - 实践出真知</title><meta name="author" content="">
+<meta name="author-link" content="">
+<meta name="description" content="io相关库阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。" /><meta name="keywords" content='计算机/go' /><meta itemprop="name" content="Go基本库阅读：io库">
+<meta itemprop="description" content="io相关库阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。"><meta itemprop="datePublished" content="2022-04-22T12:50:02+08:00" />
+<meta itemprop="dateModified" content="2022-04-22T12:50:02+08:00" />
+<meta itemprop="wordCount" content="4500">
+<meta itemprop="keywords" content="计算机/go," /><meta property="og:title" content="Go基本库阅读：io库" />
+<meta property="og:description" content="io相关库阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-04-22T12:50:02+08:00" />
+<meta property="article:modified_time" content="2022-04-22T12:50:02+08:00" />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Go基本库阅读：io库"/>
+<meta name="twitter:description" content="io相关库阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。"/>
+<meta name="application-name" content="FixIt">
+<meta name="apple-mobile-web-app-title" content="FixIt"><meta name="theme-color" data-light="#f8f8f8" data-dark="#252627" content="#f8f8f8"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="canonical" href="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" /><link rel="prev" href="http://wtysos11.github.io/posts/20220413_leetcode_380/" /><link rel="next" href="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Go基本库阅读：io库",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/wtysos11.github.io\/posts\/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io\/"
+    },"genre": "posts","keywords": "计算机\/go","wordcount":  4500 ,
+    "url": "http:\/\/wtysos11.github.io\/posts\/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io\/","datePublished": "2022-04-22T12:50:02+08:00","dateModified": "2022-04-22T12:50:02+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script></head>
+  <body data-header-desktop="sticky" data-header-mobile="auto"><script>(window.localStorage?.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('data-theme', 'dark');</script><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+    <nav>
+      <ul class="menu"><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/posts/"
+                
+                
+              >文章</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/tags/"
+                
+                
+              >标签</a></li><li class="menu-item">
+              <a
+                class="menu-link"
+                href="/categories/"
+                
+                
+              >分类</a></li><li class="menu-item delimiter"></li><li class="menu-item search" id="search-desktop">
+            <input type="text" placeholder="搜索文章标题或内容……" id="search-input-desktop">
+            <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+              <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+            </a>
+            <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+              <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+            </a>
+            <span class="search-button search-loading" id="search-loading-desktop">
+              <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+            </span>
+          </li><li class="menu-item theme-switch" title="切换主题">
+          <i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i>
+        </li><li class="menu-item language-switch">
+            <span role="button" aria-label="选择语言" title="选择语言"><i class="fa-solid fa-language fa-fw" aria-hidden="true"></i></span>
+            <ul class="sub-menu"><li class="menu-item">没有更多翻译</li></ul>
+          </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="实践出真知"><span class="header-title-text">实践出真知</span></a><span class="header-subtitle"></span></div>
+      <div class="menu-toggle" id="menu-toggle-mobile">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="search-wrapper">
+            <div class="search mobile" id="search-mobile">
+              <input type="text" placeholder="搜索文章标题或内容……" id="search-input-mobile">
+              <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                <i class="fa-solid fa-search fa-fw" aria-hidden="true"></i>
+              </a>
+              <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                <i class="fa-solid fa-times-circle fa-fw" aria-hidden="true"></i>
+              </a>
+              <span class="search-button search-loading" id="search-loading-mobile">
+                <i class="fa-solid fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+              </span>
+            </div>
+            <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+              取消
+            </a>
+          </li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/posts/"
+                  
+                  
+                >文章</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/tags/"
+                  
+                  
+                >标签</a></li><li
+              class="menu-item"
+            ><a
+                  class="menu-link"
+                  href="/categories/"
+                  
+                  
+                >分类</a></li><li class="menu-item menu-system">
+          <span class="menu-system-item theme-switch" title="切换主题"><i class="fa-solid fa-adjust fa-fw" aria-hidden="true"></i></span><span class="menu-system-item language-switch">
+              <span role="button" aria-label="选择语言" title="选择语言">简体中文<i class="dropdown-icon fa-solid fa-chevron-down" aria-hidden="true"></i></span>
+              <select class="language-select" onchange="location = this.value;"><option disabled>没有更多翻译</option></select>
+            </span></li>
+      </ul>
+    </nav>
+  </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+  </div>
+  <div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+  </div><main class="container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside>
+
+  <article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Go基本库阅读：io库</span>
+      </h1></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><span class="author"><i class="fa-solid fa-user-circle" aria-hidden="true"></i>
+      Anonymous</span></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/go%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - Go基础学习"><i class="fa-regular fa-folder fa-fw" aria-hidden="true"></i> Go基础学习</a></span></div><div class="post-meta-line"><span title="发布于 2022-04-22 12:50:02"><i class="fa-solid fa-calendar-days fa-fw me-1" aria-hidden="true"></i><time datetime="2022-04-22">2022-04-22</time></span>&nbsp;<span title="4500 字"><i class="fa-solid fa-pencil-alt fa-fw me-1" aria-hidden="true"></i>约 4600 字</span>&nbsp;<span><i class="fa-regular fa-clock fa-fw me-1" aria-hidden="true"></i>预计阅读 9 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基本结构体">基本结构体</a>
+      <ul>
+        <li><a href="#read相关">Read相关</a></li>
+        <li><a href="#writer">Writer</a></li>
+        <li><a href="#seeker">Seeker</a></li>
+        <li><a href="#管道以及常见函数">管道以及常见函数</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#realall">RealAll</a></li>
+  </ul>
+</nav></div>
+      </div><div class="content" id="content"><h1 id="io相关库" class="heading-element">
+  <a href="#io%e7%9b%b8%e5%85%b3%e5%ba%93" class="heading-mark"></a>io相关库</h1><p>阅读标准库是我大一学haskell时养成的习惯，通过阅读标准库能够更好地掌握语言设计者认为这个语言应该如何使用，从而少走一些弯路。</p>
+<p>io相关的操作我一直没怎么弄明白，特别是后面看到HTTP框架里面使用ioutil读取的时候。虽然C++的底子告诉我这样可以，但是我还是觉得应该一探究竟。</p>
+<p><a href="https://juejin.cn/post/6976841033795502093"target="_blank" rel="external nofollow noopener noreferrer">Golang的IO库那么多，我该怎么选?</a>这篇文章比较概要地介绍了go中涉及到io的库：io库、os库、ioutil库、bufio库、bytes库、string库，其实net部分也有涉及，我看看之后能不能写到这个地方</p>
+<p>可以进一步阅读的地方或资料：</p>
+<ul>
+<li>bytes的buffer，很基本的操作，常见但是涉及到很多inline相关的优化</li>
+<li><a href="https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.1.html"target="_blank" rel="external nofollow noopener noreferrer">1.1 io — 基本的 IO 接口</a>
+<ul>
+<li>这一章对于io库的叙述比较详尽，可以参考</li>
+</ul>
+</li>
+</ul>
+<h1 id="io的常见用途" class="heading-element">
+  <a href="#io%e7%9a%84%e5%b8%b8%e8%a7%81%e7%94%a8%e9%80%94" class="heading-mark"></a>io的常见用途</h1><p>我个人学习东西的习惯是比较习惯从应用出发，自己什么时候用到这个东西，这个东西会在哪里被用到，怎么被用到。</p>
+<p>说起IO，一般就是以下几种情况</p>
+<ul>
+<li>标准输入输出：fmt.Printf，fmt.Scanf</li>
+<li>读取文件</li>
+</ul>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;bufio&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;io&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">inputFile</span><span class="p">,</span> <span class="nx">inputError</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">&#34;input.dat&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">inputError</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;An error occurred on opening the inputfile\n&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;Does the file exist?\n&#34;</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">			<span class="s">&#34;Have you got acces to it?\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="c1">// exit the function on error
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">inputFile</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">inputReader</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">inputFile</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">inputString</span><span class="p">,</span> <span class="nx">readerError</span> <span class="o">:=</span> <span class="nx">inputReader</span><span class="p">.</span><span class="nf">ReadString</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">readerError</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;The input was: %s&#34;</span><span class="p">,</span> <span class="nx">inputString</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><ul>
+<li>读取网络中body的信息（这个也是我做标准库阅读的初衷）</li>
+</ul>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">//import package
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kn">import</span> <span class="s">&#34;io/ioutil&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//code snippet
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">bodyBytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"> <span class="c1">//---------- optioninal ---------------------
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//handling Errors
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">//print result
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">bodyString</span> <span class="o">:=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">bodyBytes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">log</span><span class="p">.</span><span class="nf">Info</span><span class="p">(</span><span class="nx">bodyString</span><span class="p">)</span></span></span></code></pre></div><h1 id="io库" class="heading-element">
+  <a href="#io%e5%ba%93" class="heading-mark"></a>io库</h1><p>万变不离其宗，io库就是所有IO读写的核心。</p>
+<p>IO中的核心概念是读和写，以此衍生出的概念是EOF（终止）、Seek（游走）、流或管道。基本所有的操作都是为了实现这些概念而做出来的。</p>
+<h2 id="基本结构体" class="heading-element">
+  <a href="#%e5%9f%ba%e6%9c%ac%e7%bb%93%e6%9e%84%e4%bd%93" class="heading-mark"></a>基本结构体</h2><p>最基本的结构体自然是Reader和Writer，基本方法为Read(bytes)和Write(bytes)。下面会详细介绍，但是与一般的想法不太一样，Read是将外部的数据写入到bytes数组中，而Write是将bytes中的数据写入到外部数据源。因此，应该将bytes理解成缓冲区，而数据源则为Reader或Writer自己带的。</p>
+<p>与之相对的，WriteTo(Writer)和ReadFrom(Reader)则是相反的，ReadFrom会一直从Reader中读取数据，而WriteTo则会一直向Writer写入数据。</p>
+<h3 id="read相关" class="heading-element">
+  <a href="#read%e7%9b%b8%e5%85%b3" class="heading-mark"></a>Read相关</h3><p>Read代表了对数据的读取等操作</p>
+<h4 id="reader" class="heading-element">
+  <a href="#reader" class="heading-mark"></a>Reader</h4><p>其中，Reader实现了Read方法：</p>
+<div class="highlight" id="id-1"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">方法从数组p中读取最多len(p)个bytes，返回实际读取的bytes数量n和返回的错误err。Reader不会阻塞去进行等待，如果数据没有准备好（实际数据与len(p)不匹配），它会直接返回
+</span></span></span><span class="line"><span class="cl"><span class="cm">实现细节：
+</span></span></span><span class="line"><span class="cl"><span class="cm">1. Read方法读取到最后一个bytes是返回n,EOF/nil，之后再调用则应该返回0,EOF
+</span></span></span><span class="line"><span class="cl"><span class="cm">2. 不鼓励在读取到0个bytes后返回nil，除非len(p)==0。一般情况下0和nil不能同时返回，而且它绝不能暗示EOF。
+</span></span></span><span class="line"><span class="cl"><span class="cm">3. 该方法的实现绝对不能保留数组p
+</span></span></span><span class="line"><span class="cl"><span class="cm">调用者：
+</span></span></span><span class="line"><span class="cl"><span class="cm">* 调用者应该先处理读到的bytes后，再考虑err的问题，从而将正常的错误与EOF同等对待。
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Reader</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">Read</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>Read方法的实现例子：</p>
+<div class="highlight" id="id-2"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// net包中conn有对应的实现，conn的Read依赖于netfd的Read，而后者依赖于bufferedPipe的Read
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 位置：src/net/net_fake.go:186
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">bufferedPipe</span><span class="p">)</span> <span class="nf">Read</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">p</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">defer</span> <span class="nx">p</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 加锁后直接循环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="c1">// 与官方实现说的有点不太一样，Read实际上是可以实现等待的，只是需要自行设置DDL
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">p</span><span class="p">.</span><span class="nx">closed</span> <span class="o">&amp;&amp;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="c1">// 管道关闭，或者缓冲为0时返回。
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">!</span><span class="nx">p</span><span class="p">.</span><span class="nx">rDeadline</span><span class="p">.</span><span class="nf">IsZero</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 如果存在DDL，则执行对应的逻辑
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nx">d</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Until</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">rDeadline</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">d</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">{</span> <span class="c1">// DDL到了，则返回对应的信号
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">syscall</span><span class="p">.</span><span class="nx">EAGAIN</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">time</span><span class="p">.</span><span class="nf">AfterFunc</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">rCond</span><span class="p">.</span><span class="nx">Broadcast</span><span class="p">)</span> <span class="c1">// 到时间后，BroadCast会唤醒p.rCond中的所有协程
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span> <span class="c1">// 缓存区中有数据，则直接弹出
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="k">break</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">p</span><span class="p">.</span><span class="nx">rCond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">n</span> <span class="o">:=</span> <span class="nb">copy</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span> <span class="c1">// 直接将一个slice的元素拷贝给另外一个slice，n表示实际复制成功的slice元素个数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">p</span><span class="p">.</span><span class="nx">buf</span> <span class="p">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">n</span><span class="p">:]</span> <span class="c1">// 进行截断，避免重复
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">p</span><span class="p">.</span><span class="nx">wCond</span><span class="p">.</span><span class="nf">Broadcast</span><span class="p">()</span> <span class="c1">// 唤醒所有的wCond
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>PS：如果要进一步了解IO的细节，可以阅读<a href="https://jixiuf.github.io/blog/go_epoll.html/"target="_blank" rel="external nofollow noopener noreferrer">go_epoll</a></p>
+<p>IO库的Reader与底层关系太近，bytes中的可能要稍微好一些</p>
+<div class="highlight" id="id-3"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Read的位置为src/bytes/reader.go:39
+</span></span></span><span class="line"><span class="cl"><span class="c1">// A Reader implements the io.Reader, io.ReaderAt, io.WriterTo, io.Seeker,
+</span></span></span><span class="line"><span class="cl"><span class="c1">// io.ByteScanner, and io.RuneScanner interfaces by reading from
+</span></span></span><span class="line"><span class="cl"><span class="c1">// a byte slice.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Unlike a Buffer, a Reader is read-only and supports seeking.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// The zero value for Reader operates like a Reader of an empty slice.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Reader</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">s</span>        <span class="p">[]</span><span class="kt">byte</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">i</span>        <span class="kt">int64</span> <span class="c1">// current reading index
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">prevRune</span> <span class="kt">int</span>   <span class="c1">// index of previous rune; or &lt; 0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Read implements the io.Reader interface.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Reader</span><span class="p">)</span> <span class="nf">Read</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">r</span><span class="p">.</span><span class="nx">i</span> <span class="o">&gt;=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">s</span><span class="p">))</span> <span class="p">{</span> <span class="c1">// 如果当前的index大于所读取的数据数组s，则EOF
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="c1">// 这里与之前的文档一致，0和nil不同时出现，0应该跟着EOF，除非len(p)==0
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">r</span><span class="p">.</span><span class="nx">prevRune</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1">// 这里应该是单纯的用不上
+</span></span></span><span class="line"><span class="cl"><span class="c1">// 简单的使用copy
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">n</span> <span class="p">=</span> <span class="nb">copy</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">s</span><span class="p">[</span><span class="nx">r</span><span class="p">.</span><span class="nx">i</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">r</span><span class="p">.</span><span class="nx">i</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="其他reader相关的基本操作" class="heading-element">
+  <a href="#%e5%85%b6%e4%bb%96reader%e7%9b%b8%e5%85%b3%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" class="heading-mark"></a>其他Reader相关的基本操作</h4><p>ReadAt和ReadFrom</p>
+<div class="highlight" id="id-4"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">与Read相比，ReadAt会在输入源的index==off的位置开始读取
+</span></span></span><span class="line"><span class="cl"><span class="cm">如果n&lt;len(p)，ReadAt必须返回错误来告知为什么没有读取完整。如果数据源可用但长度非len(p)，ReadAt会一直Block到出结果或者err
+</span></span></span><span class="line"><span class="cl"><span class="cm">PS: 从前面的网络包实现中可以发现，实际实现中并没有严格遵循这一点
+</span></span></span><span class="line"><span class="cl"><span class="cm">与Read不同的另外一点在于，ReadAt的Client要能够同时对同一个输入源进行操作。与之相对，尽管没有明说，但是Read的网络包实现中是加了锁的
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">ReaderAt</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">ReadAt</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">off</span> <span class="kt">int64</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// src/bytes/reader.go中同样实现了ReadAt的方法
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ReadAt implements the io.ReaderAt interface.（原注释，我对此的理解是因为要支持并发操作，因此如果对状态进行修改将会产生问题）
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">Reader</span><span class="p">)</span> <span class="nf">ReadAt</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">off</span> <span class="kt">int64</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// cannot modify state - see io.ReaderAt
+</span></span></span><span class="line"><span class="cl"><span class="c1">// legal check
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">off</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;bytes.Reader.ReadAt: negative offset&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">off</span> <span class="o">&gt;=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">s</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">n</span> <span class="p">=</span> <span class="nb">copy</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">s</span><span class="p">[</span><span class="nx">off</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">err</span> <span class="p">=</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="c1">// 比Read多的地方，如果n&lt;len(b)时会额外增加这个错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">ReadFrom的目标是从Reader中一直读取数据直到读到其他错误或者EOF
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">ReaderFrom</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">ReadFrom</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Reader</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// src/bytes/buffer.go:197中实现了这一方法，会一直从某个reader中读取数据直到读完为止
+</span></span></span><span class="line"><span class="cl"><span class="c1">// ReadFrom reads data from r until EOF and appends it to the buffer, growing
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the buffer as needed. The return value n is the number of bytes read. Any
+</span></span></span><span class="line"><span class="cl"><span class="c1">// error except io.EOF encountered during the read is also returned. If the
+</span></span></span><span class="line"><span class="cl"><span class="c1">// buffer becomes too large, ReadFrom will panic with ErrTooLarge.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Buffer</span><span class="p">)</span> <span class="nf">ReadFrom</span><span class="p">(</span><span class="nx">r</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">b</span><span class="p">.</span><span class="nx">lastRead</span> <span class="p">=</span> <span class="nx">opInvalid</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">i</span> <span class="o">:=</span> <span class="nx">b</span><span class="p">.</span><span class="nf">grow</span><span class="p">(</span><span class="nx">MinRead</span><span class="p">)</span> <span class="c1">// MinRead=512，是单个Read调用的最小的slice size。而grow则会扩展slice从而保证额外的MinRead大小的数据能够被写入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">b</span><span class="p">.</span><span class="nx">buf</span> <span class="p">=</span> <span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">[:</span><span class="nx">i</span><span class="p">]</span> <span class="c1">// 确保len正确，从切片中新建切片不会改变cap
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">m</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">:</span><span class="nb">cap</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">m</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nb">panic</span><span class="p">(</span><span class="nx">errNegativeRead</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 读到了m个数据。这里体现了一个特点，即Read的err的处理逻辑是先处理数据再处理错误
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">b</span><span class="p">.</span><span class="nx">buf</span> <span class="p">=</span> <span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">[:</span><span class="nx">i</span><span class="o">+</span><span class="nx">m</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">e</span> <span class="o">==</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">nil</span> <span class="c1">// e is EOF, so return nil explicitly
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">e</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="延伸reader" class="heading-element">
+  <a href="#%e5%bb%b6%e4%bc%b8reader" class="heading-mark"></a>延伸Reader</h4><p>主要是SectionReader</p>
+<div class="highlight" id="id-5"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">SectionReawder可以指定读取某一个范围的数据，该范围为从off之后n个点的数据，在读完n个点之后返回EOF
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">SectionReader</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">r</span>     <span class="nx">ReaderAt</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">base</span>  <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">off</span>   <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">limit</span> <span class="kt">int64</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">NewSectionReader</span><span class="p">(</span><span class="nx">r</span> <span class="nx">ReaderAt</span><span class="p">,</span> <span class="nx">off</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int64</span><span class="p">)</span> <span class="o">*</span><span class="nx">SectionReader</span></span></span></code></pre></div><p>官方给的例子：</p>
+<div class="highlight" id="id-6"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;io&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;log&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="s">&#34;strings&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">r</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="s">&#34;some io.Reader stream to be read\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">s</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">NewSectionReader</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">buf</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">s</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">buf</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">log</span><span class="p">.</span><span class="nf">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s\n&#34;</span><span class="p">,</span> <span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="writer" class="heading-element">
+  <a href="#writer" class="heading-mark"></a>Writer</h3><h4 id="write" class="heading-element">
+  <a href="#write" class="heading-mark"></a>write</h4><p>Writer则需要实现Write方法</p>
+<div class="highlight" id="id-7"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">与Read方法相对，write方法会从数组p中读取至多len(p)的数据写入到基本数据流中。
+</span></span></span><span class="line"><span class="cl"><span class="cm">其中实现并不一定要包含p，比如Discard就没有使用到p数组。
+</span></span></span><span class="line"><span class="cl"><span class="cm">问题：基本数据流该怎么调用？它是结构体的成员之一吗
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Writer</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">Write</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// src/bytes/buffer.go
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Write appends the contents of p to the buffer, growing the buffer as
+</span></span></span><span class="line"><span class="cl"><span class="c1">// needed. The return value n is the length of p; err is always nil. If the
+</span></span></span><span class="line"><span class="cl"><span class="c1">// buffer becomes too large, Write will panic with ErrTooLarge.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Buffer</span><span class="p">)</span> <span class="nf">Write</span><span class="p">(</span><span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">b</span><span class="p">.</span><span class="nx">lastRead</span> <span class="p">=</span> <span class="nx">opInvalid</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">m</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">b</span><span class="p">.</span><span class="nf">tryGrowByReslice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">m</span> <span class="p">=</span> <span class="nx">b</span><span class="p">.</span><span class="nf">grow</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 直接通过拷贝来实现写入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nb">copy</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">m</span><span class="p">:],</span> <span class="nx">p</span><span class="p">),</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h4 id="其他writer相关的基本操作" class="heading-element">
+  <a href="#%e5%85%b6%e4%bb%96writer%e7%9b%b8%e5%85%b3%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" class="heading-mark"></a>其他Writer相关的基本操作</h4><p>主要是WriteAt和WriteTo</p>
+<div class="highlight" id="id-8"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// src/bytes/buffer.go:249
+</span></span></span><span class="line"><span class="cl"><span class="c1">// WriteTo writes data to w until the buffer is drained or an error occurs.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// The return value n is the number of bytes written; it always fits into an
+</span></span></span><span class="line"><span class="cl"><span class="c1">// int, but it is int64 to match the io.WriterTo interface. Any error
+</span></span></span><span class="line"><span class="cl"><span class="c1">// encountered during the write is also returned.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Buffer</span><span class="p">)</span> <span class="nf">WriteTo</span><span class="p">(</span><span class="nx">w</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 函数将b.buf的数据写入到w中
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">b</span><span class="p">.</span><span class="nx">lastRead</span> <span class="p">=</span> <span class="nx">opInvalid</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">nBytes</span> <span class="o">:=</span> <span class="nx">b</span><span class="p">.</span><span class="nf">Len</span><span class="p">();</span> <span class="nx">nBytes</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">m</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">b</span><span class="p">.</span><span class="nx">off</span><span class="p">:])</span> <span class="c1">// 尝试向w中写入
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">m</span> <span class="p">&gt;</span> <span class="nx">nBytes</span> <span class="p">{</span> <span class="c1">// 写入异常
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>			<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;bytes.Buffer.WriteTo: invalid Write count&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">b</span><span class="p">.</span><span class="nx">off</span> <span class="o">+=</span> <span class="nx">m</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span> <span class="p">=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">e</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// all bytes should have been written, by definition of
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// Write method in io.Writer
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">if</span> <span class="nx">m</span> <span class="o">!=</span> <span class="nx">nBytes</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">io</span><span class="p">.</span><span class="nx">ErrShortWrite</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Buffer is now empty; reset.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">b</span><span class="p">.</span><span class="nf">Reset</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 由于采用了if，所以这里使用的是直接对n进行赋值的方法，而不是如ReadFrom一样的循环累加
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// src/os/file.go:200
+</span></span></span><span class="line"><span class="cl"><span class="c1">// WriteAt writes len(b) bytes to the File starting at byte offset off.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// It returns the number of bytes written and an error, if any.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// WriteAt returns a non-nil error when n != len(b).
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// If file was opened with the O_APPEND flag, WriteAt returns an error.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="o">*</span><span class="nx">File</span><span class="p">)</span> <span class="nf">WriteAt</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">off</span> <span class="kt">int64</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">checkValid</span><span class="p">(</span><span class="s">&#34;write&#34;</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">f</span><span class="p">.</span><span class="nx">appendMode</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">errWriteAtInAppendMode</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">off</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">PathError</span><span class="p">{</span><span class="nx">Op</span><span class="p">:</span> <span class="s">&#34;writeat&#34;</span><span class="p">,</span> <span class="nx">Path</span><span class="p">:</span> <span class="nx">f</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">Err</span><span class="p">:</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;negative offset&#34;</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">m</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">pwrite</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">off</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">err</span> <span class="p">=</span> <span class="nx">f</span><span class="p">.</span><span class="nf">wrapErr</span><span class="p">(</span><span class="s">&#34;write&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">n</span> <span class="o">+=</span> <span class="nx">m</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">m</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">off</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="seeker" class="heading-element">
+  <a href="#seeker" class="heading-mark"></a>Seeker</h3><div class="highlight" id="id-9"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm">Seek方法将下一个Read或者Write的index设置为offset，而这个offset的解释则根据whence进行。
+</span></span></span><span class="line"><span class="cl"><span class="cm">SeekStart与开始相关，SeekCurrent与当前相关，SeekEnd与结尾相关
+</span></span></span><span class="line"><span class="cl"><span class="cm">Seek返回处理后得到的新的offset以及对应的错误
+</span></span></span><span class="line"><span class="cl"><span class="cm">*/</span>
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Seeker</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nf">Seek</span><span class="p">(</span><span class="nx">offset</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">whence</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int64</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 实现示范，src/io/io.go
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">SectionReader</span><span class="p">)</span> <span class="nf">Seek</span><span class="p">(</span><span class="nx">offset</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">whence</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int64</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">switch</span> <span class="nx">whence</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">errWhence</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">SeekStart</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">offset</span> <span class="o">+=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">base</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">SeekCurrent</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">offset</span> <span class="o">+=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">off</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">SeekEnd</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">offset</span> <span class="o">+=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">limit</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">offset</span> <span class="p">&lt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">base</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">errOffset</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">s</span><span class="p">.</span><span class="nx">off</span> <span class="p">=</span> <span class="nx">offset</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">offset</span> <span class="o">-</span> <span class="nx">s</span><span class="p">.</span><span class="nx">base</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h3 id="管道以及常见函数" class="heading-element">
+  <a href="#%e7%ae%a1%e9%81%93%e4%bb%a5%e5%8f%8a%e5%b8%b8%e8%a7%81%e5%87%bd%e6%95%b0" class="heading-mark"></a>管道以及常见函数</h3><p>没什么特别的地方，不赘述。详见：<a href="https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.1.html"target="_blank" rel="external nofollow noopener noreferrer">1.1 io — 基本的 IO 接口</a></p>
+<p>其中，管道的实现代码：</p>
+<div class="highlight" id="id-10"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// src/io/pipe.go:199
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Pipe</span><span class="p">()</span> <span class="p">(</span><span class="o">*</span><span class="nx">PipeReader</span><span class="p">,</span> <span class="o">*</span><span class="nx">PipeWriter</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">p</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">pipe</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">wrCh</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">),</span> <span class="c1">// write channel
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">rdCh</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">),</span> <span class="c1">// read channel
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">done</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kd">struct</span><span class="p">{}),</span> <span class="c1">// done channel
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">PipeReader</span><span class="p">{</span><span class="nx">p</span><span class="p">},</span> <span class="o">&amp;</span><span class="nx">PipeWriter</span><span class="p">{</span><span class="nx">p</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">pipe</span><span class="p">)</span> <span class="nf">read</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 从管道中读取到b
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">p</span><span class="p">.</span><span class="nx">done</span><span class="p">:</span> <span class="c1">// 如果完成，则关闭
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nf">readCloseError</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nx">bw</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">p</span><span class="p">.</span><span class="nx">wrCh</span><span class="p">:</span> <span class="c1">// 从writechannel中读数据
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">nr</span> <span class="o">:=</span> <span class="nb">copy</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">bw</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">p</span><span class="p">.</span><span class="nx">rdCh</span> <span class="o">&lt;-</span> <span class="nx">nr</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">nr</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">p</span><span class="p">.</span><span class="nx">done</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nf">readCloseError</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">pipe</span><span class="p">)</span> <span class="nf">write</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 从b中写入到管道
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">p</span><span class="p">.</span><span class="nx">done</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nf">writeCloseError</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="k">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">p</span><span class="p">.</span><span class="nx">wrMu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="k">defer</span> <span class="nx">p</span><span class="p">.</span><span class="nx">wrMu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">once</span> <span class="o">:=</span> <span class="kc">true</span><span class="p">;</span> <span class="nx">once</span> <span class="o">||</span> <span class="nb">len</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">once</span> <span class="p">=</span> <span class="kc">false</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">select</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">p</span><span class="p">.</span><span class="nx">wrCh</span> <span class="o">&lt;-</span> <span class="nx">b</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">nw</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">p</span><span class="p">.</span><span class="nx">rdCh</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">[</span><span class="nx">nw</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">n</span> <span class="o">+=</span> <span class="nx">nw</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">p</span><span class="p">.</span><span class="nx">done</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nf">writeCloseError</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">n</span><span class="p">,</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><p>Copy的实现代码：</p>
+<div class="highlight" id="id-11"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Copy copies from src to dst until either EOF is reached
+</span></span></span><span class="line"><span class="cl"><span class="c1">// on src or an error occurs. It returns the number of bytes
+</span></span></span><span class="line"><span class="cl"><span class="c1">// copied and the first error encountered while copying, if any.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// A successful Copy returns err == nil, not err == EOF.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Because Copy is defined to read from src until EOF, it does
+</span></span></span><span class="line"><span class="cl"><span class="c1">// not treat an EOF from Read as an error to be reported.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// If src implements the WriterTo interface,
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the copy is implemented by calling src.WriteTo(dst).
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Otherwise, if dst implements the ReaderFrom interface,
+</span></span></span><span class="line"><span class="cl"><span class="c1">// the copy is implemented by calling dst.ReadFrom(src).
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Copy</span><span class="p">(</span><span class="nx">dst</span> <span class="nx">Writer</span><span class="p">,</span> <span class="nx">src</span> <span class="nx">Reader</span><span class="p">)</span> <span class="p">(</span><span class="nx">written</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nf">copyBuffer</span><span class="p">(</span><span class="nx">dst</span><span class="p">,</span> <span class="nx">src</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// CopyBuffer is identical to Copy except that it stages through the
+</span></span></span><span class="line"><span class="cl"><span class="c1">// provided buffer (if one is required) rather than allocating a
+</span></span></span><span class="line"><span class="cl"><span class="c1">// temporary one. If buf is nil, one is allocated; otherwise if it has
+</span></span></span><span class="line"><span class="cl"><span class="c1">// zero length, CopyBuffer panics.
+</span></span></span><span class="line"><span class="cl"><span class="c1">//
+</span></span></span><span class="line"><span class="cl"><span class="c1">// If either src implements WriterTo or dst implements ReaderFrom,
+</span></span></span><span class="line"><span class="cl"><span class="c1">// buf will not be used to perform the copy.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">CopyBuffer</span><span class="p">(</span><span class="nx">dst</span> <span class="nx">Writer</span><span class="p">,</span> <span class="nx">src</span> <span class="nx">Reader</span><span class="p">,</span> <span class="nx">buf</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">written</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">buf</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;empty buffer in CopyBuffer&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nf">copyBuffer</span><span class="p">(</span><span class="nx">dst</span><span class="p">,</span> <span class="nx">src</span><span class="p">,</span> <span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// copyBuffer is the actual implementation of Copy and CopyBuffer.
+</span></span></span><span class="line"><span class="cl"><span class="c1">// if buf is nil, one is allocated.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">copyBuffer</span><span class="p">(</span><span class="nx">dst</span> <span class="nx">Writer</span><span class="p">,</span> <span class="nx">src</span> <span class="nx">Reader</span><span class="p">,</span> <span class="nx">buf</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">written</span> <span class="kt">int64</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// If the reader has a WriteTo method, use it to do the copy.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// Avoids an allocation and a copy.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">wt</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">src</span><span class="p">.(</span><span class="nx">WriterTo</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">wt</span><span class="p">.</span><span class="nf">WriteTo</span><span class="p">(</span><span class="nx">dst</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// Similarly, if the writer has a ReadFrom method, use it to do the copy.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">rt</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">dst</span><span class="p">.(</span><span class="nx">ReaderFrom</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">rt</span><span class="p">.</span><span class="nf">ReadFrom</span><span class="p">(</span><span class="nx">src</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">buf</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">size</span> <span class="o">:=</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">1024</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">src</span><span class="p">.(</span><span class="o">*</span><span class="nx">LimitedReader</span><span class="p">);</span> <span class="nx">ok</span> <span class="o">&amp;&amp;</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">size</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">l</span><span class="p">.</span><span class="nx">N</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">N</span> <span class="p">&lt;</span> <span class="mi">1</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">size</span> <span class="p">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">size</span> <span class="p">=</span> <span class="nb">int</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">N</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">buf</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">nr</span><span class="p">,</span> <span class="nx">er</span> <span class="o">:=</span> <span class="nx">src</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">nr</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">nw</span><span class="p">,</span> <span class="nx">ew</span> <span class="o">:=</span> <span class="nx">dst</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="nx">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nx">nr</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">nw</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">nr</span> <span class="p">&lt;</span> <span class="nx">nw</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">nw</span> <span class="p">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span> <span class="nx">ew</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">ew</span> <span class="p">=</span> <span class="nx">errInvalidWrite</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">written</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">nw</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">ew</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">err</span> <span class="p">=</span> <span class="nx">ew</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">nr</span> <span class="o">!=</span> <span class="nx">nw</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">err</span> <span class="p">=</span> <span class="nx">ErrShortWrite</span>
+</span></span><span class="line"><span class="cl">				<span class="k">break</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">er</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">er</span> <span class="o">!=</span> <span class="nx">EOF</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">err</span> <span class="p">=</span> <span class="nx">er</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="k">break</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">written</span><span class="p">,</span> <span class="nx">err</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div><h1 id="ioutil库" class="heading-element">
+  <a href="#ioutil%e5%ba%93" class="heading-mark"></a>ioutil库</h1><p><a href="https://books.studygolang.com/The-Golang-Standard-Library-by-Example/chapter01/01.2.html"target="_blank" rel="external nofollow noopener noreferrer">ioutil-gitbook</a></p>
+<p>而在Go1.16中，对应的函数被io或os库的函数实现，不应该调用ioutil</p>
+<p>比较重要的几个函数</p>
+<h2 id="realall" class="heading-element">
+  <a href="#realall" class="heading-mark"></a>RealAll</h2><p><a href="https://juejin.cn/post/6977640348679929886"target="_blank" rel="external nofollow noopener noreferrer">golang中的ioutil.ReadAll vs io.Copy</a></p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod">
+        <span title="更新于 2022-04-22 12:50:02">更新于 2022-04-22&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div><div class="post-info-line">
+        <div class="post-info-md"></div>
+        <div class="post-info-share">
+          <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-title="Go基本库阅读：io库" data-hashtags="计算机/go"><i class="fa-brands fa-twitter fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-hashtag="计算机/go"><i class="fa-brands fa-facebook-square fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-title="Go基本库阅读：io库" data-web><i class="fa-brands fa-whatsapp fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-title="Go基本库阅读：io库"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-title="Go基本库阅读：io库"><i class="fa-brands fa-weibo fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Myspace" data-sharer="myspace" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-title="Go基本库阅读：io库" data-description=""><i data-svg-src="/lib/simple-icons/icons/myspace.min.svg" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-title="Go基本库阅读：io库" data-description=""><i class="fa-brands fa-blogger fa-fw" aria-hidden="true"></i></a>
+  <a href="javascript:void(0);" title="分享到 Evernote" data-sharer="evernote" data-url="http://wtysos11.github.io/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_io/" data-title="Go基本库阅读：io库"><i class="fa-brands fa-evernote fa-fw" aria-hidden="true"></i></a>
+  </span>
+        </div>
+      </div></div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags fa-fw me-1" aria-hidden="true"></i><a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/go/" class="post-tag" title="标签 - 计算机/Go">计算机/Go</a></section>
+    <section>
+      <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+    </section>
+  </div>
+
+  <div class="post-nav"><a href="/posts/20220413_leetcode_380/" class="post-nav-item" rel="prev" title="Leetcode 380: O(1)时间插入、删除和获取随机元素"><i class="fa-solid fa-angle-left fa-fw" aria-hidden="true"></i>Leetcode 380: O(1)时间插入、删除和获取随机元素</a>
+      <a href="/posts/20220422_go%E5%9F%BA%E6%9C%AC%E5%BA%93%E9%98%85%E8%AF%BB_bufio/" class="post-nav-item" rel="next" title="Go基本库阅读：bufio库">Go基本库阅读：bufio库<i class="fa-solid fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="utterances" class="comment"></div><noscript>
+        Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/" rel="external nofollow noopener noreferrer">Utterances</a>.
+      </noscript></div></article>
+
+  <aside class="toc" id="toc-auto" aria-label="目录"><h2 class="toc-title">目录&nbsp;<i class="toc-icon fa-solid fa-angle-down fa-fw" aria-hidden="true"></i></h2>
+      <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+    <div class="footer-container"><div class="footer-line powered">由 <a href="https://gohugo.io/" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.124.1"><img class="hugo-icon" src="/images/hugo.min.svg" alt="Hugo logo" /> Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/hugo-fixit/FixIt" target="_blank" rel="external" title="FixIt v0.3.2"><img class="fixit-icon" src="/images/fixit.min.svg" alt="FixIt logo" /> FixIt</a>
+        </div><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw" aria-hidden="true"></i>
+            <span itemprop="copyrightYear">2021 - 2024</span><span class="author" itemprop="copyrightHolder">
+              <a href="/"></a></span><span class="license footer-divider"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div></div>
+  </footer></div><div class="widgets"><div class="fixed-buttons animate__faster d-none"><div class="fixed-button back-to-top" role="button" aria-label="回到顶部"><i class="fa-solid fa-arrow-up fa-fw" aria-hidden="true"></i><span class="variant-numeric d-none">0%</span>
+        </div><div class="fixed-button view-comments d-none" role="button" aria-label="查看评论"><i class="fa-solid fa-comment fa-fw" aria-hidden="true"></i></div></div><div id="mask"></div><noscript>
+    <div class="noscript-warning">FixIt 主题在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="preload" href="/lib/katex/katex.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/katex/katex.min.css"></noscript><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js" defer></script><script src="/lib/algoliasearch/algoliasearch-lite.umd.min.js" defer></script><script src="/lib/sharer/sharer.min.js" async defer></script><script src="/lib/katex/katex.min.js" defer></script><script src="/lib/katex/auto-render.min.js" defer></script><script src="/lib/katex/copy-tex.min.js" defer></script><script src="/lib/katex/mhchem.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","editLockTitle":"锁定可编辑代码块","editUnLockTitle":"解锁可编辑代码块","editable":true,"maxShownLines":30},"comment":{"enable":true,"expired":false,"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"wtysos11/hugo-blog-comment"}},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验。"},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"46GYFZ8M81","algoliaIndex":"myblog","algoliaSearchKey":"10948d6f4e69e7991b7a4f9cb5095f13","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script src="/js/theme.min.js" defer></script></body>
+</html>

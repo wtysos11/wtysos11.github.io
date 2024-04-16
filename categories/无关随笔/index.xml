@@ -1,0 +1,47 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>无关随笔 - 分类 - 实践出真知</title>
+    <link>http://wtysos11.github.io/categories/%E6%97%A0%E5%85%B3%E9%9A%8F%E7%AC%94/</link>
+    <description>无关随笔 - 分类 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 24 Sep 2021 18:43:00 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/categories/%E6%97%A0%E5%85%B3%E9%9A%8F%E7%AC%94/" rel="self" type="application/rss+xml" /><item>
+  <title>《心流：最优体验心理学》读书笔记与自我思考</title>
+  <link>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</link>
+  <pubDate>Fri, 24 Sep 2021 18:43:00 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210924_%E5%BF%83%E6%B5%81%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%8E%E7%A0%94%E7%A9%B6%E6%80%9D%E8%80%83/</guid>
+  <description><![CDATA[对《心流：最优体验心理学》这本书的阅读感想，以及基于最近发生事情的一些体会。]]></description>
+</item>
+<item>
+  <title>专利讲座笔记</title>
+  <link>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</link>
+  <pubDate>Sat, 26 Jun 2021 21:13:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210626_%E4%B8%93%E5%88%A9%E8%AE%B2%E5%BA%A7%E7%AC%94%E8%AE%B0/</guid>
+  <description><![CDATA[专利学习内容： 专利基础知识 标书撰写 来自嘉权专利商标事务所的相关讲座 专利基本知识知识产权，包括工业产权、著作权与其他，专利是工业产权下属的概念]]></description>
+</item>
+<item>
+  <title>邓宁-克鲁格效应</title>
+  <link>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</link>
+  <pubDate>Thu, 17 Jun 2021 10:40:14 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20210617_%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94/</guid>
+  <description><![CDATA[每次都忘记这个效应叫什么名字，所以还是专门开个issue记录一下。 邓宁-克鲁格效应，按照百科的说法，是一种认知偏差，能力欠缺的人有一种虚幻的]]></description>
+</item>
+<item>
+  <title>使用ADEPT方法学习困难概念</title>
+  <link>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</link>
+  <pubDate>Tue, 14 Apr 2020 09:51:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200414_%E4%BD%BF%E7%94%A8adept%E6%96%B9%E6%B3%95%E5%AD%A6%E4%B9%A0%E5%9B%B0%E9%9A%BE%E6%A6%82%E5%BF%B5/</guid>
+  <description><![CDATA[原文地址 参考资料： Learning Difficult Concepts with the ADEPT Method 缘起-强化学习 困难的概念往往让人疯狂，仅仅看一遍几乎没有任何效果，实际操作又过于繁琐。使用5个步骤来科学学习]]></description>
+</item>
+<item>
+  <title>安卓环境下笔记软件总结</title>
+  <link>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</link>
+  <pubDate>Tue, 31 Mar 2020 09:51:04 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20200331_%E5%AE%89%E5%8D%93%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%AC%94%E8%AE%B0%E8%BD%AF%E4%BB%B6%E6%80%BB%E7%BB%93/</guid>
+  <description><![CDATA[在综合了价格等因素后，我选择了华为MatepadPro，这样在不用电脑模拟器的情况下我还可以使用平板进行阅读和书写记录，从综合价格上来说是最]]></description>
+</item>
+</channel>
+</rss>

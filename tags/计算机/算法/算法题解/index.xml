@@ -1,0 +1,87 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>计算机/算法/算法题解 - 标签 - 实践出真知</title>
+    <link>http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/</link>
+    <description>计算机/算法/算法题解 - 标签 | 实践出真知</description>
+    <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</lastBuildDate><atom:link href="http://wtysos11.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E7%AE%97%E6%B3%95/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" rel="self" type="application/rss+xml" /><item>
+  <title>Leetcode 380: O(1)时间插入、删除和获取随机元素</title>
+  <link>http://wtysos11.github.io/posts/20220413_leetcode_380/</link>
+  <pubDate>Wed, 13 Apr 2022 10:28:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220413_leetcode_380/</guid>
+  <description><![CDATA[Leetcode 380: O(1)时间插入、删除和获取随机元素22年4月13日每日一题 初始想法最简单的想法是数组，但是数组的插入和删除并不是O(1)的。如果使用哈]]></description>
+</item>
+<item>
+  <title>Leetcode 806: 写字符串需要的行数</title>
+  <link>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</link>
+  <pubDate>Tue, 12 Apr 2022 09:15:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220412_leetcode_806_%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9C%80%E8%A6%81%E7%9A%84%E8%A1%8C%E6%95%B0/</guid>
+  <description><![CDATA[220412 每日一题，非常简单 class Solution { public: vector&lt;int&gt; numberOfLines(vector&lt;int&gt;&amp; widths, string s) { int rest=0,linenum=1; for(int i=0;i&lt;s.length();i++){ if(rest == 100 &amp;&amp; widths[s[i]-&#39;a&#39;]&gt;0){ rest = widths[s[i]-&#39;a&#39;]; linenum++; continue; } rest += widths[s[i]-&#39;a&#39;]; if(rest&gt;100){ rest = widths[s[i]-&#39;a&#39;]; linenum++; } } return vector&lt;int&gt;{linenum,rest}; } };]]></description>
+</item>
+<item>
+  <title>Leetcode 357: 统计各位数字都不同的数字个数</title>
+  <link>http://wtysos11.github.io/posts/20220411_leetcode_357/</link>
+  <pubDate>Mon, 11 Apr 2022 10:01:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220411_leetcode_357/</guid>
+  <description><![CDATA[Leetcode 357: 统计各位数字都不同的数字个数解法包括暴力解法和扩张方法。 暴力解法直接对所有的数字求解，约为O(nlogn)，目测必定超时，就不浪费时间了]]></description>
+</item>
+<item>
+  <title>Leetcode 804: 唯一摩尔斯密码词</title>
+  <link>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</link>
+  <pubDate>Sun, 10 Apr 2022 16:30:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220410_leetcode_804_%E5%94%AF%E4%B8%80%E6%91%A9%E5%B0%94%E6%96%AF%E5%AF%86%E7%A0%81%E8%AF%8D/</guid>
+  <description><![CDATA[Leetcode 804 唯一摩尔斯密码词没什么难度，水题。如果不是每日一题不建议刷。 #include &lt;iostream&gt; #include &lt;string&gt; #include &lt;vector&gt; #include &lt;queue&gt; #include &lt;map&gt; using namespace std; class Solution { public: int uniqueMorseRepresentations(vector&lt;string&gt;&amp; words) { vector&lt;string&gt; password{&#34;.-&#34;,&#34;-...&#34;,&#34;-.-.&#34;,&#34;-..&#34;,&#34;.&#34;,&#34;..-.&#34;,&#34;--.&#34;,&#34;....&#34;,&#34;..&#34;,&#34;.---&#34;,&#34;-.-&#34;,&#34;.-..&#34;,&#34;--&#34;,&#34;-.&#34;,&#34;---&#34;,&#34;.--.&#34;,&#34;--.-&#34;,&#34;.-.&#34;,&#34;...&#34;,&#34;-&#34;,&#34;..-&#34;,&#34;...-&#34;,&#34;.--&#34;,&#34;-..-&#34;,&#34;-.--&#34;,&#34;--..&#34;}; map&lt;string,bool&gt; exist; for(int i=0;i&lt;words.size();i++){ string&amp; word = words[i]; string origin; for(int j=0;j&lt;word.length();j++){ origin = origin]]></description>
+</item>
+<item>
+  <title>Leetcode 780: 到达终点</title>
+  <link>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</link>
+  <pubDate>Sat, 09 Apr 2022 19:27:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220409_leetcode_780_%E5%88%B0%E8%BE%BE%E7%BB%88%E7%82%B9/</guid>
+  <description><![CDATA[Leetcode 780 到达终点22年4月9日每日一题 题目大意：给定起点(sx,sy)和终点(tx,ty)，询问是否能够通过一系列转换从起点到达终点。 从点(x,]]></description>
+</item>
+<item>
+  <title>Leetcode数组专题</title>
+  <link>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</link>
+  <pubDate>Fri, 08 Apr 2022 18:52:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220408_leetcode_%E6%95%B0%E7%BB%84%E4%B8%93%E9%A2%98/</guid>
+  <description><![CDATA[Leetcode中与数组相关的题目，包括704、35]]></description>
+</item>
+<item>
+  <title>Leetcode 4: 寻找两个正序数组的中位数</title>
+  <link>http://wtysos11.github.io/posts/20220408_leetcode_4/</link>
+  <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220408_leetcode_4/</guid>
+  <description><![CDATA[寻找两个正序数组的中位数这道题最终没有做出来。倒不是字面意义上的没有做出来，而是看了答案之后发现难点并不在思路上，而在于细节上。但是细节我已]]></description>
+</item>
+<item>
+  <title>Leetcode 429: N叉树的层次遍历</title>
+  <link>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</link>
+  <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220408_leetcode_429_n%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86/</guid>
+  <description><![CDATA[22年4月8日的每日一题，很简单的BFS层次遍历树。 唯一的问题在于对BFS的细节理解不到位，我的做法与标准做法相比多开了一个map来保存节点]]></description>
+</item>
+<item>
+  <title>Leetcode 762: 二进制表示中质数个计算置位</title>
+  <link>http://wtysos11.github.io/posts/20220408_leetcode_762/</link>
+  <pubDate>Fri, 08 Apr 2022 17:52:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220408_leetcode_762/</guid>
+  <description><![CDATA[762 二进制表示中质数个计算置位题目中所提到的二进制表示中单位计算置位为二进制表示中1的个数。 比如说$(21){10}=(10101){2}$，]]></description>
+</item>
+<item>
+  <title>Leetcode 796: 旋转字符串</title>
+  <link>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+  <pubDate>Thu, 07 Apr 2022 19:21:02 &#43;0800</pubDate>
+  <author>作者</author>
+  <guid>http://wtysos11.github.io/posts/20220407_leetcode_796_%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+  <description><![CDATA[Leetcode第796题：旋转字符串，简单题]]></description>
+</item>
+</channel>
+</rss>
